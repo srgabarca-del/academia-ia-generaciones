@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Iniciar sesión — Academia IA</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#4527A0,#6C3FC4,#00897B);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:20px;padding:40px 36px;max-width:420px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.3)}
+h1{text-align:center;font-size:1.4rem;font-weight:800;color:#212121;margin-bottom:4px}
+label{display:block;font-size:.85rem;font-weight:600;color:#212121;margin-bottom:5px}
+.inp{width:100%;padding:13px 14px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:.95rem;font-family:inherit;outline:none;margin-bottom:14px}
+.inp:focus{border-color:#6C3FC4}
+.btn{width:100%;padding:15px;background:#6C3FC4;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer}
+.btn:hover{background:#4527A0}
+.err{background:#FFEBEE;color:#C62828;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:14px;display:none}
+.hint{background:#F5F3FF;border-radius:10px;padding:12px 14px;font-size:.82rem;color:#6C3FC4;margin-bottom:20px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="card">
+  <div style="text-align:center;font-size:2.2rem;margin-bottom:8px;">🤖</div>
+  <h1>Iniciar sesión</h1>
+  <p style="text-align:center;color:#757575;font-size:.88rem;margin-bottom:20px;">Academia IA Generaciones</p>
+  <div class="hint">💡 Usa las credenciales que recibiste por correo.</div>
+  <div class="err" id="err">⚠️ Correo o contraseña incorrectos.</div>
+  <label for="le">Correo electrónico</label>
+  <input class="inp" type="email" id="le" placeholder="tucorreo@ejemplo.com">
+  <label for="lp">Contraseña</label>
+  <input class="inp" type="password" id="lp" placeholder="Tu contraseña">
+  <button class="btn" id="btn-login">🔓 Entrar a mi curso</button>
+  <p style="text-align:center;font-size:.8rem;color:#9E9E9E;margin-top:16px;">¿No tienes cuenta? <a href="academia_ia_pagina_ventas.html#registro" style="color:#6C3FC4;">Regístrate gratis</a></p>
+</div>
+<script>
+var CE  = sessionStorage.getItem('pago_email')   || '';
+var CP  = sessionStorage.getItem('pago_pass')    || '';
+var CER = sessionStorage.getItem('alumno_email') || '';
+var CRP = sessionStorage.getItem('alumno_pass')  || '';
+var ARCH = sessionStorage.getItem('pago_archivo') || 'modulo2.html';
+
+// Pre-fill email
+document.getElementById('le').value = CE || CER;
+
+document.getElementById('btn-login').addEventListener('click', function() {
+  var e = document.getElementById('le').value.trim();
+  var p = document.getElementById('lp').value;
+  var ok = (e===CE && p===CP) || (e===CER && p===CRP);
+  if(ok) {
+    sessionStorage.setItem('alumno_email', e);
+    if(!sessionStorage.getItem('alumno_nombre')) sessionStorage.setItem('alumno_nombre', e.split('@')[0]);
+    window.location = ARCH;
+  } else {
+    document.getElementById('err').style.display='block';
+  }
+});
+document.getElementById('lp').addEventListener('keydown', function(e) {
+  if(e.key==='Enter') document.getElementById('btn-login').click();
+});
+</script>
+</body>
+</html>

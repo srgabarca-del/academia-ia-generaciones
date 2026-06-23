@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Módulo 1 — Academia IA Generaciones</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F3FF;color:#212121}
+nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.logo{color:#fff;font-weight:700;font-size:1rem}
+.al{color:rgba(255,255,255,.8);font-size:.85rem}
+.body{max-width:860px;margin:0 auto;padding:32px 20px 60px}
+.badge{display:inline-block;background:#E8F5E9;color:#2E7D32;font-size:.8rem;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+.pbr{background:#E0E0E0;border-radius:4px;height:6px;margin-bottom:6px}
+.pf{height:100%;border-radius:4px;width:0;transition:width .6s}
+.vw{border-radius:16px;background:#1a1a2e;margin-bottom:28px;text-align:center;padding:48px 24px}
+.pb{width:76px;height:76px;background:#FF0000;border-radius:50%;font-size:2.2rem;border:none;cursor:pointer;color:#fff;margin-bottom:14px;transition:background .2s,transform .2s}
+.pb:hover{background:#CC0000;transform:scale(1.07)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:28px}
+.sc{background:#fff;border-radius:12px;padding:16px;border:1px solid #E0E0E0}
+.sn{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.res{background:#fff;border-radius:12px;padding:20px 24px;border:1px solid #E0E0E0;margin-bottom:28px}
+.rl{list-style:none}
+.rl li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F5F5F5;font-size:.9rem}
+.rl li:last-child{border:none}
+.ri{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.bdl{margin-left:auto;flex-shrink:0;border:none;padding:7px 15px;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer}
+.bn{width:100%;padding:16px;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:12px;transition:opacity .2s}
+.bn:hover{opacity:.9}
+.qq{background:#fff;border:1px solid #E0E0E0;border-radius:12px;padding:18px 20px;margin-bottom:12px}
+.qq.ok{border-color:#43A047;background:#F1F8E9}
+.qq.no{border-color:#E53935;background:#FFEBEE}
+.qt{font-size:.97rem;font-weight:700;margin-bottom:12px}
+.op{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;margin-bottom:4px;cursor:pointer;font-size:.9rem;color:#424242}
+.op:hover{background:#EDE7F6}
+.op input{accent-color:#6C3FC4;width:16px;height:16px;flex-shrink:0;cursor:pointer}
+.cert-box{border:3px solid #00897B;border-radius:16px;padding:40px 28px;text-align:center;background:#fff;margin-top:20px;display:none}
+.btn-row{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">🤖 Academia IA Generaciones</div>
+  <div class="al" id="nav-nombre">👤 Alumno</div>
+</nav>
+<div class="body">
+  <span class="badge">🆓 MÓDULO 1 — GRATUITO</span>
+  <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:#4527A0;margin-bottom:8px;">Descubriendo la Inteligencia Artificial</h1>
+  <p style="color:#555;font-size:.95rem;margin-bottom:24px;">Duración: 45–60 min · Sin conocimientos previos · En español</p>
+  <div style="background:linear-gradient(135deg,#6C3FC4,#00897B);border-radius:14px;padding:20px 24px;margin-bottom:24px;color:#fff;">
+    <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:4px;" id="saludo">¡Bienvenido/a a tu primer módulo! 🎉</h2>
+    <p style="font-size:.88rem;opacity:.85;">Comienza viendo el video, descarga el PDF y completa la evaluación.</p>
+  </div>
+  <div class="pbr"><div class="pf" id="pf" style="background:#6C3FC4;"></div></div>
+  <p style="font-size:.78rem;color:#757575;margin-bottom:24px;" id="pl">Progreso: 0%</p>
+
+  <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+    <button class="bn" id="btn-n" style="background:#6C3FC4;">🧠🤖 Video para Niños</button>
+    <button class="bn" id="btn-a" style="background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;">🎬 Video Animado — Todos</button>
+  </div>
+  <div class="vw">
+    <button class="pb" id="pb">▶</button>
+    <div style="color:rgba(255,255,255,.88);font-size:.95rem;font-weight:600;" id="vt">🧠🤖 IA para Niños — ¿Qué es la IA?</div>
+    <div style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:5px;">Pulsa ▶ para abrir en YouTube</div>
+  </div>
+
+  <div class="grid">
+    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 1</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">¿Qué es la IA?</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">Definición simple para niños y adultos.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 0:00–5:00</div></div>
+    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 2</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">¿Cómo funciona?</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">Datos, entrenamiento y respuesta.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 5:00–18:00</div></div>
+    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 3</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">IA en tu vida diaria</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">YouTube, WhatsApp, Maps y más.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 18:00–30:00</div></div>
+    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 4</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">Beneficios y límites</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">Lo que la IA puede y no puede hacer.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 30:00–40:00</div></div>
+    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 5</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">Actividades prácticas</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">Cazadores de IA · Mi Día con IA.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 40:00–55:00</div></div>
+    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 6</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">Cierre y certificado</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">Resumen y descarga de certificado.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 55:00–60:00</div></div>
+  </div>
+
+  <div class="res">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px;">📎 Materiales del módulo</h3>
+    <ul class="rl">
+      <li><div class="ri" style="background:#EDE7F6;">📄</div><span>Material del Alumno — Actividades y Evaluación</span><button class="bdl" id="btn-dl" style="background:#EDE7F6;color:#6C3FC4;">⬇ Descargar</button></li>
+      <li><div class="ri" style="background:#FCE4EC;">🏆</div><div><span>Certificado de participación</span><br><small id="cert-note" style="color:#9E9E9E;">Completa la evaluación para desbloquearlo</small></div><button class="bdl" id="btn-cert" style="background:#E0E0E0;color:#999;">🔒 Bloqueado</button></li>
+    </ul>
+  </div>
+
+  <button class="bn" id="btn-eval" style="background:#00897B;">📝 Ir a la Evaluación → Desbloquea tu Certificado</button>
+
+  <div id="ev" style="display:none;margin-top:8px;">
+    <div style="background:#4527A0;border-radius:14px;padding:20px 24px;margin-bottom:20px;color:#fff;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">📝 Evaluación del Módulo 1</h2>
+      <p style="font-size:.88rem;opacity:.85;">10 preguntas — necesitas 6 o más para aprobar.</p>
+    </div>
+    <div class="qq" id="q1"><p class="qt">1. ¿Qué es la Inteligencia Artificial?</p><label class="op"><input type="radio" name="q1" value="A"> Un robot físico que camina y habla</label><label class="op"><input type="radio" name="q1" value="B"> Tecnología que permite a las computadoras aprender y realizar tareas inteligentes</label><label class="op"><input type="radio" name="q1" value="C"> Un videojuego muy avanzado</label><label class="op"><input type="radio" name="q1" value="D"> El internet mejorado</label></div><div class="qq" id="q2"><p class="qt">2. ¿Cuál NO es una aplicación de IA en la vida diaria?</p><label class="op"><input type="radio" name="q2" value="A"> Las recomendaciones de YouTube</label><label class="op"><input type="radio" name="q2" value="B"> Las rutas de Google Maps</label><label class="op"><input type="radio" name="q2" value="C"> Un libro de papel impreso</label><label class="op"><input type="radio" name="q2" value="D"> El autocompletado de WhatsApp</label></div><div class="qq" id="q3"><p class="qt">3. ¿Cómo aprende la Inteligencia Artificial?</p><label class="op"><input type="radio" name="q3" value="A"> Leyendo libros físicos</label><label class="op"><input type="radio" name="q3" value="B"> Con datos y ejemplos que le dan los programadores</label><label class="op"><input type="radio" name="q3" value="C"> Viendo televisión</label><label class="op"><input type="radio" name="q3" value="D"> Hablando con otros robots</label></div><div class="qq" id="q4"><p class="qt">4. ¿Cuál es una LIMITACIÓN de la IA?</p><label class="op"><input type="radio" name="q4" value="A"> Puede trabajar las 24 horas</label><label class="op"><input type="radio" name="q4" value="B"> Puede traducir idiomas</label><label class="op"><input type="radio" name="q4" value="C"> Puede cometer errores y dar información incorrecta</label><label class="op"><input type="radio" name="q4" value="D"> Puede crear música</label></div><div class="qq" id="q5"><p class="qt">5. ¿Qué es un "prompt"?</p><label class="op"><input type="radio" name="q5" value="A"> El nombre de un robot famoso</label><label class="op"><input type="radio" name="q5" value="B"> La instrucción o pregunta que le das a la IA</label><label class="op"><input type="radio" name="q5" value="C"> Un tipo de computadora especial</label><label class="op"><input type="radio" name="q5" value="D"> El cerebro de la IA</label></div><div class="qq" id="q6"><p class="qt">6. Cuando YouTube te sugiere un video, ¿qué tecnología usa?</p><label class="op"><input type="radio" name="q6" value="A"> Un humano que selecciona videos</label><label class="op"><input type="radio" name="q6" value="B"> Magia digital</label><label class="op"><input type="radio" name="q6" value="C"> Inteligencia Artificial basada en tus gustos</label><label class="op"><input type="radio" name="q6" value="D"> Un sorteo aleatorio</label></div><div class="qq" id="q7"><p class="qt">7. ¿La IA puede reemplazar completamente a los seres humanos?</p><label class="op"><input type="radio" name="q7" value="A"> Sí, en todo</label><label class="op"><input type="radio" name="q7" value="B"> No, tiene limitaciones y no tiene emociones reales</label><label class="op"><input type="radio" name="q7" value="C"> Solo puede reemplazar a los jóvenes</label><label class="op"><input type="radio" name="q7" value="D"> Solo a los adultos mayores</label></div><div class="qq" id="q8"><p class="qt">8. ¿Qué necesita principalmente la IA para funcionar?</p><label class="op"><input type="radio" name="q8" value="A"> Mucha electricidad y un cuarto especial</label><label class="op"><input type="radio" name="q8" value="B"> Datos e información para aprender</label><label class="op"><input type="radio" name="q8" value="C"> Un operador humano siempre presente</label><label class="op"><input type="radio" name="q8" value="D"> Conexión a televisión</label></div><div class="qq" id="q9"><p class="qt">9. ¿Por qué es importante usar la IA con responsabilidad?</p><label class="op"><input type="radio" name="q9" value="A"> Para hacer trampa en los exámenes</label><label class="op"><input type="radio" name="q9" value="B"> Porque puede usarse para ayudar o para hacer daño</label><label class="op"><input type="radio" name="q9" value="C"> Para no necesitar estudiar más</label><label class="op"><input type="radio" name="q9" value="D"> Porque es obligatorio por ley</label></div><div class="qq" id="q10"><p class="qt">10. ¿Cuál de estas herramientas usa IA y es gratuita?</p><label class="op"><input type="radio" name="q10" value="A"> Solo herramientas de pago</label><label class="op"><input type="radio" name="q10" value="B"> ChatGPT, Gemini y Copilot (versiones gratuitas)</label><label class="op"><input type="radio" name="q10" value="C"> Solo apps de pago para empresas</label><label class="op"><input type="radio" name="q10" value="D"> Ninguna gratuita usa IA</label></div>
+    <div id="qerr" style="display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:12px;margin-top:12px;font-size:.9rem;">⚠️ Responde todas las preguntas.</div>
+    <button class="bn" id="btn-env" style="background:#4527A0;margin-top:20px;">✅ Enviar evaluación</button>
+  </div>
+
+  <div id="qres" style="display:none;text-align:center;padding:32px 16px;"></div>
+
+  <div class="cert-box" id="certbox">
+    <div style="font-size:3.5rem;margin-bottom:12px;">🏆</div>
+    <div style="font-size:.85rem;font-weight:700;color:#00897B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Academia IA Generaciones</div>
+    <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:8px;">Certificado de Participación</h2>
+    <p style="color:#555;margin-bottom:12px;">Este certificado se otorga a</p>
+    <div id="cn" style="font-size:1.8rem;font-weight:800;color:#4527A0;margin-bottom:16px;"></div>
+    <p style="font-weight:700;margin-bottom:16px;">Módulo 1: Descubriendo la Inteligencia Artificial</p>
+    <div id="cf" style="font-size:.85rem;color:#757575;margin-bottom:28px;"></div>
+    <button onclick="window.print()" style="background:#00897B;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="bn" id="btn-mod2" style="background:#6C3FC4;">🚀 Continuar al Módulo 2 — $7 USD</button>
+    <a href="academia_ia_pagina_ventas.html" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
+  </div>
+</div>
+
+<script>
+var RESP = {"q1": "B", "q2": "C", "q3": "B", "q4": "C", "q5": "B", "q6": "C", "q7": "B", "q8": "B", "q9": "B", "q10": "B"};
+var B64  = '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';
+var MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+var va = 'ninos';
+var certOK = false;
+
+// Personalizar con sessionStorage
+var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
+document.getElementById('nav-nombre').textContent = '👤 ' + nombre;
+document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienvenido/a a tu primer módulo 🎉';
+
+setTimeout(function() {
+  document.getElementById('pf').style.width = '15%';
+  document.getElementById('pl').textContent = 'Progreso: 15% — Elige tu video';
+}, 400);
+
+// Video selector
+document.getElementById('btn-n').addEventListener('click', function() {
+  va='ninos';
+  this.style.background='#6C3FC4'; this.style.color='#fff'; this.style.border='none';
+  var ba=document.getElementById('btn-a');
+  ba.style.background='#fff'; ba.style.color='#6C3FC4'; ba.style.border='2px solid #6C3FC4';
+  document.getElementById('vt').textContent='🧠🤖 IA para Niños — ¿Qué es la IA?';
+  document.getElementById('pb').textContent='▶'; document.getElementById('pb').style.background='#FF0000';
+});
+document.getElementById('btn-a').addEventListener('click', function() {
+  va='adultos';
+  this.style.background='#6C3FC4'; this.style.color='#fff'; this.style.border='none';
+  var bn=document.getElementById('btn-n');
+  bn.style.background='#fff'; bn.style.color='#6C3FC4'; bn.style.border='2px solid #6C3FC4';
+  document.getElementById('vt').textContent='🎬 ¿Qué es la IA? — Video Animado';
+  document.getElementById('pb').textContent='▶'; document.getElementById('pb').style.background='#FF0000';
+});
+
+document.getElementById('pb').addEventListener('click', function() {
+  var urls = {ninos:'https://www.youtube.com/watch?v=UKncFg0PyEk', adultos:'https://www.youtube.com/watch?v=V-cZbZtjpeY'};
+  window.open(urls[va], '_blank');
+  document.getElementById('pf').style.width='30%';
+  document.getElementById('pl').textContent='Progreso: 30% — Video abierto ✓';
+  this.textContent='✓'; this.style.background='#00897B';
+});
+
+// Descarga
+document.getElementById('btn-dl').addEventListener('click', function() {
+  var bytes=atob(B64), arr=new Uint8Array(bytes.length);
+  for(var i=0;i<bytes.length;i++) arr[i]=bytes.charCodeAt(i);
+  var blob=new Blob([arr],{type:MIME});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='Material_Alumno_Modulo1.docx';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(a.href);},200);
+});
+
+// Evaluación
+document.getElementById('btn-eval').addEventListener('click', function() {
+  document.getElementById('ev').style.display='block';
+  this.style.display='none';
+  document.getElementById('pf').style.width='60%';
+  document.getElementById('pl').textContent='Progreso: 60% — Evaluación en curso';
+  document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+document.getElementById('btn-env').addEventListener('click', function() {
+  var ok=true;
+  for(var i=1;i<=10;i++) { if(!document.querySelector('input[name="q'+i+'"]:checked')){ok=false;break;} }
+  if(!ok){document.getElementById('qerr').style.display='block';return;}
+  document.getElementById('qerr').style.display='none';
+  var c=0;
+  for(var i=1;i<=10;i++) {
+    var s=document.querySelector('input[name="q'+i+'"]:checked');
+    var d=document.getElementById('q'+i);
+    var r=RESP['q'+i];
+    d.querySelectorAll('.op').forEach(function(o){
+      var v=o.querySelector('input').value;
+      if(v===r) o.style.background='#C8E6C9';
+      else if(o.querySelector('input').checked) o.style.background='#FFCDD2';
+      o.querySelector('input').disabled=true;
+    });
+    if(s&&s.value===r){c++;d.classList.add('ok');}else{d.classList.add('no');}
+  }
+  var ap=c>=6;
+  var rs=document.getElementById('qres');
+  rs.style.display='block';
+  document.getElementById('btn-env').style.display='none';
+  if(ap){
+    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/10</h3><p style="color:#555;margin-bottom:16px;">Excelente trabajo.</p><button onclick="verCert()" style="background:#00897B;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
+    document.getElementById('pf').style.width='100%';
+    document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo completado! 🎉';
+    certOK=true;
+    document.getElementById('btn-cert').textContent='🏆 Ver';
+    document.getElementById('btn-cert').style.background='#EDE7F6';
+    document.getElementById('btn-cert').style.color='#6C3FC4';
+    document.getElementById('btn-cert').onclick=verCert;
+    document.getElementById('cert-note').textContent='¡Desbloqueado!';
+  }else{
+    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 6. Tuviste '+c+'.</h3><p style="color:#555;margin-bottom:16px;">Revisa el video e intenta de nuevo.</p><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
+  }
+  rs.scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+function reiniciar() {
+  for(var i=1;i<=10;i++) {
+    var d=document.getElementById('q'+i);
+    d.classList.remove('ok','no');
+    d.querySelectorAll('.op').forEach(function(o){o.style.background='';o.querySelector('input').disabled=false;o.querySelector('input').checked=false;});
+  }
+  document.getElementById('qres').style.display='none';
+  document.getElementById('btn-env').style.display='block';
+  document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function verCert() {
+  if(!certOK){alert('Completa la evaluación para desbloquear.');return;}
+  var n=sessionStorage.getItem('alumno_nombre')||'Alumno';
+  var f=new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('cn').textContent=n;
+  document.getElementById('cf').textContent='Fecha de emisión: '+f;
+  document.getElementById('certbox').style.display='block';
+  document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+document.getElementById('btn-mod2').addEventListener('click', function() {
+  sessionStorage.setItem('ir_a','modulo2');
+  window.location='academia_ia_pagina_ventas.html#planes-pago';
+});
+</script>
+</body>
+</html>

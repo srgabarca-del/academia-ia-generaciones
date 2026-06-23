@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Academia IA Generaciones</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;color:#212121;background:#fff}
+nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{color:#fff;font-size:1.1rem;font-weight:700}
+.cta-nav{background:#F57C00;color:#fff;padding:8px 20px;border-radius:24px;font-weight:700;font-size:.9rem;text-decoration:none}
+.hero{background:linear-gradient(135deg,#4527A0,#6C3FC4 50%,#00897B);padding:80px 24px 90px;text-align:center}
+.hero h1{color:#fff;font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.2;margin-bottom:16px}
+.hero h1 span{color:#FFD740}
+.hero p{color:rgba(255,255,255,.9);font-size:1.2rem;max-width:640px;margin:0 auto 32px;line-height:1.6}
+.personas{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+.persona{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:12px;padding:14px 24px;color:#fff}
+.persona span{display:block;font-size:1.6rem;margin-bottom:4px}
+.btn-hero{display:inline-block;background:#FFD740;color:#4527A0;font-size:1.15rem;font-weight:800;padding:18px 42px;border-radius:40px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+section{padding:60px 24px}
+.container{max-width:960px;margin:0 auto}
+.title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;text-align:center;margin-bottom:10px}
+.sub{text-align:center;color:#555;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px}
+.step{text-align:center;padding:20px 12px}
+.circle{width:60px;height:60px;border-radius:50%;background:#EDE7F6;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 12px}
+.free-box{background:#fff;border:3px solid #00897B;border-radius:20px;padding:40px;max-width:700px;margin:0 auto}
+.free-badge{display:inline-block;background:#00897B;color:#fff;padding:6px 18px;border-radius:20px;font-size:.9rem;font-weight:700;margin-bottom:20px}
+.free-inc{list-style:none;margin:20px 0}
+.free-inc li{padding:10px 0;border-bottom:1px solid #E0F2F1;display:flex;align-items:center;gap:12px}
+.free-inc li:last-child{border:none}
+.ico{width:32px;height:32px;background:#00897B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;font-size:.85rem}
+.planes{background:#4527A0;padding:60px 24px}
+.planes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:860px;margin:0 auto}
+.plan-card{background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);border-radius:24px;padding:36px 28px;text-align:center}
+.plan-btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:16px}
+.chip{display:flex;align-items:center;gap:8px;background:#F5F5F5;border:1px solid #E0E0E0;border-radius:24px;padding:10px 20px;font-weight:600}
+.dot{width:10px;height:10px;border-radius:50%;background:#00897B}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.test{background:#fff;border-radius:16px;padding:28px;border-left:4px solid #6C3FC4;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{background:#fff;border-radius:12px;margin-bottom:12px;border:1px solid #E0E0E0;overflow:hidden}
+.faq-q{padding:16px 20px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between}
+.faq-q:hover{background:#EDE7F6}
+.faq-a{padding:0 20px 16px;color:#555;font-size:.95rem;line-height:1.6;display:none}
+.faq-item.open .faq-a{display:block}
+.reg-section{background:linear-gradient(135deg,#4527A0,#6C3FC4 60%,#00897B);padding:72px 24px}
+.reg-card{background:#fff;border-radius:24px;max-width:480px;margin:0 auto;padding:44px 40px;box-shadow:0 24px 64px rgba(0,0,0,.25)}
+label{display:block;font-size:.875rem;font-weight:600;color:#212121;margin-bottom:6px}
+.inp{width:100%;padding:13px 16px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:1rem;font-family:inherit;outline:none;background:#FAFAFA;transition:border-color .2s}
+.inp:focus{border-color:#6C3FC4;background:#fff;box-shadow:0 0 0 3px rgba(108,63,196,.12)}
+.inp.ok{border-color:#43A047}
+.inp.err{border-color:#E53935}
+.msg{font-size:.78rem;margin-top:4px;min-height:16px}
+.msg.ok{color:#2E7D32}.msg.err{color:#E53935}
+.pw{position:relative}
+.pw .inp{padding-right:44px}
+.eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem}
+.sbar{height:4px;border-radius:2px;background:#E0E0E0;margin-top:6px;overflow:hidden}
+.sfill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
+.check-row{display:flex;gap:10px;align-items:flex-start;margin:18px 0 22px}
+.check-row input{margin-top:3px;accent-color:#6C3FC4;width:16px;height:16px;flex-shrink:0;cursor:pointer}
+.btn-reg{width:100%;padding:16px;background:#6C3FC4;color:#fff;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn-reg:hover{background:#4527A0}
+.btn-reg:disabled{background:#BDBDBD;cursor:not-allowed}
+.success{display:none;text-align:center;padding:20px 0}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:20px;padding:36px 32px;max-width:460px;width:100%;position:relative;max-height:90vh;overflow-y:auto;margin:auto}
+.mclose{position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#999}
+.minp{width:100%;padding:12px 14px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:.95rem;font-family:inherit;outline:none;margin-bottom:14px}
+.minp:focus{border-color:#6C3FC4}
+.metodo-row{display:flex;gap:8px;margin-bottom:14px}
+.met{flex:1;border:1.5px solid #E0E0E0;border-radius:10px;padding:10px;cursor:pointer;text-align:center;font-size:.88rem;font-weight:600;transition:all .15s}
+.met.sel{border-color:#6C3FC4;background:#EDE7F6}
+.btn-pay{width:100%;padding:15px;background:#6C3FC4;color:#fff;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer}
+.merr{display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:10px 14px;font-size:.85rem;margin-bottom:12px}
+footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255,255,.6);font-size:.875rem}
+@media(max-width:600px){.reg-card{padding:28px 20px}.free-box{padding:24px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">🤖 Academia IA Generaciones</div>
+  <a href="#registro" class="cta-nav">Crear cuenta gratis &rarr;</a>
+</nav>
+
+<section class="hero">
+  <div style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;padding:6px 18px;border-radius:20px;font-size:.85rem;margin-bottom:20px;">🎉 Módulo 1 — 100% GRATIS · Sin tarjeta</div>
+  <h1>Aprende <span>Inteligencia Artificial</span><br>sin saber nada de tecnología</h1>
+  <p>El curso diseñado para niños de 7–14 años y adultos mayores de 60.</p>
+  <div class="personas">
+    <div class="persona"><span>👦</span>Niños 7–14 años</div>
+    <div class="persona"><span>👴</span>Adultos mayores 60+</div>
+    <div class="persona"><span>👨‍👩‍👧</span>En familia</div>
+  </div>
+  <a href="#registro" class="btn-hero">🎁 Comenzar GRATIS ahora</a>
+  <p style="color:rgba(255,255,255,.7);margin-top:12px;font-size:.9rem;">✅ Sin conocimientos previos &nbsp;·&nbsp; ✅ En español &nbsp;·&nbsp; ✅ Herramientas gratuitas</p>
+</section>
+
+<section>
+  <div class="container">
+    <h2 class="title">¿Cómo funciona?</h2>
+    <div class="steps">
+      <div class="step"><div class="circle">📱</div><h4>1. Regístrate</h4><p style="font-size:.88rem;color:#555;">Solo nombre y email.</p></div>
+      <div class="step"><div class="circle">🎬</div><h4>2. Ve el video</h4><p style="font-size:.88rem;color:#555;">45–60 min en español.</p></div>
+      <div class="step"><div class="circle">✏️</div><h4>3. Practica</h4><p style="font-size:.88rem;color:#555;">Actividades reales.</p></div>
+      <div class="step"><div class="circle">🏆</div><h4>4. Certifícate</h4><p style="font-size:.88rem;color:#555;">Descarga tu certificado.</p></div>
+      <div class="step"><div class="circle">🚀</div><h4>5. Continúa</h4><p style="font-size:.88rem;color:#555;">Desbloquea más módulos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#E0F2F1;" id="gratis">
+  <div class="container">
+    <h2 class="title">Módulo 1 — ¡Completamente Gratis!</h2>
+    <p class="sub">Descubriendo la Inteligencia Artificial</p>
+    <div class="free-box">
+      <div class="free-badge">🆓 ACCESO GRATUITO</div>
+      <h3 style="font-size:1.5rem;color:#00897B;margin-bottom:10px;">Descubriendo la Inteligencia Artificial</h3>
+      <ul class="free-inc">
+        <li><div class="ico">🎬</div><span><strong>Video en español</strong> con Luna (10 años) y Don Roberto (72 años)</span></li>
+        <li><div class="ico">📄</div><span><strong>PDF descargable</strong> con conceptos y actividades</span></li>
+        <li><div class="ico">✏️</div><span><strong>Actividades prácticas</strong> para niños y adultos mayores</span></li>
+        <li><div class="ico">📝</div><span><strong>Evaluación de 10 preguntas</strong> con calificación automática</span></li>
+        <li><div class="ico">🏆</div><span><strong>Certificado de participación</strong> descargable</span></li>
+      </ul>
+      <button onclick="window.location='#registro'" style="display:block;background:#00897B;color:#fff;padding:18px;border-radius:12px;font-size:1.1rem;font-weight:700;border:none;cursor:pointer;width:100%;margin-top:16px;">🎁 Acceder al Módulo Gratis</button>
+    </div>
+  </div>
+</section>
+
+<section class="planes" id="planes-pago">
+  <div class="container">
+    <h2 class="title" style="color:#fff;">Continúa tu aprendizaje</h2>
+    <p class="sub" style="color:rgba(255,255,255,.75);">Elige la opción que mejor se adapte a ti.</p>
+    <div class="planes-grid">
+      <div class="plan-card">
+        <div style="display:inline-block;background:#00897B;color:#fff;font-size:.8rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">💬 MÓDULO 2</div>
+        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$7 <span style="font-size:1rem;color:rgba(255,255,255,.7);">USD</span></div>
+        <p style="color:rgba(255,255,255,.8);font-size:.9rem;margin:10px 0 18px;">Conversando con una IA — Pago único</p>
+        <ul style="list-style:none;text-align:left;margin-bottom:20px;">
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Qué es un prompt y cómo usarlo</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Técnicas para mejores respuestas</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Crear una historia con IA</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 2</li>
+        </ul>
+        <button class="plan-btn" onclick="abrirPago('modulo2')" style="background:#00897B;color:#fff;">💳 Comprar Módulo 2 — $7 USD</button>
+      </div>
+
+      <div class="plan-card" style="border-color:#E91E63;">
+        <div style="display:inline-block;background:#E91E63;color:#fff;font-size:.8rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">🎨 MÓDULO 3</div>
+        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1rem;color:rgba(255,255,255,.7);">USD</span></div>
+        <p style="color:rgba(255,255,255,.8);font-size:.9rem;margin:10px 0 18px;">Creando Imágenes con IA</p>
+        <ul style="list-style:none;text-align:left;margin-bottom:20px;">
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Prompts visuales efectivos</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Canva IA y Gemini gratuitos</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Héroe fantástico / recuerdo familiar</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 3</li>
+        </ul>
+        <button class="plan-btn" onclick="abrirPago('modulo3')" style="background:#E91E63;color:#fff;">💳 Comprar Módulo 3 — $9 USD</button>
+      </div>
+
+      <div class="plan-card" style="border-color:#1976D2;">
+        <div style="display:inline-block;background:#1976D2;color:#fff;font-size:.8rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">📅 MÓDULO 4</div>
+        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1rem;color:rgba(255,255,255,.7);">USD</span></div>
+        <p style="color:rgba(255,255,255,.8);font-size:.9rem;margin:10px 0 18px;">IA para la Vida Diaria</p>
+        <ul style="list-style:none;text-align:left;margin-bottom:20px;">
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Ayuda escolar y organización</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Mensajes, viajes y más</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Práctica con casos reales</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 4</li>
+        </ul>
+        <button class="plan-btn" onclick="abrirPago('modulo4')" style="background:#1976D2;color:#fff;">💳 Comprar Módulo 4 — $9 USD</button>
+      </div>
+
+      <div class="plan-card" style="border-color:#7B1FA2;">
+        <div style="display:inline-block;background:#7B1FA2;color:#fff;font-size:.8rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">✨ MÓDULO 5</div>
+        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1rem;color:rgba(255,255,255,.7);">USD</span></div>
+        <p style="color:rgba(255,255,255,.8);font-size:.9rem;margin:10px 0 18px;">IA para la Creatividad</p>
+        <ul style="list-style:none;text-align:left;margin-bottom:20px;">
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Cuentos y tarjetas con IA</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Presentaciones y proyectos</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Proyecto familiar creativo</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 5</li>
+        </ul>
+        <button class="plan-btn" onclick="abrirPago('modulo5')" style="background:#7B1FA2;color:#fff;">💳 Comprar Módulo 5 — $9 USD</button>
+      </div>
+
+      <div class="plan-card" style="border-color:#2E7D32;">
+        <div style="display:inline-block;background:#2E7D32;color:#fff;font-size:.8rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">🔒 MÓDULO 6</div>
+        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1rem;color:rgba(255,255,255,.7);">USD</span></div>
+        <p style="color:rgba(255,255,255,.8);font-size:.9rem;margin:10px 0 18px;">Seguridad y Uso Responsable</p>
+        <ul style="list-style:none;text-align:left;margin-bottom:20px;">
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Privacidad y datos personales</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Detectar fraudes y noticias falsas</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Buenas prácticas digitales</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado de Graduación 🎓</li>
+        </ul>
+        <button class="plan-btn" onclick="abrirPago('modulo6')" style="background:#2E7D32;color:#fff;">💳 Comprar Módulo 6 — $9 USD</button>
+      </div>
+
+      <div class="plan-card" style="border-color:#FFD740;position:relative;">
+        <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#FFD740;color:#4527A0;font-size:.8rem;font-weight:800;padding:4px 16px;border-radius:20px;white-space:nowrap;">⭐ MEJOR VALOR</div>
+        <div style="display:inline-block;background:#6C3FC4;color:#fff;font-size:.8rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;margin-top:6px;">PLAN COMPLETO</div>
+        <div style="font-size:2.8rem;font-weight:900;color:#FFD740;line-height:1;">$4.99 <span style="font-size:1rem;color:rgba(255,255,255,.7);">USD/mes</span></div>
+        <p style="color:rgba(255,255,255,.8);font-size:.9rem;margin:10px 0 18px;">Todos los módulos incluidos</p>
+        <ul style="list-style:none;text-align:left;margin-bottom:20px;">
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Los 6 módulos completos</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Nuevas lecciones cada mes</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Comunidad + todos los certificados</li>
+          <li style="color:rgba(255,255,255,.9);font-size:.88rem;padding:6px 0;display:flex;gap:8px;">✓ Cancela cuando quieras</li>
+        </ul>
+        <button class="plan-btn" onclick="abrirPago('suscripcion')" style="background:#FFD740;color:#4527A0;">⭐ Suscribirme — $4.99/mes</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2 class="title">Solo herramientas 100% gratuitas</h2>
+    <p class="sub">No necesitas comprar nada extra.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+      <div class="chip"><div class="dot"></div>ChatGPT (gratis)</div>
+      <div class="chip"><div class="dot"></div>Google Gemini</div>
+      <div class="chip"><div class="dot"></div>Microsoft Copilot</div>
+      <div class="chip"><div class="dot"></div>Canva (gratis)</div>
+      <div class="chip"><div class="dot"></div>Google Docs</div>
+      <div class="chip"><div class="dot"></div>YouTube</div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#F8F9FA;">
+  <div class="container">
+    <h2 class="title">Lo que dicen nuestros alumnos</h2>
+    <div class="test-grid" style="margin-top:32px;">
+      <div class="test"><div style="color:#FFD740;margin-bottom:10px;">⭐⭐⭐⭐⭐</div><p style="font-style:italic;color:#555;line-height:1.6;margin-bottom:14px;">"¡Nunca imaginé que podía usar la IA! Ahora ChatGPT me ayuda con mis recetas."</p><div style="display:flex;align-items:center;gap:10px;"><div style="width:40px;height:40px;border-radius:50%;background:#FFF3E0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">👴</div><div><strong>Don Manuel R.</strong><br><span style="font-size:.82rem;color:#555;">73 años · Guadalajara</span></div></div></div>
+      <div class="test"><div style="color:#FFD740;margin-bottom:10px;">⭐⭐⭐⭐⭐</div><p style="font-style:italic;color:#555;line-height:1.6;margin-bottom:14px;">"Mi hijo de 9 años terminó el módulo gratis en un día. Ahora aprendemos juntos."</p><div style="display:flex;align-items:center;gap:10px;"><div style="width:40px;height:40px;border-radius:50%;background:#E0F2F1;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">👩</div><div><strong>Patricia M.</strong><br><span style="font-size:.82rem;color:#555;">Mamá de alumno · CDMX</span></div></div></div>
+      <div class="test"><div style="color:#FFD740;margin-bottom:10px;">⭐⭐⭐⭐⭐</div><p style="font-style:italic;color:#555;line-height:1.6;margin-bottom:14px;">"Lo recomendé a 20 alumnos. El certificado los motivó muchísimo."</p><div style="display:flex;align-items:center;gap:10px;"><div style="width:40px;height:40px;border-radius:50%;background:#EDE7F6;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">👩‍🏫</div><div><strong>Profa. Elena V.</strong><br><span style="font-size:.82rem;color:#555;">Docente · Monterrey</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#F8F9FA;">
+  <div class="container">
+    <h2 class="title">Preguntas frecuentes</h2>
+    <div class="faq-list" style="margin-top:32px;">
+      <div class="faq-item"><div class="faq-q">¿Necesito saber de tecnología? <span>▼</span></div><div class="faq-a">No. Si puedes usar WhatsApp o YouTube, puedes tomar este curso.</div></div>
+      <div class="faq-item"><div class="faq-q">¿El módulo 1 es realmente gratis? <span>▼</span></div><div class="faq-a">Sí, 100% gratis. Sin tarjeta de crédito ni límite de tiempo.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Puedo cancelar la suscripción? <span>▼</span></div><div class="faq-a">Sí, cuando quieras. Garantía de 7 días.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Funciona en España y Latinoamérica? <span>▼</span></div><div class="faq-a">Sí. Todo en español neutro con ejemplos de la región.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="reg-section" id="registro">
+  <p style="text-align:center;color:rgba(255,255,255,.7);font-size:.85rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;">Crea tu cuenta gratuita</p>
+  <h2 style="text-align:center;color:#fff;font-size:clamp(1.6rem,3vw,2rem);font-weight:800;margin-bottom:8px;">Empieza a aprender ahora</h2>
+  <p style="text-align:center;color:rgba(255,255,255,.75);margin-bottom:32px;">El Módulo 1 es completamente gratis.</p>
+  <div class="reg-card">
+    <!-- FORMULARIO -->
+    <div id="frm">
+      <div style="text-align:center;font-size:2.4rem;margin-bottom:8px;">🤖</div>
+      <h2 style="text-align:center;font-size:1.4rem;font-weight:800;margin-bottom:6px;">Crear cuenta gratis</h2>
+      <p style="text-align:center;color:#555;font-size:.9rem;margin-bottom:24px;">Sin tarjeta de crédito.</p>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;">
+        <span style="background:#EDE7F6;color:#6C3FC4;font-size:.78rem;font-weight:600;padding:4px 12px;border-radius:20px;">🎬 Video 60 min</span>
+        <span style="background:#EDE7F6;color:#6C3FC4;font-size:.78rem;font-weight:600;padding:4px 12px;border-radius:20px;">📄 PDF</span>
+        <span style="background:#EDE7F6;color:#6C3FC4;font-size:.78rem;font-weight:600;padding:4px 12px;border-radius:20px;">🏆 Certificado</span>
+      </div>
+      <div style="background:#E8F5E9;color:#2E7D32;font-size:.8rem;font-weight:700;padding:6px;border-radius:20px;text-align:center;margin-bottom:24px;">✅ Módulo 1 — 100% GRATIS</div>
+
+      <div style="margin-bottom:16px;">
+        <label for="f-nombre">Nombre completo <span style="color:#E53935;">*</span></label>
+        <input class="inp" type="text" id="f-nombre" placeholder="Ej. María González">
+        <div class="msg" id="m-nombre"></div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <label for="f-email">Correo electrónico <span style="color:#E53935;">*</span></label>
+        <input class="inp" type="email" id="f-email" placeholder="tucorreo@ejemplo.com">
+        <div class="msg" id="m-email"></div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <label for="f-pass">Contraseña <span style="color:#E53935;">*</span> <span style="font-weight:400;color:#555;">(mín. 6 caracteres)</span></label>
+        <div class="pw">
+          <input class="inp" type="password" id="f-pass" placeholder="Mínimo 6 caracteres" maxlength="64">
+          <button class="eye" type="button" id="eye1">👁</button>
+        </div>
+        <div class="sbar"><div class="sfill" id="sfill"></div></div>
+        <div style="font-size:.75rem;color:#555;margin-top:4px;" id="slbl"></div>
+        <div class="msg" id="m-pass"></div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <label for="f-pass2">Confirmar contraseña <span style="color:#E53935;">*</span></label>
+        <div class="pw">
+          <input class="inp" type="password" id="f-pass2" placeholder="Repite tu contraseña" maxlength="64">
+          <button class="eye" type="button" id="eye2">👁</button>
+        </div>
+        <div class="msg" id="m-pass2"></div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <label for="f-tipo">Soy... <span style="color:#E53935;">*</span></label>
+        <select class="inp" id="f-tipo">
+          <option value="">Selecciona una opción</option>
+          <option value="nino">👦 Niño/a (7–14 años)</option>
+          <option value="mayor">👴 Adulto mayor (60+ años)</option>
+          <option value="adulto">👨‍💼 Adulto (15–59 años)</option>
+          <option value="padre">👨‍👩‍👧 Padre / Madre / Tutor</option>
+          <option value="docente">👩‍🏫 Docente / Educador</option>
+        </select>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="f-terms">
+        <label for="f-terms" style="font-size:.85rem;color:#555;line-height:1.5;font-weight:400;">Acepto los <a href="#" style="color:#6C3FC4;">Términos</a> y la <a href="#" style="color:#6C3FC4;">Política de Privacidad</a>.</label>
+      </div>
+      <button class="btn-reg" id="btn-reg" type="button">🎁 Crear cuenta y acceder gratis</button>
+      <p style="text-align:center;margin-top:14px;font-size:.88rem;color:#555;">¿Ya tienes cuenta? <a href="login.html" style="color:#6C3FC4;">Inicia sesión</a></p>
+    </div>
+    <!-- ÉXITO -->
+    <div class="success" id="exito">
+      <div style="font-size:4rem;margin-bottom:14px;">✅</div>
+      <h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:10px;">¡Cuenta creada!</h3>
+      <p style="color:#555;margin-bottom:20px;">Bienvenido/a, <strong id="exito-nombre"></strong>.</p>
+      <a id="btn-mod1" href="modulo1.html" style="display:block;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;text-align:center;text-decoration:none;">🎬 Ir al Módulo 1 ahora</a>
+    </div>
+  </div>
+  <p style="text-align:center;color:rgba(255,255,255,.55);font-size:.82rem;margin-top:20px;">🔒 Sin spam · Sin tarjeta · Datos protegidos</p>
+</section>
+
+<footer>
+  <p>© 2025 Academia IA Generaciones · Todos los derechos reservados</p>
+</footer>
+
+<!-- MODAL PAGO -->
+<div class="modal-overlay" id="mpago">
+  <div class="modal-box">
+    <button class="mclose" id="mcerrar">✕</button>
+    <div id="phdr" style="text-align:center;margin-bottom:4px;"></div>
+    <div style="height:1px;background:#E0E0E0;margin:14px 0;"></div>
+    <label>Nombre completo *</label>
+    <input class="minp" type="text" id="p-nombre" placeholder="Como aparecerá en tu recibo">
+    <label>Correo electrónico *</label>
+    <input class="minp" type="email" id="p-email" placeholder="Para enviarte el acceso">
+    <label style="margin-bottom:8px;">Método de pago *</label>
+    <div class="metodo-row">
+      <div class="met" id="lbl-t" onclick="selMet('t')">💳 Tarjeta</div>
+      <div class="met" id="lbl-p" onclick="selMet('p')">🅿️ PayPal</div>
+    </div>
+    <div id="det-t" style="display:none;margin-bottom:14px;">
+      <input type="text" class="minp" id="num-t" placeholder="1234 5678 9012 3456" maxlength="19" style="margin-bottom:8px;">
+      <div style="display:flex;gap:8px;">
+        <input type="text" class="minp" placeholder="MM/AA" maxlength="5" style="flex:1;margin-bottom:0;">
+        <input type="text" class="minp" placeholder="CVV" maxlength="4" style="flex:1;margin-bottom:0;">
+      </div>
+    </div>
+    <div id="det-p" style="display:none;background:#EDF5FF;border-radius:10px;padding:14px;font-size:.88rem;color:#1565C0;margin-bottom:14px;">
+      📧 Serás redirigido a PayPal para completar el pago.
+    </div>
+    <div class="merr" id="perr">⚠️ Completa todos los campos requeridos.</div>
+    <button class="btn-pay" id="btn-pay">🔒 Confirmar pago</button>
+    <p style="text-align:center;font-size:.75rem;color:#9E9E9E;margin-top:10px;">🔒 Pago seguro · Garantía 7 días</p>
+  </div>
+</div>
+
+<!-- MODAL CONFIRMACIÓN -->
+<div class="modal-overlay" id="mconf">
+  <div class="modal-box" style="max-width:500px;text-align:center;">
+    <div style="font-size:3rem;margin-bottom:12px;">✅</div>
+    <h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Pago recibido!</h3>
+    <p id="cmsg" style="color:#555;font-size:.9rem;line-height:1.6;margin-bottom:20px;"></p>
+    <div style="background:#F5F3FF;border:2px solid #6C3FC4;border-radius:14px;padding:20px;margin-bottom:20px;text-align:left;">
+      <p style="font-size:.8rem;font-weight:700;color:#6C3FC4;text-transform:uppercase;margin-bottom:12px;">🔑 Tus credenciales</p>
+      <div style="margin-bottom:8px;"><span style="font-size:.8rem;color:#757575;display:block;">Correo</span><span id="c-email" style="font-size:.95rem;font-weight:700;"></span></div>
+      <div style="margin-bottom:8px;"><span style="font-size:.8rem;color:#757575;display:block;">Contraseña temporal</span><span id="c-pass" style="font-size:1rem;font-weight:800;color:#6C3FC4;font-family:monospace;letter-spacing:.1em;"></span></div>
+      <div><span style="font-size:.8rem;color:#757575;display:block;">Módulo desbloqueado</span><span id="c-mod" style="font-size:.95rem;font-weight:700;color:#00897B;"></span></div>
+      <div style="background:#FFF8E1;border-radius:8px;padding:10px;margin-top:12px;font-size:.78rem;color:#F57C00;">⚠️ Cambia tu contraseña al iniciar sesión.</div>
+    </div>
+    <a id="btn-login-conf" href="login.html" style="display:block;background:#6C3FC4;color:#fff;padding:14px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Iniciar sesión y entrar al módulo</a>
+    <button onclick="document.getElementById('mconf').classList.remove('open')" style="width:100%;padding:12px;background:#E0E0E0;color:#555;border:none;border-radius:12px;cursor:pointer;font-size:.9rem;font-weight:600;">📋 Guardar y cerrar</button>
+  </div>
+</div>
+
+<script>
+// ── FAQ
+document.querySelectorAll('.faq-q').forEach(function(q) {
+  q.addEventListener('click', function() { q.parentElement.classList.toggle('open'); });
+});
+
+// ── REGISTRO
+var campos = ['f-nombre','f-email','f-pass','f-pass2','f-tipo','f-terms'];
+
+function actualizar() {
+  var n = document.getElementById('f-nombre').value.trim();
+  var e = document.getElementById('f-email').value.trim();
+  var p = document.getElementById('f-pass').value;
+  var p2 = document.getElementById('f-pass2').value;
+  var t = document.getElementById('f-tipo').value;
+  var ck = document.getElementById('f-terms').checked;
+
+  // Nombre
+  setMsg('f-nombre','m-nombre', n.length>=2, n.length>=2?'✓ Nombre válido':n?'Mínimo 2 caracteres':'');
+  // Email
+  var eok = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
+  setMsg('f-email','m-email', eok, eok?'✓ Correo válido':e?'Correo no válido':'');
+  // Pass
+  if (p.length > 0) {
+    var s=0; if(p.length>=8)s++; if(/[A-Z]/.test(p))s++; if(/[0-9]/.test(p))s++; if(/[^A-Za-z0-9]/.test(p))s++;
+    var lvls=[{w:'25%',bg:'#E53935',t:'Muy corta'},{w:'40%',bg:'#FF7043',t:'Débil'},{w:'65%',bg:'#FFA726',t:'Regular'},{w:'85%',bg:'#66BB6A',t:'Buena'},{w:'100%',bg:'#2E7D32',t:'¡Excelente!'}];
+    var idx = p.length<6 ? 0 : Math.min(s+1,4);
+    var l=lvls[idx];
+    document.getElementById('sfill').style.width=l.w;
+    document.getElementById('sfill').style.background=l.bg;
+    document.getElementById('slbl').textContent='Seguridad: '+l.t;
+    setMsg('f-pass','m-pass', p.length>=6, p.length>=6?'✓ Contraseña aceptada':'Mínimo 6 caracteres');
+  } else {
+    document.getElementById('sfill').style.width='0';
+    document.getElementById('slbl').textContent='';
+    setMsg('f-pass','m-pass',false,'');
+  }
+  // Pass2
+  if (p2.length > 0) {
+    setMsg('f-pass2','m-pass2', p2===p, p2===p?'✓ Coinciden':'No coinciden');
+  } else {
+    setMsg('f-pass2','m-pass2',false,'');
+  }
+
+  var ok = n.length>=2 && eok && p.length>=6 && p2===p && t!=='' && ck;
+  var btn = document.getElementById('btn-reg');
+  btn.disabled = !ok;
+  btn.style.background = ok ? '#6C3FC4' : '#BDBDBD';
+  btn.style.cursor = ok ? 'pointer' : 'not-allowed';
+}
+
+function setMsg(inputId, msgId, ok, msg) {
+  var el = document.getElementById(inputId);
+  el.classList.toggle('ok', ok && msg!=='');
+  el.classList.toggle('err', !ok && msg!=='');
+  var m = document.getElementById(msgId);
+  m.textContent = msg;
+  m.className = 'msg ' + (ok?'ok':msg?'err':'');
+}
+
+// Attach listeners
+['f-nombre','f-email','f-pass','f-pass2'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input', actualizar);
+});
+document.getElementById('f-tipo').addEventListener('change', actualizar);
+document.getElementById('f-terms').addEventListener('change', actualizar);
+
+// Toggle passwords
+document.getElementById('eye1').addEventListener('click', function() {
+  var i=document.getElementById('f-pass');
+  i.type=i.type==='password'?'text':'password';
+  this.textContent=i.type==='password'?'👁':'🙈';
+});
+document.getElementById('eye2').addEventListener('click', function() {
+  var i=document.getElementById('f-pass2');
+  i.type=i.type==='password'?'text':'password';
+  this.textContent=i.type==='password'?'👁':'🙈';
+});
+
+// Submit
+document.getElementById('btn-reg').addEventListener('click', function() {
+  actualizar();
+  if (this.disabled) return;
+  var nombre = document.getElementById('f-nombre').value.trim().split(' ')[0];
+  var email  = document.getElementById('f-email').value.trim();
+  var pass   = document.getElementById('f-pass').value;
+  this.disabled=true; this.textContent='⏳ Creando tu cuenta...';
+  sessionStorage.setItem('alumno_nombre', nombre);
+  sessionStorage.setItem('alumno_email',  email);
+  sessionStorage.setItem('alumno_pass',   pass);
+  setTimeout(function() {
+    document.getElementById('frm').style.display='none';
+    document.getElementById('exito-nombre').textContent=nombre;
+    document.getElementById('exito').style.display='block';
+  }, 1400);
+});
+
+// ── PAGO
+var pagoActual='', metSel='';
+var INFO={
+  modulo2:    {titulo:'💬 Módulo 2',    precio:'$7 USD',      color:'#00897B', mod:'Módulo 2: Conversando con una IA',    archivo:'modulo2.html'},
+  modulo3:    {titulo:'🎨 Módulo 3',    precio:'$9 USD',      color:'#E91E63', mod:'Módulo 3: Creando Imágenes con IA',   archivo:'modulo3.html'},
+  modulo4:    {titulo:'📅 Módulo 4',    precio:'$9 USD',      color:'#1976D2', mod:'Módulo 4: IA para la Vida Diaria',   archivo:'modulo4.html'},
+  modulo5:    {titulo:'✨ Módulo 5',    precio:'$9 USD',      color:'#7B1FA2', mod:'Módulo 5: IA para la Creatividad',   archivo:'modulo5.html'},
+  modulo6:    {titulo:'🔒 Módulo 6',    precio:'$9 USD',      color:'#2E7D32', mod:'Módulo 6: Seguridad y Uso Responsable', archivo:'modulo6.html'},
+  suscripcion:{titulo:'⭐ Plan Mensual', precio:'$4.99 USD/mes',color:'#6C3FC4', mod:'Plan Mensual — Módulos 2 al 6',    archivo:'modulo2.html'}
+};
+function abrirPago(tipo) {
+  pagoActual=tipo; metSel='';
+  var info=INFO[tipo];
+  document.getElementById('phdr').innerHTML=
+    '<span style="background:'+info.color+';color:#fff;font-size:.8rem;font-weight:700;padding:4px 14px;border-radius:20px;">'+info.titulo+'</span>'
+    +'<div style="font-size:2rem;font-weight:900;color:'+info.color+';margin-top:8px;">'+info.precio+'</div>';
+  document.getElementById('p-nombre').value='';
+  document.getElementById('p-email').value='';
+  document.getElementById('perr').style.display='none';
+  document.getElementById('det-t').style.display='none';
+  document.getElementById('det-p').style.display='none';
+  document.getElementById('lbl-t').classList.remove('sel');
+  document.getElementById('lbl-p').classList.remove('sel');
+  document.getElementById('btn-pay').textContent='🔒 Confirmar pago — '+info.precio;
+  document.getElementById('btn-pay').disabled=false;
+  document.getElementById('mpago').classList.add('open');
+}
+document.getElementById('mcerrar').addEventListener('click', function() {
+  document.getElementById('mpago').classList.remove('open');
+});
+function selMet(m) {
+  metSel=m;
+  document.getElementById('det-t').style.display=m==='t'?'block':'none';
+  document.getElementById('det-p').style.display=m==='p'?'block':'none';
+  document.getElementById('lbl-t').classList.toggle('sel',m==='t');
+  document.getElementById('lbl-p').classList.toggle('sel',m==='p');
+}
+document.getElementById('num-t').addEventListener('input', function() {
+  var v=this.value.replace(/\D/g,'').substring(0,16);
+  this.value=v.replace(/(.{4})/g,'$1 ').trim();
+});
+function genPass() {
+  var c='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789@#!',p='';
+  for(var i=0;i<8;i++) p+=c[Math.floor(Math.random()*c.length)];
+  return p;
+}
+document.getElementById('btn-pay').addEventListener('click', function() {
+  var nom=document.getElementById('p-nombre').value.trim();
+  var eml=document.getElementById('p-email').value.trim();
+  var eok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(eml);
+  if(!nom||!eml||!eok||!metSel) { document.getElementById('perr').style.display='block'; return; }
+  document.getElementById('perr').style.display='none';
+  this.textContent='⏳ Procesando...'; this.disabled=true;
+  var pt=genPass();
+  var info=INFO[pagoActual];
+  setTimeout(function() {
+    sessionStorage.setItem('pago_email',  eml);
+    sessionStorage.setItem('pago_pass',   pt);
+    sessionStorage.setItem('pago_archivo', info.archivo);
+    // Guardar acceso al módulo comprado
+    if (pagoActual === 'suscripcion') {
+      sessionStorage.setItem('acceso_plan', '1');
+    } else {
+      sessionStorage.setItem('acceso_' + pagoActual, '1');
+    }
+    sessionStorage.setItem('alumno_nombre', nom.split(' ')[0]);
+    document.getElementById('c-email').textContent=eml;
+    document.getElementById('c-pass').textContent=pt;
+    document.getElementById('c-mod').textContent=info.mod;
+    document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
+    document.getElementById('mpago').classList.remove('open');
+    document.getElementById('mconf').classList.add('open');
+    document.getElementById('btn-pay').textContent='🔒 Confirmar pago';
+    document.getElementById('btn-pay').disabled=false;
+  }, 1800);
+});
+
+// Auto-scroll si regresa del módulo
+window.addEventListener('load', function() {
+  var dest = sessionStorage.getItem('ir_a');
+  if (dest) {
+    sessionStorage.removeItem('ir_a');
+    setTimeout(function() {
+      var s = document.getElementById('planes-pago');
+      if (s) s.scrollIntoView({behavior:'smooth', block:'start'});
+      // Abrir directamente el formulario de pago del módulo correspondiente
+      setTimeout(function() {
+        if (INFO[dest]) abrirPago(dest);
+      }, 700);
+    }, 400);
+  }
+});
+</script>
+</body>
+</html>
