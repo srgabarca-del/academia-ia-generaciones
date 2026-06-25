@@ -37,6 +37,34 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 .saved-badge{display:none;background:#E8F5E9;color:#2E7D32;font-size:.78rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:8px;text-align:center;}
 </style>
 <style>.op input{accent-color:#C2185B;}</style>
+
+
+<script>
+  if (!firebase.apps.length) {
+    firebase.initializeApp({
+      apiKey: "AIzaSyDQO9lwBLmNAJWpW5klap9ngdcqs-CrcXw",
+      authDomain: "academia-ia-eba0b.firebaseapp.com",
+      projectId: "academia-ia-eba0b",
+      storageBucket: "academia-ia-eba0b.firebasestorage.app",
+      messagingSenderId: "285240187661",
+      appId: "1:285240187661:web:42ae229487b88237fcee44"
+    });
+  }
+  var auth = firebase.auth();
+  auth.onAuthStateChanged(function(user) {
+    if (user) {
+      sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
+      sessionStorage.setItem('alumno_email', user.email);
+      sessionStorage.setItem('firebase_uid', user.uid);
+      // Update nav name
+      var nav = document.getElementById('nav-n');
+      if (nav) {
+        var mod = nav.textContent.split('|')[1] || '';
+        nav.textContent = '👤 ' + (user.displayName || user.email.split('@')[0]) + ' |' + mod;
+      }
+    }
+  });
+</script>
 </head>
 <body>
 <nav>
@@ -136,6 +164,33 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+  if (!firebase.apps.length) {
+    firebase.initializeApp({
+      apiKey: "AIzaSyDQO9lwBLmNAJWpW5klap9ngdcqs-CrcXw",
+      authDomain: "academia-ia-eba0b.firebaseapp.com",
+      projectId: "academia-ia-eba0b",
+      storageBucket: "academia-ia-eba0b.firebasestorage.app",
+      messagingSenderId: "285240187661",
+      appId: "1:285240187661:web:42ae229487b88237fcee44"
+    });
+  }
+  var auth = firebase.auth();
+  auth.onAuthStateChanged(function(user) {
+    if (user) {
+      sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
+      sessionStorage.setItem('alumno_email', user.email);
+      sessionStorage.setItem('firebase_uid', user.uid);
+      var nav = document.getElementById('nav-n');
+      if (nav) {
+        var parts = nav.textContent.split('|');
+        nav.textContent = '👤 ' + (user.displayName || user.email.split('@')[0]) + (parts[1] ? ' |' + parts[1] : '');
+      }
+    }
+  });
+</script>
 <script>
 
 // ── DESCARGA MATERIAL ─────────────────────────────────────────────────────────
