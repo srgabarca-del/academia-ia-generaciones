@@ -52,15 +52,6 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
   }
   window.fbAuth = firebase.auth();
 
-// ── LISTA VIP ────────────────────────────────────────────────────────────────
-var VIP_EMAILS = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
-window.fbAuth.onAuthStateChanged(function(user) {
-  if (user && VIP_EMAILS.indexOf(user.email.toLowerCase()) !== -1) {
-    sessionStorage.setItem('acceso_plan', '1');
-    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
-  }
-});
-// ─────────────────────────────────────────────────────────────────────────────
   window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
@@ -196,15 +187,6 @@ window.fbAuth.onAuthStateChanged(function(user) {
   }
   window.fbAuth = firebase.auth();
 
-// ── LISTA VIP ────────────────────────────────────────────────────────────────
-var VIP_EMAILS = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
-window.fbAuth.onAuthStateChanged(function(user) {
-  if (user && VIP_EMAILS.indexOf(user.email.toLowerCase()) !== -1) {
-    sessionStorage.setItem('acceso_plan', '1');
-    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
-  }
-});
-// ─────────────────────────────────────────────────────────────────────────────
   window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
@@ -235,10 +217,31 @@ function descargarMaterial() {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
-(function() {
-  var ok = sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo6');
-  if (!ok) { window.location = 'academia_ia_pagina_ventas.html#planes-pago'; }
-})();
+var VIP_LIST = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
+var accesoVerificado = false;
+function verificarAcceso(email) {
+  if (email && VIP_LIST.indexOf(email.toLowerCase()) !== -1) {
+    sessionStorage.setItem('acceso_plan', '1');
+    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+    return true;
+  }
+  return sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo6');
+}
+window.fbAuth.onAuthStateChanged(function(user) {
+  if (accesoVerificado) return;
+  accesoVerificado = true;
+  if (!verificarAcceso(user ? user.email : null)) {
+    window.location = 'academia_ia_pagina_ventas.html#planes-pago';
+  }
+});
+setTimeout(function() {
+  if (!accesoVerificado) {
+    accesoVerificado = true;
+    if (!sessionStorage.getItem('acceso_plan') && !sessionStorage.getItem('acceso_modulo6')) {
+      window.location = 'academia_ia_pagina_ventas.html#planes-pago';
+    }
+  }
+}, 3000);
 
 var RESP = {q1:"B",q2:"D",q3:"A",q4:"C",q5:"B",q6:"D",q7:"A"};
 var N_Q = 7; var MIN_OK = 5;

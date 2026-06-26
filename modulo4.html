@@ -52,15 +52,6 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
   }
   window.fbAuth = firebase.auth();
 
-// ── LISTA VIP ────────────────────────────────────────────────────────────────
-var VIP_EMAILS = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
-window.fbAuth.onAuthStateChanged(function(user) {
-  if (user && VIP_EMAILS.indexOf(user.email.toLowerCase()) !== -1) {
-    sessionStorage.setItem('acceso_plan', '1');
-    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
-  }
-});
-// ─────────────────────────────────────────────────────────────────────────────
   window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
@@ -190,15 +181,6 @@ window.fbAuth.onAuthStateChanged(function(user) {
   }
   window.fbAuth = firebase.auth();
 
-// ── LISTA VIP ────────────────────────────────────────────────────────────────
-var VIP_EMAILS = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
-window.fbAuth.onAuthStateChanged(function(user) {
-  if (user && VIP_EMAILS.indexOf(user.email.toLowerCase()) !== -1) {
-    sessionStorage.setItem('acceso_plan', '1');
-    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
-  }
-});
-// ─────────────────────────────────────────────────────────────────────────────
   window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
@@ -229,25 +211,33 @@ function descargarMaterial() {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
-// ── CONTROL DE ACCESO ────────────────────────────────────────────────────────
-(function() {
-  var ok = sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo4');
-  if (!ok) { window.location = 'academia_ia_pagina_ventas.html#planes-pago'; }
-})();
-
-var RESP = {q1:"B",q2:"C",q3:"A",q4:"D",q5:"B",q6:"C",q7:"A"};
-var N_Q = 7;
-var MIN_OK = 5;
-var ACCENT = '#1565C0';
-var va = 'ninos';
-var certOK = false;
-
-var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
-document.getElementById('nav-n').textContent = '👤 ' + nombre + ' | Módulo 4';
-document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienvenido/a al Módulo 4 🚀';
-
-
-// ── GUARDAR Y RESTAURAR PROGRESO ─────────────────────────────────────────────
+// ── CONTROL DE ACCESO CON FIREBASE ──────────────────────────────────────────
+var VIP_LIST = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
+var accesoVerificado = false;
+function verificarAcceso(email) {
+  if (email && VIP_LIST.indexOf(email.toLowerCase()) !== -1) {
+    sessionStorage.setItem('acceso_plan', '1');
+    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+    return true;
+  }
+  return sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo4');
+}
+window.fbAuth.onAuthStateChanged(function(user) {
+  if (accesoVerificado) return;
+  accesoVerificado = true;
+  if (!verificarAcceso(user ? user.email : null)) {
+    window.location = 'academia_ia_pagina_ventas.html#planes-pago';
+  }
+});
+setTimeout(function() {
+  if (!accesoVerificado) {
+    accesoVerificado = true;
+    if (!sessionStorage.getItem('acceso_plan') && !sessionStorage.getItem('acceso_modulo4')) {
+      window.location = 'academia_ia_pagina_ventas.html#planes-pago';
+    }
+  }
+}, 3000);
+// ───────────────────────────────────────────────────────────────────────────── GUARDAR Y RESTAURAR PROGRESO ─────────────────────────────────────────────
 var STORAGE_KEY = 'prog_modulo4';
 function guardarProgreso(data) {
   try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}

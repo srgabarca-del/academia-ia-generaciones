@@ -44,15 +44,6 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
   }
   window.fbAuth = firebase.auth();
 
-// ── LISTA VIP ────────────────────────────────────────────────────────────────
-var VIP_EMAILS = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
-window.fbAuth.onAuthStateChanged(function(user) {
-  if (user && VIP_EMAILS.indexOf(user.email.toLowerCase()) !== -1) {
-    sessionStorage.setItem('acceso_plan', '1');
-    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
-  }
-});
-// ─────────────────────────────────────────────────────────────────────────────
   window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
@@ -172,15 +163,32 @@ window.fbAuth.onAuthStateChanged(function(user) {
 <script>
 var va = 'ninos';
 var certOK = false;
-// ── CONTROL DE ACCESO ────────────────────────────────────────────────────────
-(function() {
-  var plan = sessionStorage.getItem('acceso_plan');
-  var individual = sessionStorage.getItem('acceso_modulo2');
-  if (!plan && !individual) {
-    // No tiene acceso — redirigir a compra
+// ── CONTROL DE ACCESO CON FIREBASE ──────────────────────────────────────────
+var VIP_LIST = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
+var accesoVerificado = false;
+function verificarAcceso(email) {
+  if (email && VIP_LIST.indexOf(email.toLowerCase()) !== -1) {
+    sessionStorage.setItem('acceso_plan', '1');
+    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+    return true;
+  }
+  return sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo2');
+}
+window.fbAuth.onAuthStateChanged(function(user) {
+  if (accesoVerificado) return;
+  accesoVerificado = true;
+  if (!verificarAcceso(user ? user.email : null)) {
     window.location = 'academia_ia_pagina_ventas.html#planes-pago';
   }
-})();
+});
+setTimeout(function() {
+  if (!accesoVerificado) {
+    accesoVerificado = true;
+    if (!sessionStorage.getItem('acceso_plan') && !sessionStorage.getItem('acceso_modulo2')) {
+      window.location = 'academia_ia_pagina_ventas.html#planes-pago';
+    }
+  }
+}, 3000);
 // ─────────────────────────────────────────────────────────────────────────────
 
 var RESP2 = {q1:'B',q2:'B',q3:'C',q4:'B',q5:'B'};
@@ -333,15 +341,6 @@ function verCert() {
   }
   window.fbAuth = firebase.auth();
 
-// ── LISTA VIP ────────────────────────────────────────────────────────────────
-var VIP_EMAILS = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
-window.fbAuth.onAuthStateChanged(function(user) {
-  if (user && VIP_EMAILS.indexOf(user.email.toLowerCase()) !== -1) {
-    sessionStorage.setItem('acceso_plan', '1');
-    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
-  }
-});
-// ─────────────────────────────────────────────────────────────────────────────
   window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
