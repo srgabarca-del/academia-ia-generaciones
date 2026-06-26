@@ -58,12 +58,27 @@ var ARCH = sessionStorage.getItem('pago_archivo') || 'modulo1.html';
 var preEmail = sessionStorage.getItem('pago_email') || sessionStorage.getItem('alumno_email') || '';
 if (preEmail) document.getElementById('le').value = preEmail;
 
+// ── LISTA VIP — correos con acceso completo gratuito ─────────────────────────
+var VIP_EMAILS = [
+  'crisjus@hotmail.com',
+  'srgabarca-del@gmail.com'  // tú mismo como administrador
+];
+function esVIP(email) {
+  return VIP_EMAILS.indexOf(email.toLowerCase().trim()) !== -1;
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 // Check if already logged in
 window.fbAuth.onAuthStateChanged(function(user) {
   if (user) {
     sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
     sessionStorage.setItem('alumno_email', user.email);
     sessionStorage.setItem('firebase_uid', user.uid);
+    // Si es VIP, dar acceso completo a todos los módulos
+    if (esVIP(user.email)) {
+      sessionStorage.setItem('acceso_plan', '1');
+      for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+    }
     window.location = ARCH;
   }
 });
@@ -83,6 +98,11 @@ document.getElementById('btn-login').addEventListener('click', function() {
       sessionStorage.setItem('firebase_uid', user.uid);
       // Guardar estado de verificación
       sessionStorage.setItem('email_verificado', user.emailVerified ? 'si' : 'no');
+      // Si es VIP dar acceso completo
+      if (esVIP(e)) {
+        sessionStorage.setItem('acceso_plan', '1');
+        for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+      }
       // Restaurar acceso si venía de pago
       var pago_arch = sessionStorage.getItem('pago_archivo');
       if (pago_arch) {
