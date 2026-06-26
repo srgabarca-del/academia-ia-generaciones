@@ -62,6 +62,7 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 <nav>
   <div class="logo">🤖 Academia IA Generaciones</div>
   <div class="al" id="nav-nombre">👤 Alumno | Módulo 2</div>
+  <button onclick="cerrarSesion()" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-left:12px;">🚪 Salir</button>
 </nav>
 <div class="body">
   <span class="badge">💬 MÓDULO 2 — PREMIUM</span>
@@ -281,6 +282,18 @@ function mostrarSiguienteModulo() {
 function comprarSiguiente() {
   sessionStorage.setItem('ir_a', 'modulo3');
   window.location.href = 'academia_ia_pagina_ventas.html#planes-pago';
+}
+
+function cerrarSesion() {
+  if (window.fbAuth) {
+    window.fbAuth.signOut().then(function() {
+      sessionStorage.clear();
+      window.location.href = 'login.html';
+    });
+  } else {
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+  }
 }
 
 function verCert() {

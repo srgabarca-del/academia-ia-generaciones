@@ -70,6 +70,7 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 <nav>
   <div class="logo">🤖 Academia IA Generaciones</div>
   <div class="al" id="nav-n">👤 Alumno | Módulo 4</div>
+  <button onclick="cerrarSesion()" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-left:12px;">🚪 Salir</button>
 </nav>
 <div class="body">
   <div class="saved-badge" id="saved-badge">✅ Progreso guardado — módulo completado anteriormente</div>
@@ -371,6 +372,18 @@ function reiniciar() {
   document.getElementById('qres').style.display='none';
   document.getElementById('btn-env').style.display='block';
   document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function cerrarSesion() {
+  if (window.fbAuth) {
+    window.fbAuth.signOut().then(function() {
+      sessionStorage.clear();
+      window.location.href = 'login.html';
+    });
+  } else {
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+  }
 }
 
 function verCert() {
