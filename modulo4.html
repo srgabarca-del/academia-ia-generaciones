@@ -51,6 +51,16 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
     });
   }
   window.fbAuth = firebase.auth();
+
+// ── LISTA VIP ────────────────────────────────────────────────────────────────
+var VIP_EMAILS = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
+window.fbAuth.onAuthStateChanged(function(user) {
+  if (user && VIP_EMAILS.indexOf(user.email.toLowerCase()) !== -1) {
+    sessionStorage.setItem('acceso_plan', '1');
+    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+  }
+});
+// ─────────────────────────────────────────────────────────────────────────────
   window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
@@ -179,6 +189,16 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
     });
   }
   window.fbAuth = firebase.auth();
+
+// ── LISTA VIP ────────────────────────────────────────────────────────────────
+var VIP_EMAILS = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
+window.fbAuth.onAuthStateChanged(function(user) {
+  if (user && VIP_EMAILS.indexOf(user.email.toLowerCase()) !== -1) {
+    sessionStorage.setItem('acceso_plan', '1');
+    for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+  }
+});
+// ─────────────────────────────────────────────────────────────────────────────
   window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
