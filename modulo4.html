@@ -148,30 +148,38 @@ function descargarMaterial() {
 
 // ── CONTROL DE ACCESO CON FIREBASE ──────────────────────────────────────────
 var VIP_LIST = ['crisjus@hotmail.com','tiosergio98@hotmail.com','srgabarca-del@gmail.com'];
-var accesoVerificado = false;
-function verificarAcceso(email) {
-  if (email && VIP_LIST.indexOf(email.toLowerCase()) !== -1) {
+
+document.addEventListener('DOMContentLoaded', function() {
+  var loader = document.createElement('div');
+  loader.id = 'acc-loader';
+  loader.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#F5F3FF;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:16px;';
+  loader.innerHTML = '<div style="font-size:2.5rem;">🤖</div><p style="color:#6C3FC4;font-weight:700;">Verificando acceso...</p>';
+  document.body.appendChild(loader);
+});
+
+function ocultarLoader() {
+  var loader = document.getElementById('acc-loader');
+  if (loader) loader.remove();
+}
+
+function esVIP(email) {
+  return email && VIP_LIST.indexOf(email.toLowerCase().trim()) !== -1;
+}
+
+window.fbAuth.onAuthStateChanged(function(user) {
+  if (user && esVIP(user.email)) {
     sessionStorage.setItem('acceso_plan', '1');
     for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
-    return true;
-  }
-  return sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo4');
-}
-window.fbAuth.onAuthStateChanged(function(user) {
-  if (accesoVerificado) return;
-  accesoVerificado = true;
-  if (!verificarAcceso(user ? user.email : null)) {
+    ocultarLoader();
+  } else if (sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo4')) {
+    ocultarLoader();
+  } else if (user) {
     window.location = 'academia_ia_pagina_ventas.html#planes-pago';
+  } else {
+    window.location = 'login.html';
   }
 });
-setTimeout(function() {
-  if (!accesoVerificado) {
-    accesoVerificado = true;
-    if (!sessionStorage.getItem('acceso_plan') && !sessionStorage.getItem('acceso_modulo4')) {
-      window.location = 'academia_ia_pagina_ventas.html#planes-pago';
-    }
-  }
-}, 3000);
+// ─────────────────────────────────────────────────────────────────────────────
 // ───────────────────────────────────────────────────────────────────────────── GUARDAR Y RESTAURAR PROGRESO ─────────────────────────────────────────────
 var STORAGE_KEY = 'prog_modulo4';
 function guardarProgreso(data) {
