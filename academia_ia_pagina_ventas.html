@@ -479,9 +479,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
   var pass   = document.getElementById('f-pass').value;
   this.disabled=true; this.textContent='⏳ Creando tu cuenta...';
   var self = this;
-  console.log('🔥 Firebase registro iniciado:', email, '| fbAuth:', typeof window.fbAuth);
   if (!window.fbAuth) {
-    console.error('❌ fbAuth no está disponible');
     // Fallback: mostrar éxito de todas formas
     sessionStorage.setItem('alumno_nombre', nombre);
     sessionStorage.setItem('alumno_email', email);
@@ -493,11 +491,9 @@ document.getElementById('btn-reg').addEventListener('click', function() {
   }
   window.fbAuth.createUserWithEmailAndPassword(email, pass)
     .then(function(cred) {
-      console.log('✅ Usuario creado en Firebase:', cred.user.email);
       return cred.user.updateProfile({ displayName: nombre });
     })
     .then(function() {
-      console.log('✅ Perfil actualizado');
       sessionStorage.setItem('alumno_nombre', nombre);
       sessionStorage.setItem('alumno_email',  email);
       sessionStorage.setItem('acceso_modulo1', '1');
@@ -506,7 +502,6 @@ document.getElementById('btn-reg').addEventListener('click', function() {
       document.getElementById('exito').style.display='block';
     })
     .catch(function(err) {
-      console.error('❌ Error Firebase:', err.code, err.message);
       self.disabled=false; self.textContent='🎁 Crear cuenta y acceder gratis';
       var msg = '⚠️ Error: ' + err.message;
       if (err.code === 'auth/email-already-in-use') msg = '⚠️ Este correo ya tiene una cuenta. <a href="login.html">Inicia sesión aquí</a>.';
