@@ -50,8 +50,8 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
       appId: "1:285240187661:web:42ae229487b88237fcee44"
     });
   }
-  var auth = firebase.auth();
-  auth.onAuthStateChanged(function(user) {
+  window.fbAuth = firebase.auth();
+  window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
       sessionStorage.setItem('alumno_email', user.email);
@@ -184,8 +184,8 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
       appId: "1:285240187661:web:42ae229487b88237fcee44"
     });
   }
-  var auth = firebase.auth();
-  auth.onAuthStateChanged(function(user) {
+  window.fbAuth = firebase.auth();
+  window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {
       sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
       sessionStorage.setItem('alumno_email', user.email);
