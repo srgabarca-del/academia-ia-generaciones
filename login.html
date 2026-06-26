@@ -81,13 +81,24 @@ document.getElementById('btn-login').addEventListener('click', function() {
       sessionStorage.setItem('alumno_nombre', user.displayName || e.split('@')[0]);
       sessionStorage.setItem('alumno_email', e);
       sessionStorage.setItem('firebase_uid', user.uid);
+      // Guardar estado de verificación
+      sessionStorage.setItem('email_verificado', user.emailVerified ? 'si' : 'no');
       // Restaurar acceso si venía de pago
       var pago_arch = sessionStorage.getItem('pago_archivo');
       if (pago_arch) {
         var mod = pago_arch.replace('.html','');
         sessionStorage.setItem('acceso_' + mod, '1');
       }
-      window.location = ARCH;
+      // Si el correo no está verificado, avisar pero dejar entrar al módulo 1
+      if (!user.emailVerified) {
+        document.getElementById('err').style.background='#FFF8E1';
+        document.getElementById('err').style.color='#F57C00';
+        document.getElementById('err').innerHTML='⚠️ Tu correo aún no está verificado. Revisa tu bandeja de entrada. Puedes acceder al Módulo 1 pero necesitas verificarlo para comprar módulos.';
+        document.getElementById('err').style.display='block';
+        setTimeout(function() { window.location = ARCH; }, 3000);
+      } else {
+        window.location = ARCH;
+      }
     })
     .catch(function(err) {
       self.disabled=false; self.textContent='🔓 Entrar a mi curso';

@@ -260,6 +260,16 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       <div class="faq-item"><div class="faq-q">¿El módulo 1 es realmente gratis? <span>▼</span></div><div class="faq-a">Sí, 100% gratis. Sin tarjeta de crédito ni límite de tiempo.</div></div>
       <div class="faq-item"><div class="faq-q">¿Puedo cancelar la suscripción? <span>▼</span></div><div class="faq-a">Sí, cuando quieras. Garantía de 7 días.</div></div>
       <div class="faq-item"><div class="faq-q">¿Funciona en España y Latinoamérica? <span>▼</span></div><div class="faq-a">Sí. Todo en español neutro con ejemplos de la región.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Qué hago si no puedo imprimir la guía del módulo? <span>▼</span></div><div class="faq-a">No te preocupes, no es indispensable imprimirla. Puedes tomar una hoja de papel en blanco y anotar tus respuestas a los ejercicios siguiendo el orden del documento en pantalla. Cuando termines, simplemente regresa al módulo en línea para completar la evaluación y obtener tu certificado.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Cuánto tiempo tengo para completar cada módulo? <span>▼</span></div><div class="faq-a">Sin límite de tiempo. Avanzas a tu propio ritmo — puedes tomar un módulo hoy y el siguiente la próxima semana. Tu progreso se guarda automáticamente.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Puedo tomar el curso desde mi celular? <span>▼</span></div><div class="faq-a">Sí, el curso funciona en cualquier dispositivo con internet: celular, tablet, computadora o laptop. No importa si es Android, iPhone, Windows o Mac.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Necesito instalar algún programa? <span>▼</span></div><div class="faq-a">No. Todo funciona directamente desde el navegador de internet. Solo necesitas entrar a la página y comenzar — sin descargas ni instalaciones.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Es seguro pagar en línea? <span>▼</span></div><div class="faq-a">Sí. Los pagos se procesan de forma segura. Tu información bancaria nunca es almacenada en nuestro sistema.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Puedo comprar un módulo y después otro? <span>▼</span></div><div class="faq-a">Sí, puedes comprarlos uno a la vez según tu ritmo y presupuesto, o acceder a todos con el Plan Mensual por solo $4.99 al mes.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Qué incluye el plan mensual? <span>▼</span></div><div class="faq-a">Acceso completo a los 6 módulos, todas las guías PDF imprimibles y todos los certificados — incluyendo el Certificado de Graduación — por solo $4.99 al mes. Puedes cancelar cuando quieras.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Los certificados tienen validez oficial? <span>▼</span></div><div class="faq-a">Son certificados de participación de Academia IA Generaciones. Son perfectos para compartir con familiares, en redes sociales o como constancia de aprendizaje personal.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Puedo imprimir mi certificado? <span>▼</span></div><div class="faq-a">Sí. Al completar cada módulo puedes imprimir tu certificado directamente o guardarlo como PDF desde cualquier dispositivo.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Puedo repetir la evaluación si no apruebo? <span>▼</span></div><div class="faq-a">Sí, puedes intentarlo las veces que necesites. Te recomendamos revisar el video y la guía del módulo antes de volver a intentarlo.</div></div>
     </div>
   </div>
 </section>
@@ -329,10 +339,10 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
     </div>
     <!-- ÉXITO -->
     <div class="success" id="exito">
-      <div style="font-size:4rem;margin-bottom:14px;">✅</div>
-      <h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:10px;">¡Cuenta creada!</h3>
-      <p style="color:#555;margin-bottom:20px;">Bienvenido/a, <strong id="exito-nombre"></strong>.</p>
-      <a id="btn-mod1" href="modulo1.html" style="display:block;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;text-align:center;text-decoration:none;">🎬 Ir al Módulo 1 ahora</a>
+      <div style="font-size:4rem;margin-bottom:14px;">📧</div>
+      <h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:10px;">¡Cuenta creada, <span id="exito-nombre"></span>!</h3>
+      <div id="exito-msg" style="color:#555;font-size:.92rem;line-height:1.7;margin-bottom:20px;background:#F1F8E9;border-radius:10px;padding:16px;text-align:left;"></div>
+      <a id="btn-modulo1" href="modulo1.html" style="display:none;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;text-align:center;text-decoration:none;margin-top:8px;">🎬 Ir al Módulo 1 ahora</a>
     </div>
   </div>
   <p style="text-align:center;color:rgba(255,255,255,.55);font-size:.82rem;margin-top:20px;">🔒 Sin spam · Sin tarjeta · Datos protegidos</p>
@@ -491,15 +501,27 @@ document.getElementById('btn-reg').addEventListener('click', function() {
   }
   window.fbAuth.createUserWithEmailAndPassword(email, pass)
     .then(function(cred) {
-      return cred.user.updateProfile({ displayName: nombre });
-    })
-    .then(function() {
-      sessionStorage.setItem('alumno_nombre', nombre);
-      sessionStorage.setItem('alumno_email',  email);
-      sessionStorage.setItem('acceso_modulo1', '1');
-      document.getElementById('frm').style.display='none';
-      document.getElementById('exito-nombre').textContent=nombre;
-      document.getElementById('exito').style.display='block';
+      return cred.user.updateProfile({ displayName: nombre })
+        .then(function() {
+          return cred.user.sendEmailVerification();
+        })
+        .then(function() {
+          sessionStorage.setItem('alumno_nombre', nombre);
+          sessionStorage.setItem('alumno_email',  email);
+          sessionStorage.setItem('acceso_modulo1', '1');
+          sessionStorage.setItem('email_verificado', 'pendiente');
+          document.getElementById('frm').style.display='none';
+          // Mostrar mensaje de verificación en lugar del éxito normal
+          document.getElementById('exito-nombre').textContent=nombre;
+          document.getElementById('exito').style.display='block';
+          document.getElementById('exito-msg').innerHTML = 
+            '📧 Te enviamos un correo de verificación a <strong>' + email + '</strong>.<br><br>' +
+            'Revisa tu bandeja de entrada y haz clic en el enlace para confirmar tu cuenta.<br><br>' +
+            '<div style="background:#FFF8E1;border-left:4px solid #F57C00;padding:10px 14px;border-radius:6px;font-size:.88rem;color:#E65100;">' +
+            '⚠️ <strong>¿No lo encuentras?</strong> Revisa tu carpeta de <strong>Spam</strong> o <strong>Correo no deseado</strong> — a veces los correos automáticos llegan ahí.' +
+            '</div>';
+          document.getElementById('btn-modulo1').style.display='block';
+        });
     })
     .catch(function(err) {
       self.disabled=false; self.textContent='🎁 Crear cuenta y acceder gratis';
