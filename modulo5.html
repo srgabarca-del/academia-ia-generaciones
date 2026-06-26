@@ -1,71 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Módulo 5 — Academia IA Generaciones</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F3FF;color:#212121}
-nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.logo{color:#fff;font-weight:700;font-size:1rem}
-.al{color:rgba(255,255,255,.8);font-size:.85rem}
-.body{max-width:860px;margin:0 auto;padding:32px 20px 60px}
-.pbr{background:#E0E0E0;border-radius:4px;height:6px;margin-bottom:6px}
-.pf{height:100%;border-radius:4px;width:0;transition:width .6s}
-.vw{border-radius:16px;background:#1a1a2e;margin-bottom:28px;text-align:center;padding:48px 24px}
-.pb{width:76px;height:76px;background:#FF0000;border-radius:50%;font-size:2.2rem;border:none;cursor:pointer;color:#fff;margin-bottom:14px;transition:background .2s,transform .2s}
-.pb:hover{background:#CC0000;transform:scale(1.07)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:28px}
-.sc{background:#fff;border-radius:12px;padding:16px;border:1px solid #E0E0E0}
-.bn{width:100%;padding:16px;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:12px;transition:opacity .2s}
-.bn:hover{opacity:.88}
-.res{background:#fff;border-radius:12px;padding:20px 24px;border:1px solid #E0E0E0;margin-bottom:28px}
-.rl{list-style:none}
-.rl li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F5F5F5;font-size:.9rem}
-.rl li:last-child{border:none}
-.ri{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
-.bdl{margin-left:auto;flex-shrink:0;border:none;padding:7px 15px;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer}
-.qq{background:#fff;border:1px solid #E0E0E0;border-radius:12px;padding:18px 20px;margin-bottom:12px}
-.qq.ok{border-color:#43A047;background:#F1F8E9}
-.qq.no{border-color:#E53935;background:#FFEBEE}
-.op{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;margin-bottom:4px;cursor:pointer;font-size:.9rem}
-.op input{width:16px;height:16px;flex-shrink:0;cursor:pointer}
-.cert-box{border-radius:16px;padding:40px 28px;text-align:center;background:#fff;margin-top:20px;display:none}
-.lock-box{background:#fff;border:2px dashed #BDBDBD;border-radius:14px;padding:32px 24px;text-align:center;margin-top:20px;display:none}
-.btn-row{margin-top:24px;display:flex;flex-direction:column;gap:10px}
-.saved-badge{display:none;background:#E8F5E9;color:#2E7D32;font-size:.78rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:8px;text-align:center;}
-</style>
-<style>.op input{accent-color:#6A1B9A;}</style>
-
-
-<script>
-  if (!firebase.apps.length) {
-    firebase.initializeApp({
-      apiKey: "AIzaSyDQO9lwBLmNAJWpW5klap9ngdcqs-CrcXw",
-      authDomain: "academia-ia-eba0b.firebaseapp.com",
-      projectId: "academia-ia-eba0b",
-      storageBucket: "academia-ia-eba0b.firebasestorage.app",
-      messagingSenderId: "285240187661",
-      appId: "1:285240187661:web:42ae229487b88237fcee44"
-    });
-  }
-  window.fbAuth = firebase.auth();
-
-  window.fbAuth.onAuthStateChanged(function(user) {
-    if (user) {
-      sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
-      sessionStorage.setItem('alumno_email', user.email);
-      sessionStorage.setItem('firebase_uid', user.uid);
-      // Update nav name
-      var nav = document.getElementById('nav-n');
-      if (nav) {
-        var mod = nav.textContent.split('|')[1] || '';
-        nav.textContent = '👤 ' + (user.displayName || user.email.split('@')[0]) + ' |' + mod;
-      }
-    }
-  });
-</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 <nav>
@@ -166,8 +103,6 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script>
   if (!firebase.apps.length) {
     firebase.initializeApp({
