@@ -14,48 +14,104 @@ label{display:block;font-size:.85rem;font-weight:600;color:#212121;margin-bottom
 .inp:focus{border-color:#6C3FC4}
 .btn{width:100%;padding:15px;background:#6C3FC4;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer}
 .btn:hover{background:#4527A0}
+.btn:disabled{background:#BDBDBD;cursor:not-allowed}
 .err{background:#FFEBEE;color:#C62828;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:14px;display:none}
 .hint{background:#F5F3FF;border-radius:10px;padding:12px 14px;font-size:.82rem;color:#6C3FC4;margin-bottom:20px;line-height:1.5}
+.forgot{text-align:center;font-size:.82rem;color:#6C3FC4;cursor:pointer;margin-top:12px;text-decoration:underline}
+.ok-msg{background:#E8F5E9;color:#2E7D32;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:14px;display:none}
 </style>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+  if (!firebase.apps.length) { firebase.initializeApp({
+    apiKey: "AIzaSyDQO9lwBLmNAJWpW5klap9ngdcqs-CrcXw",
+    authDomain: "academia-ia-eba0b.firebaseapp.com",
+    projectId: "academia-ia-eba0b",
+    storageBucket: "academia-ia-eba0b.firebasestorage.app",
+    messagingSenderId: "285240187661",
+    appId: "1:285240187661:web:42ae229487b88237fcee44"
+  }); }
+  window.fbAuth = firebase.auth();
+</script>
 </head>
 <body>
 <div class="card">
   <div style="text-align:center;font-size:2.2rem;margin-bottom:8px;">🤖</div>
   <h1>Iniciar sesión</h1>
   <p style="text-align:center;color:#757575;font-size:.88rem;margin-bottom:20px;">Academia IA Generaciones</p>
-  <div class="hint">💡 Usa las credenciales que recibiste por correo.</div>
-  <div class="err" id="err">⚠️ Correo o contraseña incorrectos.</div>
+  <div class="hint">💡 Usa el correo y contraseña con los que te registraste o compraste tu módulo.</div>
+  <div class="err" id="err">⚠️ Correo o contraseña incorrectos. Verifica tus datos.</div>
+  <div class="ok-msg" id="ok-msg">✅ Correo de recuperación enviado. Revisa tu bandeja de entrada.</div>
   <label for="le">Correo electrónico</label>
   <input class="inp" type="email" id="le" placeholder="tucorreo@ejemplo.com">
   <label for="lp">Contraseña</label>
   <input class="inp" type="password" id="lp" placeholder="Tu contraseña">
   <button class="btn" id="btn-login">🔓 Entrar a mi curso</button>
+  <p class="forgot" id="forgot">¿Olvidaste tu contraseña? Recupérala aquí</p>
   <p style="text-align:center;font-size:.8rem;color:#9E9E9E;margin-top:16px;">¿No tienes cuenta? <a href="academia_ia_pagina_ventas.html#registro" style="color:#6C3FC4;">Regístrate gratis</a></p>
 </div>
 <script>
-var CE  = sessionStorage.getItem('pago_email')   || '';
-var CP  = sessionStorage.getItem('pago_pass')    || '';
-var CER = sessionStorage.getItem('alumno_email') || '';
-var CRP = sessionStorage.getItem('alumno_pass')  || '';
-var ARCH = sessionStorage.getItem('pago_archivo') || 'modulo2.html';
+var ARCH = sessionStorage.getItem('pago_archivo') || 'modulo1.html';
 
-// Pre-fill email
-document.getElementById('le').value = CE || CER;
+// Pre-fill email if coming from payment
+var preEmail = sessionStorage.getItem('pago_email') || sessionStorage.getItem('alumno_email') || '';
+if (preEmail) document.getElementById('le').value = preEmail;
+
+// Check if already logged in
+window.fbAuth.onAuthStateChanged(function(user) {
+  if (user) {
+    sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
+    sessionStorage.setItem('alumno_email', user.email);
+    sessionStorage.setItem('firebase_uid', user.uid);
+    window.location = ARCH;
+  }
+});
 
 document.getElementById('btn-login').addEventListener('click', function() {
   var e = document.getElementById('le').value.trim();
   var p = document.getElementById('lp').value;
-  var ok = (e===CE && p===CP) || (e===CER && p===CRP);
-  if(ok) {
-    sessionStorage.setItem('alumno_email', e);
-    if(!sessionStorage.getItem('alumno_nombre')) sessionStorage.setItem('alumno_nombre', e.split('@')[0]);
-    window.location = ARCH;
-  } else {
-    document.getElementById('err').style.display='block';
-  }
+  if (!e || !p) { document.getElementById('err').style.display='block'; return; }
+  document.getElementById('err').style.display='none';
+  this.disabled=true; this.textContent='⏳ Verificando...';
+  var self = this;
+  window.fbAuth.signInWithEmailAndPassword(e, p)
+    .then(function(cred) {
+      var user = cred.user;
+      sessionStorage.setItem('alumno_nombre', user.displayName || e.split('@')[0]);
+      sessionStorage.setItem('alumno_email', e);
+      sessionStorage.setItem('firebase_uid', user.uid);
+      // Restaurar acceso si venía de pago
+      var pago_arch = sessionStorage.getItem('pago_archivo');
+      if (pago_arch) {
+        var mod = pago_arch.replace('.html','');
+        sessionStorage.setItem('acceso_' + mod, '1');
+      }
+      window.location = ARCH;
+    })
+    .catch(function(err) {
+      self.disabled=false; self.textContent='🔓 Entrar a mi curso';
+      document.getElementById('err').style.display='block';
+    });
 });
+
 document.getElementById('lp').addEventListener('keydown', function(e) {
   if(e.key==='Enter') document.getElementById('btn-login').click();
+});
+
+// Password recovery
+document.getElementById('forgot').addEventListener('click', function() {
+  var e = document.getElementById('le').value.trim();
+  if (!e) { alert('Escribe primero tu correo electrónico.'); return; }
+  window.fbAuth.sendPasswordResetEmail(e)
+    .then(function() {
+      document.getElementById('ok-msg').style.display='block';
+      document.getElementById('err').style.display='none';
+    })
+    .catch(function() {
+      document.getElementById('err').textContent='⚠️ No encontramos una cuenta con ese correo.';
+      document.getElementById('err').style.display='block';
+    });
 });
 </script>
 </body>
