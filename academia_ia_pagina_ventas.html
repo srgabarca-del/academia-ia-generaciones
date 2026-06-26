@@ -79,6 +79,22 @@ label{display:block;font-size:.875rem;font-weight:600;color:#212121;margin-botto
 footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255,255,.6);font-size:.875rem}
 @media(max-width:600px){.reg-card{padding:28px 20px}.free-box{padding:24px}}
 </style>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyDQO9lwBLmNAJWpW5klap9ngdcqs-CrcXw",
+    authDomain: "academia-ia-eba0b.firebaseapp.com",
+    projectId: "academia-ia-eba0b",
+    storageBucket: "academia-ia-eba0b.firebasestorage.app",
+    messagingSenderId: "285240187661",
+    appId: "1:285240187661:web:42ae229487b88237fcee44"
+  };
+  if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+  window.fbAuth = firebase.auth();
+</script>
 </head>
 <body>
 
@@ -462,14 +478,29 @@ document.getElementById('btn-reg').addEventListener('click', function() {
   var email  = document.getElementById('f-email').value.trim();
   var pass   = document.getElementById('f-pass').value;
   this.disabled=true; this.textContent='⏳ Creando tu cuenta...';
-  sessionStorage.setItem('alumno_nombre', nombre);
-  sessionStorage.setItem('alumno_email',  email);
-  sessionStorage.setItem('alumno_pass',   pass);
-  setTimeout(function() {
-    document.getElementById('frm').style.display='none';
-    document.getElementById('exito-nombre').textContent=nombre;
-    document.getElementById('exito').style.display='block';
-  }, 1400);
+  var self = this;
+  // Crear usuario en Firebase
+  window.fbAuth.createUserWithEmailAndPassword(email, pass)
+    .then(function(cred) {
+      return cred.user.updateProfile({ displayName: nombre });
+    })
+    .then(function() {
+      sessionStorage.setItem('alumno_nombre', nombre);
+      sessionStorage.setItem('alumno_email',  email);
+      sessionStorage.setItem('acceso_modulo1', '1');
+      document.getElementById('frm').style.display='none';
+      document.getElementById('exito-nombre').textContent=nombre;
+      document.getElementById('exito').style.display='block';
+    })
+    .catch(function(err) {
+      self.disabled=false; self.textContent='🎁 Crear cuenta y acceder gratis';
+      var msg = '⚠️ Error al crear la cuenta.';
+      if (err.code === 'auth/email-already-in-use') msg = '⚠️ Este correo ya tiene una cuenta. <a href="login.html">Inicia sesión aquí</a>.';
+      if (err.code === 'auth/weak-password') msg = '⚠️ La contraseña debe tener al menos 6 caracteres.';
+      var errDiv = document.getElementById('f-err');
+      if (!errDiv) { errDiv=document.createElement('div'); errDiv.id='f-err'; errDiv.style.cssText='color:#C62828;font-size:.85rem;margin-top:8px;'; document.getElementById('btn-reg').before(errDiv); }
+      errDiv.innerHTML = msg;
+    });
 });
 
 // ── PAGO
@@ -528,24 +559,33 @@ document.getElementById('btn-pay').addEventListener('click', function() {
   var pt=genPass();
   var info=INFO[pagoActual];
   setTimeout(function() {
-    sessionStorage.setItem('pago_email',  eml);
-    sessionStorage.setItem('pago_pass',   pt);
-    sessionStorage.setItem('pago_archivo', info.archivo);
-    // Guardar acceso al módulo comprado
-    if (pagoActual === 'suscripcion') {
-      sessionStorage.setItem('acceso_plan', '1');
-    } else {
-      sessionStorage.setItem('acceso_' + pagoActual, '1');
-    }
-    sessionStorage.setItem('alumno_nombre', nom.split(' ')[0]);
-    document.getElementById('c-email').textContent=eml;
-    document.getElementById('c-pass').textContent=pt;
-    document.getElementById('c-mod').textContent=info.mod;
-    document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
-    document.getElementById('mpago').classList.remove('open');
-    document.getElementById('mconf').classList.add('open');
-    document.getElementById('btn-pay').textContent='🔒 Confirmar pago';
-    document.getElementById('btn-pay').disabled=false;
+    var nombre_al = nom.split(' ')[0];
+    // Crear o recuperar usuario en Firebase con la contraseña temporal
+    window.fbAuth.createUserWithEmailAndPassword(eml, pt)
+      .catch(function(err) {
+        // Si ya existe, intentar actualizar contraseña (no posible sin login previo)
+        // Dejar flujo continuar con sessionStorage como respaldo
+        return Promise.resolve();
+      })
+      .finally(function() {
+        sessionStorage.setItem('pago_email',  eml);
+        sessionStorage.setItem('pago_pass',   pt);
+        sessionStorage.setItem('pago_archivo', info.archivo);
+        if (pagoActual === 'suscripcion') {
+          sessionStorage.setItem('acceso_plan', '1');
+        } else {
+          sessionStorage.setItem('acceso_' + pagoActual, '1');
+        }
+        sessionStorage.setItem('alumno_nombre', nombre_al);
+        document.getElementById('c-email').textContent=eml;
+        document.getElementById('c-pass').textContent=pt;
+        document.getElementById('c-mod').textContent=info.mod;
+        document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
+        document.getElementById('mpago').classList.remove('open');
+        document.getElementById('mconf').classList.add('open');
+        document.getElementById('btn-pay').textContent='🔒 Confirmar pago';
+        document.getElementById('btn-pay').disabled=false;
+      });
   }, 1800);
 });
 
