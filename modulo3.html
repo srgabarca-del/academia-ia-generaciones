@@ -142,8 +142,10 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
   </div>
 
   <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
-    <!-- FIX 5: Botón Volver al Módulo 2 corregido — ya no redirige a la página de pago -->
-    <a href="modulo2.html" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">← Volver al Módulo 2</a>
+    <!-- FIX 5: Botón Volver al Módulo 2 — ya no redirige al formulario de pago.
+         Si llegaste aquí teniendo acceso al Módulo 3 (o Plan), garantizamos
+         acceso_modulo2 antes de navegar, por si el flujo del Módulo 1 no lo guardó (bug conocido). -->
+    <a href="modulo2.html" id="btn-volver-m2" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">← Volver al Módulo 2</a>
     <a href="academia_ia_pagina_ventas.html" style="display:block;width:100%;padding:12px;background:#F5F5F5;color:#555;border-radius:12px;font-size:.9rem;font-weight:600;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Inicio</a>
   </div>
 </div>
@@ -160,6 +162,15 @@ var RESP = {q1:"A",q2:"C",q3:"B",q4:"D",q5:"C",q6:"B",q7:"D"};
   var ok = sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo3');
   if (!ok) { window.location = 'academia_ia_pagina_ventas.html#planes-pago'; }
 })();
+
+// FIX 5b: si el usuario tiene acceso al Módulo 3 (o Plan) pero por algún motivo
+// nunca se guardó acceso_modulo2 (p. ej. bug del botón VIP en modulo1.html),
+// se lo otorgamos aquí mismo para que "Volver al Módulo 2" no lo rebote a la página de pago.
+document.getElementById('btn-volver-m2').addEventListener('click', function() {
+  if (sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo3')) {
+    sessionStorage.setItem('acceso_modulo2', '1');
+  }
+});
 
 var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
 document.getElementById('nav-nombre').textContent = '👤 ' + nombre + ' | Módulo 3';
