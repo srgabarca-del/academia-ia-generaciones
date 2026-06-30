@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-06-29
+> **Última actualización:** 2026-06-29 (sesión 2)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -77,7 +77,7 @@ sessionStorage.setItem('acceso_modulo6', '1');
 ## ✅ Respuestas correctas de evaluaciones
 | Módulo | Preguntas | Mínimo para aprobar | Respuestas |
 |--------|-----------|---------------------|------------|
-| 2 | 5 | 4 | q1:B, q2:B, q3:C, q4:B, q5:B |
+| 2 | 5 | 4 | q1:C, q2:A, q3:D, q4:C, q5:A |
 | 3 | 7 | 5 | q1:A, q2:C, q3:B, q4:D, q5:C, q6:B, q7:D |
 | 4 | 7 | 5 | q1:B, q2:C, q3:A, q4:D, q5:B, q6:C, q7:A |
 | 5 | 7 | 5 | q1:C, q2:A, q3:D, q4:B, q5:C, q6:A, q7:D |
@@ -105,7 +105,7 @@ sessionStorage.setItem('acceso_modulo6', '1');
 | Archivo | Estado | Notas |
 |---------|--------|-------|
 | `modulo1.html` | ⚠️ Pendiente | Botón al Módulo 2 no guarda `acceso_modulo2` para VIPs |
-| `modulo2.html` | ✅ Listo | Firebase init en head, evaluación, certificado, desbloquea M3 |
+| `modulo2.html` | ✅ Listo | Popup eliminado, botón Ir a M3 corregido, respuestas mezcladas, desbloquea M3 al aprobar |
 | `modulo3.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M4 |
 | `modulo4.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M5 |
 | `modulo5.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M6 |
@@ -139,6 +139,12 @@ sessionStorage.setItem('acceso_modulo6', '1');
 ### 2026-06-29
 - Se reorganizó y consolidó el CLAUDE.md en formato maestro con historial
 - Pendiente principal: corregir botón VIP en modulo1.html
+
+### 2026-06-29 (sesión 2)
+- ✅ modulo2.html — Eliminado popup "Módulo 3 disponible en Plan Premium"
+- ✅ modulo2.html — Botón "Ir al Módulo 3 →" aparece correctamente al aprobar (se guarda `acceso_modulo3` al aprobar)
+- ✅ modulo2.html — Respuestas de evaluación mezcladas: q1:C, q2:A, q3:D, q4:C, q5:A
+- 📁 Archivos modificados: modulo2.html
 
 <!--
 PLANTILLA para nueva entrada de historial:
