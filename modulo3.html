@@ -172,11 +172,27 @@ document.getElementById('btn-volver-m2').addEventListener('click', function() {
   }
 });
 
+// FIX: si el alumno ya aprobó este módulo antes (al volver desde otro módulo),
+// restaurar el estado "completado" en vez de mostrar todo desde cero.
+(function() {
+  if (sessionStorage.getItem('modulo3_completado')) {
+    certOK = true;
+    document.getElementById('pf').style.width = '100%';
+    document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 3 completado! ✅';
+    document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
+    document.getElementById('btn-eval').disabled = true;
+    document.getElementById('btn-eval').style.opacity = '0.6';
+    document.getElementById('btn-eval').style.cursor = 'default';
+    mostrarSiguienteModulo(true);
+  }
+})();
+
 var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
 document.getElementById('nav-nombre').textContent = '👤 ' + nombre + ' | Módulo 3';
 document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienvenido/a al Módulo 3 🚀';
 
 setTimeout(function() {
+  if (sessionStorage.getItem('modulo3_completado')) { return; }
   document.getElementById('pf').style.width = '15%';
   document.getElementById('pl').textContent = 'Progreso: 15%';
 }, 400);
@@ -266,7 +282,7 @@ function verCert() {
   document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-function mostrarSiguienteModulo() {
+function mostrarSiguienteModulo(noScroll) {
   var lockBox = document.getElementById('lock-siguiente');
   var innerDiv = document.getElementById('lock-inner');
   lockBox.style.display = 'block';
@@ -277,7 +293,7 @@ function mostrarSiguienteModulo() {
     innerDiv.innerHTML = '<p style="color:#555;font-size:.88rem;margin-bottom:16px;">Para acceder al Módulo 4 necesitas comprarlo o suscribirte al Plan Mensual.</p>'
       + '<button onclick="comprarSiguiente()" style="background:#1976D2;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">💳 Comprar Módulo 4 — $9 USD</button>';
   }
-  lockBox.scrollIntoView({behavior:'smooth', block:'center'});
+  if (!noScroll) { lockBox.scrollIntoView({behavior:'smooth', block:'center'}); }
 }
 
 function comprarSiguiente() {

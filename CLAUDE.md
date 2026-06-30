@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-06-29 (sesión 2)
+> **Última actualización:** 2026-06-30 (sesión 3)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -61,6 +61,9 @@ sessionStorage.setItem('acceso_modulo5', '1');
 sessionStorage.setItem('acceso_modulo6', '1');
 ```
 
+### ⚠️ Patrón de "rebote a pago" detectado (sesión 3)
+Cada módulo premium valida su propio acceso al cargar (`acceso_plan` o `acceso_moduloN`) y, si falta, redirige a `academia_ia_pagina_ventas.html#planes-pago`. Esto significa que un botón "Volver al Módulo X" o "Ir al Módulo X" puede rebotar al alumno a la página de pago si ese módulo específico nunca guardó su flag de acceso — típicamente por el bug pendiente del botón VIP en `modulo1.html`. **Patrón de mitigación aplicado en `modulo3.html`:** antes de navegar hacia atrás a `modulo2.html`, si el alumno tiene `acceso_plan` o `acceso_modulo3`, se le otorga también `acceso_modulo2` en ese momento. Conviene replicar este patrón en `modulo4.html`, `modulo5.html` y `modulo6.html` para sus respectivos botones "Volver".
+
 ---
 
 ## 🎨 Colores por módulo
@@ -106,10 +109,10 @@ sessionStorage.setItem('acceso_modulo6', '1');
 |---------|--------|-------|
 | `modulo1.html` | ⚠️ Pendiente | Botón al Módulo 2 no guarda `acceso_modulo2` para VIPs |
 | `modulo2.html` | ✅ Listo | Popup eliminado, botón Ir a M3 corregido, respuestas mezcladas, desbloquea M3 al aprobar |
-| `modulo3.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M4 |
-| `modulo4.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M5 |
-| `modulo5.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M6 |
-| `modulo6.html` | ✅ Listo | PDF embebido, 7 preguntas, Certificado Final |
+| `modulo3.html` | ✅ Listo | PDF embebido verificado (genera PDF válido), evaluación funcional, certificado funcional, desbloquea M4 al aprobar, botón "Volver al Módulo 2" ya no rebota a pago (otorga `acceso_modulo2` defensivamente). Probado con pruebas automatizadas (jsdom) simulando clics reales. |
+| `modulo4.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M5. *(Pendiente: verificar si necesita el mismo parche defensivo de "Volver" que M3)* |
+| `modulo5.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M6. *(Pendiente: verificar mismo parche)* |
+| `modulo6.html` | ✅ Listo | PDF embebido, 7 preguntas, Certificado Final. *(Pendiente: verificar mismo parche)* |
 | `academia_ia_pagina_ventas.html` | ⚠️ Pendiente | Pagos no integrados |
 
 ---
@@ -120,6 +123,8 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - [ ] **modulo1.html** — Botón al Módulo 2 no guarda `acceso_modulo2` para usuarios VIP antes de redirigir
 - [ ] **Pagos** — Integración de Stripe o PayPal pendiente
 - [ ] **Soporte al cliente** — Pendiente de implementar
+- [ ] **Replicar parche de "Volver al Módulo X"** — Aplicar en modulo4.html, modulo5.html y modulo6.html el mismo patrón defensivo usado en modulo3.html (otorgar el flag de acceso del módulo anterior si el alumno ya tiene `acceso_plan` o acceso al módulo actual), para evitar rebotes a la página de pago
+- [ ] **Confirmar despliegue** — Verificar que el `modulo3.html` corregido en esta sesión esté efectivamente subido/commiteado al repo de GitHub y publicado en GitHub Pages (se detectó posible desfase entre archivo local y el publicado)
 - [ ] **Diagnóstico general** — Revisar qué dejó de funcionar tras migraciones anteriores
 
 ---
@@ -130,6 +135,7 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - GitHub Pages sirve los archivos estáticos directamente
 - Firebase se usa solo para autenticación en la página de ventas/login
 - **Firebase init debe estar en el `<head>`**, no al final del body
+- Cada módulo premium valida su propio acceso en un IIFE al cargar; si el flag correspondiente no está en `sessionStorage`, redirige a `academia_ia_pagina_ventas.html#planes-pago`. Tener esto en cuenta al diagnosticar "rebotes a pago" inesperados en botones de navegación interna.
 
 ---
 
@@ -145,6 +151,14 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - ✅ modulo2.html — Botón "Ir al Módulo 3 →" aparece correctamente al aprobar (se guarda `acceso_modulo3` al aprobar)
 - ✅ modulo2.html — Respuestas de evaluación mezcladas: q1:C, q2:A, q3:D, q4:C, q5:A
 - 📁 Archivos modificados: modulo2.html
+
+### 2026-06-30 (sesión 3)
+- 🔍 Diagnóstico de modulo3.html: el archivo subido ya contenía 5 correcciones previas (comentarios `// FIX 1-5`). Se verificó con pruebas automatizadas (jsdom) que PDF descargable, botón de evaluación, certificado y desbloqueo de Módulo 4 **ya funcionaban correctamente**.
+- ✅ modulo3.html — Identificada causa real de "Volver al Módulo 2 muestra el formulario de pago": el candado de acceso propio de `modulo2.html` exige `acceso_modulo2`, que puede faltar por el bug VIP pendiente de `modulo1.html`.
+- ✅ modulo3.html — Aplicado parche defensivo: al hacer clic en "Volver al Módulo 2", si el alumno tiene `acceso_plan` o `acceso_modulo3`, se le otorga `acceso_modulo2` antes de navegar.
+- ⚠️ Pendiente nuevo: replicar este mismo parche defensivo en modulo4.html, modulo5.html y modulo6.html
+- ⚠️ Pendiente nuevo: confirmar que el modulo3.html corregido esté realmente publicado en GitHub Pages (posible desfase entre repo y archivo de trabajo)
+- 📁 Archivos modificados: modulo3.html
 
 <!--
 PLANTILLA para nueva entrada de historial:
