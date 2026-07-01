@@ -345,7 +345,9 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       <div style="font-size:4rem;margin-bottom:14px;">📧</div>
       <h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:10px;">¡Cuenta creada, <span id="exito-nombre"></span>!</h3>
       <div id="exito-msg" style="color:#555;font-size:.92rem;line-height:1.7;margin-bottom:20px;background:#F1F8E9;border-radius:10px;padding:16px;text-align:left;"></div>
-      <a id="btn-modulo1" href="modulo1.html" style="display:none;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;text-align:center;text-decoration:none;margin-top:8px;">🎬 Ir al Módulo 1 ahora</a>
+      <div id="verif-err" style="display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:10px 14px;font-size:.85rem;margin-bottom:14px;text-align:left;"></div>
+      <button id="btn-verificar" type="button" style="display:none;width:100%;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;border:none;cursor:pointer;">✅ Ya verifiqué mi correo — Continuar</button>
+      <button id="btn-reenviar" type="button" style="display:none;width:100%;background:none;color:#6C3FC4;padding:10px;font-size:.88rem;font-weight:600;border:none;cursor:pointer;margin-top:10px;">📩 Reenviar correo de verificación</button>
     </div>
   </div>
   <p style="text-align:center;color:rgba(255,255,255,.55);font-size:.82rem;margin-top:20px;">🔒 Sin spam · Sin tarjeta · Datos protegidos</p>
@@ -482,6 +484,8 @@ document.getElementById('eye2').addEventListener('click', function() {
 });
 
 // Submit
+var usuarioActual = null;
+
 document.getElementById('btn-reg').addEventListener('click', function() {
   actualizar();
   if (this.disabled) return;
@@ -491,17 +495,23 @@ document.getElementById('btn-reg').addEventListener('click', function() {
   this.disabled=true; this.textContent='⏳ Creando tu cuenta...';
   var self = this;
   if (!window.fbAuth) {
-    // Fallback: mostrar éxito de todas formas
+    // Fallback sin Firebase: no hay forma de verificar el correo, se avisa y se da acceso igual
     sessionStorage.setItem('alumno_nombre', nombre);
     sessionStorage.setItem('alumno_email', email);
     sessionStorage.setItem('acceso_modulo1', '1');
     document.getElementById('frm').style.display='none';
     document.getElementById('exito-nombre').textContent=nombre;
     document.getElementById('exito').style.display='block';
+    document.getElementById('exito-msg').innerHTML = '✅ ¡Todo listo! Ya puedes entrar al Módulo 1.';
+    var a1=document.createElement('a');
+    a1.href='modulo1.html'; a1.textContent='🎬 Ir al Módulo 1 ahora';
+    a1.style.cssText='display:block;text-align:center;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;';
+    document.getElementById('exito-msg').after(a1);
     return;
   }
   window.fbAuth.createUserWithEmailAndPassword(email, pass)
     .then(function(cred) {
+      usuarioActual = cred.user;
       return cred.user.updateProfile({ displayName: nombre })
         .then(function() {
           return cred.user.sendEmailVerification();
@@ -509,19 +519,19 @@ document.getElementById('btn-reg').addEventListener('click', function() {
         .then(function() {
           sessionStorage.setItem('alumno_nombre', nombre);
           sessionStorage.setItem('alumno_email',  email);
-          sessionStorage.setItem('acceso_modulo1', '1');
           sessionStorage.setItem('email_verificado', 'pendiente');
           document.getElementById('frm').style.display='none';
-          // Mostrar mensaje de verificación en lugar del éxito normal
+          // No se otorga acceso todavía: primero hay que confirmar el correo
           document.getElementById('exito-nombre').textContent=nombre;
           document.getElementById('exito').style.display='block';
           document.getElementById('exito-msg').innerHTML = 
             '📧 Te enviamos un correo de verificación a <strong>' + email + '</strong>.<br><br>' +
-            'Revisa tu bandeja de entrada y haz clic en el enlace para confirmar tu cuenta.<br><br>' +
+            'Abre ese correo y haz clic en el enlace de confirmación. Cuando termines, vuelve aquí y presiona el botón de abajo.<br><br>' +
             '<div style="background:#FFF8E1;border-left:4px solid #F57C00;padding:10px 14px;border-radius:6px;font-size:.88rem;color:#E65100;">' +
             '⚠️ <strong>¿No lo encuentras?</strong> Revisa tu carpeta de <strong>Spam</strong> o <strong>Correo no deseado</strong> — a veces los correos automáticos llegan ahí.' +
             '</div>';
-          document.getElementById('btn-modulo1').style.display='block';
+          document.getElementById('btn-verificar').style.display='block';
+          document.getElementById('btn-reenviar').style.display='block';
         });
     })
     .catch(function(err) {
@@ -532,6 +542,47 @@ document.getElementById('btn-reg').addEventListener('click', function() {
       var errDiv = document.getElementById('f-err');
       if (!errDiv) { errDiv=document.createElement('div'); errDiv.id='f-err'; errDiv.style.cssText='color:#C62828;font-size:.85rem;margin-top:8px;'; document.getElementById('btn-reg').before(errDiv); }
       errDiv.innerHTML = msg;
+    });
+});
+
+// Confirmar verificación real antes de dar acceso al Módulo 1
+document.getElementById('btn-verificar').addEventListener('click', function() {
+  if (!usuarioActual) return;
+  var self = this;
+  var errBox = document.getElementById('verif-err');
+  errBox.style.display='none';
+  self.disabled=true; self.textContent='⏳ Comprobando...';
+  usuarioActual.reload()
+    .then(function() {
+      if (usuarioActual.emailVerified) {
+        sessionStorage.setItem('acceso_modulo1', '1');
+        sessionStorage.setItem('email_verificado', 'si');
+        window.location.href = 'modulo1.html';
+      } else {
+        self.disabled=false; self.textContent='✅ Ya verifiqué mi correo — Continuar';
+        errBox.style.display='block';
+        errBox.innerHTML = '⚠️ Todavía no detectamos la verificación. Revisa tu correo (incluida la carpeta de Spam), haz clic en el enlace y vuelve a intentarlo.';
+      }
+    })
+    .catch(function() {
+      self.disabled=false; self.textContent='✅ Ya verifiqué mi correo — Continuar';
+      errBox.style.display='block';
+      errBox.innerHTML = '⚠️ No pudimos comprobar tu verificación. Intenta de nuevo en unos segundos.';
+    });
+});
+
+// Reenviar correo de verificación
+document.getElementById('btn-reenviar').addEventListener('click', function() {
+  if (!usuarioActual) return;
+  var self = this;
+  self.disabled=true; self.textContent='⏳ Enviando...';
+  usuarioActual.sendEmailVerification()
+    .then(function() {
+      self.textContent='✅ Correo reenviado';
+      setTimeout(function(){ self.disabled=false; self.textContent='📩 Reenviar correo de verificación'; }, 4000);
+    })
+    .catch(function() {
+      self.disabled=false; self.textContent='📩 Reenviar correo de verificación';
     });
 });
 
