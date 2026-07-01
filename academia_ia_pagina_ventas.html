@@ -393,11 +393,9 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
     <h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Pago recibido!</h3>
     <p id="cmsg" style="color:#555;font-size:.9rem;line-height:1.6;margin-bottom:20px;"></p>
     <div style="background:#F5F3FF;border:2px solid #6C3FC4;border-radius:14px;padding:20px;margin-bottom:20px;text-align:left;">
-      <p style="font-size:.8rem;font-weight:700;color:#6C3FC4;text-transform:uppercase;margin-bottom:12px;">🔑 Tus credenciales</p>
+      <p style="font-size:.8rem;font-weight:700;color:#6C3FC4;text-transform:uppercase;margin-bottom:12px;">✅ Resumen de tu acceso</p>
       <div style="margin-bottom:8px;"><span style="font-size:.8rem;color:#757575;display:block;">Correo</span><span id="c-email" style="font-size:.95rem;font-weight:700;"></span></div>
-      <div style="margin-bottom:8px;"><span style="font-size:.8rem;color:#757575;display:block;">Contraseña temporal</span><span id="c-pass" style="font-size:1rem;font-weight:800;color:#6C3FC4;font-family:monospace;letter-spacing:.1em;"></span></div>
       <div><span style="font-size:.8rem;color:#757575;display:block;">Módulo desbloqueado</span><span id="c-mod" style="font-size:.95rem;font-weight:700;color:#00897B;"></span></div>
-      <div style="background:#FFF8E1;border-radius:8px;padding:10px;margin-top:12px;font-size:.78rem;color:#F57C00;">⚠️ Cambia tu contraseña al iniciar sesión.</div>
     </div>
     <a id="btn-login-conf" href="login.html" style="display:block;background:#6C3FC4;color:#fff;padding:14px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Iniciar sesión y entrar al módulo</a>
     <button onclick="document.getElementById('mconf').classList.remove('open')" style="width:100%;padding:12px;background:#E0E0E0;color:#555;border:none;border-radius:12px;cursor:pointer;font-size:.9rem;font-weight:600;">📋 Guardar y cerrar</button>
@@ -578,11 +576,6 @@ document.getElementById('num-t').addEventListener('input', function() {
   var v=this.value.replace(/\D/g,'').substring(0,16);
   this.value=v.replace(/(.{4})/g,'$1 ').trim();
 });
-function genPass() {
-  var c='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789@#!',p='';
-  for(var i=0;i<8;i++) p+=c[Math.floor(Math.random()*c.length)];
-  return p;
-}
 document.getElementById('btn-pay').addEventListener('click', function() {
   var nom=document.getElementById('p-nombre').value.trim();
   var eml=document.getElementById('p-email').value.trim();
@@ -590,36 +583,24 @@ document.getElementById('btn-pay').addEventListener('click', function() {
   if(!nom||!eml||!eok||!metSel) { document.getElementById('perr').style.display='block'; return; }
   document.getElementById('perr').style.display='none';
   this.textContent='⏳ Procesando...'; this.disabled=true;
-  var pt=genPass();
   var info=INFO[pagoActual];
   setTimeout(function() {
     var nombre_al = nom.split(' ')[0];
-    // Crear o recuperar usuario en Firebase con la contraseña temporal
-    window.fbAuth.createUserWithEmailAndPassword(eml, pt)
-      .catch(function(err) {
-        // Si ya existe, intentar actualizar contraseña (no posible sin login previo)
-        // Dejar flujo continuar con sessionStorage como respaldo
-        return Promise.resolve();
-      })
-      .finally(function() {
-        sessionStorage.setItem('pago_email',  eml);
-        sessionStorage.setItem('pago_pass',   pt);
-        sessionStorage.setItem('pago_archivo', info.archivo);
-        if (pagoActual === 'suscripcion') {
-          sessionStorage.setItem('acceso_plan', '1');
-        } else {
-          sessionStorage.setItem('acceso_' + pagoActual, '1');
-        }
-        sessionStorage.setItem('alumno_nombre', nombre_al);
-        document.getElementById('c-email').textContent=eml;
-        document.getElementById('c-pass').textContent=pt;
-        document.getElementById('c-mod').textContent=info.mod;
-        document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
-        document.getElementById('mpago').classList.remove('open');
-        document.getElementById('mconf').classList.add('open');
-        document.getElementById('btn-pay').textContent='🔒 Confirmar pago';
-        document.getElementById('btn-pay').disabled=false;
-      });
+    sessionStorage.setItem('pago_email',  eml);
+    sessionStorage.setItem('pago_archivo', info.archivo);
+    if (pagoActual === 'suscripcion') {
+      sessionStorage.setItem('acceso_plan', '1');
+    } else {
+      sessionStorage.setItem('acceso_' + pagoActual, '1');
+    }
+    sessionStorage.setItem('alumno_nombre', nombre_al);
+    document.getElementById('c-email').textContent=eml;
+    document.getElementById('c-mod').textContent=info.mod;
+    document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
+    document.getElementById('mpago').classList.remove('open');
+    document.getElementById('mconf').classList.add('open');
+    document.getElementById('btn-pay').textContent='🔒 Confirmar pago';
+    document.getElementById('btn-pay').disabled=false;
   }, 1800);
 });
 
