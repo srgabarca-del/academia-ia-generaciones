@@ -61,9 +61,6 @@ sessionStorage.setItem('acceso_modulo5', '1');
 sessionStorage.setItem('acceso_modulo6', '1');
 ```
 
-### ⚠️ Patrón de "rebote a pago" detectado (sesión 3)
-Cada módulo premium valida su propio acceso al cargar (`acceso_plan` o `acceso_moduloN`) y, si falta, redirige a `academia_ia_pagina_ventas.html#planes-pago`. Esto significa que un botón "Volver al Módulo X" o "Ir al Módulo X" puede rebotar al alumno a la página de pago si ese módulo específico nunca guardó su flag de acceso — típicamente por el bug pendiente del botón VIP en `modulo1.html`. **Patrón de mitigación aplicado en `modulo3.html`:** antes de navegar hacia atrás a `modulo2.html`, si el alumno tiene `acceso_plan` o `acceso_modulo3`, se le otorga también `acceso_modulo2` en ese momento. Conviene replicar este patrón en `modulo4.html`, `modulo5.html` y `modulo6.html` para sus respectivos botones "Volver".
-
 ---
 
 ## 🎨 Colores por módulo
@@ -108,11 +105,11 @@ Cada módulo premium valida su propio acceso al cargar (`acceso_plan` o `acceso_
 | Archivo | Estado | Notas |
 |---------|--------|-------|
 | `modulo1.html` | ⚠️ Pendiente | Botón al Módulo 2 no guarda `acceso_modulo2` para VIPs |
-| `modulo2.html` | ✅ Listo | Popup eliminado, botón Ir a M3 corregido, respuestas mezcladas, desbloquea M3 al aprobar |
-| `modulo3.html` | ✅ Listo | PDF embebido verificado (genera PDF válido), evaluación funcional, certificado funcional, desbloquea M4 al aprobar, botón "Volver al Módulo 2" ya no rebota a pago (otorga `acceso_modulo2` defensivamente). Probado con pruebas automatizadas (jsdom) simulando clics reales. |
-| `modulo4.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M5. *(Pendiente: verificar si necesita el mismo parche defensivo de "Volver" que M3)* |
-| `modulo5.html` | ✅ Listo | PDF embebido, 7 preguntas, desbloquea M6. *(Pendiente: verificar mismo parche)* |
-| `modulo6.html` | ✅ Listo | PDF embebido, 7 preguntas, Certificado Final. *(Pendiente: verificar mismo parche)* |
+| `modulo2.html` | ✅ Listo | Popup eliminado, botón Ir a M3 corregido, respuestas mezcladas, desbloquea M3 al aprobar. Además (sesión 3): restaura estado "completado" al revisitar |
+| `modulo3.html` | ✅ Listo | PDF real embebido (guia_modulo3_imprimible.pdf, verificado byte a byte), botón "Volver a M2" otorga acceso defensivo, restaura estado "completado" al revisitar |
+| `modulo4.html` | ✅ Listo (reparado sesión 3) | Tenía JS roto al final del archivo (funciones duplicadas/mezcladas, variable fuera de scope) que probablemente rompía todo el script de la página; no tenía botón de descarga de PDF. Se reconstruyó limpio, se agregó botón de descarga, acceso defensivo al volver a M3, y restauración de estado completado |
+| `modulo5.html` | ✅ Listo (reparado sesión 3) | Mismo bug que M4: JS roto al final (fragmentos duplicados de `descargarMaterial()`) y sin botón de descarga. El PDF embebido ya era el real (no placeholder). Reparado con el mismo patrón: botón PDF, acceso defensivo al volver a M4, restauración de estado completado |
+| `modulo6.html` | ✅ Listo (reparado sesión 3) | Mismo bug que M4/M5. Es el módulo final: no desbloquea otro módulo, en su lugar restaura directamente el Certificado Final (`certbox-final`) visible al revisitar si `modulo6_completado` existe. PDF embebido ya era el real |
 | `academia_ia_pagina_ventas.html` | ⚠️ Pendiente | Pagos no integrados |
 
 ---
@@ -123,9 +120,8 @@ Cada módulo premium valida su propio acceso al cargar (`acceso_plan` o `acceso_
 - [ ] **modulo1.html** — Botón al Módulo 2 no guarda `acceso_modulo2` para usuarios VIP antes de redirigir
 - [ ] **Pagos** — Integración de Stripe o PayPal pendiente
 - [ ] **Soporte al cliente** — Pendiente de implementar
-- [ ] **Replicar parche de "Volver al Módulo X"** — Aplicar en modulo4.html, modulo5.html y modulo6.html el mismo patrón defensivo usado en modulo3.html (otorgar el flag de acceso del módulo anterior si el alumno ya tiene `acceso_plan` o acceso al módulo actual), para evitar rebotes a la página de pago
-- [ ] **Confirmar despliegue** — Verificar que el `modulo3.html` corregido en esta sesión esté efectivamente subido/commiteado al repo de GitHub y publicado en GitHub Pages (se detectó posible desfase entre archivo local y el publicado)
 - [ ] **Diagnóstico general** — Revisar qué dejó de funcionar tras migraciones anteriores
+- [ ] **Despliegue** — Confirmar que TODOS los archivos corregidos (M2, M3, M4, M5, M6) se suban al repo de GitHub; el sitio en vivo (GitHub Pages) puede seguir mostrando versiones viejas hasta que el usuario haga el push/commit manualmente
 
 ---
 
@@ -135,7 +131,12 @@ Cada módulo premium valida su propio acceso al cargar (`acceso_plan` o `acceso_
 - GitHub Pages sirve los archivos estáticos directamente
 - Firebase se usa solo para autenticación en la página de ventas/login
 - **Firebase init debe estar en el `<head>`**, no al final del body
-- Cada módulo premium valida su propio acceso en un IIFE al cargar; si el flag correspondiente no está en `sessionStorage`, redirige a `academia_ia_pagina_ventas.html#planes-pago`. Tener esto en cuenta al diagnosticar "rebotes a pago" inesperados en botones de navegación interna.
+
+### Patrones de fix ya aplicados en M2/M3/M4 (replicar en M5/M6)
+1. **Acceso defensivo al navegar "hacia atrás":** cada módulo valida su propio `acceso_moduloN` al cargar y redirige a la página de pago si falta. Si el alumno navega de un módulo al anterior sin tener ese flag guardado (típicamente por el bug de VIP en modulo1.html), lo rebota a pagos aunque sí tenga acceso. Fix: el botón "← Volver al Módulo N-1" tiene un listener que otorga `acceso_moduloN-1` si el alumno ya tiene `acceso_plan` o `acceso_moduloN`.
+2. **Restauración de estado "completado" al revisitar:** por diseño original, cada módulo siempre arrancaba desde cero (video sin ver, evaluación sin hacer) aunque el alumno ya lo hubiera aprobado antes. Fix: al cargar, si existe `moduloN_completado` en sessionStorage, se restaura visualmente el 100% de progreso, se deshabilita el botón de evaluación, y se muestra directamente el desbloqueo del módulo siguiente (sin scroll automático, usando `mostrarSiguienteModulo(true)`).
+3. **Cuidado con JS duplicado/roto:** modulo4.html tenía fragmentos de al menos tres versiones distintas de `descargarMaterial()` pegadas una tras otra al final del `<script>`, con llaves sueltas y una variable fuera de scope. Esto es un **error de sintaxis que rompe TODO el script de la página**, no solo la descarga. Si un módulo reporta múltiples fallas simultáneas (botones que no responden, evaluación que no aparece, etc.), sospechar de este patrón y revisar el final del archivo con `node --check` sobre el contenido del `<script>`.
+4. **Verificación de PDFs:** al reemplazar el PDF placeholder por el PDF real, siempre decodificar el base64 embebido y compararlo byte a byte (`==`) contra el archivo original subido, para confirmar que no hubo corrupción en el proceso.
 
 ---
 
@@ -153,12 +154,19 @@ Cada módulo premium valida su propio acceso al cargar (`acceso_plan` o `acceso_
 - 📁 Archivos modificados: modulo2.html
 
 ### 2026-06-30 (sesión 3)
-- 🔍 Diagnóstico de modulo3.html: el archivo subido ya contenía 5 correcciones previas (comentarios `// FIX 1-5`). Se verificó con pruebas automatizadas (jsdom) que PDF descargable, botón de evaluación, certificado y desbloqueo de Módulo 4 **ya funcionaban correctamente**.
-- ✅ modulo3.html — Identificada causa real de "Volver al Módulo 2 muestra el formulario de pago": el candado de acceso propio de `modulo2.html` exige `acceso_modulo2`, que puede faltar por el bug VIP pendiente de `modulo1.html`.
-- ✅ modulo3.html — Aplicado parche defensivo: al hacer clic en "Volver al Módulo 2", si el alumno tiene `acceso_plan` o `acceso_modulo3`, se le otorga `acceso_modulo2` antes de navegar.
-- ⚠️ Pendiente nuevo: replicar este mismo parche defensivo en modulo4.html, modulo5.html y modulo6.html
-- ⚠️ Pendiente nuevo: confirmar que el modulo3.html corregido esté realmente publicado en GitHub Pages (posible desfase entre repo y archivo de trabajo)
-- 📁 Archivos modificados: modulo3.html
+- ✅ modulo2.html y modulo3.html — Diagnosticado que "no aparece completado al volver" era un bug real: los módulos nunca revisaban `moduloN_completado` al cargar. Se agregó lógica de restauración de estado completado en ambos.
+- ✅ modulo3.html — Confirmado (usuario probaba el sitio en vivo, no el archivo entregado) que el PDF faltante era por falta de despliegue, no por bug de código.
+- ✅ modulo3.html — Reemplazado el PDF placeholder por `guia_modulo3_imprimible.pdf` real (verificado byte a byte)
+- ✅ modulo4.html — Detectado y reparado JS roto al final del archivo (fragmentos duplicados de `descargarMaterial()`, llaves sueltas, variable `blob` fuera de scope) que rompía todo el script de la página
+- ✅ modulo4.html — Agregado botón "Descargar Guía PDF" que no existía en el HTML original
+- ✅ modulo4.html — Verificado que el PDF ya embebido coincidía byte a byte con `guia_modulo4_imprimible.pdf`
+- ✅ modulo4.html — Aplicado acceso defensivo al botón "Volver al Módulo 3" y restauración de estado completado
+- ⚠️ Pendiente — modulo5.html y modulo6.html sin revisar; probable mismo patrón de bugs que modulo4.html
+- ⚠️ Pendiente — Confirmar que el usuario suba (git push) los archivos corregidos a GitHub, ya que el sitio en vivo seguía mostrando versiones viejas
+- 📁 Archivos modificados: modulo2.html, modulo3.html, modulo4.html
+- ✅ modulo5.html — Confirmado el mismo patrón de JS roto que modulo4.html (fragmentos duplicados de `descargarMaterial()`); reparado y agregado botón de descarga PDF, acceso defensivo al volver a M4, restauración de estado completado. PDF embebido ya era el real
+- ✅ modulo6.html — Mismo patrón de JS roto, mismo arreglo. Al ser el módulo final, la restauración de estado completado muestra directamente el Certificado Final (`certbox-final`) en vez de desbloquear un módulo siguiente
+- 📁 Archivos modificados (sesión 3 completa): modulo2.html, modulo3.html, modulo4.html, modulo5.html, modulo6.html
 
 <!--
 PLANTILLA para nueva entrada de historial:
