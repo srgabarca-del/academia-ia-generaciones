@@ -397,7 +397,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       <div style="margin-bottom:8px;"><span style="font-size:.8rem;color:#757575;display:block;">Correo</span><span id="c-email" style="font-size:.95rem;font-weight:700;"></span></div>
       <div><span style="font-size:.8rem;color:#757575;display:block;">Módulo desbloqueado</span><span id="c-mod" style="font-size:.95rem;font-weight:700;color:#00897B;"></span></div>
     </div>
-    <a id="btn-login-conf" href="login.html" style="display:block;background:#6C3FC4;color:#fff;padding:14px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Iniciar sesión y entrar al módulo</a>
+    <a id="btn-login-conf" href="#" style="display:block;background:#6C3FC4;color:#fff;padding:14px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Entrar al módulo</a>
     <button onclick="document.getElementById('mconf').classList.remove('open')" style="width:100%;padding:12px;background:#E0E0E0;color:#555;border:none;border-radius:12px;cursor:pointer;font-size:.9rem;font-weight:600;">📋 Guardar y cerrar</button>
   </div>
 </div>
@@ -596,6 +596,7 @@ document.getElementById('btn-pay').addEventListener('click', function() {
     sessionStorage.setItem('alumno_nombre', nombre_al);
     document.getElementById('c-email').textContent=eml;
     document.getElementById('c-mod').textContent=info.mod;
+    document.getElementById('btn-login-conf').href=info.archivo;
     document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
     document.getElementById('mpago').classList.remove('open');
     document.getElementById('mconf').classList.add('open');
