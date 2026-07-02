@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-07-01 (sesión 5)
+> **Última actualización:** 2026-07-01 (sesión 6)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -109,8 +109,8 @@ sessionStorage.setItem('acceso_modulo6', '1');
 ## 📋 Estado actual de cada archivo
 | Archivo | Estado | Notas |
 |---------|--------|-------|
-| `modulo1.html` | ⚠️ Pendiente | Botón al Módulo 2 no guarda `acceso_modulo2` para VIPs (pendiente). Reemplazado el placeholder `Material_Alumno_Modulo1.docx` por el PDF real `guia_modulo1_imprimible.pdf`. ✅ `cerrarSesion()` corregido: ahora redirige a `academia_ia_pagina_ventas.html` (antes iba a `login.html`). ✅ Agregada regla `@media print` para que el certificado imprima solo el cuadro, no toda la página |
-| `modulo2.html` | ✅ Listo | Popup eliminado, respuestas mezcladas, restaura estado "completado" al revisitar. ✅ Agregado botón "Salir". ✅ **Corregido bug de seguridad:** al aprobar el examen ya NO se otorga `acceso_modulo3` automáticamente — antes cualquiera que comprara solo el Módulo 2 pasaba gratis al Módulo 3 al completarlo. ✅ Agregada regla `@media print` para el certificado |
+| `modulo1.html` | ✅ Listo | Reemplazado el placeholder `Material_Alumno_Modulo1.docx` por el PDF real `guia_modulo1_imprimible.pdf`. ✅ `cerrarSesion()` corregido: ahora redirige a `academia_ia_pagina_ventas.html`. ✅ Agregada regla `@media print`. ✅ **(sesión 6) Corregido bug de VIP:** el botón "Continuar al Módulo 2" ya no manda siempre a pagos — ahora revisa `acceso_plan`/`acceso_modulo2` primero y va directo a `modulo2.html` si ya tiene acceso |
+| `modulo2.html` | ✅ Listo | Popup eliminado, respuestas mezcladas, restaura estado "completado" al revisitar. ✅ Agregado botón "Salir". ✅ Corregido bug de seguridad: al aprobar el examen ya NO se otorga `acceso_modulo3` automáticamente. ✅ Agregada regla `@media print`. ✅ **(sesión 6) Corregido bug real reportado por el usuario:** el botón "Comprar Módulo 3" (`mostrarAccesoMod3()`) era un `<a href>` plano que nunca guardaba `ir_a` en sessionStorage, por lo que el formulario de pago nunca se abría automáticamente en la página de ventas. Ahora es un botón que llama a `comprarModulo3()`, que guarda `ir_a='modulo3'` antes de navegar — mismo patrón de modulo3/4/5.html |
 | `modulo3.html` | ✅ Listo | PDF real embebido, botón "Volver a M2" con acceso defensivo, restaura estado "completado". Botón de descarga de PDF reubicado entre tarjetas y evaluación. Botón "Salir" ya estaba. ✅ **Corregido el mismo bug de seguridad:** al aprobar el examen ya NO se otorga `acceso_modulo4` automáticamente (antes decía "FIX 3: Desbloquear Módulo 4 al aprobar", pero en realidad regalaba el módulo). ✅ Agregada regla `@media print` para el certificado |
 | `modulo4.html` | ✅ Listo | JS reparado (sesión 3), botón de descarga, acceso defensivo al volver a M3, restauración de estado completado. ✅ Agregado botón "Salir". ✅ Agregada regla `@media print` para el certificado. Revisado: NO tenía el bug de auto-otorgar acceso al módulo siguiente (ya estaba bien) |
 | `modulo5.html` | ✅ Listo | JS reparado (sesión 3), botón de descarga, acceso defensivo al volver a M4, restauración de estado completado. ✅ Agregado botón "Salir". ✅ Agregada regla `@media print` para el certificado. Revisado: NO tenía el bug de auto-otorgar acceso al módulo siguiente (ya estaba bien) |
@@ -123,12 +123,11 @@ sessionStorage.setItem('acceso_modulo6', '1');
 ## 🔧 Pendientes activos
 > Marca con ✅ cuando se resuelvan y muévelos al Historial.
 
-- [ ] **modulo1.html** — Botón al Módulo 2 no guarda `acceso_modulo2` para usuarios VIP antes de redirigir
 - [ ] **Pagos** — Integración de Stripe o PayPal pendiente (el flujo de pago sigue siendo simulado)
 - [ ] **Soporte al cliente** — Pendiente de implementar
 - [ ] **Diagnóstico general** — Revisar qué dejó de funcionar tras migraciones anteriores
 - [ ] **Despliegue** — Confirmar que TODOS los archivos corregidos (M1, M2, M3, M4, M5, M6, página de ventas, login.html) se suban al repo de GitHub; el sitio en vivo (GitHub Pages) puede seguir mostrando versiones viejas hasta que el usuario haga el push/commit manualmente
-- [ ] **Revisar módulos 4, 5 y 6 por el mismo bug del auto-otorgamiento de acceso** — ya se confirmó que M4 y M5 NO lo tienen, pero conviene una revisión rápida si se vuelve a tocar ese código en el futuro (ver nota técnica 7)
+- [ ] **Prueba pendiente del usuario (sesión 6):** repetir en incógnito el flujo completo — (a) usuario nuevo: M2 → M3 debe abrir el formulario de pago correctamente; (b) usuario VIP (`srg.abarca@gmail.com`, correo ya corregido): M1 → M2 debe entrar directo sin pedir pago
 
 ---
 
@@ -209,6 +208,15 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - ✅ **Bug de seguridad encontrado y corregido:** en `modulo2.html` y `modulo3.html`, al aprobar el examen se otorgaba automáticamente acceso al módulo siguiente (`acceso_modulo3` / `acceso_modulo4`) sin verificar pago. Esto permitía comprar solo un módulo y avanzar gratis a los siguientes con solo aprobar cada examen. Corregido en ambos archivos (ver nota técnica 7). Se revisó modulo1.html, modulo4.html y modulo5.html y no tenían este bug
 - ⚠️ Pendiente — Confirmar despliegue (git push) de TODOS los archivos tocados en esta sesión: modulo1.html, modulo2.html, modulo3.html, modulo4.html, modulo5.html, modulo6.html, login.html
 - 📁 Archivos modificados: modulo1.html, modulo2.html, modulo3.html, modulo4.html, modulo5.html, modulo6.html, login.html
+
+### 2026-07-01 (sesión 6)
+- ✅ **VIP:** corregido el correo VIP incorrecto `srgabarca-del@gmail.com` → `srg.abarca@gmail.com` en `login.html`, `academia_ia_pagina_ventas.html` y este CLAUDE.md
+- ✅ **academia_ia_pagina_ventas.html — VIP en registro gratuito:** se agregó reconocimiento de la lista `VIP_EMAILS` también en el formulario de registro gratuito del Módulo 1 (antes solo existía en `login.html`). Si el correo es VIP, se otorga `acceso_plan` + los 6 módulos de inmediato al registrarse, sin esperar la verificación de correo (el correo de verificación se sigue enviando en segundo plano, pero ya no bloquea)
+- ✅ **Bug real reportado por el usuario — Módulo 2 → 3 sin formulario de pago:** el botón "Comprar Módulo 3" en `modulo2.html` (`mostrarAccesoMod3()`) era un `<a href="...#planes-pago">` plano que nunca guardaba `ir_a` en sessionStorage. Por eso `academia_ia_pagina_ventas.html` no sabía qué módulo abrir automáticamente y el usuario solo veía la sección de precios sin que se abriera ningún formulario. Corregido: ahora es un botón que llama a `comprarModulo3()`, que guarda `ir_a='modulo3'` antes de navegar — mismo patrón que ya funcionaba en modulo3/4/5.html
+- ✅ **Bug real reportado por el usuario — VIP forzado a pagar el Módulo 2:** en `modulo1.html`, el botón "Continuar al Módulo 2" mandaba siempre a la página de pagos sin revisar si el alumno ya tenía acceso (VIP o compra previa). Corregido: ahora revisa `acceso_plan`/`acceso_modulo2` antes de decidir a dónde ir
+- ⚠️ Pendiente — El usuario va a probar de nuevo en incógnito ambos flujos (usuario nuevo M2→M3, y VIP M1→M2) en cuanto haga el despliegue
+- ⚠️ Pendiente — Confirmar despliegue (git push) de: modulo1.html, modulo2.html, login.html, academia_ia_pagina_ventas.html (todos modificados en esta sesión)
+- 📁 Archivos modificados: modulo1.html, modulo2.html, login.html, academia_ia_pagina_ventas.html, CLAUDE.md
 
 <!--
 PLANTILLA para nueva entrada de historial:
