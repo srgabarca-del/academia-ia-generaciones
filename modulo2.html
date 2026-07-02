@@ -253,8 +253,17 @@ function mostrarAccesoMod3() {
     el.innerHTML = '<a href="modulo3.html" style="display:inline-block;background:#00897B;color:#fff;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;">🚀 Ir al Módulo 3 →</a>';
   } else {
     el.innerHTML = '<p style="color:#555;font-size:.88rem;margin-bottom:12px;">Para acceder al Módulo 3 necesitas comprarlo o suscribirte al Plan Mensual.</p>'
-      + '<a href="academia_ia_pagina_ventas.html#planes-pago" style="display:inline-block;background:#E91E63;color:#fff;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;">💳 Comprar Módulo 3 — $9 USD</a>';
+      + '<button onclick="comprarModulo3()" style="background:#E91E63;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">💳 Comprar Módulo 3 — $9 USD</button>';
   }
+}
+
+// FIX: guardar ir_a ANTES de navegar, igual que en modulo3/4/5, para que
+// academia_ia_pagina_ventas.html abra automáticamente el formulario de pago del Módulo 3.
+// Antes este enlace era un <a> plano que no guardaba ir_a, por lo que el usuario
+// llegaba a la página de ventas sin que se abriera ningún formulario.
+function comprarModulo3() {
+  sessionStorage.setItem('ir_a', 'modulo3');
+  window.location.href = 'academia_ia_pagina_ventas.html#planes-pago';
 }
 
 function reiniciar() {
