@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-07-01 (sesión 4)
+> **Última actualización:** 2026-07-01 (sesión 5)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -16,7 +16,7 @@
 ## 👑 Emails VIP (acceso completo sin pago)
 - crisjus@hotmail.com
 - tiosergio98@hotmail.com
-- srgabarca-del@gmail.com
+- srg.abarca@gmail.com
 
 ---
 
@@ -28,7 +28,8 @@ modulo3.html                    ← Premium
 modulo4.html                    ← Premium
 modulo5.html                    ← Premium
 modulo6.html                    ← Premium (FINAL)
-academia_ia_pagina_ventas.html  ← Página de ventas / login
+academia_ia_pagina_ventas.html  ← Página de ventas / registro / confirmación de compra
+login.html                      ← Página de inicio de sesión (Firebase Auth real: email+contraseña, VIP, recuperar contraseña)
 CLAUDE.md                       ← Este archivo de contexto
 ```
 
@@ -85,7 +86,7 @@ sessionStorage.setItem('acceso_modulo6', '1');
 | 3 | 7 | 5 | q1:A, q2:C, q3:B, q4:D, q5:C, q6:B, q7:D |
 | 4 | 7 | 5 | q1:B, q2:C, q3:A, q4:D, q5:B, q6:C, q7:A |
 | 5 | 7 | 5 | q1:C, q2:A, q3:D, q4:B, q5:C, q6:A, q7:D |
-| 6 | 7 | 5 | q1:B, q2:D, q3:A, q4:C, q5:B, q6:D, q7:A |
+| 6 | 7 | 5 | q1:B, q2:D, q3:D, q4:A, q5:B, q6:D, q7:D |
 
 ---
 
@@ -108,13 +109,14 @@ sessionStorage.setItem('acceso_modulo6', '1');
 ## 📋 Estado actual de cada archivo
 | Archivo | Estado | Notas |
 |---------|--------|-------|
-| `modulo1.html` | ⚠️ Pendiente | Botón al Módulo 2 no guarda `acceso_modulo2` para VIPs. Además (sesión 4): reemplazado el placeholder `Material_Alumno_Modulo1.docx` por el PDF real `guia_modulo1_imprimible.pdf` (verificado byte a byte). ⚠️ Su `cerrarSesion()` redirige a `login.html`, inconsistente con el resto de módulos que usan `academia_ia_pagina_ventas.html` — pendiente de corregir |
-| `modulo2.html` | ✅ Listo | Popup eliminado, botón Ir a M3 corregido, respuestas mezcladas, desbloquea M3 al aprobar. Además (sesión 3): restaura estado "completado" al revisitar. ⚠️ Pendiente (sesión 4): agregar botón "Salir" |
-| `modulo3.html` | ✅ Listo | PDF real embebido (guia_modulo3_imprimible.pdf, verificado byte a byte), botón "Volver a M2" otorga acceso defensivo, restaura estado "completado" al revisitar. Además (sesión 4): botón de descarga de PDF movido para quedar entre las tarjetas de secciones y el botón de evaluación; agregado botón "Salir" (`cerrarSesion()`, redirige a `academia_ia_pagina_ventas.html`) |
-| `modulo4.html` | ✅ Listo (reparado sesión 3) | Tenía JS roto al final del archivo (funciones duplicadas/mezcladas, variable fuera de scope) que probablemente rompía todo el script de la página; no tenía botón de descarga de PDF. Se reconstruyó limpio, se agregó botón de descarga, acceso defensivo al volver a M3, y restauración de estado completado. ⚠️ Pendiente (sesión 4): agregar botón "Salir" |
-| `modulo5.html` | ✅ Listo (reparado sesión 3) | Mismo bug que M4: JS roto al final (fragmentos duplicados de `descargarMaterial()`) y sin botón de descarga. El PDF embebido ya era el real (no placeholder). Reparado con el mismo patrón: botón PDF, acceso defensivo al volver a M4, restauración de estado completado. ⚠️ Pendiente (sesión 4): agregar botón "Salir" |
-| `modulo6.html` | ✅ Listo (reparado sesión 3) | Mismo bug que M4/M5. Es el módulo final: no desbloquea otro módulo, en su lugar restaura directamente el Certificado Final (`certbox-final`) visible al revisitar si `modulo6_completado` existe. PDF embebido ya era el real. ⚠️ Pendiente (sesión 4): agregar botón "Salir" |
-| `academia_ia_pagina_ventas.html` | ⚠️ Pendiente | Pagos no integrados (el flujo de compra sigue siendo simulado con `setTimeout`, no hay pasarela real de Stripe/PayPal). Además (sesión 4): quitada la contraseña temporal inútil del formulario de compra de módulo; el botón de confirmación de compra ahora entra directo al módulo comprado en vez de ir a `login.html`; el registro gratuito del Módulo 1 ahora exige verificación real de correo (no solo enviarlo) antes de otorgar `acceso_modulo1` |
+| `modulo1.html` | ⚠️ Pendiente | Botón al Módulo 2 no guarda `acceso_modulo2` para VIPs (pendiente). Reemplazado el placeholder `Material_Alumno_Modulo1.docx` por el PDF real `guia_modulo1_imprimible.pdf`. ✅ `cerrarSesion()` corregido: ahora redirige a `academia_ia_pagina_ventas.html` (antes iba a `login.html`). ✅ Agregada regla `@media print` para que el certificado imprima solo el cuadro, no toda la página |
+| `modulo2.html` | ✅ Listo | Popup eliminado, respuestas mezcladas, restaura estado "completado" al revisitar. ✅ Agregado botón "Salir". ✅ **Corregido bug de seguridad:** al aprobar el examen ya NO se otorga `acceso_modulo3` automáticamente — antes cualquiera que comprara solo el Módulo 2 pasaba gratis al Módulo 3 al completarlo. ✅ Agregada regla `@media print` para el certificado |
+| `modulo3.html` | ✅ Listo | PDF real embebido, botón "Volver a M2" con acceso defensivo, restaura estado "completado". Botón de descarga de PDF reubicado entre tarjetas y evaluación. Botón "Salir" ya estaba. ✅ **Corregido el mismo bug de seguridad:** al aprobar el examen ya NO se otorga `acceso_modulo4` automáticamente (antes decía "FIX 3: Desbloquear Módulo 4 al aprobar", pero en realidad regalaba el módulo). ✅ Agregada regla `@media print` para el certificado |
+| `modulo4.html` | ✅ Listo | JS reparado (sesión 3), botón de descarga, acceso defensivo al volver a M3, restauración de estado completado. ✅ Agregado botón "Salir". ✅ Agregada regla `@media print` para el certificado. Revisado: NO tenía el bug de auto-otorgar acceso al módulo siguiente (ya estaba bien) |
+| `modulo5.html` | ✅ Listo | JS reparado (sesión 3), botón de descarga, acceso defensivo al volver a M4, restauración de estado completado. ✅ Agregado botón "Salir". ✅ Agregada regla `@media print` para el certificado. Revisado: NO tenía el bug de auto-otorgar acceso al módulo siguiente (ya estaba bien) |
+| `modulo6.html` | ✅ Listo | JS reparado (sesión 3). Es el módulo final: restaura el Certificado Final (`certbox-final`) al revisitar. ✅ Agregado botón "Salir". ✅ Agregada regla `@media print` para el certificado. ✅ **Corregidas 3 respuestas incorrectas en la evaluación**: pregunta 3 (era A, es D), pregunta 4 (era C, es A), pregunta 7 (era A, es D) |
+| `academia_ia_pagina_ventas.html` | ⚠️ Pendiente | Pagos no integrados (flujo de compra simulado con `setTimeout`). Contraseña temporal inútil eliminada del flujo de compra de módulo individual. Botón de confirmación de compra entra directo al módulo comprado. Registro gratuito del Módulo 1 exige verificación real de correo antes de otorgar acceso |
+| `login.html` | ✅ Listo (recién revisado) | Ya existía en el sitio (el usuario lo subió por primera vez a esta conversación). Es una página de login **real y funcional**: usa `signInWithEmailAndPassword` de Firebase, detecta emails VIP y les da acceso completo, tiene recuperación de contraseña (`sendPasswordResetEmail`), y redirige al módulo correcto usando `pago_archivo` guardado en `sessionStorage`. ✅ Se le agregó un enlace "← Volver al inicio" (a `academia_ia_pagina_ventas.html`) para quien entra por error y no quiere iniciar sesión |
 
 ---
 
@@ -122,12 +124,11 @@ sessionStorage.setItem('acceso_modulo6', '1');
 > Marca con ✅ cuando se resuelvan y muévelos al Historial.
 
 - [ ] **modulo1.html** — Botón al Módulo 2 no guarda `acceso_modulo2` para usuarios VIP antes de redirigir
-- [ ] **modulo1.html** — `cerrarSesion()` redirige a `login.html`; debería redirigir a `academia_ia_pagina_ventas.html` como el resto de módulos, para mantener consistencia
-- [ ] **Botón "Salir"** — Falta agregarlo en modulo2.html, modulo4.html, modulo5.html y modulo6.html (ya está en modulo1.html y modulo3.html)
 - [ ] **Pagos** — Integración de Stripe o PayPal pendiente (el flujo de pago sigue siendo simulado)
 - [ ] **Soporte al cliente** — Pendiente de implementar
 - [ ] **Diagnóstico general** — Revisar qué dejó de funcionar tras migraciones anteriores
-- [ ] **Despliegue** — Confirmar que TODOS los archivos corregidos (M1, M2, M3, M4, M5, M6, página de ventas) se suban al repo de GitHub; el sitio en vivo (GitHub Pages) puede seguir mostrando versiones viejas hasta que el usuario haga el push/commit manualmente
+- [ ] **Despliegue** — Confirmar que TODOS los archivos corregidos (M1, M2, M3, M4, M5, M6, página de ventas, login.html) se suban al repo de GitHub; el sitio en vivo (GitHub Pages) puede seguir mostrando versiones viejas hasta que el usuario haga el push/commit manualmente
+- [ ] **Revisar módulos 4, 5 y 6 por el mismo bug del auto-otorgamiento de acceso** — ya se confirmó que M4 y M5 NO lo tienen, pero conviene una revisión rápida si se vuelve a tocar ese código en el futuro (ver nota técnica 7)
 
 ---
 
@@ -144,7 +145,17 @@ sessionStorage.setItem('acceso_modulo6', '1');
 3. **Cuidado con JS duplicado/roto:** modulo4.html tenía fragmentos de al menos tres versiones distintas de `descargarMaterial()` pegadas una tras otra al final del `<script>`, con llaves sueltas y una variable fuera de scope. Esto es un **error de sintaxis que rompe TODO el script de la página**, no solo la descarga. Si un módulo reporta múltiples fallas simultáneas (botones que no responden, evaluación que no aparece, etc.), sospechar de este patrón y revisar el final del archivo con `node --check` sobre el contenido del `<script>`.
 4. **Verificación de PDFs:** al reemplazar el PDF placeholder por el PDF real, siempre decodificar el base64 embebido y compararlo byte a byte (`==`) contra el archivo original subido, para confirmar que no hubo corrupción en el proceso.
 5. **Verificación real de correo electrónico (sesión 4):** enviar el correo con `sendEmailVerification()` no es suficiente — el bug original otorgaba `acceso_modulo1` inmediatamente después de crear la cuenta, sin esperar a que el usuario confirmara el enlace, por lo que cualquiera podía registrarse con un correo inventado y entrar igual. Fix aplicado en `academia_ia_pagina_ventas.html`: el acceso NO se otorga al registrarse; se guarda la referencia al usuario de Firebase (`usuarioActual`) y se muestra un botón "Ya verifiqué mi correo — Continuar" que hace `usuarioActual.reload()` y solo si `usuarioActual.emailVerified === true` se guarda `acceso_modulo1` y se redirige al módulo. Se agregó también un botón "Reenviar correo de verificación". Este patrón debería replicarse en cualquier otro flujo de registro que se agregue más adelante.
-6. **Botón "Salir" (cerrarSesion):** limpia `sessionStorage.clear()` y redirige a `academia_ia_pagina_ventas.html` (la página de login/ventas real del sitio). Ojo: `modulo1.html` tiene una versión antigua que redirige a `login.html` — no replicar ese destino al agregar el botón en los módulos restantes, usar `academia_ia_pagina_ventas.html`.
+6. **Botón "Salir" (cerrarSesion):** limpia `sessionStorage.clear()` y redirige a `academia_ia_pagina_ventas.html` (la página de login/ventas real del sitio). Ya aplicado en los 6 módulos.
+7. **⚠️ CRÍTICO — Nunca otorgar acceso al módulo siguiente al aprobar un examen:** se encontró (y corrigió) un bug de seguridad real en `modulo2.html` y `modulo3.html`: al aprobar la evaluación, el código guardaba `acceso_moduloN+1` en `sessionStorage` de forma incondicional, sin revisar si el alumno había pagado ese módulo o tenía el plan mensual. Esto permitía comprar solo un módulo individual y avanzar gratis por todos los siguientes con solo aprobar cada examen. El patrón correcto (el que ya tenían `modulo4.html` y `modulo5.html` de forma nativa) es: al aprobar, solo guardar `moduloN_completado` — la función que muestra el botón de "Ir al módulo siguiente" (`mostrarSiguienteModulo` / `mostrarAccesoMod3`) debe seguir revisando únicamente `acceso_plan` o `acceso_moduloN+1` ya existentes, sin escribir esa clave por su cuenta. Si se toca este código de nuevo (por ejemplo al agregar un Módulo 7), revisar con cuidado que no se reintroduzca este patrón.
+8. **Impresión de certificados (`@media print`):** por defecto, el botón "🖨️ Imprimir / Guardar" (`window.print()`) imprimía toda la página (nav, videos, tarjetas, etc.), no solo el certificado. Se agregó esta regla CSS en los 6 módulos, justo después de la definición de `.cert-box{...}`:
+   ```css
+   @media print {
+     body * { visibility: hidden; }
+     .cert-box, .cert-box * { visibility: visible; }
+     .cert-box { position: absolute; top: 0; left: 0; width: 100%; margin: 0; }
+   }
+   ```
+   Funciona porque todos los módulos usan la misma clase `.cert-box` para el contenedor del certificado (incluido `modulo6.html`, aunque su `id` sea `certbox-final` en vez de `certbox`). Replicar este mismo bloque si se agrega un certificado nuevo en el futuro.
 
 ---
 
@@ -188,6 +199,16 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - ⚠️ Pendiente — Agregar botón "Salir" en modulo2.html, modulo4.html, modulo5.html y modulo6.html (aún no se han subido en esta sesión)
 - ⚠️ Pendiente — Confirmar despliegue (git push) de modulo1.html, modulo3.html y academia_ia_pagina_ventas.html actualizados; el sitio en vivo puede seguir mostrando versiones viejas
 - 📁 Archivos modificados: modulo1.html, modulo3.html, academia_ia_pagina_ventas.html
+
+### 2026-07-01 (sesión 5)
+- ✅ modulo2.html, modulo4.html, modulo5.html, modulo6.html — Agregado botón "🚪 Salir" en el `<nav>` con función `cerrarSesion()` (redirige a `academia_ia_pagina_ventas.html`), igual que modulo1.html y modulo3.html. Ahora los 6 módulos son consistentes
+- ✅ modulo1.html — Corregido `cerrarSesion()`: ya no redirige a `login.html`, ahora redirige a `academia_ia_pagina_ventas.html` en ambas ramas (con y sin `fbAuth`)
+- ✅ El usuario subió `login.html` por primera vez a la conversación — se confirmó que **sí existe y sí funciona de verdad** (Firebase Auth real, lista VIP, recuperación de contraseña). Se le agregó un enlace "← Volver al inicio" para quien entra sin querer y no desea llenar el formulario
+- ✅ modulo1.html a modulo6.html — Agregada regla `@media print` (ver nota técnica 8) para que el botón "Imprimir / Guardar" del certificado imprima solo el cuadro del certificado, no toda la página
+- ✅ modulo6.html — Corregidas 3 respuestas incorrectas en `RESP`: pregunta 3 (era A, correcta es D), pregunta 4 (era C, correcta es A), pregunta 7 (era A, correcta es D). Verificado contra el texto real de las opciones antes de aplicar
+- ✅ **Bug de seguridad encontrado y corregido:** en `modulo2.html` y `modulo3.html`, al aprobar el examen se otorgaba automáticamente acceso al módulo siguiente (`acceso_modulo3` / `acceso_modulo4`) sin verificar pago. Esto permitía comprar solo un módulo y avanzar gratis a los siguientes con solo aprobar cada examen. Corregido en ambos archivos (ver nota técnica 7). Se revisó modulo1.html, modulo4.html y modulo5.html y no tenían este bug
+- ⚠️ Pendiente — Confirmar despliegue (git push) de TODOS los archivos tocados en esta sesión: modulo1.html, modulo2.html, modulo3.html, modulo4.html, modulo5.html, modulo6.html, login.html
+- 📁 Archivos modificados: modulo1.html, modulo2.html, modulo3.html, modulo4.html, modulo5.html, modulo6.html, login.html
 
 <!--
 PLANTILLA para nueva entrada de historial:

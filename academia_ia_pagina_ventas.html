@@ -486,6 +486,17 @@ document.getElementById('eye2').addEventListener('click', function() {
 // Submit
 var usuarioActual = null;
 
+// ── LISTA VIP — correos con acceso completo gratuito (misma lista que login.html) ────
+var VIP_EMAILS = [
+  'crisjus@hotmail.com',
+  'tiosergio98@hotmail.com',
+  'srg.abarca@gmail.com'
+];
+function esVIP(email) {
+  return VIP_EMAILS.indexOf(email.toLowerCase().trim()) !== -1;
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 document.getElementById('btn-reg').addEventListener('click', function() {
   actualizar();
   if (this.disabled) return;
@@ -498,7 +509,12 @@ document.getElementById('btn-reg').addEventListener('click', function() {
     // Fallback sin Firebase: no hay forma de verificar el correo, se avisa y se da acceso igual
     sessionStorage.setItem('alumno_nombre', nombre);
     sessionStorage.setItem('alumno_email', email);
-    sessionStorage.setItem('acceso_modulo1', '1');
+    if (esVIP(email)) {
+      sessionStorage.setItem('acceso_plan', '1');
+      for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+    } else {
+      sessionStorage.setItem('acceso_modulo1', '1');
+    }
     document.getElementById('frm').style.display='none';
     document.getElementById('exito-nombre').textContent=nombre;
     document.getElementById('exito').style.display='block';
@@ -514,24 +530,39 @@ document.getElementById('btn-reg').addEventListener('click', function() {
       usuarioActual = cred.user;
       return cred.user.updateProfile({ displayName: nombre })
         .then(function() {
-          return cred.user.sendEmailVerification();
-        })
-        .then(function() {
           sessionStorage.setItem('alumno_nombre', nombre);
           sessionStorage.setItem('alumno_email',  email);
-          sessionStorage.setItem('email_verificado', 'pendiente');
           document.getElementById('frm').style.display='none';
-          // No se otorga acceso todavía: primero hay que confirmar el correo
-          document.getElementById('exito-nombre').textContent=nombre;
-          document.getElementById('exito').style.display='block';
-          document.getElementById('exito-msg').innerHTML = 
-            '📧 Te enviamos un correo de verificación a <strong>' + email + '</strong>.<br><br>' +
-            'Abre ese correo y haz clic en el enlace de confirmación. Cuando termines, vuelve aquí y presiona el botón de abajo.<br><br>' +
-            '<div style="background:#FFF8E1;border-left:4px solid #F57C00;padding:10px 14px;border-radius:6px;font-size:.88rem;color:#E65100;">' +
-            '⚠️ <strong>¿No lo encuentras?</strong> Revisa tu carpeta de <strong>Spam</strong> o <strong>Correo no deseado</strong> — a veces los correos automáticos llegan ahí.' +
-            '</div>';
-          document.getElementById('btn-verificar').style.display='block';
-          document.getElementById('btn-reenviar').style.display='block';
+          // ── Si es VIP, acceso completo inmediato, sin esperar verificación de correo ──
+          if (esVIP(email)) {
+            sessionStorage.setItem('acceso_plan', '1');
+            for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+            sessionStorage.setItem('email_verificado', 'si');
+            cred.user.sendEmailVerification().catch(function(){}); // opcional, no bloquea
+            document.getElementById('exito-nombre').textContent=nombre;
+            document.getElementById('exito').style.display='block';
+            document.getElementById('exito-msg').innerHTML = '👑 ¡Cuenta VIP reconocida! Ya tienes acceso completo a todos los módulos.';
+            var aVip=document.createElement('a');
+            aVip.href='modulo1.html'; aVip.textContent='🚀 Ir al Módulo 1 ahora';
+            aVip.style.cssText='display:block;text-align:center;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;';
+            document.getElementById('exito-msg').after(aVip);
+            return;
+          }
+          return cred.user.sendEmailVerification()
+            .then(function() {
+              sessionStorage.setItem('email_verificado', 'pendiente');
+              // No se otorga acceso todavía: primero hay que confirmar el correo
+              document.getElementById('exito-nombre').textContent=nombre;
+              document.getElementById('exito').style.display='block';
+              document.getElementById('exito-msg').innerHTML = 
+                '📧 Te enviamos un correo de verificación a <strong>' + email + '</strong>.<br><br>' +
+                'Abre ese correo y haz clic en el enlace de confirmación. Cuando termines, vuelve aquí y presiona el botón de abajo.<br><br>' +
+                '<div style="background:#FFF8E1;border-left:4px solid #F57C00;padding:10px 14px;border-radius:6px;font-size:.88rem;color:#E65100;">' +
+                '⚠️ <strong>¿No lo encuentras?</strong> Revisa tu carpeta de <strong>Spam</strong> o <strong>Correo no deseado</strong> — a veces los correos automáticos llegan ahí.' +
+                '</div>';
+              document.getElementById('btn-verificar').style.display='block';
+              document.getElementById('btn-reenviar').style.display='block';
+            });
         });
     })
     .catch(function(err) {
