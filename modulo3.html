@@ -260,8 +260,9 @@ document.getElementById('btn-env').addEventListener('click', function() {
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 3 completado! 🎉';
     certOK=true;
     sessionStorage.setItem('modulo3_completado','1');
-    // FIX 3: Desbloquear Módulo 4 al aprobar
-    sessionStorage.setItem('acceso_modulo4','1');
+    // FIX (bug de compra): antes se otorgaba acceso_modulo4 automáticamente aquí ("FIX 3"),
+    // lo que permitía pasar al Módulo 4 gratis sin comprarlo ni tener el plan mensual.
+    // Ahora mostrarSiguienteModulo() solo revisa lo que el alumno realmente ya tiene.
     setTimeout(mostrarSiguienteModulo, 1200);
   }else{
     rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';

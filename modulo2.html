@@ -231,7 +231,9 @@ document.getElementById('btn-env').addEventListener('click', function() {
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 2 completado! 🎉';
     certOK=true;
     sessionStorage.setItem('modulo2_completado','1');
-    sessionStorage.setItem('acceso_modulo3','1');
+    // FIX (bug de compra): antes se otorgaba acceso_modulo3 automáticamente aquí,
+    // lo que permitía pasar al Módulo 3 gratis sin comprarlo ni tener el plan mensual.
+    // Ahora mostrarAccesoMod3() solo revisa lo que el alumno realmente ya tiene.
     // Mostrar acceso al módulo 3
     setTimeout(function() {
       mostrarAccesoMod3();
