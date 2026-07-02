@@ -85,7 +85,7 @@ sessionStorage.setItem('acceso_modulo6', '1');
 | 2 | 5 | 4 | q1:C, q2:A, q3:D, q4:C, q5:A |
 | 3 | 7 | 5 | q1:A, q2:C, q3:B, q4:D, q5:C, q6:B, q7:D |
 | 4 | 7 | 5 | q1:B, q2:C, q3:A, q4:D, q5:B, q6:C, q7:A |
-| 5 | 7 | 5 | q1:C, q2:A, q3:D, q4:B, q5:C, q6:A, q7:D |
+| 5 | 7 | 5 | q1:C, q2:A, q3:D, q4:B, q5:C, q6:C, q7:D |
 | 6 | 7 | 5 | q1:B, q2:D, q3:D, q4:A, q5:B, q6:D, q7:D |
 
 ---
@@ -127,7 +127,6 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - [ ] **Soporte al cliente** — Pendiente de implementar
 - [ ] **Diagnóstico general** — Revisar qué dejó de funcionar tras migraciones anteriores
 - [ ] **Despliegue** — Confirmar que TODOS los archivos corregidos (M1, M2, M3, M4, M5, M6, página de ventas, login.html) se suban al repo de GitHub; el sitio en vivo (GitHub Pages) puede seguir mostrando versiones viejas hasta que el usuario haga el push/commit manualmente
-- [ ] **Prueba pendiente del usuario (sesión 6):** repetir en incógnito el flujo completo — (a) usuario nuevo: M2 → M3 debe abrir el formulario de pago correctamente; (b) usuario VIP (`srg.abarca@gmail.com`, correo ya corregido): M1 → M2 debe entrar directo sin pedir pago
 
 ---
 
@@ -214,9 +213,10 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - ✅ **academia_ia_pagina_ventas.html — VIP en registro gratuito:** se agregó reconocimiento de la lista `VIP_EMAILS` también en el formulario de registro gratuito del Módulo 1 (antes solo existía en `login.html`). Si el correo es VIP, se otorga `acceso_plan` + los 6 módulos de inmediato al registrarse, sin esperar la verificación de correo (el correo de verificación se sigue enviando en segundo plano, pero ya no bloquea)
 - ✅ **Bug real reportado por el usuario — Módulo 2 → 3 sin formulario de pago:** el botón "Comprar Módulo 3" en `modulo2.html` (`mostrarAccesoMod3()`) era un `<a href="...#planes-pago">` plano que nunca guardaba `ir_a` en sessionStorage. Por eso `academia_ia_pagina_ventas.html` no sabía qué módulo abrir automáticamente y el usuario solo veía la sección de precios sin que se abriera ningún formulario. Corregido: ahora es un botón que llama a `comprarModulo3()`, que guarda `ir_a='modulo3'` antes de navegar — mismo patrón que ya funcionaba en modulo3/4/5.html
 - ✅ **Bug real reportado por el usuario — VIP forzado a pagar el Módulo 2:** en `modulo1.html`, el botón "Continuar al Módulo 2" mandaba siempre a la página de pagos sin revisar si el alumno ya tenía acceso (VIP o compra previa). Corregido: ahora revisa `acceso_plan`/`acceso_modulo2` antes de decidir a dónde ir
-- ⚠️ Pendiente — El usuario va a probar de nuevo en incógnito ambos flujos (usuario nuevo M2→M3, y VIP M1→M2) en cuanto haga el despliegue
-- ⚠️ Pendiente — Confirmar despliegue (git push) de: modulo1.html, modulo2.html, login.html, academia_ia_pagina_ventas.html (todos modificados en esta sesión)
-- 📁 Archivos modificados: modulo1.html, modulo2.html, login.html, academia_ia_pagina_ventas.html, CLAUDE.md
+- ✅ **modulo5.html — Corregida respuesta incorrecta en la evaluación:** pregunta 6 (era A, correcta es C: "Compartiendo una computadora y eligiendo el tipo de proyecto juntos"). Verificado contra el texto real de las opciones antes de aplicar
+- ✅ **Confirmado por el usuario en incógnito (sitio en vivo, ya desplegado):** VIP entra directo a los módulos sin pedir pago; usuario nuevo M2→M3 abre correctamente el formulario de pago
+- ⚠️ Pendiente — Confirmar despliegue (git push) de: modulo1.html, modulo2.html, modulo5.html, login.html, academia_ia_pagina_ventas.html (todos modificados en esta sesión)
+- 📁 Archivos modificados: modulo1.html, modulo2.html, modulo5.html, login.html, academia_ia_pagina_ventas.html, CLAUDE.md
 
 <!--
 PLANTILLA para nueva entrada de historial:
