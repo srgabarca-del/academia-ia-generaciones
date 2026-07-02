@@ -28,6 +28,12 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 .op:hover{background:#E3F2FD}
 .op input{accent-color:#1565C0;width:16px;height:16px;flex-shrink:0;cursor:pointer}
 .cert-box{border-radius:16px;padding:40px 28px;text-align:center;background:#fff;margin-top:20px;display:none}
+
+@media print {
+  body * { visibility: hidden; }
+  .cert-box, .cert-box * { visibility: visible; }
+  .cert-box { position: absolute; top: 0; left: 0; width: 100%; margin: 0; }
+}
 </style>
 </head>
 <body>
