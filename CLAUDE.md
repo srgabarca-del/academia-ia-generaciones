@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-07-02 (sesión 7)
+> **Última actualización:** 2026-07-02 (sesión 8)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -227,6 +227,11 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - ✅ **Deployment de GitHub Pages resuelto:** se destrabó después de un `git pull origin main` (para traer un cambio hecho directo en la web que el repo local no tenía) seguido de un nuevo push. El run #50 completó exitosamente en 46s. **Confirmado por el usuario en incógnito:** los botones "➡️ Módulo X" ya aparecen y funcionan correctamente en los 6 módulos (2→3, 3→4, 4→5, 5→6)
 - ⚠️ Pendiente — Decidir cuándo retomar la integración de pagos reales (Stripe/PayPal + Firebase Functions), que requiere plan Blaze de Firebase
 - 📁 Archivos modificados: modulo2.html, modulo3.html, modulo4.html, modulo5.html, CLAUDE.md
+
+### 2026-07-02 (sesión 8)
+- ✅ **VIP:** agregado el correo `abarcadabra@gmail.com` a la lista `VIP_EMAILS` en `login.html` y `academia_ia_pagina_ventas.html` — acceso completo a los 6 módulos sin pago
+- ⚠️ **GitHub Pages volvió a atorarse (mismo patrón intermitente de sesión 7):** run #52 quedó en "Queued" varios minutos; el intento de "Cancel workflow" falló con "Failed to cancel workflow." Se resolvió disparando un nuevo commit real (este mismo, agregando esta entrada al CLAUDE.md) para forzar un run nuevo, en vez de cancelar el atorado
+- 📁 Archivos modificados: login.html, academia_ia_pagina_ventas.html, CLAUDE.md
 
 <!--
 PLANTILLA para nueva entrada de historial:
