@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-07-02 (sesión 8)
+> **Última actualización:** 2026-07-03 (sesión 9)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -18,6 +18,8 @@
 - tiosergio98@hotmail.com
 - srg.abarca@gmail.com
 - abarcadabra@gmail.com
+- mayca.ar@gmail.com
+- paula.abarca.rodriguez@gmail.com
 
 ---
 
@@ -230,8 +232,16 @@ sessionStorage.setItem('acceso_modulo6', '1');
 
 ### 2026-07-02 (sesión 8)
 - ✅ **VIP:** agregado el correo `abarcadabra@gmail.com` a la lista `VIP_EMAILS` en `login.html` y `academia_ia_pagina_ventas.html` — acceso completo a los 6 módulos sin pago
-- ⚠️ **GitHub Pages volvió a atorarse (mismo patrón intermitente de sesión 7):** run #52 quedó en "Queued" varios minutos; el intento de "Cancel workflow" falló con "Failed to cancel workflow." Se resolvió disparando un nuevo commit real (este mismo, agregando esta entrada al CLAUDE.md) para forzar un run nuevo, en vez de cancelar el atorado
+- ⚠️ **GitHub Pages volvió a atorarse (mismo patrón intermitente de sesión 7):** run #52 quedó en "Queued" varios minutos; el intento de "Cancel workflow" falló con "Failed to cancel workflow." Se intentó forzar un run nuevo con un commit real (actualización de este CLAUDE.md), pero el run #53 también falló (`Deployment failed, try again later.`, mismo error de siempre). El deploy quedó pendiente de un día para otro (ver sesión 9)
 - 📁 Archivos modificados: login.html, academia_ia_pagina_ventas.html, CLAUDE.md
+
+### 2026-07-03 (sesión 9)
+- ✅ **Deployment de GitHub Pages finalmente resuelto:** al día siguiente, con el status de GitHub ya normalizado (verificado en githubstatus.com), se forzó un nuevo run con un commit vacío (`git commit --allow-empty -m "forzar redeploy"` + push). El run #54 completó exitosamente en 47s. Los runs #48, #49, #52 y #53 quedaron atorados en "Queued" de forma permanente (aparentemente sin afectar a los runs nuevos)
+- ✅ **Confirmado por el usuario en el sitio en vivo:** el flujo VIP existente sigue funcionando bien tras el nuevo deploy (probado con `srg.abarca@gmail.com`)
+- ⚠️ Pendiente — Confirmar que `abarcadabra@gmail.com` (correo VIP agregado en sesión 8, ya desplegado) funciona correctamente cuando esa persona se registre por primera vez — no se pudo probar en esta sesión porque el usuario no tiene acceso a esa cuenta de correo
+- ⚠️ Pendiente — Decidir cuándo retomar la integración de pagos reales (Stripe/PayPal + Firebase Functions)
+- 📌 **Nota operativa para deployments futuros de GitHub Pages atorados:** si un run se queda en "Queued" o falla con `Deployment failed, try again later.` / `Timeout reached, aborting!`, el truco que ha funcionado dos veces es: (1) esperar a que el status de github.com se normalice en githubstatus.com, y (2) forzar un commit nuevo — real o vacío (`git commit --allow-empty -m "..."`) — en vez de solo reintentar el mismo run atorado. Cancelar el run atorado NO suele funcionar ("Failed to cancel workflow")
+- 📁 Ningún archivo de código modificado en esta sesión (solo troubleshooting de deployment)
 
 <!--
 PLANTILLA para nueva entrada de historial:
