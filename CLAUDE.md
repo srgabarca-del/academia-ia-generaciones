@@ -15,7 +15,6 @@
 
 ## 👑 Emails VIP (acceso completo sin pago)
 - crisjus@hotmail.com
-- tiosergio98@hotmail.com
 - srg.abarca@gmail.com
 - abarcadabra@gmail.com
 - mayca.ar@gmail.com
@@ -261,7 +260,8 @@ sessionStorage.setItem('acceso_modulo6', '1');
   1. **"Guía de Emergencia y Antiestafas"** (2 páginas, cómo detectar enlaces falsos/estafas) → **Módulo 6**, ya que su "Sección 2: Detectar fraudes y engaños" trata exactamente ese tema. Se agregó como botón nuevo `🛡️ Descargar Guía de Emergencia Antiestafas`, junto al PDF guía que ya existía ahí. Función: `descargarGuiaAntiestafas()`, archivo: `guia_emergencia_antiestafas.pdf`
   2. **"Hoja de Misión Espacial"** (1 página, actividad gamificada de prompts con temática espacial) → inicialmente se consideró el Módulo 1, pero se cambió a **Módulo 2** a petición del usuario, para no sobrecargar de contenido gratis el módulo 1 y sumar valor a un módulo de pago — el temario de M2 ("¿Qué es un prompt?", "Práctica guiada") encaja igual de bien. Se agregó como botón nuevo `🚀 Descargar Actividad: Misión Espacial`. Función: `descargarMisionEspacial()`, archivo: `mision_espacial_actividad.pdf`
   - Ambos PDF se embebieron como base64 siguiendo el mismo patrón que `guia_moduloN_imprimible.pdf` (Blob + descarga), y se verificaron **byte a byte** contra el archivo original antes de confirmar
-- 📁 Archivos modificados: modulo2.html, modulo6.html, CLAUDE.md
+- ✅ **VIP:** retirado el correo `tiosergio98@hotmail.com` de la lista `VIP_EMAILS` en `login.html` y `academia_ia_pagina_ventas.html` a petición del usuario. Lista VIP actual (5 correos): crisjus@hotmail.com, srg.abarca@gmail.com, abarcadabra@gmail.com, mayca.ar@gmail.com, paula.abarca.rodriguez@gmail.com
+- 📁 Archivos modificados: modulo2.html, modulo6.html, login.html, academia_ia_pagina_ventas.html, CLAUDE.md
 
 <!--
 PLANTILLA para nueva entrada de historial:
