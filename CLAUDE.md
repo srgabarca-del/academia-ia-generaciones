@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-07-03 (sesión 9)
+> **Última actualización:** 2026-07-04 (sesión 11)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -242,6 +242,26 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - ⚠️ Pendiente — Decidir cuándo retomar la integración de pagos reales (Stripe/PayPal + Firebase Functions)
 - 📌 **Nota operativa para deployments futuros de GitHub Pages atorados:** si un run se queda en "Queued" o falla con `Deployment failed, try again later.` / `Timeout reached, aborting!`, el truco que ha funcionado dos veces es: (1) esperar a que el status de github.com se normalice en githubstatus.com, y (2) forzar un commit nuevo — real o vacío (`git commit --allow-empty -m "..."`) — en vez de solo reintentar el mismo run atorado. Cancelar el run atorado NO suele funcionar ("Failed to cancel workflow")
 - 📁 Ningún archivo de código modificado en esta sesión (solo troubleshooting de deployment)
+
+### 2026-07-04 (sesión 10)
+- ✅ **VIP:** agregados `mayca.ar@gmail.com` y `paula.abarca.rodriguez@gmail.com` a la lista `VIP_EMAILS` en `login.html` y `academia_ia_pagina_ventas.html` — acceso completo a los 6 módulos sin pago. Lista VIP completa ahora: 6 correos (ver lista al inicio de este documento)
+- 🖥️ **Cambio de computadora — configuración inicial de Git:** el usuario cambió a una computadora nueva y copió la carpeta del proyecto completa (incluyendo `.git`) vía USB/OneDrive. Se detectaron y resolvieron 2 problemas de configuración (no relacionados con el código del proyecto):
+  1. Git no estaba instalado en la máquina nueva → se instaló desde git-scm.com/download/win
+  2. Faltaba configurar identidad de Git (`Author identity unknown` al hacer commit) → se corrió `git config --global user.email "..."` y `git config --global user.name "..."`
+  3. Primera vez usando GitHub en esa máquina → pidió autenticación vía navegador (Git Credential Manager), normal y ya resuelto
+  - **Nota para el futuro:** el usuario seguirá alternando entre 2 computadoras. Recordarle SIEMPRE correr `git pull origin main` antes de empezar a trabajar en cualquiera de las dos, para evitar conflictos de sincronización entre ellas
+- ⚠️ **GitHub Pages se atoró de nuevo (mismo patrón intermitente):** run #55 falló, se resolvió con el mismo truco de siempre — commit vacío (`git commit --allow-empty`) — y el run #56 completó exitosamente en 38s
+- ⚠️ Pendiente — Confirmar que `mayca.ar@gmail.com` y `paula.abarca.rodriguez@gmail.com` funcionan correctamente cuando esas personas se registren/inicien sesión por primera vez — no se pudo probar en esta sesión, el usuario no tiene acceso a esas cuentas de correo
+- ⚠️ Pendiente — Confirmar `abarcadabra@gmail.com` (sigue pendiente desde sesión 8/9, mismo motivo)
+- ⚠️ Pendiente — Decidir cuándo retomar la integración de pagos reales (Stripe/PayPal + Firebase Functions)
+- 📁 Archivos modificados: login.html, academia_ia_pagina_ventas.html, CLAUDE.md
+
+### 2026-07-04 (sesión 11)
+- ✅ **Nuevos materiales PDF integrados** — el usuario compartió 2 PDFs para incluir en el curso; se analizó el contenido de cada uno para encontrar la ubicación temática más adecuada antes de integrarlos:
+  1. **"Guía de Emergencia y Antiestafas"** (2 páginas, cómo detectar enlaces falsos/estafas) → **Módulo 6**, ya que su "Sección 2: Detectar fraudes y engaños" trata exactamente ese tema. Se agregó como botón nuevo `🛡️ Descargar Guía de Emergencia Antiestafas`, junto al PDF guía que ya existía ahí. Función: `descargarGuiaAntiestafas()`, archivo: `guia_emergencia_antiestafas.pdf`
+  2. **"Hoja de Misión Espacial"** (1 página, actividad gamificada de prompts con temática espacial) → inicialmente se consideró el Módulo 1, pero se cambió a **Módulo 2** a petición del usuario, para no sobrecargar de contenido gratis el módulo 1 y sumar valor a un módulo de pago — el temario de M2 ("¿Qué es un prompt?", "Práctica guiada") encaja igual de bien. Se agregó como botón nuevo `🚀 Descargar Actividad: Misión Espacial`. Función: `descargarMisionEspacial()`, archivo: `mision_espacial_actividad.pdf`
+  - Ambos PDF se embebieron como base64 siguiendo el mismo patrón que `guia_moduloN_imprimible.pdf` (Blob + descarga), y se verificaron **byte a byte** contra el archivo original antes de confirmar
+- 📁 Archivos modificados: modulo2.html, modulo6.html, CLAUDE.md
 
 <!--
 PLANTILLA para nueva entrada de historial:
