@@ -296,8 +296,8 @@ sessionStorage.setItem('acceso_modulo6', '1');
   - Se eliminaron `descargarMaterial()` / `descargarGuiaAntiestafas()` y sus base64 embebidos en los 6 archivos, y también el modal `#pdf-modal` + función `mostrarPDF()` (nota técnica 11) que quedó como código muerto en los 6 módulos al ya no haber ningún PDF que mostrar — limpieza completa
   - **Tamaño de archivo:** los 6 módulos pasaron de 260-310KB (M2-M6) / 7.3MB (M1) a **28-38KB cada uno**
   - Verificado con `node --check` (sintaxis JS) en los 6 archivos — sin errores. La verificación visual en el Browser pane automatizado no se pudo completar esta sesión (el tab quedó en un estado inconsistente / el usuario tenía el preview abierto en su propio navegador en paralelo); recomendado volver a probar visualmente la próxima sesión si no se hizo ya
+- ✅ **Desplegado (git push) — commit `9902825`** con los 8 archivos modificados en esta sesión (modulo1-6.html, academia_ia_pagina_ventas.html, CLAUDE.md). El usuario confirmó los 6 módulos en su propio navegador antes del push. Pendiente que GitHub Pages termine el redeploy automático
 - ⚠️ Pendiente (según orden acordado con el usuario): (2) precios — en pausa, el usuario lo va a pensar; (4) seguridad real — sacar los campos de tarjeta del HTML propio (usar Stripe Checkout embebido) y resolver el control de acceso client-side
-- ⚠️ Pendiente — Confirmar despliegue (git push) de todos los archivos modificados en esta sesión
 - 📁 Archivos modificados: modulo1.html, modulo2.html, modulo3.html, modulo4.html, modulo5.html, modulo6.html, academia_ia_pagina_ventas.html, CLAUDE.md
 
 <!--
