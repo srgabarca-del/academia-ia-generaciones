@@ -109,10 +109,10 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 <section class="hero">
   <div style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;padding:6px 18px;border-radius:20px;font-size:.85rem;margin-bottom:20px;">🎉 Módulo 1 — 100% GRATIS · Sin tarjeta</div>
   <h1>Aprende <span>Inteligencia Artificial</span><br>sin saber nada de tecnología</h1>
-  <p>El curso diseñado para niños de 7–14 años y adultos mayores de 60.</p>
+  <p>El curso diseñado especialmente para adultos mayores de 60 años.</p>
   <div class="personas">
-    <div class="persona"><span>👦</span>Niños 7–14 años</div>
     <div class="persona"><span>👴</span>Adultos mayores 60+</div>
+    <div class="persona"><span>👵</span>A tu propio ritmo</div>
     <div class="persona"><span>👨‍👩‍👧</span>En familia</div>
   </div>
   <a href="#registro" class="btn-hero">🎁 Comenzar GRATIS ahora</a>
@@ -140,7 +140,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       <div class="free-badge">🆓 ACCESO GRATUITO</div>
       <h3 style="font-size:1.5rem;color:#00897B;margin-bottom:10px;">Descubriendo la Inteligencia Artificial</h3>
       <ul class="free-inc">
-        <li><div class="ico">🎬</div><span><strong>Video en español</strong> para niños y para adultos mayores</span></li>
+        <li><div class="ico">🎬</div><span><strong>Video en español</strong> pensado para adultos mayores</span></li>
         <li><div class="ico">📖</div><span><strong>Guía del Módulo 1</strong> — PDF ilustrado para leer primero</span></li>
         <li><div class="ico">📄</div><span><strong>Material del Alumno</strong> — actividades y evaluación imprimibles</span></li>
         <li><div class="ico">🎞️</div><span><strong>Videos Complementarios</strong> sobre Inteligencia Artificial</span></li>
@@ -322,17 +322,6 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
         </div>
         <div class="msg" id="m-pass2"></div>
       </div>
-      <div style="margin-bottom:16px;">
-        <label for="f-tipo">Soy... <span style="color:#E53935;">*</span></label>
-        <select class="inp" id="f-tipo">
-          <option value="">Selecciona una opción</option>
-          <option value="nino">👦 Niño/a (7–14 años)</option>
-          <option value="mayor">👴 Adulto mayor (60+ años)</option>
-          <option value="adulto">👨‍💼 Adulto (15–59 años)</option>
-          <option value="padre">👨‍👩‍👧 Padre / Madre / Tutor</option>
-          <option value="docente">👩‍🏫 Docente / Educador</option>
-        </select>
-      </div>
       <div class="check-row">
         <input type="checkbox" id="f-terms">
         <label for="f-terms" style="font-size:.85rem;color:#555;line-height:1.5;font-weight:400;">Acepto los <a href="#" style="color:#6C3FC4;">Términos</a> y la <a href="#" style="color:#6C3FC4;">Política de Privacidad</a>.</label>
@@ -411,14 +400,13 @@ document.querySelectorAll('.faq-q').forEach(function(q) {
 });
 
 // ── REGISTRO
-var campos = ['f-nombre','f-email','f-pass','f-pass2','f-tipo','f-terms'];
+var campos = ['f-nombre','f-email','f-pass','f-pass2','f-terms'];
 
 function actualizar() {
   var n = document.getElementById('f-nombre').value.trim();
   var e = document.getElementById('f-email').value.trim();
   var p = document.getElementById('f-pass').value;
   var p2 = document.getElementById('f-pass2').value;
-  var t = document.getElementById('f-tipo').value;
   var ck = document.getElementById('f-terms').checked;
 
   // Nombre
@@ -448,7 +436,7 @@ function actualizar() {
     setMsg('f-pass2','m-pass2',false,'');
   }
 
-  var ok = n.length>=2 && eok && p.length>=6 && p2===p && t!=='' && ck;
+  var ok = n.length>=2 && eok && p.length>=6 && p2===p && ck;
   var btn = document.getElementById('btn-reg');
   btn.disabled = !ok;
   btn.style.background = ok ? '#6C3FC4' : '#BDBDBD';
@@ -468,7 +456,6 @@ function setMsg(inputId, msgId, ok, msg) {
 ['f-nombre','f-email','f-pass','f-pass2'].forEach(function(id) {
   document.getElementById(id).addEventListener('input', actualizar);
 });
-document.getElementById('f-tipo').addEventListener('change', actualizar);
 document.getElementById('f-terms').addEventListener('change', actualizar);
 
 // Toggle passwords

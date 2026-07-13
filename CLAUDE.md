@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-07-04 (sesión 11)
+> **Última actualización:** 2026-07-13 (sesión 12)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -9,7 +9,7 @@
 - **Repositorio GitHub:** github.com/srgabarca-del/academia-ia-generaciones
 - **GitHub Pages URL:** srgabarca-del.github.io/academia-ia-generaciones
 - **Firebase proyecto:** academia-ia-eba0b
-- **Tipo:** Curso freemium de IA (Módulo 1 gratis, Módulos 2-6 de pago)
+- **Tipo:** Curso freemium de IA (Módulo 1 gratis, Módulos 2-6 de pago), dirigido exclusivamente a adultos mayores (60+)
 
 ---
 
@@ -93,18 +93,16 @@ sessionStorage.setItem('acceso_modulo6', '1');
 ---
 
 ## 🎬 Videos por módulo
-| Módulo | Audiencia | URL |
-|--------|-----------|-----|
-| 2 | Niños | https://www.youtube.com/watch?v=UKncFg0PyEk |
-| 2 | Adultos | https://www.youtube.com/watch?v=6TvZm1D0W6I |
-| 3 | Niños | https://www.youtube.com/watch?v=6kYZNrztJWM |
-| 3 | Adultos | https://www.youtube.com/watch?v=kesSRLD-UHI |
-| 4 | Niños | https://www.youtube.com/watch?v=Eof398WSUwo |
-| 4 | Adultos | https://www.youtube.com/watch?v=vpNqY5M1kqs |
-| 5 | Niños | https://www.youtube.com/watch?v=K0YntGeHD00 |
-| 5 | Adultos | https://www.youtube.com/watch?v=Gsv7VkWQNwA |
-| 6 | Niños | https://www.youtube.com/watch?v=SD9K8Pfogzc |
-| 6 | Adultos | https://www.youtube.com/watch?v=nkkhU_ZuC98 |
+> **(sesión 12)** El sitio ahora es 100% para adultos mayores — se eliminó la opción de video "para Niños" en los 6 módulos. Solo queda un video por módulo (el que antes era la versión "Adultos").
+
+| Módulo | URL |
+|--------|-----|
+| 1 | https://www.youtube.com/watch?v=V-cZbZtjpeY |
+| 2 | https://www.youtube.com/watch?v=6TvZm1D0W6I |
+| 3 | https://www.youtube.com/watch?v=kesSRLD-UHI |
+| 4 | https://www.youtube.com/watch?v=vpNqY5M1kqs |
+| 5 | https://www.youtube.com/watch?v=Gsv7VkWQNwA |
+| 6 | https://www.youtube.com/watch?v=nkkhU_ZuC98 |
 
 ---
 
@@ -156,6 +154,7 @@ sessionStorage.setItem('acceso_modulo6', '1');
    ```
 9. **Navegación entre módulos no debe depender de repetir el examen (sesión 7):** se detectó que el único lugar donde aparecía el enlace "Ir al Módulo N+1" era dentro de la sección que se revela tras aprobar el examen (`mostrarAccesoMod3()` y equivalentes en M3/M4/M5), la cual solo se muestra si `moduloN_completado` está en sessionStorage. Esto obligaba a un VIP o alumno con plan completo a rehacer el examen cada vez que quería avanzar o solo repasar contenido, aunque ya tuviera acceso pagado a todos los módulos. Fix aplicado en `modulo2.html` a `modulo5.html`: se agregó un botón nuevo en el `<nav>` (`id="btn-nav-siguiente"`, oculto por defecto) que se muestra automáticamente en `DOMContentLoaded` si `sessionStorage` tiene `acceso_plan` o el `acceso_moduloN+1` correspondiente — sin importar si el examen fue completado. El examen sigue existiendo y sigue siendo necesario únicamente para obtener el certificado de ese módulo, ya no para poder avanzar.
 10. **Pagos reales (Stripe/PayPal) — guía entregada, no implementada (sesión 7):** el sitio es estático (GitHub Pages) y el control de acceso vive enteramente en `sessionStorage`, lo cual es **inseguro para pagos reales** (cualquiera puede escribir `sessionStorage.setItem('acceso_modulo3','1')` en la consola del navegador sin pagar). La arquitectura correcta requiere mover el control de acceso a Firestore, verificado por **Firebase Cloud Functions** (necesita plan Blaze) que reciban el webhook de Stripe (`checkout.session.completed`) o verifiquen la orden de PayPal server-side antes de escribir el acceso. Se le compartió al usuario el código base de ejemplo (Cloud Function `crearSesionPago`, webhook `webhookStripe`, botón de PayPal con `verificarPagoPaypal`) pero **nada de esto está implementado todavía** — el flujo de compra sigue siendo el `setTimeout` simulado de siempre. Si se retoma este tema, empezar preguntando si el usuario ya tiene el plan Blaze de Firebase activado.
+11. **Guías y evaluaciones ya no se descargan como archivo — visor de PDF embebido (sesión 12):** por petición del usuario, todas las guías PDF (y la Guía de Emergencia Antiestafas del Módulo 6) ahora se ven **dentro de la misma página**, no se descargan. Patrón aplicado en los 6 módulos: un `<div id="pdf-modal">` fijo (overlay oscuro + `<iframe id="pdf-modal-frame">` + botón "✕ Cerrar") agregado una vez por archivo justo antes del `<script>` principal, y una función `mostrarPDF(url, titulo)` reutilizable. Cada función `descargarX()` ya NO crea un `<a download>` — en vez de eso, después de construir el `Blob` del PDF (que sigue viniendo del mismo base64 embebido de siempre, sin tocar), llama a `mostrarPDF(URL.createObjectURL(blob), 'Título')`, que mete esa URL `blob:` en el iframe y muestra el modal. Los botones se renombraron de "⬇ Descargar..." a "📖 Ver..." / "👁 Ver" / "🛡️ Ver...". **Las evaluaciones no se tocaron** — ya eran formularios interactivos dentro de la página (radio buttons + calificación por JS), nunca fueron un archivo descargable. Si se agrega un Módulo 7 o un nuevo PDF a futuro, replicar este mismo patrón de modal en vez de volver al `<a download>`.
 
 ---
 
@@ -262,6 +261,44 @@ sessionStorage.setItem('acceso_modulo6', '1');
   - Ambos PDF se embebieron como base64 siguiendo el mismo patrón que `guia_moduloN_imprimible.pdf` (Blob + descarga), y se verificaron **byte a byte** contra el archivo original antes de confirmar
 - ✅ **VIP:** retirado el correo `tiosergio98@hotmail.com` de la lista `VIP_EMAILS` en `login.html` y `academia_ia_pagina_ventas.html` a petición del usuario. Lista VIP actual (5 correos): crisjus@hotmail.com, srg.abarca@gmail.com, abarcadabra@gmail.com, mayca.ar@gmail.com, paula.abarca.rodriguez@gmail.com
 - 📁 Archivos modificados: modulo2.html, modulo6.html, login.html, academia_ia_pagina_ventas.html, CLAUDE.md
+
+### 2026-07-13 (sesión 12)
+- 🎯 **Inicio de reestructuración solicitada por el usuario, paso a paso.** Se hizo una auditoría rápida primero (ver hallazgos abajo) y se acordó empezar por el punto 1 (audiencia); los puntos 2-4 (precios, guías/evaluaciones embebidas, seguridad real) quedan para sesiones siguientes
+- 🔍 **Auditoría entregada al usuario:**
+  1. Lenguaje "para niños" presente en `academia_ia_pagina_ventas.html`, `modulo1.html` y en el toggle de video Niños/Adultos de `modulo2.html` a `modulo6.html`
+  2. Registro del módulo gratuito: ya solo pedía nombre, email y contraseña — **excepto** un select oculto "Soy..." (`f-tipo`) con la opción "Niño/a (7–14 años)" que si se detectó y había que quitar
+  3. Precios: Módulo 2 $7, Módulos 3-6 $9 c/u, Plan Mensual $4.99/mes (recurrente) — pendiente de convertir a pago único de por vida (con módulos futuros incluidos)
+  4. Guías/evaluaciones se siguen descargando como archivo (Blob + `<a download>`) en vez de mostrarse embebidas en la página — pendiente
+  5. **Seguridad real encontrada sin que se pidiera** (razón probable de la sensación de "poca seguridad" del usuario): el formulario de compra pide número de tarjeta/vencimiento/CVV directamente en el HTML sin pasarela real; el control de acceso vive en `sessionStorage` (bypasseable desde la consola); la lista de correos VIP y la config de Firebase son visibles en el código fuente. El usuario decidió abordar esto **más adelante**, no en esta sesión
+- ✅ **Punto 1 completado — Sitio 100% orientado a adultos mayores, sin ninguna mención a "niños":**
+  - `modulo1.html` a `modulo6.html`: eliminado el botón/toggle "Video para Niños" en cada módulo; ahora cada módulo muestra un solo video (el que antes era la opción "Adultos"), sin selector. Se limpió el JS asociado (`var va`, listeners de `btn-n`/`btn-a`, objeto `urls{ninos,adultos}`) en los 6 archivos
+  - `modulo3.html`: corregido el texto de la Sección 4 ("Niños: héroe fantástico · Adultos: recuerdo familiar." → "Tu proyecto: recrea un recuerdo familiar con IA.")
+  - `academia_ia_pagina_ventas.html`: reescrito el copy del hero y la lista "personas" (se quitó "Niños 7–14 años"), reescrita la lista de "qué incluye" el módulo gratis
+  - `academia_ia_pagina_ventas.html`: **eliminado el campo select "Soy..." (`f-tipo`)** del formulario de registro gratuito — incluía la opción "Niño/a (7–14 años)" y no era parte de lo que el usuario quería pedir (nombre, email, contraseña). Se limpió también el JS de validación asociado (`campos`, lectura de `.value`, condición `t!==''`, event listener)
+  - Verificado con grep case-insensitive sobre todos los `.html` del proyecto que no queda ninguna mención a "niño/niña/niños" en ningún archivo
+- ✅ **Corrección adicional en modulo2.html (reportada por el usuario tras revisar el preview):** el botón/función "🚀 Descargar Actividad: Misión Espacial" (agregado en sesión 11) también estaba dirigido a niños. Se eliminó por completo — botón, función `descargarMisionEspacial()` y el PDF base64 embebido — ya que no encajaba con el sitio 100% adultos
+- ⏸️ **Punto 2 (precios) pausado a petición del usuario** — lo quiere pensar bien antes de decidir. Se le dio una propuesta de referencia: pago único de **$29–$34 USD** (ej. $29.99) para reemplazar el Plan Mensual $4.99/mes, ya que comprar los 5 módulos de pago sueltos suma $43 USD — quedaría pendiente hasta que el usuario decida
+- ✅ **Punto 3 completado — Guías y Guía de Emergencia Antiestafas ahora se ven embebidas en la página, no se descargan:**
+  - Se agregó un modal reutilizable (`#pdf-modal` + `mostrarPDF(url, titulo)`) en cada uno de los 6 módulos (ver nota técnica 11 para el patrón exacto)
+  - `modulo1.html`: los botones "Guía del Módulo 1" y "Material del Alumno" ahora dicen "👁 Ver" y abren el PDF en el modal
+  - `modulo2.html` a `modulo6.html`: el botón "⬇ Descargar Guía PDF..." ahora dice "📖 Ver Guía del Módulo N" y abre el modal
+  - `modulo6.html`: el botón de la Guía de Emergencia Antiestafas ahora dice "🛡️ Ver Guía de Emergencia Antiestafas"
+  - **Las evaluaciones no requirieron cambios** — ya eran interactivas dentro de la página (nunca fueron un archivo descargable)
+  - Verificado con `node --check` (sintaxis JS de los 6 archivos) y probado en el preview local: cada botón genera correctamente una URL `blob:` y la muestra en el modal, sin errores de consola
+- ✅ **Piloto en modulo1.html — Guía y Actividades convertidas a HTML rellenable (a petición del usuario, en vez de PDF):** la "Guía y Actividades del Módulo 1" ya no usa PDF en absoluto (ni descarga ni modal) — es una sección expandible (`#guia-box` / `toggleGuia()`, mismo patrón que "Videos Complementarios") con el contenido teórico y 2 actividades prácticas + reflexión final con `<input>`/`<textarea>`/`<select>` reales. El texto se extrajo de `guia_modulo1_imprimible.pdf` con `pdftotext -layout -enc UTF-8` (Python no está instalado en esta máquina; `pdftotext` de Git Bash sí funciona). Se eliminaron `descargarGuia()`, el listener de `btn-dl` y sus dos base64 embebidos (uno de 7MB, otro de 237KB) — **modulo1.html bajó de 7.3MB a 39KB**. De paso se corrigió una mención a "(Para Niños)" que estaba oculta dentro del contenido del PDF (actividad "Cazadores de IA"), invisible al grep del HTML. Se agregó botón "🖨️ Imprimir mis respuestas" (sin backend — las respuestas no persisten al recargar). **Solo aplicado en modulo1.html como piloto** — módulos 2-6 siguen usando el modal de PDF (nota técnica 11); replicar este patrón ahí es el siguiente paso pendiente
+- ✅ **Tamaños de letra aumentados en la Guía y Actividades del Módulo 1** — el usuario pidió letra más grande pensando en que los usuarios son adultos mayores. Encabezados de sección subieron a ~1.3rem, encabezados de actividad a ~1.35rem, texto de párrafos/labels/textareas a 1.2rem (antes .82–.9rem). **Si se replica el patrón de guía HTML en los módulos 2-6, usar estos mismos tamaños desde el inicio**
+- ✅ **Tamaños de letra aumentados también en la sección de Evaluación de modulo1.html** (mismo pedido del usuario, extendido a la evaluación): clases globales `.qt` (pregunta) .97rem→1.3rem y `.op` (opción) .9rem→1.2rem — como las 10 preguntas viven en una sola línea larga de HTML generada una vez, bastó con subir estas 2 clases CSS en vez de tocar cada pregunta. También `.bn` (botones grandes tipo "Enviar evaluación") 1rem→1.1rem, el encabezado "Evaluación del Módulo 1" 1.1rem→1.3rem, su subtítulo .88rem→1.05rem, y el aviso de error `#qerr` .9rem→1.1rem. **Aplicar los mismos tamaños (.qt/.op/.bn) al replicar en los módulos 2-6**, ya que esos módulos comparten la misma estructura de evaluación
+- ✅ **Patrón de guía HTML rellenable replicado en modulo2.html a modulo6.html** (piloto de Módulo 1 confirmado por el usuario, se extendió a todo el curso en la misma sesión):
+  - Contenido de cada guía extraído con `pdftotext -layout -enc UTF-8 guia_moduloN_imprimible.pdf -` (y para la Guía de Emergencia Antiestafas, que no existía como archivo suelto, se decodificó primero su base64 desde `modulo6.html` a un PDF temporal antes de extraer el texto)
+  - Mismo patrón que Módulo 1: `#guia-box` + `toggleGuia()`, contenido teórico + 2 actividades prácticas + reflexión final con `<input>`/`<textarea>`/`<select>`, botón "🖨️ Imprimir mis respuestas". `modulo6.html` además tiene un segundo acordeón `#antiestafas-box` / `toggleAntiestafas()` para la Guía de Emergencia Antiestafas (contenido de solo lectura, sin campos rellenables)
+  - Actividades que en el PDF original distinguían "(Para Niños)" vs "(Para Adultos Mayores)" se fusionaron en una sola actividad neutra por módulo, redactada para adultos (ej. M3 "Mi Héroe Fantástico" → "Diseña una escena o personaje"; M4/M5 quitada la referencia escolar/infantil)
+  - Mismos tamaños de letra que el piloto: `.qq p{font-size:1.3rem}`, `.op{font-size:1.2rem}` (antes no existía `.qq p` como clase separada en M2-M6, se agregó), `.bn` 1rem→1.1rem, encabezado de evaluación 1.1rem→1.3rem, subtítulo .88rem→1.05rem, `#qerr` .9rem→1.1rem — igual en los 6 módulos
+  - Se eliminaron `descargarMaterial()` / `descargarGuiaAntiestafas()` y sus base64 embebidos en los 6 archivos, y también el modal `#pdf-modal` + función `mostrarPDF()` (nota técnica 11) que quedó como código muerto en los 6 módulos al ya no haber ningún PDF que mostrar — limpieza completa
+  - **Tamaño de archivo:** los 6 módulos pasaron de 260-310KB (M2-M6) / 7.3MB (M1) a **28-38KB cada uno**
+  - Verificado con `node --check` (sintaxis JS) en los 6 archivos — sin errores. La verificación visual en el Browser pane automatizado no se pudo completar esta sesión (el tab quedó en un estado inconsistente / el usuario tenía el preview abierto en su propio navegador en paralelo); recomendado volver a probar visualmente la próxima sesión si no se hizo ya
+- ⚠️ Pendiente (según orden acordado con el usuario): (2) precios — en pausa, el usuario lo va a pensar; (4) seguridad real — sacar los campos de tarjeta del HTML propio (usar Stripe Checkout embebido) y resolver el control de acceso client-side
+- ⚠️ Pendiente — Confirmar despliegue (git push) de todos los archivos modificados en esta sesión
+- 📁 Archivos modificados: modulo1.html, modulo2.html, modulo3.html, modulo4.html, modulo5.html, modulo6.html, academia_ia_pagina_ventas.html, CLAUDE.md
 
 <!--
 PLANTILLA para nueva entrada de historial:
