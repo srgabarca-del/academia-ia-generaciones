@@ -1,0 +1,14 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions — pagos y acceso de Academia IA Generaciones",
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.1.0",
+    "firebase-functions": "^5.0.0",
+    "stripe": "^16.2.0"
+  },
+  "private": true
+}

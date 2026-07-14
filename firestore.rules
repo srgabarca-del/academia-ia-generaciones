@@ -1,0 +1,18 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Cada documento vive en accesos/{email en minúsculas}.
+    // Un alumno solo puede LEER su propio documento de acceso, y solo si
+    // inició sesión con ese mismo correo en Firebase Auth.
+    // Nadie puede escribir desde el cliente — solo las Cloud Functions
+    // (que usan el Admin SDK y por lo tanto ignoran estas reglas) pueden
+    // otorgar acceso, y solo después de confirmar un pago real con Stripe.
+    match /accesos/{email} {
+      allow read: if request.auth != null
+                  && request.auth.token.email.lower() == email;
+      allow write: if false;
+    }
+  }
+}
