@@ -22,7 +22,6 @@ const PRODUCTOS = {
   modulo4: { nombre: 'Módulo 4: IA para la Vida Diaria', centavos: 900 },
   modulo5: { nombre: 'Módulo 5: IA para la Creatividad', centavos: 900 },
   modulo6: { nombre: 'Módulo 6: Seguridad y Uso Responsable', centavos: 900 },
-  // TODO: actualizar a pago único cuando el usuario decida el precio final (punto 2 pendiente).
   plan: { nombre: 'Plan Completo — Todos los módulos', centavos: 2999 },
 };
 
