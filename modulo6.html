@@ -38,6 +38,20 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
   #guia-header, #guia-box button, #antiestafas-header, #antiestafas-box button { display: none !important; }
 }
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  if (!firebase.apps.length) {
+    firebase.initializeApp({
+      apiKey: "AIzaSyDQO9lwBLmNAJWpW5klap9ngdcqs-CrcXw",
+      authDomain: "academia-ia-eba0b.firebaseapp.com",
+      projectId: "academia-ia-eba0b",
+      storageBucket: "academia-ia-eba0b.firebasestorage.app",
+      messagingSenderId: "285240187661",
+      appId: "1:285240187661:web:42ae229487b88237fcee44"
+    });
+  }
+</script>
 </head>
 <body>
 <nav>
@@ -265,6 +279,28 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
     <button onclick="window.print()" style="background:#2E7D32;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
   </div>
 
+  <div id="opinion-box" style="display:none;background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-top:20px;padding:28px 24px;">
+    <h3 style="font-size:1.3rem;font-weight:700;color:#212121;margin-bottom:6px;">💬 ¿Qué te pareció el curso?</h3>
+    <p style="font-size:1.05rem;color:#757575;margin-bottom:20px;">Tu opinión nos ayuda a mejorar Academia IA Generaciones.</p>
+
+    <div id="opinion-form">
+      <div style="text-align:center;margin-bottom:20px;">
+        <div id="estrellas" style="font-size:2.6rem;letter-spacing:10px;">
+          <span class="estrella" data-val="1" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella" data-val="2" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella" data-val="3" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella" data-val="4" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella" data-val="5" style="cursor:pointer;color:#E0E0E0;">★</span>
+        </div>
+      </div>
+      <label style="display:block;font-size:1.1rem;color:#424242;margin-bottom:8px;">Cuéntanos qué te gustó o qué mejorarías:</label>
+      <textarea id="opinion-texto" rows="4" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:12px;font-size:1.1rem;font-family:inherit;margin-bottom:16px;box-sizing:border-box;" placeholder="Escribe aquí tu opinión..."></textarea>
+      <div id="opinion-err" style="display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:10px 14px;font-size:1rem;margin-bottom:14px;">⚠️ Selecciona una calificación y escribe tu opinión.</div>
+      <button id="btn-enviar-opinion" style="width:100%;padding:14px;background:#2E7D32;color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">📩 Enviar mi opinión</button>
+    </div>
+
+    <div id="opinion-gracias" style="display:none;text-align:center;padding:16px 0;">
+      <div style="font-size:2.5rem;margin-bottom:10px;">🙏</div>
+      <p style="font-size:1.15rem;color:#212121;font-weight:700;">¡Gracias por tu opinión!</p>
+    </div>
+  </div>
+
 
   <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
     <a href="modulo5.html" id="btn-volver-m5" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">← Volver al Módulo 5</a>
@@ -384,6 +420,7 @@ function verCert() {
   document.getElementById('cf').textContent='Fecha de emisión: '+f;
   document.getElementById('certbox-final').style.display='block';
   document.getElementById('certbox-final').scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('opinion-box').style.display='block';
 }
 
 
@@ -404,8 +441,55 @@ function verCert() {
     document.getElementById('cn').textContent = n;
     document.getElementById('cf').textContent = 'Fecha de emisión: ' + f;
     document.getElementById('certbox-final').style.display = 'block';
+    document.getElementById('opinion-box').style.display = 'block';
   }
 })();
+
+var calificacionSel = 0;
+document.querySelectorAll('.estrella').forEach(function(el) {
+  el.addEventListener('click', function() {
+    calificacionSel = parseInt(this.getAttribute('data-val'), 10);
+    document.querySelectorAll('.estrella').forEach(function(e2) {
+      var val = parseInt(e2.getAttribute('data-val'), 10);
+      e2.style.color = val <= calificacionSel ? '#FFC107' : '#E0E0E0';
+    });
+  });
+});
+
+document.getElementById('btn-enviar-opinion').addEventListener('click', function() {
+  var texto = document.getElementById('opinion-texto').value.trim();
+  var btn = this;
+  if (calificacionSel < 1 || !texto) {
+    document.getElementById('opinion-err').textContent = '⚠️ Selecciona una calificación y escribe tu opinión.';
+    document.getElementById('opinion-err').style.display = 'block';
+    return;
+  }
+  document.getElementById('opinion-err').style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+  var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
+  var email = sessionStorage.getItem('alumno_email') || sessionStorage.getItem('pago_email') || '';
+  var envio = firebase.firestore().collection('opiniones').add({
+    nombre: nombre,
+    email: email,
+    calificacion: calificacionSel,
+    comentario: texto,
+    modulo: 'modulo6',
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  });
+  var tiempoLimite = new Promise(function(resolve, reject) {
+    setTimeout(function() { reject(new Error('tiempo-agotado')); }, 8000);
+  });
+  Promise.race([envio, tiempoLimite]).then(function() {
+    document.getElementById('opinion-form').style.display = 'none';
+    document.getElementById('opinion-gracias').style.display = 'block';
+  }).catch(function(err) {
+    document.getElementById('opinion-err').textContent = '⚠️ No se pudo enviar tu opinión. Intenta de nuevo.';
+    document.getElementById('opinion-err').style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '📩 Enviar mi opinión';
+  });
+});
 
 function cerrarSesion() {
   sessionStorage.clear();

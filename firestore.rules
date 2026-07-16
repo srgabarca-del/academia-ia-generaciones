@@ -14,5 +14,26 @@ service cloud.firestore {
                   && request.auth.token.email.lower() == email;
       allow write: if false;
     }
+
+    // Opiniones de alumnos (calificación + comentario libre) enviadas al
+    // terminar el Módulo 6. Cualquiera puede CREAR una opinión (no hace
+    // falta haber iniciado sesión con Firebase Auth aquí, el sitio ya
+    // confía en el nombre/correo que trae de sessionStorage igual que en
+    // el resto del curso) pero NADIE puede leer, editar ni borrar desde
+    // el cliente — el dueño del sitio las revisa directamente en la
+    // Consola de Firebase (Firestore Database), que usa credenciales de
+    // administrador y por lo tanto ignora estas reglas.
+    match /opiniones/{opinionId} {
+      allow read, update, delete: if false;
+      allow create: if request.resource.data.calificacion is int
+                    && request.resource.data.calificacion >= 1
+                    && request.resource.data.calificacion <= 5
+                    && request.resource.data.comentario is string
+                    && request.resource.data.comentario.size() <= 2000
+                    && request.resource.data.nombre is string
+                    && request.resource.data.nombre.size() <= 200
+                    && request.resource.data.email is string
+                    && request.resource.data.email.size() <= 200;
+    }
   }
 }
