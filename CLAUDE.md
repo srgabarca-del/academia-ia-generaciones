@@ -105,7 +105,7 @@ sessionStorage.setItem('acceso_modulo6', '1');
 | 2 | https://www.youtube.com/watch?v=6TvZm1D0W6I |
 | 3 | https://www.youtube.com/watch?v=kesSRLD-UHI |
 | 4 | https://www.youtube.com/watch?v=vpNqY5M1kqs |
-| 5 | https://www.youtube.com/watch?v=Gsv7VkWQNwA |
+| 5 | https://www.youtube.com/watch?v=bmpeIKXymOc |
 | 6 | https://www.youtube.com/watch?v=nkkhU_ZuC98 |
 
 ---
@@ -342,6 +342,7 @@ sessionStorage.setItem('acceso_modulo6', '1');
   - Se actualizó la tabla de "Respuestas correctas de evaluaciones" de este archivo (M1 agregado, M4 y M6 actualizados)
   - Verificado con `node --check` en ambos archivos y probado en vivo: los dos exámenes califican "7/7" con las respuestas correctas nuevas, la sección de guía de M6 se muestra correctamente, sin errores de consola
   - **Pendiente del resto de la auditoría** (no implementado, solo si el usuario lo pide): autoguardado de respuestas en localStorage (los 6 módulos), variar longitud de opciones de examen para que la correcta no se note por ser más larga, más preguntas de examen tipo "aplicación" en el resto de los módulos
+- ✅ **Video del Módulo 5 reemplazado** (reportado por el usuario: el video anterior duraba 43 min y enseñaba a crear storyboards usando Gemini Gems personalizados, que no vienen por defecto y hay que crearlos — fricción extra para el alumno). Se investigó y se encontró que existe **Gemini Storybook**, una función ya lista dentro de Gemini (aparece como Gem prediseñado en la lista de Gems, no hay que crearla) que genera cuentos ilustrados y narrados desde un simple prompt — resuelve el problema de raíz, no solo lo acorta. Se buscaron y probaron 2 videos candidatos en español sobre esta función usando un método de verificación robusto (la API real de YouTube IFrame Player con manejador `onError`, en vez de solo revisar si la URL "carga" — la primera prueba con navegación directa a `/embed/ID` daba falsos positivos de "Error 153" incluso en el video que ya funcionaba en vivo). Ambos candidatos resultaron embebibles sin errores; se eligió el más corto y de canal más establecido. Video anterior: `Gsv7VkWQNwA` (43 min) → nuevo: `bmpeIKXymOc` ("NUEVO DE GEMINI: STORYBOOK CON IMÁGENES CONSISTENTES, NARRATIVA Y AUDIO", canal INVESTIC-IA, 7:33 min, 12.6K suscriptores). Cambios en `modulo5.html`: `videoId` del reproductor y el texto del título (`#vt`) a "✨ Gemini Storybook: crea cuentos narrados e ilustrados con IA". La guía y actividades de M5 no mencionaban Gems ni el video anterior por nombre, así que no necesitaron cambios de texto. Actualizada la tabla "Videos por módulo" de este archivo. Verificado con `node --check` y en vivo: el iframe carga con el video y título correctos, sin errores de consola
 
 <!--
 PLANTILLA para nueva entrada de historial:
