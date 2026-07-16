@@ -86,11 +86,12 @@ sessionStorage.setItem('acceso_modulo6', '1');
 ## ✅ Respuestas correctas de evaluaciones
 | Módulo | Preguntas | Mínimo para aprobar | Respuestas |
 |--------|-----------|---------------------|------------|
+| 1 | 7 | 5 | q1:B, q2:C, q3:B, q4:C, q5:B, q6:B, q7:B |
 | 2 | 5 | 4 | q1:C, q2:A, q3:D, q4:C, q5:A |
 | 3 | 7 | 5 | q1:A, q2:C, q3:B, q4:D, q5:C, q6:B, q7:D |
-| 4 | 7 | 5 | q1:B, q2:C, q3:A, q4:D, q5:B, q6:C, q7:A |
+| 4 | 7 | 5 | q1:B, q2:C, q3:A, q4:D, q5:B, q6:B, q7:A |
 | 5 | 7 | 5 | q1:C, q2:A, q3:D, q4:B, q5:C, q6:C, q7:D |
-| 6 | 7 | 5 | q1:B, q2:D, q3:D, q4:A, q5:B, q6:D, q7:D |
+| 6 | 7 | 5 | q1:B, q2:D, q3:D, q4:A, q5:B, q6:B, q7:D |
 
 ---
 
@@ -335,6 +336,12 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - ✅ **Revisión pedagógica del contenido del curso** (a petición del usuario, actuando como docente de IA): se auditaron las 6 guías y evaluaciones completas y se entregó un listado de sugerencias para aumentar (estafas con voz clonada por IA en M6, reforzar la fórmula Identidad+Intención+Instrucciones en exámenes posteriores, autoguardado de respuestas, variar longitud de opciones de examen, preguntas de aplicación) y disminuir/simplificar (bajar preguntas de M1, consolidar contenido duplicado de "alucinaciones" entre M4 y M6, recortar tablas de actividades, ajustar tiempo estimado de M1). El usuario eligió empezar solo por el subconjunto de "cambios rápidos de texto"
 - ✅ **Implementado el subconjunto de cambios rápidos** (commit `ed5a84f`): `modulo1.html` — examen reducido de 10 a 7 preguntas (se quitaron 3 redundantes: tecnología de recomendaciones de YouTube, si la IA puede reemplazar humanos, qué necesita la IA para funcionar; renumeradas 1-7, umbral de aprobación ajustado a 5/7 igual que M2-M6, tabla de actividad "Encuentra la IA en tus apps" de 3 a 2 filas, tiempo estimado de "45–60 min" a "45–75 min"); `modulo6.html` — el párrafo sobre "alucinaciones de la IA" (antes casi idéntico al de M4) se reemplazó por una referencia corta al Módulo 4, tabla "Detective de noticias" de 3 a 2 filas. Verificado con `node --check` y probado en vivo: el examen de M1 califica correctamente con las 7 preguntas nuevas (probado con las respuestas correctas dando "7/7"), la guía de M6 muestra el texto consolidado y la tabla con 2 filas, sin errores de consola. **Pendientes del resto de la auditoría** (no implementados, quedan para cuando el usuario los pida): estafas con voz IA en M6, reforzar fórmula de prompting en exámenes posteriores, autoguardado de respuestas en localStorage (el cambio más grande, toca los 6 módulos), variar longitud de opciones de examen, preguntas de examen tipo "aplicación"
 - 📁 Archivos modificados: modulo1.html, modulo2.html, modulo3.html, modulo4.html, modulo5.html, modulo6.html, Academia_AI.html, login.html, terminos.html, privacidad.html, CLAUDE.md
+- ✅ **Implementado el segundo subconjunto de la auditoría pedagógica — estafas con voz IA + reforzar la fórmula de prompting:**
+  - `modulo6.html` — nueva sección en la guía **"📞 Cuidado con las llamadas de voz clonada por IA"** (el "engaño del nieto/familiar"), insertada después de la sección de detectar noticias/imágenes falsas: explica que la IA puede clonar una voz real con solo segundos de audio, y da la defensa concreta (colgar y verificar por un número conocido, nunca transferir dinero por una sola llamada). La pregunta 6 del examen (antes "¿Cómo afecta el uso irresponsable de la IA a la sociedad?", pregunta abstracta) se reemplazó por un escenario de esta estafa; `RESP.q6` cambió de D a B
+  - `modulo4.html` — la pregunta 6 del examen (antes definición trivial de "lista de tareas") se reemplazó por una pregunta de aplicación: dado un prompt de ejemplo, identificar qué parte de la fórmula Identidad+Intención+Instrucciones (enseñada en el Módulo 2) le falta; `RESP.q6` cambió de C a B
+  - Se actualizó la tabla de "Respuestas correctas de evaluaciones" de este archivo (M1 agregado, M4 y M6 actualizados)
+  - Verificado con `node --check` en ambos archivos y probado en vivo: los dos exámenes califican "7/7" con las respuestas correctas nuevas, la sección de guía de M6 se muestra correctamente, sin errores de consola
+  - **Pendiente del resto de la auditoría** (no implementado, solo si el usuario lo pide): autoguardado de respuestas en localStorage (los 6 módulos), variar longitud de opciones de examen para que la correcta no se note por ser más larga, más preguntas de examen tipo "aplicación" en el resto de los módulos
 
 <!--
 PLANTILLA para nueva entrada de historial:

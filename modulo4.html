@@ -165,11 +165,11 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
       <label class="op"><input type="radio" name="q5" value="C"> Compartirla en redes sociales inmediatamente</label>
       <label class="op"><input type="radio" name="q5" value="D"> Ignorarla siempre</label>
     </div>
-    <div class="qq" id="q6"><p style="font-weight:700;margin-bottom:12px;">6. ¿Qué es una "lista de tareas" generada con IA?</p>
-      <label class="op"><input type="radio" name="q6" value="A"> Una lista de videos de YouTube</label>
-      <label class="op"><input type="radio" name="q6" value="B"> Un tipo de recordatorio de alarma</label>
-      <label class="op"><input type="radio" name="q6" value="C"> Una organización personalizada de actividades según tus necesidades</label>
-      <label class="op"><input type="radio" name="q6" value="D"> Una app de compras</label>
+    <div class="qq" id="q6"><p style="font-weight:700;margin-bottom:12px;">6. Un amigo escribe este prompt: "Actúa como asesor financiero. Ayúdame con mi presupuesto mensual." Según la fórmula de 3 pasos del Módulo 2 (Identidad + Intención + Instrucciones), ¿qué le falta?</p>
+      <label class="op"><input type="radio" name="q6" value="A"> Le falta decirle qué rol debe tomar la IA (Identidad)</label>
+      <label class="op"><input type="radio" name="q6" value="B"> Le falta decirle cómo quiere el resultado: formato, estilo o extensión (Instrucciones)</label>
+      <label class="op"><input type="radio" name="q6" value="C"> Le falta escribir su nombre completo</label>
+      <label class="op"><input type="radio" name="q6" value="D"> El prompt ya está completo y no necesita nada más</label>
     </div>
     <div class="qq" id="q7"><p style="font-weight:700;margin-bottom:12px;">7. ¿Cuál es un uso RESPONSABLE de la IA en la escuela?</p>
       <label class="op"><input type="radio" name="q7" value="A"> Usarla para entender mejor un tema e informar al maestro</label>
@@ -220,7 +220,7 @@ function toggleGuia() {
 }
 var N_Q = 7;
 var MIN_OK = 5;
-var RESP = {q1:"B",q2:"C",q3:"A",q4:"D",q5:"B",q6:"C",q7:"A"};
+var RESP = {q1:"B",q2:"C",q3:"A",q4:"D",q5:"B",q6:"B",q7:"A"};
 
 (function() {
   var ok = localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo4');
