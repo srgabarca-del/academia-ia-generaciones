@@ -80,8 +80,8 @@ window.fbAuth.onAuthStateChanged(function(user) {
     sessionStorage.setItem('firebase_uid', user.uid);
     // Si es VIP, dar acceso completo a todos los módulos
     if (esVIP(user.email)) {
-      sessionStorage.setItem('acceso_plan', '1');
-      for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+      localStorage.setItem('acceso_plan', '1');
+      for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
     }
     window.location = ARCH;
   }
@@ -104,14 +104,14 @@ document.getElementById('btn-login').addEventListener('click', function() {
       sessionStorage.setItem('email_verificado', user.emailVerified ? 'si' : 'no');
       // Si es VIP dar acceso completo
       if (esVIP(e)) {
-        sessionStorage.setItem('acceso_plan', '1');
-        for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+        localStorage.setItem('acceso_plan', '1');
+        for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
       }
       // Restaurar acceso si venía de pago
       var pago_arch = sessionStorage.getItem('pago_archivo');
       if (pago_arch) {
         var mod = pago_arch.replace('.html','');
-        sessionStorage.setItem('acceso_' + mod, '1');
+        localStorage.setItem('acceso_' + mod, '1');
       }
       // Si el correo no está verificado, avisar pero dejar entrar al módulo 1
       if (!user.emailVerified) {

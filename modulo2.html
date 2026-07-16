@@ -207,8 +207,8 @@ function toggleGuia() {
 }
 // ── CONTROL DE ACCESO ────────────────────────────────────────────────────────
 (function() {
-  var plan = sessionStorage.getItem('acceso_plan');
-  var individual = sessionStorage.getItem('acceso_modulo2');
+  var plan = localStorage.getItem('acceso_plan');
+  var individual = localStorage.getItem('acceso_modulo2');
   if (!plan && !individual) {
     // No tiene acceso — redirigir a compra
     window.location = 'academia_ia_pagina_ventas.html#planes-pago';
@@ -219,7 +219,7 @@ function toggleGuia() {
 // FIX: si el alumno ya aprobó este módulo antes (al volver desde otro módulo),
 // restaurar el estado "completado" en vez de mostrar todo desde cero.
 (function() {
-  if (sessionStorage.getItem('modulo2_completado')) {
+  if (localStorage.getItem('modulo2_completado')) {
     certOK = true;
     document.getElementById('pf').style.width = '100%';
     document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 2 completado! ✅';
@@ -240,7 +240,7 @@ document.getElementById('nav-nombre').textContent = '👤 ' + nombre + ' | Módu
 document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienvenido/a al Módulo 2 🚀';
 
 setTimeout(function() {
-  if (sessionStorage.getItem('modulo2_completado')) { return; }
+  if (localStorage.getItem('modulo2_completado')) { return; }
   document.getElementById('pf').style.width = '15%';
   document.getElementById('pl').textContent = 'Progreso: 15%';
 }, 400);
@@ -287,7 +287,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
     document.getElementById('pf').style.width='100%';
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 2 completado! 🎉';
     certOK=true;
-    sessionStorage.setItem('modulo2_completado','1');
+    localStorage.setItem('modulo2_completado','1');
     // FIX (bug de compra): antes se otorgaba acceso_modulo3 automáticamente aquí,
     // lo que permitía pasar al Módulo 3 gratis sin comprarlo ni tener el plan mensual.
     // Ahora mostrarAccesoMod3() solo revisa lo que el alumno realmente ya tiene.
@@ -306,7 +306,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
 
 function mostrarAccesoMod3() {
   var el = document.getElementById('acceso-mod3');
-  if (sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo3')) {
+  if (localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo3')) {
     el.innerHTML = '<a href="modulo3.html" style="display:inline-block;background:#00897B;color:#fff;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;">🚀 Ir al Módulo 3 →</a>';
   } else {
     el.innerHTML = '<p style="color:#555;font-size:.88rem;margin-bottom:12px;">Para acceder al Módulo 3 necesitas comprarlo o adquirir el Plan Completo.</p>'
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // FIX: el acceso al Módulo 3 no debe depender de repetir el examen.
   // Si el alumno ya tiene acceso (VIP, plan o compra individual), se le
   // muestra un acceso directo en el menú, visible siempre que visite la página.
-  if (sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo3')) {
+  if (localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo3')) {
     document.getElementById('btn-nav-siguiente').style.display = 'inline-block';
   }
 });

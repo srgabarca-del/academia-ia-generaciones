@@ -499,10 +499,10 @@ document.getElementById('btn-reg').addEventListener('click', function() {
     sessionStorage.setItem('alumno_nombre', nombre);
     sessionStorage.setItem('alumno_email', email);
     if (esVIP(email)) {
-      sessionStorage.setItem('acceso_plan', '1');
-      for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+      localStorage.setItem('acceso_plan', '1');
+      for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
     } else {
-      sessionStorage.setItem('acceso_modulo1', '1');
+      localStorage.setItem('acceso_modulo1', '1');
     }
     document.getElementById('frm').style.display='none';
     document.getElementById('exito-nombre').textContent=nombre;
@@ -524,8 +524,8 @@ document.getElementById('btn-reg').addEventListener('click', function() {
           document.getElementById('frm').style.display='none';
           // ── Si es VIP, acceso completo inmediato, sin esperar verificación de correo ──
           if (esVIP(email)) {
-            sessionStorage.setItem('acceso_plan', '1');
-            for (var i=1; i<=6; i++) sessionStorage.setItem('acceso_modulo'+i, '1');
+            localStorage.setItem('acceso_plan', '1');
+            for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
             sessionStorage.setItem('email_verificado', 'si');
             cred.user.sendEmailVerification().catch(function(){}); // opcional, no bloquea
             document.getElementById('exito-nombre').textContent=nombre;
@@ -575,7 +575,7 @@ document.getElementById('btn-verificar').addEventListener('click', function() {
   usuarioActual.reload()
     .then(function() {
       if (usuarioActual.emailVerified) {
-        sessionStorage.setItem('acceso_modulo1', '1');
+        localStorage.setItem('acceso_modulo1', '1');
         sessionStorage.setItem('email_verificado', 'si');
         window.location.href = 'modulo1.html';
       } else {
@@ -660,9 +660,9 @@ document.getElementById('btn-pay').addEventListener('click', function() {
     sessionStorage.setItem('pago_email',  eml);
     sessionStorage.setItem('pago_archivo', info.archivo);
     if (pagoActual === 'plan') {
-      sessionStorage.setItem('acceso_plan', '1');
+      localStorage.setItem('acceso_plan', '1');
     } else {
-      sessionStorage.setItem('acceso_' + pagoActual, '1');
+      localStorage.setItem('acceso_' + pagoActual, '1');
     }
     sessionStorage.setItem('alumno_nombre', nombre_al);
     document.getElementById('c-email').textContent=eml;

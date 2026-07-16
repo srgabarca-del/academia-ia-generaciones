@@ -440,7 +440,7 @@ function verCert() {
 // incluso si el alumno ya tenía acceso (VIP o plan/módulo ya comprado).
 // Ahora primero revisa si ya tiene acceso y, si es así, va directo al Módulo 2.
 document.getElementById('btn-mod2').addEventListener('click', function() {
-  if (sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo2')) {
+  if (localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo2')) {
     window.location.href = 'modulo2.html';
   } else {
     sessionStorage.setItem('ir_a','modulo2');

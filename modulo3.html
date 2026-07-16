@@ -238,7 +238,7 @@ var MIN_OK = 5;
 var RESP = {q1:"A",q2:"C",q3:"B",q4:"D",q5:"C",q6:"B",q7:"D"};
 
 (function() {
-  var ok = sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo3');
+  var ok = localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo3');
   if (!ok) { window.location = 'academia_ia_pagina_ventas.html#planes-pago'; }
 })();
 
@@ -246,15 +246,15 @@ var RESP = {q1:"A",q2:"C",q3:"B",q4:"D",q5:"C",q6:"B",q7:"D"};
 // nunca se guardó acceso_modulo2 (p. ej. bug del botón VIP en modulo1.html),
 // se lo otorgamos aquí mismo para que "Volver al Módulo 2" no lo rebote a la página de pago.
 document.getElementById('btn-volver-m2').addEventListener('click', function() {
-  if (sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo3')) {
-    sessionStorage.setItem('acceso_modulo2', '1');
+  if (localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo3')) {
+    localStorage.setItem('acceso_modulo2', '1');
   }
 });
 
 // FIX: si el alumno ya aprobó este módulo antes (al volver desde otro módulo),
 // restaurar el estado "completado" en vez de mostrar todo desde cero.
 (function() {
-  if (sessionStorage.getItem('modulo3_completado')) {
+  if (localStorage.getItem('modulo3_completado')) {
     certOK = true;
     document.getElementById('pf').style.width = '100%';
     document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 3 completado! ✅';
@@ -271,7 +271,7 @@ document.getElementById('nav-nombre').textContent = '👤 ' + nombre + ' | Módu
 document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienvenido/a al Módulo 3 🚀';
 
 setTimeout(function() {
-  if (sessionStorage.getItem('modulo3_completado')) { return; }
+  if (localStorage.getItem('modulo3_completado')) { return; }
   document.getElementById('pf').style.width = '15%';
   document.getElementById('pl').textContent = 'Progreso: 15%';
 }, 400);
@@ -317,7 +317,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
     document.getElementById('pf').style.width='100%';
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 3 completado! 🎉';
     certOK=true;
-    sessionStorage.setItem('modulo3_completado','1');
+    localStorage.setItem('modulo3_completado','1');
     // FIX (bug de compra): antes se otorgaba acceso_modulo4 automáticamente aquí ("FIX 3"),
     // lo que permitía pasar al Módulo 4 gratis sin comprarlo ni tener el plan mensual.
     // Ahora mostrarSiguienteModulo() solo revisa lo que el alumno realmente ya tiene.
@@ -352,7 +352,7 @@ function mostrarSiguienteModulo(noScroll) {
   var lockBox = document.getElementById('lock-siguiente');
   var innerDiv = document.getElementById('lock-inner');
   lockBox.style.display = 'block';
-  var tiene = sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo4');
+  var tiene = localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo4');
   if (tiene) {
     innerDiv.innerHTML = '<a href="modulo4.html" style="display:inline-block;background:#1976D2;color:#fff;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;">🚀 Ir al Módulo 4 →</a>';
   } else {
@@ -376,7 +376,7 @@ function cerrarSesion() {
 // Si el alumno ya tiene acceso (VIP, plan o compra individual), se le
 // muestra un acceso directo en el menú, visible siempre que visite la página.
 document.addEventListener('DOMContentLoaded', function() {
-  if (sessionStorage.getItem('acceso_plan') || sessionStorage.getItem('acceso_modulo4')) {
+  if (localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo4')) {
     document.getElementById('btn-nav-siguiente').style.display = 'inline-block';
   }
 });
