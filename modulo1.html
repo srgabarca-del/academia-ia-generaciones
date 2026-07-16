@@ -303,6 +303,7 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 <script>
   if (!firebase.apps.length) {
     firebase.initializeApp({
@@ -311,9 +312,11 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
       projectId: "academia-ia-eba0b",
       storageBucket: "academia-ia-eba0b.firebasestorage.app",
       messagingSenderId: "285240187661",
-      appId: "1:285240187661:web:42ae229487b88237fcee44"
+      appId: "1:285240187661:web:42ae229487b88237fcee44",
+      measurementId: "G-FJR421N496"
     });
   }
+  firebase.analytics();
   window.fbAuth = firebase.auth();
   window.fbAuth.onAuthStateChanged(function(user) {
     if (user) {

@@ -83,6 +83,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 <script>
   var firebaseConfig = {
     apiKey: "AIzaSyDQO9lwBLmNAJWpW5klap9ngdcqs-CrcXw",
@@ -90,9 +91,11 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
     projectId: "academia-ia-eba0b",
     storageBucket: "academia-ia-eba0b.firebasestorage.app",
     messagingSenderId: "285240187661",
-    appId: "1:285240187661:web:42ae229487b88237fcee44"
+    appId: "1:285240187661:web:42ae229487b88237fcee44",
+    measurementId: "G-FJR421N496"
   };
   if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+  firebase.analytics();
   window.fbAuth = firebase.auth();
 </script>
 </head>
@@ -521,6 +524,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
     } else {
       localStorage.setItem('acceso_modulo1', '1');
     }
+    firebase.analytics().logEvent('sign_up', {method:'email'});
     document.getElementById('frm').style.display='none';
     document.getElementById('exito-nombre').textContent=nombre;
     document.getElementById('exito').style.display='block';
@@ -539,6 +543,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
           sessionStorage.setItem('alumno_nombre', nombre);
           sessionStorage.setItem('alumno_email',  email);
           sincronizarCuentaAcceso(email);
+          firebase.analytics().logEvent('sign_up', {method:'email'});
           document.getElementById('frm').style.display='none';
           // ── Si es VIP, acceso completo inmediato, sin esperar verificación de correo ──
           if (esVIP(email)) {
@@ -606,6 +611,11 @@ function abrirPago(tipo) {
   document.getElementById('btn-pay').textContent='🔒 Confirmar pago — '+info.precio;
   document.getElementById('btn-pay').disabled=false;
   document.getElementById('mpago').classList.add('open');
+  firebase.analytics().logEvent('begin_checkout', {
+    currency: 'USD',
+    value: parseFloat(info.precio.replace(/[^0-9.]/g,'')),
+    items: [{item_id: tipo, item_name: info.mod}]
+  });
 }
 document.getElementById('mcerrar').addEventListener('click', function() {
   document.getElementById('mpago').classList.remove('open');
@@ -640,6 +650,12 @@ document.getElementById('btn-pay').addEventListener('click', function() {
       localStorage.setItem('acceso_' + pagoActual, '1');
     }
     sessionStorage.setItem('alumno_nombre', nombre_al);
+    firebase.analytics().logEvent('purchase', {
+      currency: 'USD',
+      value: parseFloat(info.precio.replace(/[^0-9.]/g,'')),
+      transaction_id: pagoActual + '_' + Date.now(),
+      items: [{item_id: pagoActual, item_name: info.mod}]
+    });
     document.getElementById('c-email').textContent=eml;
     document.getElementById('c-mod').textContent=info.mod;
     document.getElementById('btn-login-conf').href=info.archivo;

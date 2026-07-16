@@ -38,6 +38,7 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 <script>
   if (!firebase.apps.length) {
     firebase.initializeApp({
@@ -46,8 +47,10 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
       projectId: "academia-ia-eba0b",
       storageBucket: "academia-ia-eba0b.firebasestorage.app",
       messagingSenderId: "285240187661",
-      appId: "1:285240187661:web:42ae229487b88237fcee44"
+      appId: "1:285240187661:web:42ae229487b88237fcee44",
+      measurementId: "G-FJR421N496"
     });
+    firebase.analytics();
   }
 </script>
 </head>
@@ -424,7 +427,8 @@ document.getElementById('btn-env').addEventListener('click', function() {
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 6 completado! 🎉';
     certOK=true;
     localStorage.setItem('modulo6_completado','1');
-    
+    firebase.analytics().logEvent('course_complete', {course: 'academia_ia_6_modulos'});
+
   }else{
     rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
   }
