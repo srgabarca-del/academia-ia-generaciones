@@ -72,12 +72,30 @@ function esVIP(email) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ── Evita que el acceso comprado por una cuenta se herede a otra cuenta ──────
+// distinta registrada/iniciada después en el mismo navegador (localStorage no
+// se limpia solo al cambiar de cuenta). Llamar SIEMPRE antes de otorgar acceso.
+function sincronizarCuentaAcceso(email) {
+  var actual = (email || '').toLowerCase().trim();
+  var previa = localStorage.getItem('cuenta_acceso');
+  if (previa && previa !== actual) {
+    localStorage.removeItem('acceso_plan');
+    for (var i=1; i<=6; i++) {
+      localStorage.removeItem('acceso_modulo'+i);
+      localStorage.removeItem('modulo'+i+'_completado');
+    }
+  }
+  localStorage.setItem('cuenta_acceso', actual);
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 // Check if already logged in
 window.fbAuth.onAuthStateChanged(function(user) {
   if (user) {
     sessionStorage.setItem('alumno_nombre', user.displayName || user.email.split('@')[0]);
     sessionStorage.setItem('alumno_email', user.email);
     sessionStorage.setItem('firebase_uid', user.uid);
+    sincronizarCuentaAcceso(user.email);
     // Si es VIP, dar acceso completo a todos los módulos
     if (esVIP(user.email)) {
       localStorage.setItem('acceso_plan', '1');
@@ -102,6 +120,7 @@ document.getElementById('btn-login').addEventListener('click', function() {
       sessionStorage.setItem('firebase_uid', user.uid);
       // Guardar estado de verificación
       sessionStorage.setItem('email_verificado', user.emailVerified ? 'si' : 'no');
+      sincronizarCuentaAcceso(e);
       // Si es VIP dar acceso completo
       if (esVIP(e)) {
         localStorage.setItem('acceso_plan', '1');

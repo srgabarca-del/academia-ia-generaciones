@@ -486,6 +486,23 @@ function esVIP(email) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ── Evita que el acceso comprado por una cuenta se herede a otra cuenta ──────
+// distinta registrada/iniciada después en el mismo navegador (localStorage no
+// se limpia solo al cambiar de cuenta). Llamar SIEMPRE antes de otorgar acceso.
+function sincronizarCuentaAcceso(email) {
+  var actual = (email || '').toLowerCase().trim();
+  var previa = localStorage.getItem('cuenta_acceso');
+  if (previa && previa !== actual) {
+    localStorage.removeItem('acceso_plan');
+    for (var i=1; i<=6; i++) {
+      localStorage.removeItem('acceso_modulo'+i);
+      localStorage.removeItem('modulo'+i+'_completado');
+    }
+  }
+  localStorage.setItem('cuenta_acceso', actual);
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 document.getElementById('btn-reg').addEventListener('click', function() {
   actualizar();
   if (this.disabled) return;
@@ -498,6 +515,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
     // Fallback sin Firebase: no hay forma de verificar el correo, se avisa y se da acceso igual
     sessionStorage.setItem('alumno_nombre', nombre);
     sessionStorage.setItem('alumno_email', email);
+    sincronizarCuentaAcceso(email);
     if (esVIP(email)) {
       localStorage.setItem('acceso_plan', '1');
       for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
@@ -521,6 +539,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
         .then(function() {
           sessionStorage.setItem('alumno_nombre', nombre);
           sessionStorage.setItem('alumno_email',  email);
+          sincronizarCuentaAcceso(email);
           document.getElementById('frm').style.display='none';
           // ── Si es VIP, acceso completo inmediato, sin esperar verificación de correo ──
           if (esVIP(email)) {
@@ -575,6 +594,7 @@ document.getElementById('btn-verificar').addEventListener('click', function() {
   usuarioActual.reload()
     .then(function() {
       if (usuarioActual.emailVerified) {
+        sincronizarCuentaAcceso(usuarioActual.email);
         localStorage.setItem('acceso_modulo1', '1');
         sessionStorage.setItem('email_verificado', 'si');
         window.location.href = 'modulo1.html';
@@ -659,6 +679,7 @@ document.getElementById('btn-pay').addEventListener('click', function() {
     var nombre_al = nom.split(' ')[0];
     sessionStorage.setItem('pago_email',  eml);
     sessionStorage.setItem('pago_archivo', info.archivo);
+    sincronizarCuentaAcceso(eml);
     if (pagoActual === 'plan') {
       localStorage.setItem('acceso_plan', '1');
     } else {
