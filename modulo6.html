@@ -8,16 +8,16 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F3FF;color:#212121}
 nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.logo{color:#fff;font-weight:700;font-size:1rem}
-.al{color:rgba(255,255,255,.8);font-size:.85rem}
+.logo{color:#fff;font-weight:700;font-size:1.15rem}
+.al{color:rgba(255,255,255,.8);font-size:1.1rem}
 .body{max-width:860px;margin:0 auto;padding:32px 20px 60px}
-.badge{display:inline-block;background:#E8F5E9;color:#2E7D32;font-size:.8rem;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+.badge{display:inline-block;background:#E8F5E9;color:#2E7D32;font-size:1.05rem;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:16px}
 .pbr{background:#E0E0E0;border-radius:4px;height:6px;margin-bottom:6px}
 .pf{height:100%;border-radius:4px;width:0;transition:width .6s;background:#2E7D32}
 .vw{border-radius:16px;background:#1a1a2e;margin-bottom:12px;overflow:hidden}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:28px}
 .sc{background:#fff;border-radius:12px;padding:16px;border:1px solid #E0E0E0}
-.sn{font-size:.72rem;font-weight:700;color:#2E7D32;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.sn{font-size:.95rem;font-weight:700;color:#2E7D32;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 .bn{width:100%;padding:16px;color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;margin-bottom:12px}
 .qq{background:#fff;border:1px solid #E0E0E0;border-radius:12px;padding:18px 20px;margin-bottom:12px}
 .qq.ok{border-color:#43A047;background:#F1F8E9}
@@ -55,31 +55,31 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 <nav>
   <div class="logo">🤖 Academia IA Generaciones</div>
   <div class="al" id="nav-nombre">👤 Alumno | Módulo 6</div>
-  <button onclick="cerrarSesion()" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-left:12px;">🚪 Salir</button>
+  <button onclick="cerrarSesion()" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:1.05rem;cursor:pointer;margin-left:12px;">🚪 Salir</button>
 </nav>
 <div class="body">
   <span class="badge">🔒 MÓDULO 6 — PREMIUM · $9 USD · MÓDULO FINAL</span>
   <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:#2E7D32;margin-bottom:8px;">Seguridad y Uso Responsable</h1>
-  <p style="color:#555;font-size:.95rem;margin-bottom:24px;">Duración: 45–60 min · Herramientas gratuitas · En español</p>
+  <p style="color:#555;font-size:1.2rem;margin-bottom:24px;">Duración: 45–60 min · Herramientas gratuitas · En español</p>
   <div style="background:linear-gradient(135deg,#2E7D32,#388E3C);border-radius:14px;padding:20px 24px;margin-bottom:24px;color:#fff;">
     <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:4px;" id="saludo">¡Bienvenido/a al Módulo 6! 🚀</h2>
-    <p style="font-size:.88rem;opacity:.85;">Este es el último módulo. ¡Completa la evaluación y obtén tu Certificado Final!</p>
+    <p style="font-size:1.15rem;opacity:.85;">Este es el último módulo. ¡Completa la evaluación y obtén tu Certificado Final!</p>
   </div>
   <div class="pbr"><div class="pf" id="pf"></div></div>
-  <p style="font-size:.78rem;color:#757575;margin-bottom:24px;" id="pl">Progreso: 0%</p>
+  <p style="font-size:1rem;color:#757575;margin-bottom:24px;" id="pl">Progreso: 0%</p>
 
   <div class="vw">
     <div style="position:relative;width:100%;padding-top:56.25%;">
       <div id="yt-player" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>
     </div>
   </div>
-  <p style="color:#555;font-size:.95rem;font-weight:600;margin-bottom:24px;" id="vt">🛡️ La guía de seguridad para usar IA</p>
+  <p style="color:#555;font-size:1.2rem;font-weight:600;margin-bottom:24px;" id="vt">🛡️ La guía de seguridad para usar IA</p>
 
   <div class="grid">
-    <div class="sc"><div class="sn">Sección 1</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">Privacidad y datos personales</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">Qué información nunca debes dar a ninguna IA.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 0:00–15:00</div></div>
-    <div class="sc"><div class="sn">Sección 2</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">Detectar fraudes y engaños</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">Cómo identificar mensajes falsos generados con IA.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 15:00–30:00</div></div>
-    <div class="sc"><div class="sn">Sección 3</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">Noticias falsas e imágenes falsas</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">Cómo verificar si una imagen o noticia es real.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 30:00–45:00</div></div>
-    <div class="sc"><div class="sn">Sección 4</div><h4 style="font-size:.93rem;font-weight:700;margin-bottom:5px;">Buenas prácticas y uso responsable</h4><p style="font-size:.83rem;color:#555;line-height:1.5;">Reglas de oro para usar la IA de forma ética.</p><div style="font-size:.76rem;color:#9E9E9E;margin-top:7px;">⏱ 45:00–60:00</div></div>
+    <div class="sc"><div class="sn">Sección 1</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Privacidad y datos personales</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Qué información nunca debes dar a ninguna IA.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 0:00–15:00</div></div>
+    <div class="sc"><div class="sn">Sección 2</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Detectar fraudes y engaños</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Cómo identificar mensajes falsos generados con IA.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 15:00–30:00</div></div>
+    <div class="sc"><div class="sn">Sección 3</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Noticias falsas e imágenes falsas</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Cómo verificar si una imagen o noticia es real.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 30:00–45:00</div></div>
+    <div class="sc"><div class="sn">Sección 4</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Buenas prácticas y uso responsable</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Reglas de oro para usar la IA de forma ética.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 45:00–60:00</div></div>
   </div>
 
   <div id="guia-box" style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:24px;overflow:hidden;">
@@ -268,14 +268,14 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 
   <div class="cert-box" id="certbox-final" style="border:3px solid #2E7D32;">
     <div style="font-size:3.5rem;margin-bottom:12px;">🏆🎓</div>
-    <div style="font-size:.85rem;font-weight:700;color:#2E7D32;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Academia IA Generaciones</div>
+    <div style="font-size:1.1rem;font-weight:700;color:#2E7D32;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Academia IA Generaciones</div>
     <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:8px;">¡Curso Completado!</h2>
     <p style="color:#555;margin-bottom:12px;">Este certificado se otorga a</p>
     <div id="cn" style="font-size:1.8rem;font-weight:800;color:#2E7D32;margin-bottom:16px;"></div>
     <p style="font-weight:700;margin-bottom:4px;">Módulo 6: Seguridad y Uso Responsable</p>
     <p style="color:#555;margin-bottom:16px;">Completó el curso completo de 6 módulos</p>
-    <div id="cf" style="font-size:.85rem;color:#757575;margin-bottom:28px;"></div>
-    <button onclick="window.print()" style="background:#2E7D32;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
+    <div id="cf" style="font-size:1.1rem;color:#757575;margin-bottom:28px;"></div>
+    <button onclick="window.print()" style="background:#2E7D32;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
   </div>
 
   <div id="opinion-box" style="display:none;background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-top:20px;padding:28px 24px;">
@@ -302,8 +302,8 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 
 
   <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
-    <a href="modulo5.html" id="btn-volver-m5" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">← Volver al Módulo 5</a>
-    <a href="Academia_AI.html" style="display:block;width:100%;padding:12px;background:#F5F5F5;color:#555;border-radius:12px;font-size:.9rem;font-weight:600;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Inicio</a>
+    <a href="modulo5.html" id="btn-volver-m5" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">← Volver al Módulo 5</a>
+    <a href="Academia_AI.html" style="display:block;width:100%;padding:12px;background:#F5F5F5;color:#555;border-radius:12px;font-size:1.15rem;font-weight:600;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Inicio</a>
   </div>
 </div>
 
@@ -403,14 +403,14 @@ document.getElementById('btn-env').addEventListener('click', function() {
   var rs=document.getElementById('qres');
   rs.style.display='block'; document.getElementById('btn-env').style.display='none';
   if(ap){
-    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/'+N_Q+'</h3><p style="color:#555;margin-bottom:16px;">¡Felicidades! Has completado el curso.</p><button onclick="verCert()" style="background:#2E7D32;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado Final</button>';
+    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/'+N_Q+'</h3><p style="color:#555;margin-bottom:16px;">¡Felicidades! Has completado el curso.</p><button onclick="verCert()" style="background:#2E7D32;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado Final</button>';
     document.getElementById('pf').style.width='100%';
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 6 completado! 🎉';
     certOK=true;
     localStorage.setItem('modulo6_completado','1');
     
   }else{
-    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
+    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
   }
   rs.scrollIntoView({behavior:'smooth',block:'center'});
 });

@@ -8,17 +8,17 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#4527A0,#6C3FC4,#00897B);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .card{background:#fff;border-radius:20px;padding:40px 36px;max-width:420px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.3)}
-h1{text-align:center;font-size:1.4rem;font-weight:800;color:#212121;margin-bottom:4px}
-label{display:block;font-size:.85rem;font-weight:600;color:#212121;margin-bottom:5px}
-.inp{width:100%;padding:13px 14px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:.95rem;font-family:inherit;outline:none;margin-bottom:14px}
+h1{text-align:center;font-size:1.5rem;font-weight:800;color:#212121;margin-bottom:4px}
+label{display:block;font-size:1.1rem;font-weight:600;color:#212121;margin-bottom:5px}
+.inp{width:100%;padding:13px 14px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:1.2rem;font-family:inherit;outline:none;margin-bottom:14px}
 .inp:focus{border-color:#6C3FC4}
-.btn{width:100%;padding:15px;background:#6C3FC4;color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer}
+.btn{width:100%;padding:15px;background:#6C3FC4;color:#fff;border:none;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer}
 .btn:hover{background:#4527A0}
 .btn:disabled{background:#BDBDBD;cursor:not-allowed}
-.err{background:#FFEBEE;color:#C62828;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:14px;display:none}
-.hint{background:#F5F3FF;border-radius:10px;padding:12px 14px;font-size:.82rem;color:#6C3FC4;margin-bottom:20px;line-height:1.5}
-.forgot{text-align:center;font-size:.82rem;color:#6C3FC4;cursor:pointer;margin-top:12px;text-decoration:underline}
-.ok-msg{background:#E8F5E9;color:#2E7D32;border-radius:8px;padding:10px 14px;font-size:.85rem;margin-bottom:14px;display:none}
+.err{background:#FFEBEE;color:#C62828;border-radius:8px;padding:10px 14px;font-size:1.1rem;margin-bottom:14px;display:none}
+.hint{background:#F5F3FF;border-radius:10px;padding:12px 14px;font-size:1.05rem;color:#6C3FC4;margin-bottom:20px;line-height:1.5}
+.forgot{text-align:center;font-size:1.05rem;color:#6C3FC4;cursor:pointer;margin-top:12px;text-decoration:underline}
+.ok-msg{background:#E8F5E9;color:#2E7D32;border-radius:8px;padding:10px 14px;font-size:1.1rem;margin-bottom:14px;display:none}
 </style>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -37,10 +37,10 @@ label{display:block;font-size:.85rem;font-weight:600;color:#212121;margin-bottom
 </head>
 <body>
 <div class="card">
-  <a href="Academia_AI.html" style="display:flex;align-items:center;gap:6px;color:#757575;font-size:.85rem;text-decoration:none;margin-bottom:16px;width:fit-content;">← Volver al inicio</a>
+  <a href="Academia_AI.html" style="display:flex;align-items:center;gap:6px;color:#757575;font-size:1.1rem;text-decoration:none;margin-bottom:16px;width:fit-content;">← Volver al inicio</a>
   <div style="text-align:center;font-size:2.2rem;margin-bottom:8px;">🤖</div>
   <h1>Iniciar sesión</h1>
-  <p style="text-align:center;color:#757575;font-size:.88rem;margin-bottom:20px;">Academia IA Generaciones</p>
+  <p style="text-align:center;color:#757575;font-size:1.15rem;margin-bottom:20px;">Academia IA Generaciones</p>
   <div class="hint">💡 Usa el correo y contraseña con los que te registraste o compraste tu módulo.</div>
   <div class="err" id="err">⚠️ Correo o contraseña incorrectos. Verifica tus datos.</div>
   <div class="ok-msg" id="ok-msg">✅ Correo de recuperación enviado. Revisa tu bandeja de entrada.</div>
@@ -50,7 +50,7 @@ label{display:block;font-size:.85rem;font-weight:600;color:#212121;margin-bottom
   <input class="inp" type="password" id="lp" placeholder="Tu contraseña">
   <button class="btn" id="btn-login">🔓 Entrar a mi curso</button>
   <p class="forgot" id="forgot">¿Olvidaste tu contraseña? Recupérala aquí</p>
-  <p style="text-align:center;font-size:.8rem;color:#9E9E9E;margin-top:16px;">¿No tienes cuenta? <a href="Academia_AI.html#registro" style="color:#6C3FC4;">Regístrate gratis</a></p>
+  <p style="text-align:center;font-size:1.05rem;color:#757575;margin-top:16px;">¿No tienes cuenta? <a href="Academia_AI.html#registro" style="color:#6C3FC4;">Regístrate gratis</a></p>
 </div>
 <script>
 var ARCH = sessionStorage.getItem('pago_archivo') || 'modulo1.html';
