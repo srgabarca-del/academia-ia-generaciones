@@ -73,6 +73,7 @@ footer{text-align:center;padding:28px 24px;color:#757575;font-size:.95rem}
   <p>Si tienes preguntas sobre estos Términos y Condiciones, escríbenos a <span class="placeholder">[tu correo de contacto]</span>.</p>
 </div>
 
-<footer>© 2025 Academia IA Generaciones · Todos los derechos reservados</footer>
+<footer>© <span id="anio-actual">2025</span> Academia IA Generaciones · Todos los derechos reservados</footer>
+<script>document.getElementById('anio-actual').textContent = new Date().getFullYear();</script>
 </body>
 </html>
