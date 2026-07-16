@@ -302,7 +302,7 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
 
   <div class="btn-row">
     <button class="bn" id="btn-mod2" style="background:#6C3FC4;">🚀 Continuar al Módulo 2 — $7 USD</button>
-    <a href="academia_ia_pagina_ventas.html" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
+    <a href="Academia_AI.html" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
   </div>
 </div>
 
@@ -430,11 +430,11 @@ function cerrarSesion() {
   if (window.fbAuth) {
     window.fbAuth.signOut().then(function() {
       sessionStorage.clear();
-      window.location.href = 'academia_ia_pagina_ventas.html';
+      window.location.href = 'Academia_AI.html';
     });
   } else {
     sessionStorage.clear();
-    window.location.href = 'academia_ia_pagina_ventas.html';
+    window.location.href = 'Academia_AI.html';
   }
 }
 
@@ -456,7 +456,7 @@ document.getElementById('btn-mod2').addEventListener('click', function() {
     window.location.href = 'modulo2.html';
   } else {
     sessionStorage.setItem('ir_a','modulo2');
-    window.location='academia_ia_pagina_ventas.html#planes-pago';
+    window.location='Academia_AI.html#planes-pago';
   }
 });
 

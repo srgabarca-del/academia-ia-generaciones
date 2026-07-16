@@ -190,7 +190,7 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
     </div>
 
     <button id="btn-siguiente-alert" class="bn" style="background:#6C3FC4;margin-top:10px;display:none;" onclick="alert('Módulo 3 disponible con el Plan Completo.')">🚀 Continuar al Módulo 3 →</button>
-    <a href="academia_ia_pagina_ventas.html" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
+    <a href="Academia_AI.html" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
   </div>
 </div>
 
@@ -210,7 +210,7 @@ function toggleGuia() {
   var individual = localStorage.getItem('acceso_modulo2');
   if (!plan && !individual) {
     // No tiene acceso — redirigir a compra
-    window.location = 'academia_ia_pagina_ventas.html#planes-pago';
+    window.location = 'Academia_AI.html#planes-pago';
   }
 })();
 // ─────────────────────────────────────────────────────────────────────────────
@@ -327,12 +327,12 @@ function mostrarAccesoMod3() {
 }
 
 // FIX: guardar ir_a ANTES de navegar, igual que en modulo3/4/5, para que
-// academia_ia_pagina_ventas.html abra automáticamente el formulario de pago del Módulo 3.
+// Academia_AI.html abra automáticamente el formulario de pago del Módulo 3.
 // Antes este enlace era un <a> plano que no guardaba ir_a, por lo que el usuario
 // llegaba a la página de ventas sin que se abriera ningún formulario.
 function comprarModulo3() {
   sessionStorage.setItem('ir_a', 'modulo3');
-  window.location.href = 'academia_ia_pagina_ventas.html#planes-pago';
+  window.location.href = 'Academia_AI.html#planes-pago';
 }
 
 function reiniciar() {
@@ -363,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.addEventListener('click', function(e) {
       e.preventDefault();
       sessionStorage.setItem('ir_a', btn.getAttribute('data-mod'));
-      window.location.href = 'academia_ia_pagina_ventas.html#planes-pago';
+      window.location.href = 'Academia_AI.html#planes-pago';
     });
   }
   // FIX: el acceso al Módulo 3 no debe depender de repetir el examen.
@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function cerrarSesion() {
   sessionStorage.clear();
-  window.location.href = 'academia_ia_pagina_ventas.html';
+  window.location.href = 'Academia_AI.html';
 }
 </script>
 </body>

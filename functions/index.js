@@ -61,8 +61,8 @@ exports.crearSesionPago = onCall({ secrets: [stripeSecretKey] }, async (request)
         quantity: 1,
       },
     ],
-    success_url: `${URL_SITIO}/academia_ia_pagina_ventas.html?pago=exito&tipo=${tipo}`,
-    cancel_url: `${URL_SITIO}/academia_ia_pagina_ventas.html?pago=cancelado`,
+    success_url: `${URL_SITIO}/Academia_AI.html?pago=exito&tipo=${tipo}`,
+    cancel_url: `${URL_SITIO}/Academia_AI.html?pago=cancelado`,
   });
 
   return { url: session.url };

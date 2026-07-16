@@ -217,7 +217,7 @@ nav{background:#4527A0;padding:14px 24px;display:flex;align-items:center;justify
          Si llegaste aquí teniendo acceso al Módulo 3 (o Plan), garantizamos
          acceso_modulo2 antes de navegar, por si el flujo del Módulo 1 no lo guardó (bug conocido). -->
     <a href="modulo2.html" id="btn-volver-m2" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">← Volver al Módulo 2</a>
-    <a href="academia_ia_pagina_ventas.html" style="display:block;width:100%;padding:12px;background:#F5F5F5;color:#555;border-radius:12px;font-size:.9rem;font-weight:600;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Inicio</a>
+    <a href="Academia_AI.html" style="display:block;width:100%;padding:12px;background:#F5F5F5;color:#555;border-radius:12px;font-size:.9rem;font-weight:600;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Inicio</a>
   </div>
 </div>
 
@@ -238,7 +238,7 @@ var RESP = {q1:"A",q2:"C",q3:"B",q4:"D",q5:"C",q6:"B",q7:"D"};
 
 (function() {
   var ok = localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo3');
-  if (!ok) { window.location = 'academia_ia_pagina_ventas.html#planes-pago'; }
+  if (!ok) { window.location = 'Academia_AI.html#planes-pago'; }
 })();
 
 // FIX 5b: si el usuario tiene acceso al Módulo 3 (o Plan) pero por algún motivo
@@ -376,12 +376,12 @@ function mostrarSiguienteModulo(noScroll) {
 
 function comprarSiguiente() {
   sessionStorage.setItem('ir_a', 'modulo4');
-  window.location.href = 'academia_ia_pagina_ventas.html#planes-pago';
+  window.location.href = 'Academia_AI.html#planes-pago';
 }
 
 function cerrarSesion() {
   sessionStorage.clear();
-  window.location.href = 'academia_ia_pagina_ventas.html';
+  window.location.href = 'Academia_AI.html';
 }
 
 // FIX: el acceso al Módulo 4 no debe depender de repetir el examen.
