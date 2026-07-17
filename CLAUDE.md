@@ -20,6 +20,7 @@
 - mayca.ar@gmail.com
 - paula.abarca.rodriguez@gmail.com
 - gelaabarca@gmail.com
+- barbosamx@gmail.com
 
 ---
 
