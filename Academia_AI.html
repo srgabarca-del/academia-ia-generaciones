@@ -41,8 +41,9 @@ section{padding:60px 24px}
 .test{background:#fff;border-radius:16px;padding:28px;border-left:4px solid #6C3FC4;box-shadow:0 2px 12px rgba(0,0,0,.06)}
 .faq-list{max-width:700px;margin:0 auto}
 .faq-item{background:#fff;border-radius:12px;margin-bottom:12px;border:1px solid #E0E0E0;overflow:hidden}
-.faq-q{padding:16px 20px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between}
+.faq-q{width:100%;padding:16px 20px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:none;border:none;text-align:left;font-family:inherit;font-size:1.2rem;color:#212121}
 .faq-q:hover{background:#EDE7F6}
+.faq-q:focus-visible{outline:3px solid #6C3FC4;outline-offset:-3px}
 .faq-a{padding:0 20px 16px;color:#555;font-size:1.2rem;line-height:1.6;display:none}
 .faq-item.open .faq-a{display:block}
 .reg-section{background:linear-gradient(135deg,#4527A0,#6C3FC4 60%,#00897B);padding:72px 24px}
@@ -262,20 +263,20 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
   <div class="container">
     <h2 class="title">Preguntas frecuentes</h2>
     <div class="faq-list" style="margin-top:32px;">
-      <div class="faq-item"><div class="faq-q">¿Necesito saber de tecnología? <span>▼</span></div><div class="faq-a">No. Si puedes usar WhatsApp o YouTube, puedes tomar este curso.</div></div>
-      <div class="faq-item"><div class="faq-q">¿El módulo 1 es realmente gratis? <span>▼</span></div><div class="faq-a">Sí, 100% gratis. Sin tarjeta de crédito ni límite de tiempo.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Puedo pedir un reembolso? <span>▼</span></div><div class="faq-a">Sí, tienes garantía de 7 días desde tu compra.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Funciona en España y Latinoamérica? <span>▼</span></div><div class="faq-a">Sí. Todo en español neutro con ejemplos de la región.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Qué hago si no puedo imprimir la guía del módulo? <span>▼</span></div><div class="faq-a">No te preocupes, no es indispensable imprimirla. Puedes tomar una hoja de papel en blanco y anotar tus respuestas a los ejercicios siguiendo el orden del documento en pantalla. Cuando termines, simplemente regresa al módulo en línea para completar la evaluación y obtener tu certificado.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Cuánto tiempo tengo para completar cada módulo? <span>▼</span></div><div class="faq-a">Sin límite de tiempo. Avanzas a tu propio ritmo — puedes tomar un módulo hoy y el siguiente la próxima semana. Tu progreso se guarda automáticamente.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Puedo tomar el curso desde mi celular? <span>▼</span></div><div class="faq-a">Sí, el curso funciona en cualquier dispositivo con internet: celular, tablet, computadora o laptop. No importa si es Android, iPhone, Windows o Mac.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Necesito instalar algún programa? <span>▼</span></div><div class="faq-a">No. Todo funciona directamente desde el navegador de internet. Solo necesitas entrar a la página y comenzar — sin descargas ni instalaciones.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Es seguro pagar en línea? <span>▼</span></div><div class="faq-a">Sí. Los pagos se procesan de forma segura. Tu información bancaria nunca es almacenada en nuestro sistema.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Puedo comprar un módulo y después otro? <span>▼</span></div><div class="faq-a">Sí, puedes comprarlos uno a la vez según tu ritmo y presupuesto, o acceder a todos con el Plan Completo por un pago único de $29.99 USD.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Qué incluye el Plan Completo? <span>▼</span></div><div class="faq-a">Acceso completo a los 6 módulos, todas las guías y todos los certificados — incluyendo el Certificado de Graduación — por un solo pago de $29.99 USD, sin mensualidades. También incluye los módulos nuevos que se agreguen en el futuro, sin costo adicional.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Los certificados tienen validez oficial? <span>▼</span></div><div class="faq-a">Son certificados de participación de Academia IA Generaciones. Son perfectos para compartir con familiares, en redes sociales o como constancia de aprendizaje personal.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Puedo imprimir mi certificado? <span>▼</span></div><div class="faq-a">Sí. Al completar cada módulo puedes imprimir tu certificado directamente o guardarlo como PDF desde cualquier dispositivo.</div></div>
-      <div class="faq-item"><div class="faq-q">¿Puedo repetir la evaluación si no apruebo? <span>▼</span></div><div class="faq-a">Sí, puedes intentarlo las veces que necesites. Te recomendamos revisar el video y la guía del módulo antes de volver a intentarlo.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Necesito saber de tecnología? <span aria-hidden="true">▼</span></button><div class="faq-a">No. Si puedes usar WhatsApp o YouTube, puedes tomar este curso.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿El módulo 1 es realmente gratis? <span aria-hidden="true">▼</span></button><div class="faq-a">Sí, 100% gratis. Sin tarjeta de crédito ni límite de tiempo.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Puedo pedir un reembolso? <span aria-hidden="true">▼</span></button><div class="faq-a">Sí, tienes garantía de 7 días desde tu compra.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Funciona en España y Latinoamérica? <span aria-hidden="true">▼</span></button><div class="faq-a">Sí. Todo en español neutro con ejemplos de la región.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Qué hago si no puedo imprimir la guía del módulo? <span aria-hidden="true">▼</span></button><div class="faq-a">No te preocupes, no es indispensable imprimirla. Puedes tomar una hoja de papel en blanco y anotar tus respuestas a los ejercicios siguiendo el orden del documento en pantalla. Cuando termines, simplemente regresa al módulo en línea para completar la evaluación y obtener tu certificado.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Cuánto tiempo tengo para completar cada módulo? <span aria-hidden="true">▼</span></button><div class="faq-a">Sin límite de tiempo. Avanzas a tu propio ritmo — puedes tomar un módulo hoy y el siguiente la próxima semana. Tu progreso se guarda automáticamente.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Puedo tomar el curso desde mi celular? <span aria-hidden="true">▼</span></button><div class="faq-a">Sí, el curso funciona en cualquier dispositivo con internet: celular, tablet, computadora o laptop. No importa si es Android, iPhone, Windows o Mac.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Necesito instalar algún programa? <span aria-hidden="true">▼</span></button><div class="faq-a">No. Todo funciona directamente desde el navegador de internet. Solo necesitas entrar a la página y comenzar — sin descargas ni instalaciones.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Es seguro pagar en línea? <span aria-hidden="true">▼</span></button><div class="faq-a">Sí. Los pagos se procesan de forma segura. Tu información bancaria nunca es almacenada en nuestro sistema.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Puedo comprar un módulo y después otro? <span aria-hidden="true">▼</span></button><div class="faq-a">Sí, puedes comprarlos uno a la vez según tu ritmo y presupuesto, o acceder a todos con el Plan Completo por un pago único de $29.99 USD.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Qué incluye el Plan Completo? <span aria-hidden="true">▼</span></button><div class="faq-a">Acceso completo a los 6 módulos, todas las guías y todos los certificados — incluyendo el Certificado de Graduación — por un solo pago de $29.99 USD, sin mensualidades. También incluye los módulos nuevos que se agreguen en el futuro, sin costo adicional.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Los certificados tienen validez oficial? <span aria-hidden="true">▼</span></button><div class="faq-a">Son certificados de participación de Academia IA Generaciones. Son perfectos para compartir con familiares, en redes sociales o como constancia de aprendizaje personal.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Puedo imprimir mi certificado? <span aria-hidden="true">▼</span></button><div class="faq-a">Sí. Al completar cada módulo puedes imprimir tu certificado directamente o guardarlo como PDF desde cualquier dispositivo.</div></div>
+      <div class="faq-item"><button type="button" class="faq-q" aria-expanded="false">¿Puedo repetir la evaluación si no apruebo? <span aria-hidden="true">▼</span></button><div class="faq-a">Sí, puedes intentarlo las veces que necesites. Te recomendamos revisar el video y la guía del módulo antes de volver a intentarlo.</div></div>
     </div>
   </div>
 </section>
@@ -397,7 +398,10 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 <script>
 // ── FAQ
 document.querySelectorAll('.faq-q').forEach(function(q) {
-  q.addEventListener('click', function() { q.parentElement.classList.toggle('open'); });
+  q.addEventListener('click', function() {
+    var open = q.parentElement.classList.toggle('open');
+    q.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
 });
 
 // ── REGISTRO
