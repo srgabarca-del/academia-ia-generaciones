@@ -296,6 +296,14 @@ nav{background:#083042;padding:14px 24px;display:flex;align-items:center;justify
       </div>
       <label style="display:block;font-size:1.1rem;color:#424242;margin-bottom:8px;">Cuéntanos qué te gustó o qué mejorarías:</label>
       <textarea id="opinion-texto" rows="4" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:12px;font-size:1.1rem;font-family:inherit;margin-bottom:16px;box-sizing:border-box;" placeholder="Escribe aquí tu opinión..."></textarea>
+
+      <label style="display:block;font-size:1.1rem;color:#424242;margin-bottom:10px;">¿Qué otro tema de IA te gustaría que incluyéramos en el próximo módulo? <span style="color:#757575;font-weight:400;">(opcional, puedes elegir varios)</span></label>
+      <div style="margin-bottom:16px;">
+        <label style="display:flex;align-items:center;gap:10px;font-size:1.05rem;color:#000000;margin-bottom:10px;cursor:pointer;"><input type="checkbox" class="tema-chk" value="IA para la salud y el bienestar" style="width:20px;height:20px;flex-shrink:0;cursor:pointer;accent-color:#2E7D32;"> IA para la salud y el bienestar</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:1.05rem;color:#000000;margin-bottom:10px;cursor:pointer;"><input type="checkbox" class="tema-chk" value="IA para mantenerse en contacto con la familia" style="width:20px;height:20px;flex-shrink:0;cursor:pointer;accent-color:#2E7D32;"> IA para mantenerse en contacto con la familia</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:1.05rem;color:#000000;margin-bottom:10px;cursor:pointer;"><input type="checkbox" class="tema-chk" value="Asistentes de voz (Alexa, Google Home, Siri)" style="width:20px;height:20px;flex-shrink:0;cursor:pointer;accent-color:#2E7D32;"> Asistentes de voz (Alexa, Google Home, Siri)</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:1.05rem;color:#000000;margin-bottom:10px;cursor:pointer;"><input type="checkbox" class="tema-chk" value="IA para trámites, finanzas y viajes" style="width:20px;height:20px;flex-shrink:0;cursor:pointer;accent-color:#2E7D32;"> IA para trámites, finanzas y viajes</label>
+      </div>
       <div id="opinion-err" style="display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:10px 14px;font-size:1rem;margin-bottom:14px;">⚠️ Selecciona una calificación y escribe tu opinión.</div>
       <button id="btn-enviar-opinion" style="width:100%;padding:14px;background:#2E7D32;color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">📩 Enviar mi opinión</button>
     </div>
@@ -506,11 +514,13 @@ document.getElementById('btn-enviar-opinion').addEventListener('click', function
   btn.textContent = '⏳ Enviando...';
   var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
   var email = sessionStorage.getItem('alumno_email') || sessionStorage.getItem('pago_email') || '';
+  var temasInteres = Array.from(document.querySelectorAll('.tema-chk:checked')).map(function(c) { return c.value; });
   var envio = firebase.firestore().collection('opiniones').add({
     nombre: nombre,
     email: email,
     calificacion: calificacionSel,
     comentario: texto,
+    temas_interes: temasInteres,
     modulo: 'modulo6',
     fecha: firebase.firestore.FieldValue.serverTimestamp()
   });
