@@ -35,6 +35,10 @@ section{padding:60px 24px}
 .planes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:860px;margin:0 auto}
 .plan-card{background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);border-radius:24px;padding:36px 28px;text-align:center}
 .plan-btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;margin-top:16px}
+.moneda-selector{display:inline-flex;background:rgba(255,255,255,.12);border-radius:20px;padding:4px;gap:4px}
+.moneda-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:1.05rem;font-weight:700;padding:7px 18px;border-radius:16px;cursor:pointer;font-family:inherit}
+.moneda-btn.activo{background:#FFD740;color:#4527A0}
+.precio-conv{display:block;font-size:1.05rem;font-weight:600;color:rgba(255,255,255,.75);margin-top:4px;min-height:1.3em}
 .chip{display:flex;align-items:center;gap:8px;background:#F5F5F5;border:1px solid #E0E0E0;border-radius:24px;padding:10px 20px;font-weight:600}
 .dot{width:10px;height:10px;border-radius:50%;background:#00897B}
 .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
@@ -172,10 +176,18 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
   <div class="container">
     <h2 class="title" style="color:#fff;">Continúa tu aprendizaje</h2>
     <p class="sub" style="color:rgba(255,255,255,.9);">Elige la opción que mejor se adapte a ti. Cada módulo se compra por separado y da acceso únicamente a ese módulo — si quieres los 6, el Plan Completo te conviene más.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px;flex-wrap:wrap;">
+      <span style="color:rgba(255,255,255,.85);font-size:1.05rem;">💱 Ver precio de referencia en:</span>
+      <div class="moneda-selector" id="moneda-selector">
+        <button type="button" class="moneda-btn" data-moneda="USD">USD</button>
+        <button type="button" class="moneda-btn" data-moneda="MXN">MXN</button>
+        <button type="button" class="moneda-btn" data-moneda="EUR">EUR</button>
+      </div>
+    </div>
     <div class="planes-grid">
       <div class="plan-card">
         <div style="display:inline-block;background:#00897B;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">💬 MÓDULO 2</div>
-        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$7 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
+        <div class="precio-usd" data-usd="7" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$7 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Conversando con una IA — Pago único</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Qué es un prompt y cómo usarlo</li>
@@ -188,7 +200,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 
       <div class="plan-card" style="border-color:#E91E63;">
         <div style="display:inline-block;background:#E91E63;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">🎨 MÓDULO 3</div>
-        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
+        <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Creando Imágenes con IA</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Prompts visuales efectivos</li>
@@ -201,7 +213,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 
       <div class="plan-card" style="border-color:#1976D2;">
         <div style="display:inline-block;background:#1976D2;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">📅 MÓDULO 4</div>
-        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
+        <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">IA para la Vida Diaria</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Ayuda escolar y organización</li>
@@ -214,7 +226,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 
       <div class="plan-card" style="border-color:#7B1FA2;">
         <div style="display:inline-block;background:#7B1FA2;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">✨ MÓDULO 5</div>
-        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
+        <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">IA para la Creatividad</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Cuentos y tarjetas con IA</li>
@@ -227,7 +239,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 
       <div class="plan-card" style="border-color:#2E7D32;">
         <div style="display:inline-block;background:#2E7D32;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">🔒 MÓDULO 6</div>
-        <div style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
+        <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Seguridad y Uso Responsable</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Privacidad y datos personales</li>
@@ -241,7 +253,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       <div class="plan-card" style="border-color:#FFD740;position:relative;">
         <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#FFD740;color:#4527A0;font-size:1.05rem;font-weight:800;padding:4px 16px;border-radius:20px;white-space:nowrap;">⭐ MEJOR VALOR</div>
         <div style="display:inline-block;background:#323F45;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;margin-top:6px;">PLAN COMPLETO</div>
-        <div style="font-size:2.8rem;font-weight:900;color:#FFD740;line-height:1;">$29.99 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
+        <div class="precio-usd" data-usd="29.99" style="font-size:2.8rem;font-weight:900;color:#FFD740;line-height:1;">$29.99 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Pago único — Todos los módulos incluidos</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Los 6 módulos completos</li>
@@ -608,6 +620,45 @@ document.getElementById('btn-reg').addEventListener('click', function() {
       errDiv.innerHTML = msg;
     });
 });
+
+// ── SELECTOR DE MONEDA DE REFERENCIA ──────────────────────────────────────
+// El cobro real siempre es en USD (así lo espera el checkout/Stripe); esto
+// solo muestra un precio aproximado al lado para que el alumno se ubique.
+// Tipos de cambio fijos, actualízalos aquí cuando cambien mucho — a propósito
+// NO se consulta ninguna API de tipo de cambio para que el precio nunca
+// falle, tarde o parpadee por un servicio externo caído.
+var FX_RATES = {
+  USD: 1,
+  MXN: 18.5, // referencia 2026-07-23 — revisar cada pocos meses
+  EUR: 0.92  // referencia 2026-07-23 — revisar cada pocos meses
+};
+function detectarMonedaInicial() {
+  var lang = (navigator.language || '').toLowerCase();
+  if (lang === 'es-mx') return 'MXN';
+  if (lang === 'es-es') return 'EUR';
+  return 'USD';
+}
+function aplicarMoneda(moneda) {
+  document.querySelectorAll('.precio-usd').forEach(function(el) {
+    var usd = parseFloat(el.getAttribute('data-usd'));
+    var conv = el.querySelector('.precio-conv');
+    if (moneda === 'USD' || !FX_RATES[moneda]) {
+      conv.textContent = '';
+      return;
+    }
+    var valor = usd * FX_RATES[moneda];
+    var texto = moneda === 'EUR' ? valor.toFixed(2) : Math.round(valor).toLocaleString('es-MX');
+    conv.textContent = '≈ ' + texto + ' ' + moneda;
+  });
+  document.querySelectorAll('.moneda-btn').forEach(function(btn) {
+    btn.classList.toggle('activo', btn.getAttribute('data-moneda') === moneda);
+  });
+}
+document.querySelectorAll('.moneda-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() { aplicarMoneda(btn.getAttribute('data-moneda')); });
+});
+aplicarMoneda(detectarMonedaInicial());
+// ─────────────────────────────────────────────────────────────────────────
 
 // ── PAGO
 var pagoActual='', metSel='';
