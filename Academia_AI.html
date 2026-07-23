@@ -624,13 +624,18 @@ document.getElementById('btn-reg').addEventListener('click', function() {
 // ── SELECTOR DE MONEDA DE REFERENCIA ──────────────────────────────────────
 // El cobro real siempre es en USD (así lo espera el checkout/Stripe); esto
 // solo muestra un precio aproximado al lado para que el alumno se ubique.
-// Tipos de cambio fijos, actualízalos aquí cuando cambien mucho — a propósito
-// NO se consulta ninguna API de tipo de cambio para que el precio nunca
-// falle, tarde o parpadee por un servicio externo caído.
+// Tipos de cambio fijos — el NAVEGADOR del alumno nunca llama a ninguna API
+// de tipo de cambio, así que el precio nunca falla, tarda ni parpadea por un
+// servicio externo caído. Los valores se actualizan solos una vez por semana
+// mediante un GitHub Action (.github/workflows/update-fx-rates.yml, que
+// corre .github/scripts/update-fx-rates.mjs y hace commit del cambio) — si
+// alguna semana la API de referencia falla, el Action simplemente no toca
+// el archivo y los valores existentes se quedan como están, nunca en blanco.
+// También puedes editarlos aquí a mano si hace falta.
 var FX_RATES = {
   USD: 1,
-  MXN: 18.5, // referencia 2026-07-23 — revisar cada pocos meses
-  EUR: 0.92  // referencia 2026-07-23 — revisar cada pocos meses
+  MXN: 17.46, // referencia 2026-07-23 — revisar cada pocos meses
+  EUR: 0.88  // referencia 2026-07-23 — revisar cada pocos meses
 };
 function detectarMonedaInicial() {
   var lang = (navigator.language || '').toLowerCase();
