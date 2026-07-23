@@ -249,14 +249,11 @@ var RESP = {q1:"C",q2:"A",q3:"D",q4:"B",q5:"C",q6:"C",q7:"D"};
   if (!ok) { window.location = 'Academia_AI.html#planes-pago'; }
 })();
 
-// FIX: si el usuario tiene acceso al Módulo 5 (o Plan) pero por algún motivo
-// nunca se guardó acceso_modulo4, se lo otorgamos aquí mismo para que
-// "Volver al Módulo 4" no lo rebote a la página de pago.
-document.getElementById('btn-volver-m4').addEventListener('click', function() {
-  if (localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo5')) {
-    localStorage.setItem('acceso_modulo4', '1');
-  }
-});
+// (sesión 19) Se eliminó el backfill que otorgaba acceso_modulo4 al hacer clic
+// en "Volver al Módulo 4" — permitía comprar solo el módulo más alto y navegar
+// hacia atrás para desbloquear gratis todos los anteriores. Ahora "Volver al
+// Módulo 4" es un enlace normal: si no compraste el Módulo 4, modulo4.html te
+// rebota a la página de pago, como debe ser.
 
 var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
 document.getElementById('nav-nombre').textContent = '👤 ' + nombre + ' | Módulo 5';
