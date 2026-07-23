@@ -56,8 +56,6 @@ label{display:block;font-size:1.1rem;font-weight:600;color:#212121;margin-bottom
   <p style="text-align:center;font-size:1.05rem;color:#757575;margin-top:16px;">¿No tienes cuenta? <a href="Academia_AI.html#registro" style="color:#6C3FC4;">Regístrate gratis</a></p>
 </div>
 <script>
-var ARCH = sessionStorage.getItem('pago_archivo') || 'modulo1.html';
-
 // Pre-fill email if coming from payment
 var preEmail = sessionStorage.getItem('pago_email') || sessionStorage.getItem('alumno_email') || '';
 if (preEmail) document.getElementById('le').value = preEmail;
@@ -106,7 +104,7 @@ window.fbAuth.onAuthStateChanged(function(user) {
       localStorage.setItem('acceso_plan', '1');
       for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
     }
-    window.location = ARCH;
+    window.location = 'dashboard.html';
   }
 });
 
@@ -137,7 +135,7 @@ document.getElementById('btn-login').addEventListener('click', function() {
         var mod = pago_arch.replace('.html','');
         localStorage.setItem('acceso_' + mod, '1');
       }
-      window.location = ARCH;
+      window.location = 'dashboard.html';
     })
     .catch(function(err) {
       self.disabled=false; self.textContent='🔓 Entrar a mi curso';

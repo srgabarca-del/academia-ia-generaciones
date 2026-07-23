@@ -105,10 +105,22 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 <nav>
   <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:64px;width:64px;border-radius:50%;">Academia IA Generaciones</div>
   <div style="display:flex;align-items:center;gap:12px;">
-    <a href="login.html" style="color:#fff;font-size:1.15rem;font-weight:600;text-decoration:none;opacity:.85;">Iniciar sesión</a>
+    <a href="login.html" id="nav-login-link" style="color:#fff;font-size:1.15rem;font-weight:600;text-decoration:none;opacity:.85;">Iniciar sesión</a>
     <a href="#registro" class="cta-nav">Crear cuenta gratis &rarr;</a>
   </div>
 </nav>
+<script>
+  // Si el visitante ya tiene una sesión iniciada en este navegador, cambia
+  // "Iniciar sesión" por "Mi cuenta" y lo manda directo a su panel.
+  (function() {
+    var yaLogueado = sessionStorage.getItem('alumno_email') || localStorage.getItem('cuenta_acceso');
+    if (yaLogueado) {
+      var link = document.getElementById('nav-login-link');
+      link.textContent = '👤 Mi cuenta';
+      link.href = 'dashboard.html';
+    }
+  })();
+</script>
 
 <section class="hero">
   <div style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;padding:6px 18px;border-radius:20px;font-size:1.1rem;margin-bottom:20px;">🎉 Módulo 1 — 100% GRATIS · Sin tarjeta</div>

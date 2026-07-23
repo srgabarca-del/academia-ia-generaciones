@@ -41,6 +41,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 <nav>
   <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:64px;width:64px;border-radius:50%;">Academia IA Generaciones</div>
   <div class="al" id="nav-nombre">👤 Alumno | Módulo 5</div>
+  <a href="dashboard.html" style="color:#fff;font-size:1.05rem;font-weight:600;text-decoration:none;opacity:.85;margin-left:12px;">🏠 Mi panel</a>
   <button onclick="cerrarSesion()" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:1.05rem;cursor:pointer;margin-left:12px;">🚪 Salir</button>
   <button onclick="window.location.href='modulo6.html'" id="btn-nav-siguiente" style="display:none;background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:1.05rem;cursor:pointer;margin-left:8px;">➡️ Módulo 6</button>
 </nav>
@@ -352,11 +353,12 @@ function mostrarSiguienteModulo(noScroll) {
   var innerDiv = document.getElementById('lock-inner');
   lockBox.style.display = 'block';
   var tiene = localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo6');
+  var panelBtn = '<a href="dashboard.html" style="display:inline-block;background:#fff;color:#424242;border:2px solid #BDBDBD;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;margin-left:8px;">🏠 Volver a mi panel</a>';
   if (tiene) {
-    innerDiv.innerHTML = '<a href="modulo6.html" style="display:inline-block;background:#2E7D32;color:#fff;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;">🚀 Ir al Módulo 6 →</a>';
+    innerDiv.innerHTML = '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;"><a href="modulo6.html" style="display:inline-block;background:#2E7D32;color:#fff;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;">🚀 Ir al Módulo 6 →</a>' + panelBtn + '</div>';
   } else {
     innerDiv.innerHTML = '<p style="color:#555;font-size:1.15rem;margin-bottom:16px;">Para acceder al Módulo 6 necesitas comprarlo o adquirir el Plan Completo.</p>'
-      + '<button onclick="comprarSiguiente()" style="background:#2E7D32;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">💳 Comprar Módulo 6 — $9 USD</button>';
+      + '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;"><button onclick="comprarSiguiente()" style="background:#2E7D32;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">💳 Comprar Módulo 6 — $9 USD</button>' + panelBtn + '</div>';
   }
   if (!noScroll) { lockBox.scrollIntoView({behavior:'smooth', block:'center'}); }
 }
@@ -377,6 +379,14 @@ function comprarSiguiente() {
     document.getElementById('btn-eval').disabled = true;
     document.getElementById('btn-eval').style.opacity = '0.6';
     document.getElementById('btn-eval').style.cursor = 'default';
+    var nRestore = sessionStorage.getItem('alumno_nombre') || 'Alumno';
+    var fRestore = new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+    document.getElementById('cn').textContent = nRestore;
+    document.getElementById('cf').textContent = 'Fecha de emisión: ' + fRestore;
+    document.getElementById('certbox').style.display = 'block';
+    if (location.hash === '#certbox') {
+      setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
+    }
     mostrarSiguienteModulo(true);
   }
 })();

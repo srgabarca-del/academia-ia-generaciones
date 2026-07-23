@@ -49,6 +49,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 <nav>
   <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:64px;width:64px;border-radius:50%;">Academia IA Generaciones</div>
   <div class="al" id="nav-nombre">👤 Alumno</div>
+  <a href="dashboard.html" style="color:#fff;font-size:1.05rem;font-weight:600;text-decoration:none;opacity:.85;margin-left:12px;">🏠 Mi panel</a>
   <button onclick="cerrarSesion()" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:1.05rem;cursor:pointer;margin-left:12px;">🚪 Salir</button>
 </nav>
 <div class="body">
@@ -270,7 +271,8 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 
   <div class="btn-row">
     <button class="bn" id="btn-mod2" style="background:#6C3FC4;">🚀 Continuar al Módulo 2 — $7 USD</button>
-    <a href="Academia_AI.html" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
+    <a href="dashboard.html" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Volver a mi panel</a>
+    <a href="Academia_AI.html" style="display:block;width:100%;padding:14px;background:#fff;color:#757575;border:2px solid #E0E0E0;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
   </div>
 </div>
 
@@ -313,7 +315,30 @@ var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
 document.getElementById('nav-nombre').textContent = '👤 ' + nombre;
 document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienvenido/a a tu primer módulo 🎉';
 
+// FIX: si el alumno ya aprobó este módulo antes (al volver desde el panel u
+// otro módulo), restaurar el estado "completado" en vez de mostrar todo desde
+// cero — mismo patrón ya usado en modulo2-6.html.
+(function() {
+  if (localStorage.getItem('modulo1_completado')) {
+    certOK = true;
+    document.getElementById('pf').style.width = '100%';
+    document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo completado! ✅';
+    document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
+    document.getElementById('btn-eval').disabled = true;
+    document.getElementById('btn-eval').style.opacity = '0.6';
+    document.getElementById('btn-eval').style.cursor = 'default';
+    var fCert = new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+    document.getElementById('cn').textContent = nombre;
+    document.getElementById('cf').textContent = 'Fecha de emisión: ' + fCert;
+    document.getElementById('certbox').style.display = 'block';
+    if (location.hash === '#certbox') {
+      setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
+    }
+  }
+})();
+
 setTimeout(function() {
+  if (localStorage.getItem('modulo1_completado')) { return; }
   document.getElementById('pf').style.width = '15%';
   document.getElementById('pl').textContent = 'Progreso: 15% — Elige tu video';
 }, 400);
@@ -375,6 +400,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
     document.getElementById('pf').style.width='100%';
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo completado! 🎉';
     certOK=true;
+    localStorage.setItem('modulo1_completado','1');
     document.getElementById('btn-cert').textContent='🏆 Ver';
     document.getElementById('btn-cert').style.background='#EDE7F6';
     document.getElementById('btn-cert').style.color='#6C3FC4';
