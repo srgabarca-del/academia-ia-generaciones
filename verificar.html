@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Verificar Certificado — Academia IA Generaciones</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F5F5;color:#212121;min-height:100vh;display:flex;flex-direction:column}
+nav{background:#083042;padding:14px 24px;display:flex;align-items:center;gap:10px}
+nav a{color:#fff;font-size:1.2rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:10px}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 20px}
+.card{background:#fff;border-radius:20px;padding:44px 36px;max-width:520px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.12);text-align:center}
+.icono{font-size:3.5rem;margin-bottom:16px}
+h1{font-size:1.5rem;font-weight:800;margin-bottom:14px}
+.detalle{background:#F5F3FF;border-radius:14px;padding:20px;margin-top:20px;text-align:left}
+.detalle .fila{margin-bottom:10px}
+.detalle .fila:last-child{margin-bottom:0}
+.detalle .etiqueta{font-size:.95rem;color:#757575;display:block}
+.detalle .valor{font-size:1.2rem;font-weight:700;color:#212121}
+.mensaje{font-size:1.15rem;color:#555;line-height:1.6}
+.volver{display:inline-block;margin-top:24px;color:#083042;font-size:1.05rem;font-weight:600;text-decoration:none}
+.cargando{font-size:1.2rem;color:#757575}
+</style>
+</head>
+<body>
+<nav>
+  <a href="Academia_AI.html"><img src="logo.png" alt="" style="height:36px;width:36px;border-radius:50%;">Academia IA Generaciones</a>
+</nav>
+<main>
+  <div class="card" id="card">
+    <div class="cargando" id="cargando">⏳ Buscando el certificado...</div>
+  </div>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+if (!firebase.apps.length) {
+  firebase.initializeApp({
+    apiKey: "AIzaSyDQO9lwBLmNAJWpW5klap9ngdcqs-CrcXw",
+    authDomain: "academia-ia-eba0b.firebaseapp.com",
+    projectId: "academia-ia-eba0b",
+    storageBucket: "academia-ia-eba0b.firebasestorage.app",
+    messagingSenderId: "285240187661",
+    appId: "1:285240187661:web:42ae229487b88237fcee44",
+    measurementId: "G-FJR421N496"
+  });
+}
+
+function mostrar(html) {
+  document.getElementById('card').innerHTML = html;
+}
+
+var id = new URLSearchParams(window.location.search).get('id');
+
+if (!id) {
+  mostrar(
+    '<div class="icono">🔎</div>' +
+    '<h1>Verificar un certificado</h1>' +
+    '<p class="mensaje">Escanea el código QR de un certificado de Academia IA Generaciones, o pégalo aquí abajo, para confirmar que es real.</p>' +
+    '<a class="volver" href="Academia_AI.html">← Volver al inicio</a>'
+  );
+} else {
+  firebase.firestore().collection('certificados').doc(id).get()
+    .then(function(snap) {
+      if (!snap.exists) {
+        mostrar(
+          '<div class="icono">❌</div>' +
+          '<h1>Certificado no encontrado</h1>' +
+          '<p class="mensaje">No encontramos ningún certificado con este código. Revisa que el enlace o el código QR sean correctos.</p>' +
+          '<a class="volver" href="Academia_AI.html">← Volver al inicio</a>'
+        );
+        return;
+      }
+      var d = snap.data();
+      var nombre = (d.nombre || 'Alumno').replace(/</g, '&lt;');
+      var moduloNombre = (d.moduloNombre || '').replace(/</g, '&lt;');
+      var fecha = (d.fecha || '').replace(/</g, '&lt;');
+      mostrar(
+        '<div class="icono">✅</div>' +
+        '<h1>Certificado verificado</h1>' +
+        '<p class="mensaje">Este certificado fue emitido a <strong>' + nombre + '</strong> el ' + fecha + '.</p>' +
+        '<div class="detalle">' +
+          '<div class="fila"><span class="etiqueta">Alumno/a</span><span class="valor">' + nombre + '</span></div>' +
+          '<div class="fila"><span class="etiqueta">Módulo</span><span class="valor">' + moduloNombre + '</span></div>' +
+          '<div class="fila"><span class="etiqueta">Fecha de emisión</span><span class="valor">' + fecha + '</span></div>' +
+        '</div>' +
+        '<a class="volver" href="Academia_AI.html">← Volver al inicio</a>'
+      );
+    })
+    .catch(function(err) {
+      console.error('Error al verificar el certificado:', err);
+      mostrar(
+        '<div class="icono">⚠️</div>' +
+        '<h1>No se pudo verificar</h1>' +
+        '<p class="mensaje">Hubo un problema al consultar este certificado. Intenta de nuevo en unos minutos.</p>' +
+        '<a class="volver" href="Academia_AI.html">← Volver al inicio</a>'
+      );
+    });
+}
+</script>
+</body>
+</html>

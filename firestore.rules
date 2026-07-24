@@ -35,5 +35,30 @@ service cloud.firestore {
                     && request.resource.data.email is string
                     && request.resource.data.email.size() <= 200;
     }
+
+    // Certificados verificables: un documento por certificado emitido, con
+    // el UUID del certificado como ID del documento. Cualquiera puede leer
+    // UN certificado por su ID exacto (así funciona la página pública
+    // verificar.html), pero "list" está bloqueado para que no se puedan
+    // extraer todos los nombres/correos de golpe. El sitio crea el
+    // documento automáticamente al aprobar un examen; nadie puede editarlo
+    // ni borrarlo después desde el cliente.
+    match /certificados/{certId} {
+      allow get: if true;
+      allow list: if false;
+      allow update, delete: if false;
+      allow create: if request.resource.data.nombre is string
+                    && request.resource.data.nombre.size() > 0
+                    && request.resource.data.nombre.size() <= 200
+                    && request.resource.data.email is string
+                    && request.resource.data.email.size() <= 200
+                    && request.resource.data.modulo is int
+                    && request.resource.data.modulo >= 1
+                    && request.resource.data.modulo <= 6
+                    && request.resource.data.moduloNombre is string
+                    && request.resource.data.moduloNombre.size() <= 200
+                    && request.resource.data.fecha is string
+                    && request.resource.data.fecha.size() <= 100;
+    }
   }
 }

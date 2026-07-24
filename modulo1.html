@@ -270,6 +270,8 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
     <div id="cn" style="font-size:1.8rem;font-weight:800;color:#4527A0;margin-bottom:16px;"></div>
     <p style="font-weight:700;margin-bottom:16px;">Módulo 1: Descubriendo la Inteligencia Artificial</p>
     <div id="cf" style="font-size:1.1rem;color:#757575;margin-bottom:28px;"></div>
+    <div id="cert-qr" style="width:110px;height:110px;margin:0 auto 10px;"></div>
+    <div id="cert-id-info" style="font-size:.95rem;color:#757575;margin-bottom:20px;word-break:break-all;"></div>
     <button onclick="window.print()" style="background:#00897B;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
   </div>
 
@@ -283,6 +285,8 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
   if (!firebase.apps.length) {
     firebase.initializeApp({
@@ -312,6 +316,54 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
   });
 </script>
 <script>
+// ── Certificado verificable — ID único guardado en Firestore ─────────────
+// Antes el certificado era solo texto en pantalla (window.print()), fácil
+// de falsificar editando el DOM antes de imprimir. Ahora, al aprobar el
+// examen, se genera un UUID que se guarda en Firestore (colección
+// "certificados") junto con el nombre/fecha reales, y se muestra un código
+// QR + enlace que apuntan a verificar.html?id=UUID — cualquiera puede
+// confirmar ahí que ese certificado específico existe de verdad.
+function asegurarCertificadoVerificable(numModulo, nombreModulo, nombreAlumno, fechaTexto) {
+  var claveId = 'modulo' + numModulo + '_cert_id';
+  var claveSync = 'modulo' + numModulo + '_cert_synced';
+  var id = localStorage.getItem(claveId);
+  if (!id) {
+    id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (
+      'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      })
+    );
+    localStorage.setItem(claveId, id);
+  }
+  if (localStorage.getItem(claveSync) !== '1' && typeof firebase !== 'undefined' && firebase.firestore) {
+    firebase.firestore().collection('certificados').doc(id).set({
+      nombre: nombreAlumno,
+      email: sessionStorage.getItem('alumno_email') || '',
+      modulo: numModulo,
+      moduloNombre: nombreModulo,
+      fecha: fechaTexto,
+      fechaEmision: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function() {
+      localStorage.setItem(claveSync, '1');
+    }).catch(function(err) {
+      console.error('No se pudo guardar el certificado verificable:', err);
+    });
+  }
+  var baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'verificar.html';
+  var urlVerif = baseUrl + '?id=' + id;
+  var qrDiv = document.getElementById('cert-qr');
+  if (qrDiv && typeof QRCode !== 'undefined') {
+    qrDiv.innerHTML = '';
+    new QRCode(qrDiv, { text: urlVerif, width: 110, height: 110, correctLevel: QRCode.CorrectLevel.M });
+  }
+  var idDiv = document.getElementById('cert-id-info');
+  if (idDiv) {
+    idDiv.innerHTML = 'ID de verificación: <code>' + id + '</code><br><a href="' + urlVerif + '" target="_blank" rel="noopener">Verificar este certificado →</a>';
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────
+
 var RESP = {"q1": "B", "q2": "C", "q3": "B", "q4": "C", "q5": "B", "q6": "B", "q7": "B"};
 var certOK = false;
 
@@ -336,6 +388,7 @@ document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienven
     document.getElementById('cn').textContent = nombre;
     document.getElementById('cf').textContent = 'Fecha de emisión: ' + fCert;
     document.getElementById('certbox').style.display = 'block';
+    asegurarCertificadoVerificable(1, 'Módulo 1: Descubriendo la Inteligencia Artificial', nombre, fCert);
     if (location.hash === '#certbox') {
       setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
     }
@@ -447,6 +500,7 @@ function verCert() {
   document.getElementById('cn').textContent=n;
   document.getElementById('cf').textContent='Fecha de emisión: '+f;
   document.getElementById('certbox').style.display='block';
+  asegurarCertificadoVerificable(1, 'Módulo 1: Descubriendo la Inteligencia Artificial', n, f);
   document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'});
 }
 
