@@ -114,10 +114,17 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
   </div>
 </nav>
 <script>
-  // Si el visitante ya tiene una sesión iniciada en este navegador, cambia
+  // Si el visitante tiene una sesión ACTIVA en este navegador, cambia
   // "Iniciar sesión" por "Mi cuenta" y lo manda directo a su panel.
+  // FIX (bug real reportado por el usuario): antes también revisaba
+  // localStorage.cuenta_acceso, que "cerrarSesion()" deja intacto a propósito
+  // (para no perder el acceso comprado al cerrar sesión). Eso hacía que,
+  // después de dar "Salir", el nav siguiera mostrando "Mi cuenta" de la
+  // cuenta anterior en vez de "Iniciar sesión", sin dejar forma fácil de
+  // entrar con otro correo. Ahora solo revisa sessionStorage (sesión activa
+  // de verdad), que sí se borra al cerrar sesión.
   (function() {
-    var yaLogueado = sessionStorage.getItem('alumno_email') || localStorage.getItem('cuenta_acceso');
+    var yaLogueado = sessionStorage.getItem('alumno_email');
     if (yaLogueado) {
       var link = document.getElementById('nav-login-link');
       link.textContent = '👤 Mi cuenta';
