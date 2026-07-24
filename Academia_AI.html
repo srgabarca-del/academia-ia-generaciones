@@ -591,13 +591,16 @@ function procesarUsuarioGoogle(user, esNuevo) {
   window.location = 'dashboard.html';
 }
 
+console.log('[Google Sign-In] Revisando si venimos de un redirect...');
 window.fbAuth.getRedirectResult().then(function(result) {
+  console.log('[Google Sign-In] getRedirectResult resolvió:', result, 'user:', result && result.user);
   if (result && result.user) {
     var esNuevo = !!(result.additionalUserInfo && result.additionalUserInfo.isNewUser);
     procesarUsuarioGoogle(result.user, esNuevo);
   }
-}).catch(function() {
-  document.getElementById('err-google').textContent = '⚠️ No se pudo completar el registro con Google. Intenta de nuevo.';
+}).catch(function(err) {
+  console.error('[Google Sign-In] getRedirectResult falló:', err);
+  document.getElementById('err-google').textContent = '⚠️ No se pudo completar el registro con Google (' + (err && err.code ? err.code : 'error desconocido') + '). Intenta de nuevo.';
   document.getElementById('err-google').style.display = 'block';
 });
 
@@ -606,9 +609,11 @@ document.getElementById('btn-google').addEventListener('click', function() {
   btn.disabled = true;
   document.getElementById('err-google').style.display = 'none';
   var provider = new firebase.auth.GoogleAuthProvider();
-  window.fbAuth.signInWithRedirect(provider).catch(function() {
+  console.log('[Google Sign-In] Iniciando signInWithRedirect...');
+  window.fbAuth.signInWithRedirect(provider).catch(function(err) {
+    console.error('[Google Sign-In] signInWithRedirect falló:', err);
     btn.disabled = false;
-    document.getElementById('err-google').textContent = '⚠️ No se pudo iniciar el registro con Google. Intenta de nuevo.';
+    document.getElementById('err-google').textContent = '⚠️ No se pudo iniciar el registro con Google (' + (err && err.code ? err.code : 'error desconocido') + '). Intenta de nuevo.';
     document.getElementById('err-google').style.display = 'block';
   });
 });
