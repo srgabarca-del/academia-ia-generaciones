@@ -340,14 +340,16 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
         <div class="msg" id="m-email"></div>
       </div>
       <div style="margin-bottom:16px;">
-        <label for="f-pass">Contraseña <span style="color:#E53935;">*</span> <span style="font-weight:400;color:#555;">(mín. 6 caracteres)</span></label>
+        <label for="f-pass">Contraseña <span style="color:#E53935;">*</span> <span style="font-weight:400;color:#555;">(mín. 10 caracteres)</span></label>
+        <p style="font-size:1.05rem;color:#757575;margin:2px 0 10px;line-height:1.5;">Mientras más larga sea tu contraseña, más difícil es que alguien más la adivine y entre a tu cuenta — por eso te pedimos al menos 10 caracteres, con una letra mayúscula y un número.</p>
         <div class="pw">
-          <input class="inp" type="password" id="f-pass" placeholder="Mínimo 6 caracteres" maxlength="64">
+          <input class="inp" type="password" id="f-pass" placeholder="Mínimo 10 caracteres" maxlength="64">
           <button class="eye" type="button" id="eye1">👁</button>
         </div>
         <div class="sbar"><div class="sfill" id="sfill"></div></div>
         <div style="font-size:1.2rem;color:#555;margin-top:4px;" id="slbl"></div>
         <div class="msg" id="m-pass"></div>
+        <div style="background:#F5F3FF;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:1.05rem;color:#323F45;line-height:1.5;">💡 <strong>Truco:</strong> no hace falta que sea complicada de recordar. Una frase con puntos es más fácil y más segura que una mezcla rara de letras — por ejemplo: <code style="background:#fff;padding:2px 6px;border-radius:4px;">Cafe.con.leche.9</code> (con la primera letra en mayúscula)</div>
       </div>
       <div style="margin-bottom:16px;">
         <label for="f-pass2">Confirmar contraseña <span style="color:#E53935;">*</span></label>
@@ -457,16 +459,24 @@ function actualizar() {
   // Email
   var eok = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
   setMsg('f-email','m-email', eok, eok?'✓ Correo válido':e?'Correo no válido':'');
-  // Pass
+  // Pass — mínimo 10 caracteres, al menos una mayúscula y un número
+  var tieneMayus = /[A-Z]/.test(p);
+  var tieneNumero = /[0-9]/.test(p);
+  var passOk = p.length>=10 && tieneMayus && tieneNumero;
   if (p.length > 0) {
-    var s=0; if(p.length>=8)s++; if(/[A-Z]/.test(p))s++; if(/[0-9]/.test(p))s++; if(/[^A-Za-z0-9]/.test(p))s++;
+    var s=0; if(p.length>=8)s++; if(tieneMayus)s++; if(tieneNumero)s++; if(/[^A-Za-z0-9]/.test(p))s++;
     var lvls=[{w:'25%',bg:'#E53935',t:'Muy corta'},{w:'40%',bg:'#FF7043',t:'Débil'},{w:'65%',bg:'#FFA726',t:'Regular'},{w:'85%',bg:'#66BB6A',t:'Buena'},{w:'100%',bg:'#2E7D32',t:'¡Excelente!'}];
-    var idx = p.length<6 ? 0 : Math.min(s+1,4);
+    var idx = p.length<10 ? 0 : Math.min(s+1,4);
     var l=lvls[idx];
     document.getElementById('sfill').style.width=l.w;
     document.getElementById('sfill').style.background=l.bg;
     document.getElementById('slbl').textContent='Seguridad: '+l.t;
-    setMsg('f-pass','m-pass', p.length>=6, p.length>=6?'✓ Contraseña aceptada':'Mínimo 6 caracteres');
+    var passMsg;
+    if (p.length<10) passMsg = 'Necesita al menos 10 caracteres';
+    else if (!tieneMayus) passMsg = 'Agrega al menos una letra mayúscula (A, B, C...)';
+    else if (!tieneNumero) passMsg = 'Agrega al menos un número (1, 2, 3...)';
+    else passMsg = '✓ Contraseña aceptada';
+    setMsg('f-pass','m-pass', passOk, passMsg);
   } else {
     document.getElementById('sfill').style.width='0';
     document.getElementById('slbl').textContent='';
@@ -479,7 +489,7 @@ function actualizar() {
     setMsg('f-pass2','m-pass2',false,'');
   }
 
-  var ok = n.length>=2 && eok && p.length>=6 && p2===p && ck;
+  var ok = n.length>=2 && eok && passOk && p2===p && ck;
   var btn = document.getElementById('btn-reg');
   btn.disabled = !ok;
   btn.style.background = ok ? '#323F45' : '#BDBDBD';
