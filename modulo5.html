@@ -36,6 +36,10 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
   #guia-header, #guia-box button { display: none !important; }
 }
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
+<style>
+#cc-main{--cc-font-family:'Segoe UI',Arial,sans-serif;font-size:22px;--cc-btn-primary-bg:#083042;--cc-btn-primary-border-color:#083042;--cc-btn-primary-hover-bg:#0a4058;--cc-btn-primary-hover-border-color:#0a4058;--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
+</style>
 </head>
 <body>
 <nav>
@@ -406,5 +410,73 @@ document.addEventListener('DOMContentLoaded', function() {
 <a href="https://wa.me/523318045363?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20Academia%20IA%20Generaciones" target="_blank" rel="noopener" title="Soporte por WhatsApp" aria-label="Contactar soporte por WhatsApp" style="position:fixed;bottom:20px;right:20px;width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:9999;text-decoration:none;">
   <svg viewBox="0 0 24 24" width="30" height="30" fill="#fff" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m0 1.67c2.2 0 4.27.86 5.82 2.42a8.23 8.23 0 012.42 5.82c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 01-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.54.12.17 1.75 2.78 4.35 3.79 2.15.84 2.59.67 3.06.63.47-.04 1.51-.62 1.72-1.22.21-.6.21-1.11.15-1.22-.07-.11-.24-.17-.5-.3-.27-.13-1.6-.79-1.85-.88-.25-.09-.43-.13-.61.13-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.13-1.13-.42-2.16-1.34-.8-.71-1.34-1.6-1.5-1.87-.16-.27-.02-.42.12-.55.12-.12.27-.32.4-.48.13-.16.18-.27.27-.45.09-.18.04-.34-.02-.48-.07-.13-.61-1.48-.84-2.03-.22-.53-.44-.46-.61-.47-.16-.01-.34-.01-.52-.01z"/></svg>
 </a>
+
+<!-- ── Banner de cookies (CookieConsent v3) ──────────────────────────────
+     Bloquea firebase.analytics() hasta que el alumno acepte cookies de
+     estadísticas. La elección se guarda en localStorage y no se vuelve
+     a preguntar durante 182 días (~6 meses). ──────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js"></script>
+<script>
+function cc_activarAnalytics() {
+  if (typeof firebase !== 'undefined' && window.CookieConsent && CookieConsent.acceptedCategory('analytics')) {
+    firebase.analytics();
+  }
+}
+CookieConsent.run({
+  categories: {
+    necessary: { enabled: true, readOnly: true },
+    analytics: {}
+  },
+  cookie: { useLocalStorage: true, expiresAfterDays: 182 },
+  guiOptions: {
+    consentModal: { layout: 'box', position: 'bottom center' },
+    preferencesModal: { layout: 'box', position: 'right' }
+  },
+  onConsent: cc_activarAnalytics,
+  onChange: cc_activarAnalytics,
+  language: {
+    default: 'es',
+    translations: {
+      es: {
+        consentModal: {
+          title: '🍪 Usamos cookies',
+          description: 'Usamos cookies para que la página funcione bien. También nos gustaría usar algunas para saber qué partes del curso son más útiles — solo si tú nos das permiso.',
+          acceptAllBtn: 'Aceptar',
+          acceptNecessaryBtn: 'Rechazar',
+          showPreferencesBtn: 'Personalizar'
+        },
+        preferencesModal: {
+          title: 'Tus preferencias de cookies',
+          acceptAllBtn: 'Aceptar todas',
+          acceptNecessaryBtn: 'Rechazar',
+          savePreferencesBtn: 'Guardar mi elección',
+          closeIconLabel: 'Cerrar',
+          sections: [
+            {
+              title: '¿Qué son las cookies?',
+              description: 'Son archivos pequeños que ayudan a que la página funcione bien y a saber qué partes usan más los alumnos.'
+            },
+            {
+              title: 'Cookies necesarias',
+              description: 'Estas cookies son indispensables para iniciar sesión y usar el curso. Siempre están activas.',
+              linkedCategory: 'necessary'
+            },
+            {
+              title: 'Cookies de estadísticas',
+              description: 'Nos ayudan a saber qué módulos visitan más los alumnos, para mejorar el curso. Son opcionales.',
+              linkedCategory: 'analytics'
+            },
+            {
+              title: 'Más información',
+              description: 'Puedes leer más en nuestra <a href="legal.html#cookies">Política de Cookies</a>.'
+            }
+          ]
+        }
+      }
+    }
+  }
+});
+</script>
+<button type="button" onclick="CookieConsent.showPreferences()" aria-label="Cambiar mis preferencias de cookies" style="position:fixed;bottom:20px;left:20px;background:#fff;color:#083042;border:2px solid #083042;padding:9px 16px;border-radius:20px;font-size:1rem;font-weight:700;cursor:pointer;z-index:9998;box-shadow:0 2px 8px rgba(0,0,0,.2);">🍪 Cookies</button>
 </body>
 </html>
