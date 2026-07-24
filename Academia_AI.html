@@ -448,7 +448,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       <div><span style="font-size:1.05rem;color:#757575;display:block;">Módulo desbloqueado</span><span id="c-mod" style="font-size:1.2rem;font-weight:700;color:#00897B;"></span></div>
     </div>
     <a id="btn-login-conf" href="#" style="display:block;background:#323F45;color:#fff;padding:14px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Entrar al módulo</a>
-    <button onclick="document.getElementById('mconf').classList.remove('open')" style="width:100%;padding:12px;background:#E0E0E0;color:#555;border:none;border-radius:12px;cursor:pointer;font-size:1.15rem;font-weight:600;">📋 Guardar y cerrar</button>
+    <button onclick="AccesibilidadModal.cerrar(document.getElementById('mconf'))" style="width:100%;padding:12px;background:#E0E0E0;color:#555;border:none;border-radius:12px;cursor:pointer;font-size:1.15rem;font-weight:600;">📋 Guardar y cerrar</button>
   </div>
 </div>
 
@@ -747,6 +747,70 @@ document.querySelectorAll('.moneda-btn').forEach(function(btn) {
 aplicarMoneda(detectarMonedaInicial());
 // ─────────────────────────────────────────────────────────────────────────
 
+// ── ACCESIBILIDAD DE MODALES (mpago / mconf) ──────────────────────────────
+// Antes solo se podían cerrar con la ✕. Se agrega: Escape, clic en el fondo
+// oscuro, foco atrapado dentro del modal (Tab no se escapa hacia la página
+// de atrás), y al cerrar el foco regresa al botón que lo abrió — importante
+// para un público que se pierde fácil si el modal "no se cierra".
+var AccesibilidadModal = (function() {
+  var modalActivo = null;
+  var elementoOrigen = null;
+
+  function elementosFocables(contenedor) {
+    return [].slice.call(contenedor.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(function(el) { return el.offsetParent !== null; });
+  }
+
+  function abrir(overlay, opener) {
+    elementoOrigen = opener || document.activeElement;
+    modalActivo = overlay;
+    overlay.classList.add('open');
+    var focos = elementosFocables(overlay.querySelector('.modal-box'));
+    if (focos.length) focos[0].focus();
+  }
+
+  function cerrar(overlay) {
+    overlay.classList.remove('open');
+    if (modalActivo === overlay) {
+      modalActivo = null;
+      if (elementoOrigen && typeof elementoOrigen.focus === 'function') {
+        elementoOrigen.focus();
+      }
+      elementoOrigen = null;
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (!modalActivo) return;
+    if (e.key === 'Escape') {
+      cerrar(modalActivo);
+      return;
+    }
+    if (e.key === 'Tab') {
+      var focos = elementosFocables(modalActivo.querySelector('.modal-box'));
+      if (!focos.length) return;
+      var primero = focos[0], ultimo = focos[focos.length - 1];
+      if (e.shiftKey && document.activeElement === primero) {
+        e.preventDefault();
+        ultimo.focus();
+      } else if (!e.shiftKey && document.activeElement === ultimo) {
+        e.preventDefault();
+        primero.focus();
+      }
+    }
+  });
+
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) cerrar(overlay);
+    });
+  });
+
+  return { abrir: abrir, cerrar: cerrar, obtenerOrigen: function() { return elementoOrigen; } };
+})();
+// ─────────────────────────────────────────────────────────────────────────
+
 // ── PAGO
 var pagoActual='', metSel='';
 var INFO={
@@ -772,7 +836,7 @@ function abrirPago(tipo) {
   document.getElementById('lbl-p').classList.remove('sel');
   document.getElementById('btn-pay').textContent='🔒 Confirmar pago — '+info.precio;
   document.getElementById('btn-pay').disabled=false;
-  document.getElementById('mpago').classList.add('open');
+  AccesibilidadModal.abrir(document.getElementById('mpago'));
   firebase.analytics().logEvent('begin_checkout', {
     currency: 'USD',
     value: parseFloat(info.precio.replace(/[^0-9.]/g,'')),
@@ -780,7 +844,7 @@ function abrirPago(tipo) {
   });
 }
 document.getElementById('mcerrar').addEventListener('click', function() {
-  document.getElementById('mpago').classList.remove('open');
+  AccesibilidadModal.cerrar(document.getElementById('mpago'));
 });
 function selMet(m) {
   metSel=m;
@@ -822,8 +886,9 @@ document.getElementById('btn-pay').addEventListener('click', function() {
     document.getElementById('c-mod').textContent=info.mod;
     document.getElementById('btn-login-conf').href=info.archivo;
     document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
+    var origenPago = AccesibilidadModal.obtenerOrigen();
     document.getElementById('mpago').classList.remove('open');
-    document.getElementById('mconf').classList.add('open');
+    AccesibilidadModal.abrir(document.getElementById('mconf'), origenPago);
     document.getElementById('btn-pay').textContent='🔒 Confirmar pago';
     document.getElementById('btn-pay').disabled=false;
   }, 1800);
