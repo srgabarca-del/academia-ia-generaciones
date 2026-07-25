@@ -4,9 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Módulo 3 — Academia IA Generaciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F3FF;color:#212121}
+body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:#F5F3FF;color:#212121;line-height:1.6}
 nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
 .logo{color:#fff;font-weight:700;font-size:1.15rem}
 .al{color:rgba(255,255,255,.8);font-size:1.1rem}
@@ -38,7 +41,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
-#cc-main{--cc-font-family:'Segoe UI',Arial,sans-serif;font-size:22px;--cc-btn-primary-bg:#083042;--cc-btn-primary-border-color:#083042;--cc-btn-primary-hover-bg:#0a4058;--cc-btn-primary-hover-border-color:#0a4058;--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
+#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:#083042;--cc-btn-primary-border-color:#083042;--cc-btn-primary-hover-bg:#0a4058;--cc-btn-primary-hover-border-color:#0a4058;--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
 </style>
 </head>
 <body>
@@ -88,11 +91,11 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 
     <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;">
       <h4 style="font-size:1.3rem;font-weight:700;color:#C2185B;margin-bottom:8px;">🎨 ¿Qué es un prompt visual?</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:6px;">Una descripción de texto que le das a la IA para que cree una imagen. La IA no puede leer tu mente — necesita que le describas exactamente lo que imaginas.</p>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:20px;">Un buen prompt visual incluye: <strong>QUIÉN o QUÉ + CÓMO ES + DÓNDE + ESTILO + COLORES</strong>. Mientras más detalles des, más cercana será la imagen a lo que quieres.</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:6px;">Una descripción de texto que le das a la IA para que cree una imagen. La IA no puede leer tu mente — necesita que le describas exactamente lo que imaginas.</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">Un buen prompt visual incluye: <strong>QUIÉN o QUÉ + CÓMO ES + DÓNDE + ESTILO + COLORES</strong>. Mientras más detalles des, más cercana será la imagen a lo que quieres.</p>
 
       <h4 style="font-size:1.3rem;font-weight:700;color:#C2185B;margin-bottom:8px;">📎 El truco profesional: adjuntar material</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:20px;">Si tienes una foto, un dibujo o una imagen de referencia — <strong>NO la describas, ¡adjúntala!</strong> La IA procesa mejor lo que ve que cualquier descripción escrita. <a href="https://www.canva.com" target="_blank" rel="noopener" style="color:#C2185B;">Canva IA</a>, <a href="https://chat.openai.com" target="_blank" rel="noopener" style="color:#C2185B;">ChatGPT</a> y <a href="https://gemini.google.com" target="_blank" rel="noopener" style="color:#C2185B;">Gemini</a> aceptan imágenes como entrada.</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">Si tienes una foto, un dibujo o una imagen de referencia — <strong>NO la describas, ¡adjúntala!</strong> La IA procesa mejor lo que ve que cualquier descripción escrita. <a href="https://www.canva.com" target="_blank" rel="noopener" style="color:#C2185B;">Canva IA</a>, <a href="https://chat.openai.com" target="_blank" rel="noopener" style="color:#C2185B;">ChatGPT</a> y <a href="https://gemini.google.com" target="_blank" rel="noopener" style="color:#C2185B;">Gemini</a> aceptan imágenes como entrada.</p>
 
       <h4 style="font-size:1.3rem;font-weight:700;color:#C2185B;margin-bottom:12px;">🔁 Cómo mejorar una imagen paso a paso</h4>
       <ul style="font-size:1.1rem;color:#000000;line-height:1.9;margin-bottom:20px;padding-left:20px;">
@@ -104,12 +107,12 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 
       <h4 style="font-size:1.3rem;font-weight:700;color:#C2185B;margin-bottom:8px;">✨ Fórmula del prompt visual perfecto</h4>
       <div style="background:#FCE4EC;border-radius:10px;padding:14px 16px;font-size:1.05rem;color:#000000;margin-bottom:12px;">[PERSONAJE/OBJETO] + [DESCRIPCIÓN DETALLADA] + [LUGAR/FONDO] + [ESTILO] + [COLORES/LUZ]</div>
-      <p style="font-size:1.1rem;color:#000000;line-height:1.6;margin-bottom:24px;"><strong>Estilos más usados:</strong> Fotografía realista · Caricatura · Manga/Anime · Acuarela · Óleo · Ilustración digital · Minimalista · Ciencia ficción · Vintage</p>
+      <p style="font-size:1.1rem;color:#000000;line-height:1.7;margin-bottom:24px;"><strong>Estilos más usados:</strong> Fotografía realista · Caricatura · Manga/Anime · Acuarela · Óleo · Ilustración digital · Minimalista · Ciencia ficción · Vintage</p>
 
       <div style="border-top:2px dashed #E0E0E0;margin:24px 0;"></div>
 
       <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">✏️ Actividad práctica 1 — Diseña una escena o personaje</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:12px;">Completa la ficha y luego usa la fórmula para escribir tu prompt y generar la imagen en <a href="https://www.canva.com" target="_blank" rel="noopener" style="color:#C2185B;">Canva IA</a> o <a href="https://gemini.google.com" target="_blank" rel="noopener" style="color:#C2185B;">Gemini</a>.</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Completa la ficha y luego usa la fórmula para escribir tu prompt y generar la imagen en <a href="https://www.canva.com" target="_blank" rel="noopener" style="color:#C2185B;">Canva IA</a> o <a href="https://gemini.google.com" target="_blank" rel="noopener" style="color:#C2185B;">Gemini</a>.</p>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">Nombre del personaje o escena:</label>
       <textarea id="modulo3_g1" rows="1" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">Cómo se ve (colores, vestimenta, accesorios):</label>
@@ -122,7 +125,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
       <div style="font-size:1.2rem;color:#000000;margin-bottom:24px;"><label style="margin-right:16px;"><input id="modulo3_g5" type="checkbox" style="width:18px;height:18px;vertical-align:middle;"> Canva IA</label><label style="margin-right:16px;"><input id="modulo3_g6" type="checkbox" style="width:18px;height:18px;vertical-align:middle;"> Gemini</label><label><input id="modulo3_g7" type="checkbox" style="width:18px;height:18px;vertical-align:middle;"> ChatGPT</label></div>
 
       <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">🖼️ Actividad práctica 2 — Recreando un recuerdo familiar</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:12px;">Piensa en un recuerdo especial — un lugar favorito, una celebración, un paisaje que nunca olvidaste. Usa la IA para recrearlo como imagen. Truco: si tienes una foto, ¡adjúntala directamente en vez de describirla!</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Piensa en un recuerdo especial — un lugar favorito, una celebración, un paisaje que nunca olvidaste. Usa la IA para recrearlo como imagen. Truco: si tienes una foto, ¡adjúntala directamente en vez de describirla!</p>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">El lugar o momento que quiero recrear:</label>
       <textarea id="modulo3_g8" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">Los colores y personas o elementos importantes que recuerdo:</label>

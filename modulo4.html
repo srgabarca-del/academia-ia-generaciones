@@ -4,9 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Módulo 4 — Academia IA Generaciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#F5F3FF;color:#212121}
+body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:#F5F3FF;color:#212121;line-height:1.6}
 nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
 .logo{color:#fff;font-weight:700;font-size:1.15rem}
 .al{color:rgba(255,255,255,.8);font-size:1.1rem}
@@ -38,7 +41,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
-#cc-main{--cc-font-family:'Segoe UI',Arial,sans-serif;font-size:22px;--cc-btn-primary-bg:#083042;--cc-btn-primary-border-color:#083042;--cc-btn-primary-hover-bg:#0a4058;--cc-btn-primary-hover-border-color:#0a4058;--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
+#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:#083042;--cc-btn-primary-border-color:#083042;--cc-btn-primary-hover-bg:#0a4058;--cc-btn-primary-hover-border-color:#0a4058;--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
 </style>
 </head>
 <body>
@@ -88,23 +91,23 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 
     <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;">
       <h4 style="font-size:1.3rem;font-weight:700;color:#1565C0;margin-bottom:8px;">🚀 De preguntas a encargos: el salto profesional</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:6px;">Hay dos formas de usar la IA: preguntarle cosas o darle encargos completos.</p>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:20px;">El aficionado pregunta: "¿Cómo organizo mis tareas?" y recibe consejos generales. El profesional encarga: "Revisa esta lista, ordénala por urgencia y crea un plan de acción para hoy con tiempos estimados" — y la IA lo hace del tirón.</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:6px;">Hay dos formas de usar la IA: preguntarle cosas o darle encargos completos.</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">El aficionado pregunta: "¿Cómo organizo mis tareas?" y recibe consejos generales. El profesional encarga: "Revisa esta lista, ordénala por urgencia y crea un plan de acción para hoy con tiempos estimados" — y la IA lo hace del tirón.</p>
 
       <h4 style="font-size:1.3rem;font-weight:700;color:#1565C0;margin-bottom:8px;">🧠 Pídele que piense antes de responder</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:8px;">Para decisiones importantes o problemas complejos, agrega esta frase al final de tu prompt:</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:8px;">Para decisiones importantes o problemas complejos, agrega esta frase al final de tu prompt:</p>
       <div style="background:#E3F2FD;border-radius:10px;padding:14px 16px;font-size:1.1rem;color:#000000;margin-bottom:20px;">"Antes de responder, piensa el problema por partes, valora las opciones y dame tu conclusión."</div>
 
       <h4 style="font-size:1.3rem;font-weight:700;color:#1565C0;margin-bottom:8px;">🗂️ Configura tu espacio de trabajo una vez, úsalo siempre</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:20px;">En vez de explicar quién eres cada vez, guarda tu contexto (nombre, edad, situación, intereses, estilo preferido de respuesta). <a href="https://chat.openai.com" target="_blank" rel="noopener" style="color:#1565C0;">ChatGPT</a> usa "Memoria" o GPTs personalizados, Claude usa "Proyectos", <a href="https://gemini.google.com" target="_blank" rel="noopener" style="color:#1565C0;">Gemini</a> usa "Gems".</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">En vez de explicar quién eres cada vez, guarda tu contexto (nombre, edad, situación, intereses, estilo preferido de respuesta). <a href="https://chat.openai.com" target="_blank" rel="noopener" style="color:#1565C0;">ChatGPT</a> usa "Memoria" o GPTs personalizados, Claude usa "Proyectos", <a href="https://gemini.google.com" target="_blank" rel="noopener" style="color:#1565C0;">Gemini</a> usa "Gems".</p>
 
       <h4 style="font-size:1.3rem;font-weight:700;color:#1565C0;margin-bottom:8px;">✅ Enséñale a decir "no lo sé"</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:24px;">La IA a veces se inventa información con seguridad. Cierra tus peticiones importantes con: "Si no estás seguro de algo, dímelo claramente." / "Prefiero que me digas que no sabes a que inventes una respuesta."</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:24px;">La IA a veces se inventa información con seguridad. Cierra tus peticiones importantes con: "Si no estás seguro de algo, dímelo claramente." / "Prefiero que me digas que no sabes a que inventes una respuesta."</p>
 
       <div style="border-top:2px dashed #E0E0E0;margin:24px 0;"></div>
 
       <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">✏️ Actividad práctica 1 — Aprende algo nuevo con tu tutor de IA</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:12px;">Elige algo que quieras aprender y dale un encargo completo a la IA usando los 3 pasos: Identidad + Intención + Instrucciones.</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Elige algo que quieras aprender y dale un encargo completo a la IA usando los 3 pasos: Identidad + Intención + Instrucciones.</p>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">IDENTIDAD — Actúa como:</label>
       <textarea id="modulo4_g1" rows="1" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">INTENCIÓN — Quiero aprender:</label>
@@ -115,7 +118,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
       <textarea id="modulo4_g4" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
 
       <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">🗓️ Actividad práctica 2 — Mi planificador con IA</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.6;margin-bottom:12px;">Dale a la IA un encargo completo para planear algo de tu vida real: un viaje, una reunión familiar, una actividad o una compra importante.</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Dale a la IA un encargo completo para planear algo de tu vida real: un viaje, una reunión familiar, una actividad o una compra importante.</p>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Qué quiero planear? ¿Para cuándo y cuántas personas?</label>
       <textarea id="modulo4_g5" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">Mi encargo completo a la IA (escríbelo antes de enviarlo):</label>
