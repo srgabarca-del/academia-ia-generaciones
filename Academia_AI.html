@@ -351,19 +351,19 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 
       <div style="margin-bottom:16px;">
         <label for="f-nombre">Nombre completo <span style="color:#E53935;">*</span></label>
-        <input class="inp" type="text" id="f-nombre" placeholder="Ej. María González">
+        <input class="inp" type="text" id="f-nombre" placeholder="Ej. María González" autocomplete="name">
         <div class="msg" id="m-nombre"></div>
       </div>
       <div style="margin-bottom:16px;">
         <label for="f-email">Correo electrónico <span style="color:#E53935;">*</span></label>
-        <input class="inp" type="email" id="f-email" placeholder="tucorreo@ejemplo.com">
+        <input class="inp" type="email" id="f-email" placeholder="tucorreo@ejemplo.com" autocomplete="email" inputmode="email" spellcheck="false">
         <div class="msg" id="m-email"></div>
       </div>
       <div style="margin-bottom:16px;">
         <label for="f-pass">Contraseña <span style="color:#E53935;">*</span> <span style="font-weight:400;color:#555;">(mín. 10 caracteres)</span></label>
         <p style="font-size:1.05rem;color:#757575;margin:2px 0 10px;line-height:1.5;">Mientras más larga sea tu contraseña, más difícil es que alguien más la adivine y entre a tu cuenta — por eso te pedimos al menos 10 caracteres, con una letra mayúscula y un número.</p>
         <div class="pw">
-          <input class="inp" type="password" id="f-pass" placeholder="Mínimo 10 caracteres" maxlength="64">
+          <input class="inp" type="password" id="f-pass" placeholder="Mínimo 10 caracteres" maxlength="64" autocomplete="new-password" spellcheck="false">
           <button class="eye" type="button" id="eye1">👁</button>
         </div>
         <div class="sbar"><div class="sfill" id="sfill"></div></div>
@@ -374,7 +374,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       <div style="margin-bottom:16px;">
         <label for="f-pass2">Confirmar contraseña <span style="color:#E53935;">*</span></label>
         <div class="pw">
-          <input class="inp" type="password" id="f-pass2" placeholder="Repite tu contraseña" maxlength="64">
+          <input class="inp" type="password" id="f-pass2" placeholder="Repite tu contraseña" maxlength="64" autocomplete="new-password" spellcheck="false">
           <button class="eye" type="button" id="eye2">👁</button>
         </div>
         <div class="msg" id="m-pass2"></div>
@@ -415,16 +415,16 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
     <div id="phdr" style="text-align:center;margin-bottom:4px;"></div>
     <div style="height:1px;background:#E0E0E0;margin:14px 0;"></div>
     <label>Nombre completo *</label>
-    <input class="minp" type="text" id="p-nombre" placeholder="Como aparecerá en tu recibo">
+    <input class="minp" type="text" id="p-nombre" placeholder="Como aparecerá en tu recibo" autocomplete="name">
     <label>Correo electrónico *</label>
-    <input class="minp" type="email" id="p-email" placeholder="Para enviarte el acceso">
+    <input class="minp" type="email" id="p-email" placeholder="Para enviarte el acceso" autocomplete="email" inputmode="email" spellcheck="false">
     <label style="margin-bottom:8px;">Método de pago *</label>
     <div class="metodo-row">
       <div class="met" id="lbl-t" onclick="selMet('t')">💳 Tarjeta</div>
       <div class="met" id="lbl-p" onclick="selMet('p')">🅿️ PayPal</div>
     </div>
     <div id="det-t" style="display:none;margin-bottom:14px;">
-      <input type="text" class="minp" id="num-t" placeholder="1234 5678 9012 3456" maxlength="19" style="margin-bottom:8px;">
+      <input type="text" class="minp" id="num-t" placeholder="1234 5678 9012 3456" maxlength="19" style="margin-bottom:8px;" autocomplete="cc-number" inputmode="numeric">
       <div style="display:flex;gap:8px;">
         <input type="text" class="minp" placeholder="MM/AA" maxlength="5" style="flex:1;margin-bottom:0;">
         <input type="text" class="minp" placeholder="CVV" maxlength="4" style="flex:1;margin-bottom:0;">
