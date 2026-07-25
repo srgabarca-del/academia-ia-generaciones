@@ -9,6 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+.skip-link{position:absolute;left:-9999px;top:0;background:#0D47A1;color:#fff;padding:14px 22px;font-size:1.1rem;font-weight:700;z-index:99999;border-radius:0 0 10px 0;text-decoration:none}
+.skip-link:focus{left:0}
+a:focus-visible,button:focus-visible{outline:3px solid #0D47A1;outline-offset:3px}
 body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;color:#212121;background:#fff;line-height:1.6}
 nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .logo{color:#fff;font-size:1.25rem;font-weight:700}
@@ -50,7 +53,8 @@ section{padding:60px 24px}
 .faq-item{background:#fff;border-radius:12px;margin-bottom:12px;border:1px solid #E0E0E0;overflow:hidden}
 .faq-q{width:100%;padding:16px 20px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:none;border:none;text-align:left;font-family:inherit;font-size:1.2rem;color:#212121;transition:background .2s ease}
 .faq-q:hover{background:#EDE7F6}
-.faq-q:focus-visible{outline:3px solid #323F45;outline-offset:-3px}
+/* offset negativo: .faq-item tiene overflow:hidden y recortaría un outline hacia afuera */
+.faq-q:focus-visible{outline:3px solid #0D47A1;outline-offset:-3px}
 .faq-item.open .faq-q{background:#EDEFF0}
 .faq-icon{display:inline-block;flex-shrink:0;margin-left:12px;font-size:1.3rem;line-height:1;transition:transform .25s ease}
 .faq-item.open .faq-icon{transform:rotate(180deg)}
@@ -121,6 +125,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link">Ir al contenido</a>
 
 <nav>
   <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:64px;width:64px;border-radius:50%;">Academia IA Generaciones</div>
@@ -149,7 +154,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
   })();
 </script>
 
-<section class="hero">
+<section class="hero" id="main">
   <div style="display:inline-block;background:rgba(255,255,255,.2);color:#fff;padding:6px 18px;border-radius:20px;font-size:1.1rem;margin-bottom:20px;">🎉 Módulo 1 — 100% GRATIS · Sin tarjeta</div>
   <h1>Aprende <span>Inteligencia Artificial</span><br>sin saber nada de tecnología</h1>
   <p>El curso diseñado especialmente para adultos mayores de 60 años.</p>
@@ -367,7 +372,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
         <p style="font-size:1.05rem;color:#757575;margin:2px 0 10px;line-height:1.5;">Mientras más larga sea tu contraseña, más difícil es que alguien más la adivine y entre a tu cuenta — por eso te pedimos al menos 10 caracteres, con una letra mayúscula y un número.</p>
         <div class="pw">
           <input class="inp" type="password" id="f-pass" placeholder="Mínimo 10 caracteres" maxlength="64" autocomplete="new-password" spellcheck="false">
-          <button class="eye" type="button" id="eye1">👁</button>
+          <button class="eye" type="button" id="eye1" aria-label="Mostrar contraseña">👁</button>
         </div>
         <div class="sbar"><div class="sfill" id="sfill"></div></div>
         <div style="font-size:1.2rem;color:#555;margin-top:4px;" id="slbl"></div>
@@ -378,7 +383,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
         <label for="f-pass2">Confirmar contraseña <span style="color:#E53935;">*</span></label>
         <div class="pw">
           <input class="inp" type="password" id="f-pass2" placeholder="Repite tu contraseña" maxlength="64" autocomplete="new-password" spellcheck="false">
-          <button class="eye" type="button" id="eye2">👁</button>
+          <button class="eye" type="button" id="eye2" aria-label="Mostrar contraseña">👁</button>
         </div>
         <div class="msg" id="m-pass2"></div>
       </div>
@@ -413,8 +418,8 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 
 <!-- MODAL PAGO -->
 <div class="modal-overlay" id="mpago">
-  <div class="modal-box">
-    <button class="mclose" id="mcerrar">✕</button>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="phdr">
+    <button class="mclose" id="mcerrar" aria-label="Cerrar ventana de pago">✕</button>
     <div id="phdr" style="text-align:center;margin-bottom:4px;"></div>
     <div style="height:1px;background:#E0E0E0;margin:14px 0;"></div>
     <label>Nombre completo *</label>
@@ -444,9 +449,9 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 
 <!-- MODAL CONFIRMACIÓN -->
 <div class="modal-overlay" id="mconf">
-  <div class="modal-box" style="max-width:500px;text-align:center;">
-    <div style="font-size:3rem;margin-bottom:12px;">✅</div>
-    <h3 style="font-size:1.5rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Pago recibido!</h3>
+  <div class="modal-box" style="max-width:500px;text-align:center;" role="dialog" aria-modal="true" aria-labelledby="conf-titulo">
+    <div style="font-size:3rem;margin-bottom:12px;" aria-hidden="true">✅</div>
+    <h3 id="conf-titulo" style="font-size:1.5rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Pago recibido!</h3>
     <p id="cmsg" style="color:#555;font-size:1.15rem;line-height:1.6;margin-bottom:20px;"></p>
     <div style="background:#F5F3FF;border:2px solid #323F45;border-radius:14px;padding:20px;margin-bottom:20px;text-align:left;">
       <p style="font-size:1.05rem;font-weight:700;color:#323F45;text-transform:uppercase;margin-bottom:12px;">✅ Resumen de tu acceso</p>
@@ -541,11 +546,13 @@ document.getElementById('eye1').addEventListener('click', function() {
   var i=document.getElementById('f-pass');
   i.type=i.type==='password'?'text':'password';
   this.textContent=i.type==='password'?'👁':'🙈';
+  this.setAttribute('aria-label', i.type==='password'?'Mostrar contraseña':'Ocultar contraseña');
 });
 document.getElementById('eye2').addEventListener('click', function() {
   var i=document.getElementById('f-pass2');
   i.type=i.type==='password'?'text':'password';
   this.textContent=i.type==='password'?'👁':'🙈';
+  this.setAttribute('aria-label', i.type==='password'?'Mostrar contraseña':'Ocultar contraseña');
 });
 
 // Submit
