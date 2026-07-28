@@ -15,6 +15,19 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Correos VIP (acceso completo sin pago). Un documento por correo VIP,
+    // con el correo en minúsculas como ID (ej. vip_users/crisjus@hotmail.com).
+    // Mismo patrón que accesos/{email}: cada quien solo puede leer si el
+    // documento corresponde a su propio correo ya autenticado en Firebase
+    // Auth — así el HTML público nunca vuelve a contener la lista de
+    // correos VIP en texto plano. Nadie puede escribir desde el cliente;
+    // los documentos se agregan a mano desde la Consola de Firebase.
+    match /vip_users/{email} {
+      allow read: if request.auth != null
+                  && request.auth.token.email.lower() == email;
+      allow write: if false;
+    }
+
     // Opiniones de alumnos (calificación + comentario libre) enviadas al
     // terminar el Módulo 6. Cualquiera puede CREAR una opinión (no hace
     // falta haber iniciado sesión con Firebase Auth aquí, el sitio ya

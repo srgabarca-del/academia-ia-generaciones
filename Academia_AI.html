@@ -113,6 +113,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 <script>
   var firebaseConfig = {
@@ -128,6 +129,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
   // firebase.analytics() ya no se llama aquí — solo se activa tras aceptar
   // cookies de estadísticas, ver cc_activarAnalytics() al final del body.
   window.fbAuth = firebase.auth();
+  window.fbDb = firebase.firestore();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
@@ -585,18 +587,21 @@ document.getElementById('eye2').addEventListener('click', function() {
 // Submit
 var usuarioActual = null;
 
-// ── LISTA VIP — correos con acceso completo gratuito (misma lista que login.html) ────
-var VIP_EMAILS = [
-  'crisjus@hotmail.com',
-  'srg.abarca@gmail.com',
-  'abarcadabra@gmail.com',
-  'mayca.ar@gmail.com',
-  'paula.abarca.rodriguez@gmail.com',
-  'gelaabarca@gmail.com',
-  'barbosamx@gmail.com'
-];
+// ── VIP — correos con acceso completo gratuito ────────────────────────────
+// La lista ya no vive en el HTML: se consulta la colección Firestore
+// "vip_users" (documento = correo en minúsculas). Las reglas de Firestore
+// solo dejan leer un documento al usuario ya autenticado con ese mismo
+// correo (mismo patrón que accesos/{email}), así que esta consulta solo
+// funciona DESPUÉS de que Firebase Auth confirmó la sesión — nunca antes.
+// Devuelve una Promise<boolean> en vez de un booleano directo.
 function esVIP(email) {
-  return VIP_EMAILS.indexOf(email.toLowerCase().trim()) !== -1;
+  var correo = (email || '').toLowerCase().trim();
+  return window.fbDb.collection('vip_users').doc(correo).get()
+    .then(function(doc) { return doc.exists; })
+    .catch(function(err) {
+      console.error('No se pudo verificar el estado VIP:', err);
+      return false;
+    });
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -631,16 +636,18 @@ function procesarUsuarioGoogle(user, esNuevo) {
   sessionStorage.setItem('alumno_nombre', nombre);
   sessionStorage.setItem('alumno_email', email);
   sincronizarCuentaAcceso(email);
-  if (esVIP(email)) {
-    localStorage.setItem('acceso_plan', '1');
-    for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
-  } else {
-    // Con o sin cuenta nueva, Google ya verificó el correo — acceso gratis
-    // inmediato al Módulo 1, igual que el registro con correo/contraseña.
-    localStorage.setItem('acceso_modulo1', '1');
-  }
-  firebase.analytics().logEvent(esNuevo ? 'sign_up' : 'login', {method: 'google'});
-  window.location = 'dashboard.html';
+  esVIP(email).then(function(esVip) {
+    if (esVip) {
+      localStorage.setItem('acceso_plan', '1');
+      for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
+    } else {
+      // Con o sin cuenta nueva, Google ya verificó el correo — acceso gratis
+      // inmediato al Módulo 1, igual que el registro con correo/contraseña.
+      localStorage.setItem('acceso_modulo1', '1');
+    }
+    firebase.analytics().logEvent(esNuevo ? 'sign_up' : 'login', {method: 'google'});
+    window.location = 'dashboard.html';
+  });
 }
 
 document.getElementById('btn-google').addEventListener('click', function() {
@@ -674,16 +681,13 @@ document.getElementById('btn-reg').addEventListener('click', function() {
   this.disabled=true; this.textContent='⏳ Creando tu cuenta...';
   var self = this;
   if (!window.fbAuth) {
-    // Fallback sin Firebase: no hay forma de verificar el correo, se avisa y se da acceso igual
+    // Fallback sin Firebase: no hay Auth ni Firestore disponibles, así que
+    // no hay forma segura de verificar el estado VIP aquí — se da acceso
+    // normal al Módulo 1 (igual que cualquier alumno no-VIP).
     sessionStorage.setItem('alumno_nombre', nombre);
     sessionStorage.setItem('alumno_email', email);
     sincronizarCuentaAcceso(email);
-    if (esVIP(email)) {
-      localStorage.setItem('acceso_plan', '1');
-      for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
-    } else {
-      localStorage.setItem('acceso_modulo1', '1');
-    }
+    localStorage.setItem('acceso_modulo1', '1');
     firebase.analytics().logEvent('sign_up', {method:'email'});
     document.getElementById('frm').style.display='none';
     document.getElementById('exito-nombre').textContent=nombre;
@@ -706,32 +710,34 @@ document.getElementById('btn-reg').addEventListener('click', function() {
           firebase.analytics().logEvent('sign_up', {method:'email'});
           document.getElementById('frm').style.display='none';
           // ── Si es VIP, acceso completo inmediato, sin esperar verificación de correo ──
-          if (esVIP(email)) {
-            localStorage.setItem('acceso_plan', '1');
-            for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
-            sessionStorage.setItem('email_verificado', 'si');
-            cred.user.sendEmailVerification().catch(function(){}); // opcional, no bloquea
+          return esVIP(email).then(function(esVip) {
+            if (esVip) {
+              localStorage.setItem('acceso_plan', '1');
+              for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
+              sessionStorage.setItem('email_verificado', 'si');
+              cred.user.sendEmailVerification().catch(function(){}); // opcional, no bloquea
+              document.getElementById('exito-nombre').textContent=nombre;
+              document.getElementById('exito').style.display='block';
+              document.getElementById('exito-msg').innerHTML = '👑 ¡Cuenta VIP reconocida! Ya tienes acceso completo a todos los módulos.';
+              var aVip=document.createElement('a');
+              aVip.href='modulo1.html'; aVip.textContent='🚀 Ir al Módulo 1 ahora';
+              aVip.style.cssText='display:block;text-align:center;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
+              document.getElementById('exito-msg').after(aVip);
+              return;
+            }
+            // Acceso inmediato al Módulo 1 — sin esperar a que confirme su correo,
+            // para no complicarle el registro a un adulto mayor. El correo de
+            // verificación se sigue enviando, pero ya no bloquea el acceso.
+            localStorage.setItem('acceso_modulo1', '1');
+            cred.user.sendEmailVerification().catch(function(){});
             document.getElementById('exito-nombre').textContent=nombre;
             document.getElementById('exito').style.display='block';
-            document.getElementById('exito-msg').innerHTML = '👑 ¡Cuenta VIP reconocida! Ya tienes acceso completo a todos los módulos.';
-            var aVip=document.createElement('a');
-            aVip.href='modulo1.html'; aVip.textContent='🚀 Ir al Módulo 1 ahora';
-            aVip.style.cssText='display:block;text-align:center;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
-            document.getElementById('exito-msg').after(aVip);
-            return;
-          }
-          // Acceso inmediato al Módulo 1 — sin esperar a que confirme su correo,
-          // para no complicarle el registro a un adulto mayor. El correo de
-          // verificación se sigue enviando, pero ya no bloquea el acceso.
-          localStorage.setItem('acceso_modulo1', '1');
-          cred.user.sendEmailVerification().catch(function(){});
-          document.getElementById('exito-nombre').textContent=nombre;
-          document.getElementById('exito').style.display='block';
-          document.getElementById('exito-msg').innerHTML = '✅ ¡Todo listo! Ya puedes entrar al Módulo 1.';
-          var a1=document.createElement('a');
-          a1.href='modulo1.html'; a1.textContent='🎬 Ir al Módulo 1 ahora';
-          a1.style.cssText='display:block;text-align:center;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
-          document.getElementById('exito-msg').after(a1);
+            document.getElementById('exito-msg').innerHTML = '✅ ¡Todo listo! Ya puedes entrar al Módulo 1.';
+            var a1=document.createElement('a');
+            a1.href='modulo1.html'; a1.textContent='🎬 Ir al Módulo 1 ahora';
+            a1.style.cssText='display:block;text-align:center;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
+            document.getElementById('exito-msg').after(a1);
+          });
         });
     })
     .catch(function(err) {
