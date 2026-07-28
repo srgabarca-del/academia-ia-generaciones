@@ -16,6 +16,16 @@ body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;color:#212121;back
 nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .logo{color:#fff;font-size:1.25rem;font-weight:700}
 .cta-nav{background:#F57C00;color:#fff;padding:8px 20px;border-radius:24px;font-weight:700;font-size:1.15rem;text-decoration:none}
+.nav-burger{display:none;background:none;border:none;color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;padding:6px 8px}
+.nav-links{display:flex;align-items:center}
+@media(max-width:600px){
+  .logo-full{display:none}
+  .cta-full{display:none}
+  .nav-burger{display:block}
+  nav{position:relative}
+  .nav-links{display:none;position:absolute;top:100%;right:24px;background:#083042;flex-direction:column;align-items:flex-start;gap:10px;padding:14px 20px;border-radius:0 0 12px 12px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .nav-links.open{display:flex}
+}
 .hero{background:#323F45;padding:80px 24px 90px;text-align:center}
 .hero h1{color:#fff;font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.2;margin-bottom:16px}
 .hero h1 span{color:#FFD740}
@@ -128,10 +138,13 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 <a href="#main" class="skip-link">Ir al contenido</a>
 
 <nav>
-  <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:64px;width:64px;border-radius:50%;">Academia IA Generaciones</div>
+  <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:64px;width:64px;border-radius:50%;">Academia IA<span class="logo-full"> Generaciones</span></div>
   <div style="display:flex;align-items:center;gap:12px;">
-    <a href="login.html" id="nav-login-link" style="color:#fff;font-size:1.15rem;font-weight:600;text-decoration:none;opacity:.85;">Iniciar sesión</a>
-    <a href="#registro" class="cta-nav">Crear cuenta gratis &rarr;</a>
+    <button type="button" class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
+    <div class="nav-links" id="nav-links">
+      <a href="login.html" id="nav-login-link" style="color:#fff;font-size:1.15rem;font-weight:600;text-decoration:none;opacity:.85;">Iniciar sesión</a>
+    </div>
+    <a href="#registro" class="cta-nav">Crear cuenta<span class="cta-full"> gratis &rarr;</span></a>
   </div>
 </nav>
 <script>
@@ -152,6 +165,13 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       link.href = 'dashboard.html';
     }
   })();
+
+  // Menú hamburguesa (solo visible en móvil, ≤600px)
+  document.getElementById('nav-burger').addEventListener('click', function() {
+    var abierto = this.getAttribute('aria-expanded') === 'true';
+    this.setAttribute('aria-expanded', abierto ? 'false' : 'true');
+    document.getElementById('nav-links').classList.toggle('open');
+  });
 </script>
 
 <section class="hero" id="main">

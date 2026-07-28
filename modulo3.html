@@ -16,6 +16,15 @@ body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:#F5F3FF
 nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
 .logo{color:#fff;font-weight:700;font-size:1.15rem}
 .al{color:rgba(255,255,255,.8);font-size:1.1rem}
+.nav-burger{display:none;background:none;border:none;color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;padding:6px 8px}
+.nav-links{display:flex;align-items:center}
+@media(max-width:600px){
+  .logo-full{display:none}
+  .nav-burger{display:block}
+  nav{position:relative;flex-wrap:wrap;row-gap:8px}
+  .nav-links{display:none;position:absolute;top:100%;right:24px;background:#083042;flex-direction:column;align-items:flex-start;gap:10px;padding:14px 20px;border-radius:0 0 12px 12px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .nav-links.open{display:flex}
+}
 .body{max-width:860px;margin:0 auto;padding:32px 20px 60px}
 .badge{display:inline-block;background:#FCE4EC;color:#C2185B;font-size:1.05rem;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:16px}
 .pbr{background:#E0E0E0;border-radius:4px;height:6px;margin-bottom:6px}
@@ -50,12 +59,24 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 <body>
 <a href="#main" class="skip-link">Ir al contenido</a>
 <nav>
-  <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:64px;width:64px;border-radius:50%;">Academia IA Generaciones</div>
-  <div class="al" id="nav-nombre">👤 Alumno | Módulo 3</div>
-  <a href="dashboard.html" style="color:#fff;font-size:1.05rem;font-weight:600;text-decoration:none;opacity:.85;margin-left:12px;">🏠 Mi panel</a>
-  <button onclick="cerrarSesion()" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:1.05rem;cursor:pointer;margin-left:12px;">🚪 Salir</button>
+  <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:64px;width:64px;border-radius:50%;">Academia IA<span class="logo-full"> Generaciones</span></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="al" id="nav-nombre">👤 Alumno | Módulo 3</div>
+    <button type="button" class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
+    <div class="nav-links" id="nav-links">
+      <a href="dashboard.html" style="color:#fff;font-size:1.05rem;font-weight:600;text-decoration:none;opacity:.85;">🏠 Mi panel</a>
+    </div>
+    <button onclick="cerrarSesion()" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:1.05rem;cursor:pointer;">🚪 Salir</button>
+  </div>
   <button onclick="window.location.href='modulo4.html'" id="btn-nav-siguiente" style="display:none;background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:1.05rem;cursor:pointer;margin-left:8px;">➡️ Módulo 4</button>
 </nav>
+<script>
+document.getElementById('nav-burger').addEventListener('click', function() {
+  var abierto = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', abierto ? 'false' : 'true');
+  document.getElementById('nav-links').classList.toggle('open');
+});
+</script>
 <div class="body" id="main">
   <span class="badge">🎨 MÓDULO 3 — PREMIUM · $9 USD</span>
   <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:#C2185B;margin-bottom:8px;">Creando Imágenes con IA</h1>
