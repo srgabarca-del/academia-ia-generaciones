@@ -9,15 +9,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-.footer-social-bar{background:#083042;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-radius:12px;margin-top:20px}
+:root{
+  --color-primario:#4527A0;      /* Púrpura — botones y elementos de acción principales */
+  --color-secundario:#083042;    /* Azul marino — nav y fondos estructurales oscuros */
+  --color-acento:#FFD740;        /* Amarillo — resaltados sobre fondo oscuro y detalles de prestigio */
+  --color-neutro-oscuro:#212121; /* Texto principal y fondos oscuros secundarios */
+  --color-neutro-claro:#F5F5F5;  /* Fondos claros de sección y tarjeta */
+  --color-error:#C62828;         /* Validación de errores y alertas */
+}
+.footer-social-bar{background:var(--color-secundario);display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-radius:12px;margin-top:20px}
 @media(max-width:600px){
   .footer-social-bar{max-width:480px;margin-left:auto;margin-right:auto}
 }
 .skip-link{position:absolute;left:-9999px;top:0;background:#0D47A1;color:#fff;padding:14px 22px;font-size:1.1rem;font-weight:700;z-index:99999;border-radius:0 0 10px 0;text-decoration:none}
 .skip-link:focus{left:0}
 a:focus-visible,button:focus-visible{outline:3px solid #0D47A1;outline-offset:3px}
-body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:#F5F3FF;color:#212121;line-height:1.6}
-nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:var(--color-neutro-claro);color:var(--color-neutro-oscuro);line-height:1.6}
+nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
 .logo{color:#fff;font-weight:700;font-size:1.15rem}
 .al{color:rgba(255,255,255,.8);font-size:1.1rem}
 .nav-burger{display:none;background:none;border:none;color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;padding:6px 8px}
@@ -26,25 +34,25 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
   .logo-full{display:none}
   .nav-burger{display:block}
   nav{position:relative;flex-wrap:wrap;row-gap:8px}
-  .nav-links{display:none;position:absolute;top:100%;right:24px;background:#083042;flex-direction:column;align-items:flex-start;gap:10px;padding:14px 20px;border-radius:0 0 12px 12px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .nav-links{display:none;position:absolute;top:100%;right:24px;background:var(--color-secundario);flex-direction:column;align-items:flex-start;gap:10px;padding:14px 20px;border-radius:0 0 12px 12px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
   .nav-links.open{display:flex}
 }
 .body{max-width:860px;margin:0 auto;padding:32px 20px 60px}
 .badge{display:inline-block;background:#E3F2FD;color:#1565C0;font-size:1.05rem;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:16px}
 .pbr{background:#E0E0E0;border-radius:4px;height:6px;margin-bottom:6px}
-.pf{height:100%;border-radius:4px;width:0;transition:width .6s;background:#1565C0}
+.pf{height:100%;border-radius:4px;width:0;transition:width .6s;background:var(--color-primario)}
 .vw{border-radius:16px;background:#1a1a2e;margin-bottom:12px;overflow:hidden}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:28px}
 .sc{background:#fff;border-radius:12px;padding:16px;border:1px solid #E0E0E0}
-.sn{font-size:.95rem;font-weight:700;color:#1565C0;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.sn{font-size:.95rem;font-weight:700;color:var(--color-primario);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 .bn{width:100%;padding:16px;color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;margin-bottom:12px}
 .qq{background:#fff;border:1px solid #E0E0E0;border-radius:12px;padding:18px 20px;margin-bottom:12px}
 .qq.ok{border-color:#43A047;background:#F1F8E9}
-.qq.no{border-color:#E53935;background:#FFEBEE}
+.qq.no{border-color:var(--color-error);background:#FFEBEE}
 .qq p{font-size:1.3rem}
 .op{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;margin-bottom:4px;cursor:pointer;font-size:1.2rem}
 .op:hover{background:#E3F2FD}
-.op input{accent-color:#1565C0;width:20px;height:20px;flex-shrink:0;cursor:pointer}
+.op input{accent-color:var(--color-primario);width:20px;height:20px;flex-shrink:0;cursor:pointer}
 .cert-box{border-radius:16px;padding:40px 28px;text-align:center;background:#fff;margin-top:20px;display:none}
 
 @media print {
@@ -57,7 +65,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
-#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:#083042;--cc-btn-primary-border-color:#083042;--cc-btn-primary-hover-bg:#0a4058;--cc-btn-primary-hover-border-color:#0a4058;--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
+#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:var(--color-secundario);--cc-btn-primary-border-color:var(--color-secundario);--cc-btn-primary-hover-bg:color-mix(in srgb, var(--color-secundario) 85%, white);--cc-btn-primary-hover-border-color:color-mix(in srgb, var(--color-secundario) 85%, white);--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
 </style>
 </head>
 <body>
@@ -83,9 +91,9 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 </script>
 <div class="body" id="main">
   <span class="badge">📅 MÓDULO 4 — PREMIUM · $9 USD</span>
-  <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:#1565C0;margin-bottom:8px;">IA para la Vida Diaria</h1>
+  <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:var(--color-primario);margin-bottom:8px;">IA para la Vida Diaria</h1>
   <p style="color:#555;font-size:1.2rem;margin-bottom:24px;">Duración: 45–60 min · Herramientas gratuitas · En español</p>
-  <div style="background:linear-gradient(135deg,#1565C0,#1976D2);border-radius:14px;padding:20px 24px;margin-bottom:24px;color:#fff;">
+  <div style="background:linear-gradient(135deg,var(--color-primario),var(--color-secundario));border-radius:14px;padding:20px 24px;margin-bottom:24px;color:#fff;">
     <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:4px;" id="saludo">¡Bienvenido/a al Módulo 4! 🚀</h2>
     <p style="font-size:1.15rem;opacity:.85;">Completa el video, las actividades y la evaluación para desbloquear el siguiente módulo.</p>
   </div>
@@ -107,58 +115,58 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   </div>
 
   <div id="guia-box" style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:24px;overflow:hidden;">
-    <div id="guia-header" onclick="toggleGuia()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:#F8F9FA;">
+    <div id="guia-header" onclick="toggleGuia()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);">
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:1.5rem;">📖</span>
         <div>
-          <div style="font-size:1.15rem;font-weight:700;color:#212121;">Guía y Actividades del Módulo 4</div>
+          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);">Guía y Actividades del Módulo 4</div>
           <div style="font-size:.95rem;color:#757575;">Léela y completa las actividades aquí mismo</div>
         </div>
       </div>
-      <span id="guia-arrow" style="font-size:1.2rem;color:#1565C0;transition:transform .3s;">▼</span>
+      <span id="guia-arrow" style="font-size:1.2rem;color:var(--color-primario);transition:transform .3s;">▼</span>
     </div>
 
     <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;"></div>
   </div>
 
-  <button class="bn" id="btn-eval" style="background:#1565C0;">📝 Ir a la Evaluación → Desbloquea el Módulo 5</button>
+  <button class="bn" id="btn-eval" style="background:var(--color-primario);">📝 Ir a la Evaluación → Desbloquea el Módulo 5</button>
 
   <div id="ev" style="display:none;margin-top:8px;">
-    <div style="background:#1565C0;border-radius:14px;padding:20px 24px;margin-bottom:20px;color:#fff;">
+    <div style="background:var(--color-primario);border-radius:14px;padding:20px 24px;margin-bottom:20px;color:#fff;">
       <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:4px;">📝 Evaluación del Módulo 4</h2>
       <p style="font-size:1.05rem;opacity:.85;">7 preguntas — necesitas 5 o más para aprobar.</p>
     </div>
     <div id="preguntas-examen"></div>
     
-    <div id="qerr" style="display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:12px;margin-top:12px;font-size:1.1rem;">⚠️ Responde todas las preguntas.</div>
-    <button class="bn" id="btn-env" style="background:#1565C0;margin-top:16px;">✅ Enviar evaluación</button>
+    <div id="qerr" style="display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:12px;margin-top:12px;font-size:1.1rem;">⚠️ Responde todas las preguntas.</div>
+    <button class="bn" id="btn-env" style="background:var(--color-primario);margin-top:16px;">✅ Enviar evaluación</button>
   </div>
 
   <div id="qres" style="display:none;text-align:center;padding:32px 16px;"></div>
 
-  <div class="cert-box" id="certbox" style="border:3px solid #1565C0;">
+  <div class="cert-box" id="certbox" style="border:3px solid var(--color-acento);">
     <div style="font-size:3.5rem;margin-bottom:12px;">🏆</div>
-    <div style="font-size:1.1rem;font-weight:700;color:#1565C0;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Academia IA Generaciones</div>
+    <div style="font-size:1.1rem;font-weight:700;color:var(--color-primario);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Academia IA Generaciones</div>
     <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:8px;">Certificado de Módulo</h2>
     <p style="color:#555;margin-bottom:12px;">Este certificado se otorga a</p>
-    <div id="cn" style="font-size:1.8rem;font-weight:800;color:#1565C0;margin-bottom:16px;"></div>
+    <div id="cn" style="font-size:1.8rem;font-weight:800;color:var(--color-primario);margin-bottom:16px;"></div>
     <p style="font-weight:700;margin-bottom:16px;">Módulo 4: IA para la Vida Diaria</p>
     <div id="cf" style="font-size:1.1rem;color:#757575;margin-bottom:28px;"></div>
     <div id="cert-qr" style="width:110px;height:110px;margin:0 auto 10px;"></div>
     <div id="cert-id-info" style="font-size:.95rem;color:#757575;margin-bottom:20px;word-break:break-all;"></div>
-    <button onclick="window.print()" style="background:#1565C0;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
+    <button onclick="window.print()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
   </div>
 
   <div id="lock-siguiente" style="display:none;background:#fff;border:2px dashed #BDBDBD;border-radius:14px;padding:32px 24px;text-align:center;margin-top:20px;">
     <div style="font-size:2.5rem;margin-bottom:10px;">🔓</div>
-    <h3 style="font-size:1.1rem;font-weight:700;color:#212121;margin-bottom:8px;">¡Módulo 5 desbloqueado!</h3>
+    <h3 style="font-size:1.1rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:8px;">¡Módulo 5 desbloqueado!</h3>
     <p style="color:#555;font-size:1.15rem;margin-bottom:20px;">Has completado el Módulo 4. Ahora puedes acceder al Módulo 5: <strong>IA para la Creatividad</strong></p>
     <div id="lock-inner"></div>
   </div>
 
   <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
-    <a href="modulo3.html" id="btn-volver-m3" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">← Volver al Módulo 3</a>
-    <a href="Academia_AI.html" style="display:block;width:100%;padding:12px;background:#F5F5F5;color:#555;border-radius:12px;font-size:1.15rem;font-weight:600;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Inicio</a>
+    <a href="modulo3.html" id="btn-volver-m3" style="display:block;width:100%;padding:14px;background:#fff;color:var(--color-secundario);border:2px solid var(--color-secundario);border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">← Volver al Módulo 3</a>
+    <a href="Academia_AI.html" style="display:block;width:100%;padding:12px;background:var(--color-neutro-claro);color:#555;border-radius:12px;font-size:1.15rem;font-weight:600;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Inicio</a>
   </div>
   <div class="footer-social-bar">
   <button type="button" onclick="CookieConsent.showPreferences()" aria-label="Cambiar mis preferencias de cookies" style="background:none;border:none;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 10px;">🍪 Cookies</button>
@@ -238,7 +246,7 @@ function asegurarCertificadoVerificable(numModulo, nombreModulo, nombreAlumno, f
 }
 // ─────────────────────────────────────────────────────────────────────────
 
-var ACCENT = '#1565C0';
+var ACCENT = 'var(--color-primario)';
 var certOK = false;
 // Autoguardado de respuestas de la guía: restaura y guarda cada campo en
 // localStorage. Ahora se activa DESPUÉS de inyectar el HTML de la guía
@@ -272,10 +280,21 @@ var guiaContenidoCargado = false;
 // una consulta a Firestore sin importar si el alumno abre primero la
 // guía o directamente la evaluación.
 var contenidoModuloPromise = null;
+// Espera a que Firebase Auth termine de rehidratar la sesión guardada antes de
+// llamar a la Cloud Function — si se llama demasiado pronto tras cargar la
+// página, currentUser todavía puede estar en null aunque la sesión sí sea
+// válida, y la función responde 'unauthenticated' por error.
+function esperarAuthListo() {
+  if (firebase.auth().currentUser) return Promise.resolve();
+  return new Promise(function(resolve) {
+    var unsub = firebase.auth().onAuthStateChanged(function() { unsub(); resolve(); });
+  });
+}
 function cargarContenidoModulo() {
   if (!contenidoModuloPromise) {
-    contenidoModuloPromise = firebase.functions().httpsCallable('obtenerContenidoModulo')({modulo:'modulo4'})
-      .catch(function(err) { contenidoModuloPromise = null; throw err; });
+    contenidoModuloPromise = esperarAuthListo().then(function() {
+      return firebase.functions().httpsCallable('obtenerContenidoModulo')({modulo:'modulo4'});
+    }).catch(function(err) { contenidoModuloPromise = null; throw err; });
   }
   return contenidoModuloPromise;
 }
@@ -309,7 +328,7 @@ function toggleGuia() {
       activarAutoguardadoGuia();
     })
     .catch(function(err) {
-      lista.innerHTML = '<p style="text-align:center;color:#C62828;padding:40px 20px;font-size:1.15rem;">'+mensajeErrorContenido(err)+'</p>';
+      lista.innerHTML = '<p style="text-align:center;color:var(--color-error);padding:40px 20px;font-size:1.15rem;">'+mensajeErrorContenido(err)+'</p>';
     });
 }
 var N_Q = 7;
@@ -412,14 +431,14 @@ document.getElementById('btn-env').addEventListener('click', function() {
       rs.style.display='block'; btnEnv.style.display='none';
       btnEnv.disabled=false; btnEnv.textContent='✅ Enviar evaluación';
       if(data.aprobado){
-        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/'+N_Q+'</h3><p style="color:#555;margin-bottom:16px;">Excelente trabajo.</p><button onclick="verCert()" style="background:#1565C0;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
+        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:var(--color-primario);margin-bottom:8px;">¡Aprobaste! '+c+'/'+N_Q+'</h3><p style="color:#555;margin-bottom:16px;">Excelente trabajo.</p><button onclick="verCert()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
         document.getElementById('pf').style.width='100%';
         document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 4 completado! 🎉';
         certOK=true;
         localStorage.setItem('modulo4_completado','1');
         setTimeout(mostrarSiguienteModulo, 1200);
       }else{
-        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
+        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:var(--color-error);margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
       }
       rs.scrollIntoView({behavior:'smooth',block:'center'});
     })
@@ -459,10 +478,10 @@ function mostrarSiguienteModulo(noScroll) {
   var tiene = localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo5');
   var panelBtn = '<a href="dashboard.html" style="display:inline-block;background:#fff;color:#424242;border:2px solid #BDBDBD;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;margin-left:8px;">🏠 Volver a mi panel</a>';
   if (tiene) {
-    innerDiv.innerHTML = '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;"><a href="modulo5.html" style="display:inline-block;background:#7B1FA2;color:#fff;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;">🚀 Ir al Módulo 5 →</a>' + panelBtn + '</div>';
+    innerDiv.innerHTML = '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;"><a href="modulo5.html" style="display:inline-block;background:var(--color-primario);color:#fff;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;">🚀 Ir al Módulo 5 →</a>' + panelBtn + '</div>';
   } else {
     innerDiv.innerHTML = '<p style="color:#555;font-size:1.15rem;margin-bottom:16px;">Para acceder al Módulo 5 necesitas comprarlo o adquirir el Plan Completo.</p>'
-      + '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;"><button onclick="comprarSiguiente()" style="background:#7B1FA2;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">💳 Comprar Módulo 5 — $9 USD</button>' + panelBtn + '</div>';
+      + '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;"><button onclick="comprarSiguiente()" style="background:var(--color-secundario);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">💳 Comprar Módulo 5 — $9 USD</button>' + panelBtn + '</div>';
   }
   if (!noScroll) { lockBox.scrollIntoView({behavior:'smooth', block:'center'}); }
 }

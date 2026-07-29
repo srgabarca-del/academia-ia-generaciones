@@ -9,15 +9,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-.footer-social-bar{background:#083042;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-radius:12px;margin-top:20px}
+:root{
+  --color-primario:#4527A0;      /* Púrpura — botones y elementos de acción principales */
+  --color-secundario:#083042;    /* Azul marino — nav y fondos estructurales oscuros */
+  --color-acento:#FFD740;        /* Amarillo — resaltados sobre fondo oscuro y detalles de prestigio */
+  --color-neutro-oscuro:#212121; /* Texto principal y fondos oscuros secundarios */
+  --color-neutro-claro:#F5F5F5;  /* Fondos claros de sección y tarjeta */
+  --color-error:#C62828;         /* Validación de errores y alertas */
+}
+.footer-social-bar{background:var(--color-secundario);display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-radius:12px;margin-top:20px}
 @media(max-width:600px){
   .footer-social-bar{max-width:480px;margin-left:auto;margin-right:auto}
 }
 .skip-link{position:absolute;left:-9999px;top:0;background:#0D47A1;color:#fff;padding:14px 22px;font-size:1.1rem;font-weight:700;z-index:99999;border-radius:0 0 10px 0;text-decoration:none}
 .skip-link:focus{left:0}
 a:focus-visible,button:focus-visible{outline:3px solid #0D47A1;outline-offset:3px}
-body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:#F5F3FF;color:#212121;line-height:1.6}
-nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:var(--color-neutro-claro);color:var(--color-neutro-oscuro);line-height:1.6}
+nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
 .logo{color:#fff;font-weight:700;font-size:1.15rem}
 .al{color:rgba(255,255,255,.8);font-size:1.1rem}
 .nav-burger{display:none;background:none;border:none;color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;padding:6px 8px}
@@ -26,7 +34,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
   .logo-full{display:none}
   .nav-burger{display:block}
   nav{position:relative;flex-wrap:wrap;row-gap:8px}
-  .nav-links{display:none;position:absolute;top:100%;right:24px;background:#083042;flex-direction:column;align-items:flex-start;gap:10px;padding:14px 20px;border-radius:0 0 12px 12px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .nav-links{display:none;position:absolute;top:100%;right:24px;background:var(--color-secundario);flex-direction:column;align-items:flex-start;gap:10px;padding:14px 20px;border-radius:0 0 12px 12px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
   .nav-links.open{display:flex}
 }
 .body{max-width:860px;margin:0 auto;padding:32px 20px 60px}
@@ -39,7 +47,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 .sn{font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 .res{background:#fff;border-radius:12px;padding:20px 24px;border:1px solid #E0E0E0;margin-bottom:28px}
 .rl{list-style:none}
-.rl li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F5F5F5;font-size:1.15rem}
+.rl li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-neutro-claro);font-size:1.15rem}
 .rl li:last-child{border:none}
 .ri{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
 .bdl{margin-left:auto;flex-shrink:0;border:none;padding:7px 15px;border-radius:8px;font-size:1.05rem;font-weight:700;cursor:pointer}
@@ -47,12 +55,12 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 .bn:hover{opacity:.9}
 .qq{background:#fff;border:1px solid #E0E0E0;border-radius:12px;padding:18px 20px;margin-bottom:12px}
 .qq.ok{border-color:#43A047;background:#F1F8E9}
-.qq.no{border-color:#E53935;background:#FFEBEE}
+.qq.no{border-color:var(--color-error);background:#FFEBEE}
 .qt{font-size:1.3rem;font-weight:700;margin-bottom:12px}
 .op{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;margin-bottom:4px;cursor:pointer;font-size:1.2rem;color:#424242}
 .op:hover{background:#EDE7F6}
-.op input{accent-color:#6C3FC4;width:20px;height:20px;flex-shrink:0;cursor:pointer}
-.cert-box{border:3px solid #00897B;border-radius:16px;padding:40px 28px;text-align:center;background:#fff;margin-top:20px;display:none}
+.op input{accent-color:var(--color-primario);width:20px;height:20px;flex-shrink:0;cursor:pointer}
+.cert-box{border:3px solid var(--color-acento);border-radius:16px;padding:40px 28px;text-align:center;background:#fff;margin-top:20px;display:none}
 
 @media print {
   body * { visibility: hidden; }
@@ -65,7 +73,7 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
-#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:#083042;--cc-btn-primary-border-color:#083042;--cc-btn-primary-hover-bg:#0a4058;--cc-btn-primary-hover-border-color:#0a4058;--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
+#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:var(--color-secundario);--cc-btn-primary-border-color:var(--color-secundario);--cc-btn-primary-hover-bg:color-mix(in srgb, var(--color-secundario) 85%, white);--cc-btn-primary-hover-border-color:color-mix(in srgb, var(--color-secundario) 85%, white);--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
 </style>
 </head>
 <body>
@@ -90,13 +98,13 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 </script>
 <div class="body" id="main">
   <span class="badge">🆓 MÓDULO 1 — GRATUITO</span>
-  <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:#4527A0;margin-bottom:8px;">Descubriendo la Inteligencia Artificial</h1>
+  <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:var(--color-primario);margin-bottom:8px;">Descubriendo la Inteligencia Artificial</h1>
   <p style="color:#555;font-size:1.2rem;margin-bottom:24px;">Duración: 45–75 min · Sin conocimientos previos · En español</p>
-  <div style="background:linear-gradient(135deg,#6C3FC4,#00897B);border-radius:14px;padding:20px 24px;margin-bottom:24px;color:#fff;">
+  <div style="background:linear-gradient(135deg,var(--color-primario),var(--color-secundario));border-radius:14px;padding:20px 24px;margin-bottom:24px;color:#fff;">
     <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:4px;" id="saludo">¡Bienvenido/a a tu primer módulo! 🎉</h2>
     <p style="font-size:1.15rem;opacity:.85;">Comienza viendo el video, descarga el PDF y completa la evaluación.</p>
   </div>
-  <div class="pbr"><div class="pf" id="pf" style="background:#6C3FC4;"></div></div>
+  <div class="pbr"><div class="pf" id="pf" style="background:var(--color-primario);"></div></div>
   <p style="font-size:1rem;color:#757575;margin-bottom:24px;" id="pl">Progreso: 0%</p>
 
   <div class="vw">
@@ -107,12 +115,12 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   <p style="color:#555;font-size:1.2rem;font-weight:600;margin-bottom:24px;" id="vt">🎬 ¿Qué es la IA? — Video Animado</p>
 
   <div class="grid">
-    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 1</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">¿Qué es la IA?</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Definición simple y clara.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 0:00–5:00</div></div>
-    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 2</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">¿Cómo funciona?</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Datos, entrenamiento y respuesta.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 5:00–18:00</div></div>
-    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 3</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">IA en tu vida diaria</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">YouTube, WhatsApp, Maps y más.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 18:00–30:00</div></div>
-    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 4</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Beneficios y límites</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Lo que la IA puede y no puede hacer.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 30:00–40:00</div></div>
-    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 5</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Actividades prácticas</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Cazadores de IA · Mi Día con IA.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 40:00–55:00</div></div>
-    <div class="sc"><div class="sn" style="color:#6C3FC4;">Sección 6</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Cierre y certificado</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Resumen y descarga de certificado.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 55:00–60:00</div></div>
+    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 1</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">¿Qué es la IA?</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Definición simple y clara.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 0:00–5:00</div></div>
+    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 2</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">¿Cómo funciona?</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Datos, entrenamiento y respuesta.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 5:00–18:00</div></div>
+    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 3</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">IA en tu vida diaria</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">YouTube, WhatsApp, Maps y más.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 18:00–30:00</div></div>
+    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 4</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Beneficios y límites</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Lo que la IA puede y no puede hacer.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 30:00–40:00</div></div>
+    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 5</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Actividades prácticas</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Cazadores de IA · Mi Día con IA.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 40:00–55:00</div></div>
+    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 6</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Cierre y certificado</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Resumen y descarga de certificado.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 55:00–60:00</div></div>
   </div>
 
   <div class="res">
@@ -127,23 +135,23 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   <!-- (ya no es un PDF descargable/visible en modal, es rellenable) -->
   <!-- ══════════════════════════════════════════════════════════════ -->
   <div id="guia-box" style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:28px;overflow:hidden;">
-    <div id="guia-header" onclick="toggleGuia()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:#F8F9FA;">
+    <div id="guia-header" onclick="toggleGuia()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);">
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:1.5rem;">📖</span>
         <div>
-          <div style="font-size:1.15rem;font-weight:700;color:#212121;">Guía y Actividades del Módulo 1</div>
+          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);">Guía y Actividades del Módulo 1</div>
           <div style="font-size:.95rem;color:#757575;">Léela y completa las actividades aquí mismo</div>
         </div>
       </div>
-      <span id="guia-arrow" style="font-size:1.2rem;color:#6C3FC4;transition:transform .3s;">▼</span>
+      <span id="guia-arrow" style="font-size:1.2rem;color:var(--color-primario);transition:transform .3s;">▼</span>
     </div>
 
     <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;">
-      <h4 style="font-size:1.3rem;font-weight:700;color:#4527A0;margin-bottom:8px;">🤖 ¿Qué es la Inteligencia Artificial?</h4>
+      <h4 style="font-size:1.3rem;font-weight:700;color:var(--color-primario);margin-bottom:8px;">🤖 ¿Qué es la Inteligencia Artificial?</h4>
       <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:6px;">Una computadora que aprende a hacer cosas que antes solo hacían los humanos: hablar, escribir, dibujar y crear música. No duerme ni se cansa, puede leer millones de libros en segundos y responder al instante.</p>
       <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">La IA aprende de los datos que le damos, igual que una persona aprende de la experiencia.</p>
 
-      <h4 style="font-size:1.3rem;font-weight:700;color:#4527A0;margin-bottom:8px;">📱 La IA ya está en tu vida diaria</h4>
+      <h4 style="font-size:1.3rem;font-weight:700;color:var(--color-primario);margin-bottom:8px;">📱 La IA ya está en tu vida diaria</h4>
       <ul style="font-size:1.2rem;color:#000000;line-height:1.9;margin-bottom:20px;padding-left:20px;">
         <li><strong>YouTube</strong> — aprende qué te gusta y recomienda videos</li>
         <li><strong>WhatsApp</strong> — corrige errores de escritura automáticamente</li>
@@ -175,18 +183,18 @@ document.getElementById('nav-burger').addEventListener('click', function() {
         </div>
       </div>
 
-      <h4 style="font-size:1.3rem;font-weight:700;color:#4527A0;margin-bottom:8px;">💬 ¿Qué es un PROMPT?</h4>
+      <h4 style="font-size:1.3rem;font-weight:700;color:var(--color-primario);margin-bottom:8px;">💬 ¿Qué es un PROMPT?</h4>
       <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:4px;">La instrucción o pregunta que le das a la IA para obtener una respuesta.</p>
       <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:4px;"><em>Ejemplo: "Explícame qué es la fotosíntesis como si tuviera 10 años"</em></p>
       <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">Mientras más claro y específico sea tu prompt, ¡mejor será la respuesta!</p>
 
       <div style="border-top:2px dashed #E0E0E0;margin:24px 0;"></div>
 
-      <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">✏️ Actividad práctica 1 — Encuentra la IA en tus apps</h4>
+      <h4 style="font-size:1.35rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:14px;">✏️ Actividad práctica 1 — Encuentra la IA en tus apps</h4>
       <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Abre 3 de tus apps favoritas y busca señales de inteligencia artificial. Completa la tabla:</p>
       <div style="overflow-x:auto;margin-bottom:12px;">
         <table style="width:100%;border-collapse:collapse;font-size:1rem;min-width:480px;">
-          <tr style="background:#F5F3FF;">
+          <tr style="background:var(--color-neutro-claro);">
             <th style="text-align:left;padding:8px;border:1px solid #E0E0E0;">App</th>
             <th style="text-align:left;padding:8px;border:1px solid #E0E0E0;">¿Qué hace la IA ahí?</th>
             <th style="text-align:left;padding:8px;border:1px solid #E0E0E0;">¿Es útil?</th>
@@ -206,7 +214,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Cuál fue la señal de IA más sorprendente que encontraste?</label>
       <textarea id="modulo1_g7" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
 
-      <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">🗓️ Actividad práctica 2 — Mi Día con IA</h4>
+      <h4 style="font-size:1.35rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:14px;">🗓️ Actividad práctica 2 — Mi Día con IA</h4>
       <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Piensa en tu día de ayer. ¿Usaste el celular? ¿Viste noticias? Responde:</p>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">1. ¿Qué apps o dispositivos usaste ayer?</label>
       <textarea id="modulo1_g8" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
@@ -219,7 +227,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">5. ¿Le contarías a un familiar lo que aprendiste hoy? ¿Qué le dirías?</label>
       <textarea id="modulo1_g12" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
 
-      <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">💭 Reflexión final</h4>
+      <h4 style="font-size:1.35rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:14px;">💭 Reflexión final</h4>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Qué fue lo más interesante que aprendiste en este módulo?</label>
       <textarea id="modulo1_g13" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Para qué te gustaría usar la IA en tu vida?</label>
@@ -228,7 +236,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
       <textarea id="modulo1_g15" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:20px;box-sizing:border-box;"></textarea>
 
       <p style="text-align:center;font-size:1rem;color:#757575;margin-bottom:10px;">Puedes imprimir la guía para que te sirva de apoyo para el uso de las herramientas de IA.</p>
-      <button onclick="window.print()" style="width:100%;padding:14px;background:#6C3FC4;color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir</button>
+      <button onclick="window.print()" style="width:100%;padding:14px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir</button>
     </div>
   </div>
 
@@ -239,30 +247,30 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   <!-- ══════════════════════════════════════════════════════════════ -->
   <div style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:28px;overflow:hidden;">
     <!-- Encabezado colapsable -->
-    <div id="comp-header" onclick="toggleComp()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:#F8F9FA;">
+    <div id="comp-header" onclick="toggleComp()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);">
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:1.5rem;">🎬</span>
         <div>
-          <div style="font-size:1.15rem;font-weight:700;color:#212121;">Videos Complementarios</div>
+          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);">Videos Complementarios</div>
           <div style="font-size:1.05rem;color:#757575;">Contenido adicional sobre Inteligencia Artificial</div>
         </div>
       </div>
-      <span id="comp-arrow" style="font-size:1.2rem;color:#6C3FC4;transition:transform .3s;">▼</span>
+      <span id="comp-arrow" style="font-size:1.2rem;color:var(--color-primario);transition:transform .3s;">▼</span>
     </div>
 
     <!-- Lista de videos (colapsable) -->
     <div id="comp-lista" style="display:none;padding:16px 24px;border-top:1px solid #E0E0E0;">
 
       <!-- ── VIDEO 1 ── -->
-      <div class="vid-card" style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #F5F5F5;">
+      <div class="vid-card" style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--color-neutro-claro);">
         <div style="flex-shrink:0;width:120px;height:68px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;" onclick="abrirVideo('9-W1VbQNt5Y')">
           <span style="font-size:1.8rem;">▶</span>
         </div>
         <div style="flex:1;">
-          <div style="font-size:1.15rem;font-weight:700;color:#212121;margin-bottom:4px;">El TeledIArio del Futuro — Desafío de la Inteligencia Artificial</div>
+          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:4px;">El TeledIArio del Futuro — Desafío de la Inteligencia Artificial</div>
           <div style="font-size:1.05rem;color:#757575;margin-bottom:8px;">📺 RTVE — Televisión Española · Especial informativo</div>
           <div style="font-size:1.05rem;color:#555;line-height:1.5;margin-bottom:10px;">Cómo se ha desarrollado la IA, sus características y los riesgos del futuro. Un especial producido por TVE bajo la dirección de Pepa Bueno.</div>
-          <button onclick="abrirVideo('9-W1VbQNt5Y')" style="background:#6C3FC4;color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:1.05rem;font-weight:700;cursor:pointer;">▶ Ver en YouTube</button>
+          <button onclick="abrirVideo('9-W1VbQNt5Y')" style="background:var(--color-primario);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:1.05rem;font-weight:700;cursor:pointer;">▶ Ver en YouTube</button>
         </div>
       </div>
       <!-- ── FIN VIDEO 1 ── -->
@@ -279,36 +287,36 @@ document.getElementById('nav-burger').addEventListener('click', function() {
     </div>
   </div>
 
-  <button class="bn" id="btn-eval" style="background:#00897B;">📝 Ir a la Evaluación → Desbloquea tu Certificado</button>
+  <button class="bn" id="btn-eval" style="background:var(--color-primario);">📝 Ir a la Evaluación → Desbloquea tu Certificado</button>
 
   <div id="ev" style="display:none;margin-top:8px;">
-    <div style="background:#4527A0;border-radius:14px;padding:20px 24px;margin-bottom:20px;color:#fff;">
+    <div style="background:var(--color-primario);border-radius:14px;padding:20px 24px;margin-bottom:20px;color:#fff;">
       <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:4px;">📝 Evaluación del Módulo 1</h2>
       <p style="font-size:1.05rem;opacity:.85;">7 preguntas — necesitas 5 o más para aprobar.</p>
     </div>
     <div class="qq" id="q1"><p class="qt">1. ¿Qué es la Inteligencia Artificial?</p><label class="op"><input type="radio" name="q1" value="A"> Un robot físico que camina y habla</label><label class="op"><input type="radio" name="q1" value="B"> Tecnología que permite a las computadoras aprender y realizar tareas inteligentes</label><label class="op"><input type="radio" name="q1" value="C"> Un videojuego muy avanzado</label><label class="op"><input type="radio" name="q1" value="D"> El internet mejorado</label></div><div class="qq" id="q2"><p class="qt">2. ¿Cuál NO es una aplicación de IA en la vida diaria?</p><label class="op"><input type="radio" name="q2" value="A"> Las recomendaciones de YouTube</label><label class="op"><input type="radio" name="q2" value="B"> Las rutas de Google Maps</label><label class="op"><input type="radio" name="q2" value="C"> Un libro de papel impreso</label><label class="op"><input type="radio" name="q2" value="D"> El autocompletado de WhatsApp</label></div><div class="qq" id="q3"><p class="qt">3. ¿Cómo aprende la Inteligencia Artificial?</p><label class="op"><input type="radio" name="q3" value="A"> Leyendo libros físicos</label><label class="op"><input type="radio" name="q3" value="B"> Con datos y ejemplos que le dan los programadores</label><label class="op"><input type="radio" name="q3" value="C"> Viendo televisión</label><label class="op"><input type="radio" name="q3" value="D"> Hablando con otros robots</label></div><div class="qq" id="q4"><p class="qt">4. ¿Cuál es una LIMITACIÓN de la IA?</p><label class="op"><input type="radio" name="q4" value="A"> Puede trabajar las 24 horas</label><label class="op"><input type="radio" name="q4" value="B"> Puede traducir idiomas</label><label class="op"><input type="radio" name="q4" value="C"> Puede cometer errores y dar información incorrecta</label><label class="op"><input type="radio" name="q4" value="D"> Puede crear música</label></div><div class="qq" id="q5"><p class="qt">5. ¿Qué es un "prompt"?</p><label class="op"><input type="radio" name="q5" value="A"> El nombre de un robot famoso</label><label class="op"><input type="radio" name="q5" value="B"> La instrucción o pregunta que le das a la IA</label><label class="op"><input type="radio" name="q5" value="C"> Un tipo de computadora especial</label><label class="op"><input type="radio" name="q5" value="D"> El cerebro de la IA</label></div><div class="qq" id="q6"><p class="qt">6. ¿Por qué es importante usar la IA con responsabilidad?</p><label class="op"><input type="radio" name="q6" value="A"> Para hacer trampa en los exámenes</label><label class="op"><input type="radio" name="q6" value="B"> Porque puede usarse para ayudar o para hacer daño</label><label class="op"><input type="radio" name="q6" value="C"> Para no necesitar estudiar más</label><label class="op"><input type="radio" name="q6" value="D"> Porque es obligatorio por ley</label></div><div class="qq" id="q7"><p class="qt">7. ¿Cuál de estas herramientas usa IA y es gratuita?</p><label class="op"><input type="radio" name="q7" value="A"> Solo herramientas de pago</label><label class="op"><input type="radio" name="q7" value="B"> ChatGPT, Gemini y Copilot (versiones gratuitas)</label><label class="op"><input type="radio" name="q7" value="C"> Solo apps de pago para empresas</label><label class="op"><input type="radio" name="q7" value="D"> Ninguna gratuita usa IA</label></div>
-    <div id="qerr" style="display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:12px;margin-top:12px;font-size:1.1rem;">⚠️ Responde todas las preguntas.</div>
-    <button class="bn" id="btn-env" style="background:#4527A0;margin-top:20px;">✅ Enviar evaluación</button>
+    <div id="qerr" style="display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:12px;margin-top:12px;font-size:1.1rem;">⚠️ Responde todas las preguntas.</div>
+    <button class="bn" id="btn-env" style="background:var(--color-primario);margin-top:20px;">✅ Enviar evaluación</button>
   </div>
 
   <div id="qres" style="display:none;text-align:center;padding:32px 16px;"></div>
 
   <div class="cert-box" id="certbox">
     <div style="font-size:3.5rem;margin-bottom:12px;">🏆</div>
-    <div style="font-size:1.1rem;font-weight:700;color:#00897B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Academia IA Generaciones</div>
+    <div style="font-size:1.1rem;font-weight:700;color:var(--color-primario);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Academia IA Generaciones</div>
     <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:8px;">Certificado de Participación</h2>
     <p style="color:#555;margin-bottom:12px;">Este certificado se otorga a</p>
-    <div id="cn" style="font-size:1.8rem;font-weight:800;color:#4527A0;margin-bottom:16px;"></div>
+    <div id="cn" style="font-size:1.8rem;font-weight:800;color:var(--color-primario);margin-bottom:16px;"></div>
     <p style="font-weight:700;margin-bottom:16px;">Módulo 1: Descubriendo la Inteligencia Artificial</p>
     <div id="cf" style="font-size:1.1rem;color:#757575;margin-bottom:28px;"></div>
     <div id="cert-qr" style="width:110px;height:110px;margin:0 auto 10px;"></div>
     <div id="cert-id-info" style="font-size:.95rem;color:#757575;margin-bottom:20px;word-break:break-all;"></div>
-    <button onclick="window.print()" style="background:#00897B;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
+    <button onclick="window.print()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
   </div>
 
   <div class="btn-row">
-    <button class="bn" id="btn-mod2" style="background:#6C3FC4;">🚀 Continuar al Módulo 2 — $7 USD</button>
-    <a href="dashboard.html" style="display:block;width:100%;padding:14px;background:#fff;color:#6C3FC4;border:2px solid #6C3FC4;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Volver a mi panel</a>
+    <button class="bn" id="btn-mod2" style="background:var(--color-primario);">🚀 Continuar al Módulo 2 — $7 USD</button>
+    <a href="dashboard.html" style="display:block;width:100%;padding:14px;background:#fff;color:var(--color-primario);border:2px solid var(--color-primario);border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Volver a mi panel</a>
     <a href="Academia_AI.html" style="display:block;width:100%;padding:14px;background:#fff;color:#757575;border:2px solid #E0E0E0;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
   </div>
   <div class="footer-social-bar">
@@ -494,18 +502,18 @@ document.getElementById('btn-env').addEventListener('click', function() {
   rs.style.display='block';
   document.getElementById('btn-env').style.display='none';
   if(ap){
-    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/7</h3><p style="color:#555;margin-bottom:16px;">Excelente trabajo.</p><button onclick="verCert()" style="background:#00897B;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
+    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/7</h3><p style="color:#555;margin-bottom:16px;">Excelente trabajo.</p><button onclick="verCert()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
     document.getElementById('pf').style.width='100%';
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo completado! 🎉';
     certOK=true;
     localStorage.setItem('modulo1_completado','1');
     document.getElementById('btn-cert').textContent='🏆 Ver';
     document.getElementById('btn-cert').style.background='#EDE7F6';
-    document.getElementById('btn-cert').style.color='#6C3FC4';
+    document.getElementById('btn-cert').style.color='var(--color-primario)';
     document.getElementById('btn-cert').onclick=verCert;
     document.getElementById('cert-note').textContent='¡Desbloqueado!';
   }else{
-    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><p style="color:#555;margin-bottom:16px;">Revisa el video e intenta de nuevo.</p><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
+    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:var(--color-error);margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><p style="color:#555;margin-bottom:16px;">Revisa el video e intenta de nuevo.</p><button onclick="reiniciar()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
   }
   rs.scrollIntoView({behavior:'smooth',block:'center'});
 });

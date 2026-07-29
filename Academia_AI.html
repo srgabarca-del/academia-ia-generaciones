@@ -9,17 +9,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-.footer-social-bar{background:#083042;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-radius:12px;margin-top:20px}
+:root{
+  --color-primario:#4527A0;      /* Púrpura — botones y elementos de acción principales */
+  --color-secundario:#083042;    /* Azul marino — nav y fondos estructurales oscuros */
+  --color-acento:#FFD740;        /* Amarillo — resaltados sobre fondo oscuro y detalles de prestigio */
+  --color-neutro-oscuro:#212121; /* Texto principal y fondos oscuros secundarios */
+  --color-neutro-claro:#F5F5F5;  /* Fondos claros de sección y tarjeta */
+  --color-error:#C62828;         /* Validación de errores y alertas */
+}
+.footer-social-bar{background:var(--color-secundario);display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-radius:12px;margin-top:20px}
 @media(max-width:600px){
   .footer-social-bar{max-width:480px;margin-left:auto;margin-right:auto}
 }
 .skip-link{position:absolute;left:-9999px;top:0;background:#0D47A1;color:#fff;padding:14px 22px;font-size:1.1rem;font-weight:700;z-index:99999;border-radius:0 0 10px 0;text-decoration:none}
 .skip-link:focus{left:0}
 a:focus-visible,button:focus-visible{outline:3px solid #0D47A1;outline-offset:3px}
-body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;color:#212121;background:#fff;line-height:1.6}
-nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;color:var(--color-neutro-oscuro);background:#fff;line-height:1.6}
+nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .logo{color:#fff;font-size:1.25rem;font-weight:700}
-.cta-nav{background:#F57C00;color:#fff;padding:8px 20px;border-radius:24px;font-weight:700;font-size:1.15rem;text-decoration:none}
+.cta-nav{background:var(--color-primario);color:#fff;padding:8px 20px;border-radius:24px;font-weight:700;font-size:1.15rem;text-decoration:none}
 .nav-burger{display:none;background:none;border:none;color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;padding:6px 8px}
 .nav-links{display:flex;align-items:center;gap:12px}
 @media(max-width:600px){
@@ -27,17 +35,17 @@ nav{background:#083042;padding:0 24px;display:flex;align-items:center;justify-co
   .cta-full{display:none}
   .nav-burger{display:block}
   nav{position:relative}
-  .nav-links{display:none;position:absolute;top:100%;right:24px;background:#083042;flex-direction:column;align-items:flex-start;gap:10px;padding:14px 20px;border-radius:0 0 12px 12px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .nav-links{display:none;position:absolute;top:100%;right:24px;background:var(--color-secundario);flex-direction:column;align-items:flex-start;gap:10px;padding:14px 20px;border-radius:0 0 12px 12px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
   .nav-links.open{display:flex}
 }
-.hero{background:#323F45;padding:80px 24px 90px;text-align:center}
+.hero{background:var(--color-secundario);padding:80px 24px 90px;text-align:center}
 .hero h1{color:#fff;font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.2;margin-bottom:16px}
-.hero h1 span{color:#FFD740}
+.hero h1 span{color:var(--color-acento)}
 .hero p{color:rgba(255,255,255,.9);font-size:1.3rem;max-width:640px;margin:0 auto 32px;line-height:1.6}
 .personas{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:36px}
 .persona{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:12px;padding:14px 24px;color:#fff}
 .persona span{display:block;font-size:1.6rem;margin-bottom:4px}
-.btn-hero{display:inline-block;background:#FFD740;color:#4527A0;font-size:1.3rem;font-weight:800;padding:18px 42px;border-radius:40px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.btn-hero{display:inline-block;background:var(--color-acento);color:var(--color-primario);font-size:1.3rem;font-weight:800;padding:18px 42px;border-radius:40px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 section{padding:60px 24px}
 .container{max-width:960px;margin:0 auto}
 .title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;text-align:center;margin-bottom:10px}
@@ -45,27 +53,27 @@ section{padding:60px 24px}
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px}
 .step{text-align:center;padding:20px 12px}
 .circle{width:60px;height:60px;border-radius:50%;background:#EDE7F6;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 12px}
-.free-box{background:#fff;border:3px solid #00897B;border-radius:20px;padding:40px;max-width:700px;margin:0 auto}
-.free-badge{display:inline-block;background:#00897B;color:#fff;padding:6px 18px;border-radius:20px;font-size:1.15rem;font-weight:700;margin-bottom:20px}
+.free-box{background:#fff;border:3px solid var(--color-primario);border-radius:20px;padding:40px;max-width:700px;margin:0 auto}
+.free-badge{display:inline-block;background:var(--color-primario);color:#fff;padding:6px 18px;border-radius:20px;font-size:1.15rem;font-weight:700;margin-bottom:20px}
 .free-inc{list-style:none;margin:20px 0}
 .free-inc li{padding:10px 0;border-bottom:1px solid #E0F2F1;display:flex;align-items:center;gap:12px}
 .free-inc li:last-child{border:none}
-.ico{width:32px;height:32px;background:#00897B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;font-size:1.1rem}
-.planes{background:#323F45;padding:60px 24px}
+.ico{width:32px;height:32px;background:var(--color-primario);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;font-size:1.1rem}
+.planes{background:var(--color-secundario);padding:60px 24px}
 .planes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:860px;margin:0 auto}
 .plan-card{background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);border-radius:24px;padding:36px 28px;text-align:center}
 .plan-btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;margin-top:16px}
 .moneda-selector{display:inline-flex;background:rgba(255,255,255,.12);border-radius:20px;padding:4px;gap:4px}
 .moneda-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:1.05rem;font-weight:700;padding:7px 18px;border-radius:16px;cursor:pointer;font-family:inherit}
-.moneda-btn.activo{background:#FFD740;color:#4527A0}
+.moneda-btn.activo{background:var(--color-acento);color:var(--color-primario)}
 .precio-conv{display:block;font-size:1.05rem;font-weight:600;color:rgba(255,255,255,.75);margin-top:4px;min-height:1.3em}
-.chip{display:flex;align-items:center;gap:8px;background:#F5F5F5;border:1px solid #E0E0E0;border-radius:24px;padding:10px 20px;font-weight:600}
-.dot{width:10px;height:10px;border-radius:50%;background:#00897B}
+.chip{display:flex;align-items:center;gap:8px;background:var(--color-neutro-claro);border:1px solid #E0E0E0;border-radius:24px;padding:10px 20px;font-weight:600}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--color-primario)}
 .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
-.test{background:#fff;border-radius:16px;padding:28px;border-left:4px solid #323F45;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.test{background:#fff;border-radius:16px;padding:28px;border-left:4px solid var(--color-primario);box-shadow:0 2px 12px rgba(0,0,0,.06)}
 .faq-list{max-width:700px;margin:0 auto}
 .faq-item{background:#fff;border-radius:12px;margin-bottom:12px;border:1px solid #E0E0E0;overflow:hidden}
-.faq-q{width:100%;padding:16px 20px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:none;border:none;text-align:left;font-family:inherit;font-size:1.2rem;color:#212121;transition:background .2s ease}
+.faq-q{width:100%;padding:16px 20px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:none;border:none;text-align:left;font-family:inherit;font-size:1.2rem;color:var(--color-neutro-oscuro);transition:background .2s ease}
 .faq-q:hover{background:#EDE7F6}
 /* offset negativo: .faq-item tiene overflow:hidden y recortaría un outline hacia afuera */
 .faq-q:focus-visible{outline:3px solid #0D47A1;outline-offset:-3px}
@@ -74,29 +82,29 @@ section{padding:60px 24px}
 .faq-item.open .faq-icon{transform:rotate(180deg)}
 .faq-a{padding:0 20px 16px;color:#555;font-size:1.2rem;line-height:1.7;display:none}
 .faq-item.open .faq-a{display:block}
-.reg-section{background:#323F45;padding:72px 24px}
+.reg-section{background:var(--color-secundario);padding:72px 24px}
 .reg-card{background:#fff;border-radius:24px;max-width:480px;margin:0 auto;padding:44px 40px;box-shadow:0 24px 64px rgba(0,0,0,.25)}
-label{display:block;font-size:1.1rem;font-weight:600;color:#212121;margin-bottom:6px}
-.inp{width:100%;padding:13px 16px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:1.15rem;font-family:inherit;outline:none;background:#FAFAFA;transition:border-color .2s}
-.inp:focus{border-color:#323F45;background:#fff;box-shadow:0 0 0 3px rgba(50,63,69,.12)}
+label{display:block;font-size:1.1rem;font-weight:600;color:var(--color-neutro-oscuro);margin-bottom:6px}
+.inp{width:100%;padding:13px 16px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:1.15rem;font-family:inherit;outline:none;background:var(--color-neutro-claro);transition:border-color .2s}
+.inp:focus{border-color:var(--color-primario);background:#fff;box-shadow:0 0 0 3px rgba(69,39,160,.12)}
 .inp.ok{border-color:#43A047}
-.inp.err{border-color:#E53935}
+.inp.err{border-color:var(--color-error)}
 .msg{font-size:1rem;margin-top:4px;min-height:16px}
-.msg.ok{color:#2E7D32}.msg.err{color:#E53935}
+.msg.ok{color:#2E7D32}.msg.err{color:var(--color-error)}
 .pw{position:relative}
 .pw .inp{padding-right:44px}
 .eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.15rem}
-.btn-google{width:100%;padding:13px;background:#fff;color:#212121;border:1.5px solid #E0E0E0;border-radius:12px;font-size:1.1rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;font-family:inherit}
-.btn-google:hover{background:#F5F5F5}
+.btn-google{width:100%;padding:13px;background:#fff;color:var(--color-neutro-oscuro);border:1.5px solid #E0E0E0;border-radius:12px;font-size:1.1rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;font-family:inherit}
+.btn-google:hover{background:var(--color-neutro-claro)}
 .btn-google:disabled{opacity:.6;cursor:not-allowed}
 .divider{display:flex;align-items:center;gap:12px;margin-bottom:18px;color:#9E9E9E;font-size:1rem}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:#E0E0E0}
 .sbar{height:4px;border-radius:2px;background:#E0E0E0;margin-top:6px;overflow:hidden}
 .sfill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
 .check-row{display:flex;gap:10px;align-items:flex-start;margin:18px 0 22px}
-.check-row input{margin-top:3px;accent-color:#323F45;width:16px;height:16px;flex-shrink:0;cursor:pointer}
-.btn-reg{width:100%;padding:16px;background:#323F45;color:#fff;border:none;border-radius:12px;font-size:1.2rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
-.btn-reg:hover{background:#4527A0}
+.check-row input{margin-top:3px;accent-color:var(--color-primario);width:16px;height:16px;flex-shrink:0;cursor:pointer}
+.btn-reg{width:100%;padding:16px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.2rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn-reg:hover{background:var(--color-primario)}
 .btn-reg:disabled{background:#BDBDBD;cursor:not-allowed}
 .success{display:none;text-align:center;padding:20px 0}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
@@ -104,13 +112,13 @@ label{display:block;font-size:1.1rem;font-weight:600;color:#212121;margin-bottom
 .modal-box{background:#fff;border-radius:20px;padding:36px 32px;max-width:460px;width:100%;position:relative;max-height:90vh;overflow-y:auto;margin:auto}
 .mclose{position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#666}
 .minp{width:100%;padding:12px 14px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:1.2rem;font-family:inherit;outline:none;margin-bottom:14px}
-.minp:focus{border-color:#323F45}
+.minp:focus{border-color:var(--color-primario)}
 .metodo-row{display:flex;gap:8px;margin-bottom:14px}
 .met{flex:1;border:1.5px solid #E0E0E0;border-radius:10px;padding:10px;cursor:pointer;text-align:center;font-size:1.15rem;font-weight:600;transition:all .15s}
-.met.sel{border-color:#323F45;background:#EDE7F6}
-.btn-pay{width:100%;padding:15px;background:#323F45;color:#fff;border:none;border-radius:12px;font-size:1.2rem;font-weight:700;cursor:pointer}
-.merr{display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:10px 14px;font-size:1.1rem;margin-bottom:12px}
-footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255,255,.85);font-size:1.1rem}
+.met.sel{border-color:var(--color-primario);background:#EDE7F6}
+.btn-pay{width:100%;padding:15px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.2rem;font-weight:700;cursor:pointer}
+.merr{display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:10px 14px;font-size:1.1rem;margin-bottom:12px}
+footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center;color:rgba(255,255,255,.85);font-size:1.1rem}
 @media(max-width:600px){.reg-card{padding:28px 20px}.free-box{padding:24px}}
 </style>
 
@@ -138,7 +146,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
-#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:#083042;--cc-btn-primary-border-color:#083042;--cc-btn-primary-hover-bg:#0a4058;--cc-btn-primary-hover-border-color:#0a4058;--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
+#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:var(--color-secundario);--cc-btn-primary-border-color:var(--color-secundario);--cc-btn-primary-hover-bg:color-mix(in srgb, var(--color-secundario) 85%, white);--cc-btn-primary-hover-border-color:color-mix(in srgb, var(--color-secundario) 85%, white);--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
 </style>
 </head>
 <body>
@@ -213,7 +221,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
     <p class="sub">Descubriendo la Inteligencia Artificial</p>
     <div class="free-box">
       <div class="free-badge">🆓 ACCESO GRATUITO</div>
-      <h3 style="font-size:1.5rem;color:#00897B;margin-bottom:10px;">Descubriendo la Inteligencia Artificial</h3>
+      <h3 style="font-size:1.5rem;color:var(--color-primario);margin-bottom:10px;">Descubriendo la Inteligencia Artificial</h3>
       <ul class="free-inc">
         <li><div class="ico">🎬</div><span><strong>Video en español</strong> pensado para adultos mayores</span></li>
         <li><div class="ico">📖</div><span><strong>Guía del Módulo 1</strong> — PDF ilustrado para leer primero</span></li>
@@ -222,7 +230,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
         <li><div class="ico">📝</div><span><strong>Evaluación en línea</strong> con calificación automática</span></li>
         <li><div class="ico">🏆</div><span><strong>Certificado de participación</strong> descargable</span></li>
       </ul>
-      <button onclick="window.location='#registro'" style="display:block;background:#00897B;color:#fff;padding:18px;border-radius:12px;font-size:1.25rem;font-weight:700;border:none;cursor:pointer;width:100%;margin-top:16px;">🎁 Acceder al Módulo Gratis</button>
+      <button onclick="window.location='#registro'" style="display:block;background:var(--color-primario);color:#fff;padding:18px;border-radius:12px;font-size:1.25rem;font-weight:700;border:none;cursor:pointer;width:100%;margin-top:16px;">🎁 Acceder al Módulo Gratis</button>
     </div>
   </div>
 </section>
@@ -250,10 +258,10 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Crear una historia con IA</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 2</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo2')" style="background:#00897B;color:#fff;">💳 Comprar Módulo 2 — $7 USD</button>
+        <button class="plan-btn" onclick="abrirPago('modulo2')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 2 — $7 USD</button>
       </div>
 
-      <div class="plan-card" style="border-color:#E91E63;">
+      <div class="plan-card">
         <div style="display:inline-block;background:#E91E63;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">🎨 MÓDULO 3</div>
         <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Creando Imágenes con IA</p>
@@ -263,10 +271,10 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Héroe fantástico / recuerdo familiar</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 3</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo3')" style="background:#E91E63;color:#fff;">💳 Comprar Módulo 3 — $9 USD</button>
+        <button class="plan-btn" onclick="abrirPago('modulo3')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 3 — $9 USD</button>
       </div>
 
-      <div class="plan-card" style="border-color:#1976D2;">
+      <div class="plan-card">
         <div style="display:inline-block;background:#1976D2;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">📅 MÓDULO 4</div>
         <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">IA para la Vida Diaria</p>
@@ -276,10 +284,10 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Práctica con casos reales</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 4</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo4')" style="background:#1976D2;color:#fff;">💳 Comprar Módulo 4 — $9 USD</button>
+        <button class="plan-btn" onclick="abrirPago('modulo4')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 4 — $9 USD</button>
       </div>
 
-      <div class="plan-card" style="border-color:#7B1FA2;">
+      <div class="plan-card">
         <div style="display:inline-block;background:#7B1FA2;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">✨ MÓDULO 5</div>
         <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">IA para la Creatividad</p>
@@ -289,10 +297,10 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Proyecto familiar creativo</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 5</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo5')" style="background:#7B1FA2;color:#fff;">💳 Comprar Módulo 5 — $9 USD</button>
+        <button class="plan-btn" onclick="abrirPago('modulo5')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 5 — $9 USD</button>
       </div>
 
-      <div class="plan-card" style="border-color:#2E7D32;">
+      <div class="plan-card">
         <div style="display:inline-block;background:#2E7D32;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;">🔒 MÓDULO 6</div>
         <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Seguridad y Uso Responsable</p>
@@ -302,13 +310,13 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Buenas prácticas digitales</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado final de Graduación (de participación) 🎓</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo6')" style="background:#2E7D32;color:#fff;">💳 Comprar Módulo 6 — $9 USD</button>
+        <button class="plan-btn" onclick="abrirPago('modulo6')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 6 — $9 USD</button>
       </div>
 
-      <div class="plan-card" style="border-color:#FFD740;position:relative;">
-        <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#FFD740;color:#4527A0;font-size:1.05rem;font-weight:800;padding:4px 16px;border-radius:20px;white-space:nowrap;">⭐ MEJOR VALOR</div>
-        <div style="display:inline-block;background:#323F45;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;margin-top:6px;">PLAN COMPLETO</div>
-        <div class="precio-usd" data-usd="29.99" style="font-size:2.8rem;font-weight:900;color:#FFD740;line-height:1;">$29.99 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
+      <div class="plan-card" style="border-color:var(--color-acento);position:relative;">
+        <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--color-acento);color:var(--color-primario);font-size:1.05rem;font-weight:800;padding:4px 16px;border-radius:20px;white-space:nowrap;">⭐ MEJOR VALOR</div>
+        <div style="display:inline-block;background:var(--color-primario);color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;margin-top:6px;">PLAN COMPLETO</div>
+        <div class="precio-usd" data-usd="29.99" style="font-size:2.8rem;font-weight:900;color:var(--color-acento);line-height:1;">$29.99 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Pago único — Todos los módulos incluidos</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Los 6 módulos completos</li>
@@ -316,7 +324,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Todos los certificados incluidos</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Un solo pago, sin mensualidades</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('plan')" style="background:#FFD740;color:#4527A0;">⭐ Obtener Plan Completo — $29.99 USD</button>
+        <button class="plan-btn" onclick="abrirPago('plan')" style="background:var(--color-acento);color:var(--color-primario);">⭐ Obtener Plan Completo — $29.99 USD</button>
       </div>
     </div>
   </div>
@@ -338,7 +346,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 </section>
 
 
-<section style="background:#F8F9FA;">
+<section style="background:var(--color-neutro-claro);">
   <div class="container">
     <h2 class="title">Preguntas frecuentes</h2>
     <div class="faq-list" style="margin-top:32px;">
@@ -371,31 +379,31 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       <h2 style="text-align:center;font-size:1.5rem;font-weight:800;margin-bottom:6px;">Crear cuenta gratis</h2>
       <p style="text-align:center;color:#555;font-size:1.15rem;margin-bottom:24px;">Sin tarjeta de crédito.</p>
       <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;">
-        <span style="background:#EDE7F6;color:#323F45;font-size:1rem;font-weight:600;padding:4px 12px;border-radius:20px;">🎬 Video</span>
-        <span style="background:#EDE7F6;color:#323F45;font-size:1rem;font-weight:600;padding:4px 12px;border-radius:20px;">📄 PDF</span>
-        <span style="background:#EDE7F6;color:#323F45;font-size:1rem;font-weight:600;padding:4px 12px;border-radius:20px;">🏆 Certificado</span>
+        <span style="background:#EDE7F6;color:var(--color-primario);font-size:1rem;font-weight:600;padding:4px 12px;border-radius:20px;">🎬 Video</span>
+        <span style="background:#EDE7F6;color:var(--color-primario);font-size:1rem;font-weight:600;padding:4px 12px;border-radius:20px;">📄 PDF</span>
+        <span style="background:#EDE7F6;color:var(--color-primario);font-size:1rem;font-weight:600;padding:4px 12px;border-radius:20px;">🏆 Certificado</span>
       </div>
-      <div style="background:#E8F5E9;color:#2E7D32;font-size:1.05rem;font-weight:700;padding:6px;border-radius:20px;text-align:center;margin-bottom:24px;">✅ Módulo 1 — 100% GRATIS</div>
+      <div style="background:var(--color-acento);color:var(--color-neutro-oscuro);font-size:1.05rem;font-weight:700;padding:6px;border-radius:20px;text-align:center;margin-bottom:24px;">✅ Módulo 1 — 100% GRATIS</div>
 
       <button class="btn-google" id="btn-google" type="button">
         <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.5 5.1 29.5 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 15.1 18.9 12 24 12c3.1 0 5.8 1.1 8 3l6-6C34.5 5.1 29.5 3 24 3 16.3 3 9.7 7.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 45c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 36.5 26.7 37 24 37c-5.2 0-9.6-3.1-11.3-7.6l-6.5 5C9.6 40.6 16.3 45 24 45z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.1 5.6l6.2 5.2C36.9 39.6 44 34 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
         Continuar con Google
       </button>
-      <div class="err" id="err-google" style="display:none;background:#FFEBEE;color:#C62828;border-radius:8px;padding:10px 14px;font-size:1.1rem;margin-bottom:14px;"></div>
+      <div class="err" id="err-google" style="display:none;background:#FFEBEE;color:var(--color-error);border-radius:8px;padding:10px 14px;font-size:1.1rem;margin-bottom:14px;"></div>
       <div class="divider"><span>o regístrate con tu correo</span></div>
 
       <div style="margin-bottom:16px;">
-        <label for="f-nombre">Nombre completo <span style="color:#E53935;">*</span></label>
+        <label for="f-nombre">Nombre completo <span style="color:var(--color-error);">*</span></label>
         <input class="inp" type="text" id="f-nombre" placeholder="Ej. María González" autocomplete="name">
         <div class="msg" id="m-nombre"></div>
       </div>
       <div style="margin-bottom:16px;">
-        <label for="f-email">Correo electrónico <span style="color:#E53935;">*</span></label>
+        <label for="f-email">Correo electrónico <span style="color:var(--color-error);">*</span></label>
         <input class="inp" type="email" id="f-email" placeholder="tucorreo@ejemplo.com" autocomplete="email" inputmode="email" spellcheck="false">
         <div class="msg" id="m-email"></div>
       </div>
       <div style="margin-bottom:16px;">
-        <label for="f-pass">Contraseña <span style="color:#E53935;">*</span> <span style="font-weight:400;color:#555;">(mín. 10 caracteres)</span></label>
+        <label for="f-pass">Contraseña <span style="color:var(--color-error);">*</span> <span style="font-weight:400;color:#555;">(mín. 10 caracteres)</span></label>
         <p style="font-size:1.05rem;color:#757575;margin:2px 0 10px;line-height:1.5;">Mientras más larga sea tu contraseña, más difícil es que alguien más la adivine y entre a tu cuenta — por eso te pedimos al menos 10 caracteres, con una letra mayúscula y un número.</p>
         <div class="pw">
           <input class="inp" type="password" id="f-pass" placeholder="Mínimo 10 caracteres" maxlength="64" autocomplete="new-password" spellcheck="false">
@@ -404,10 +412,10 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
         <div class="sbar"><div class="sfill" id="sfill"></div></div>
         <div style="font-size:1.2rem;color:#555;margin-top:4px;" id="slbl"></div>
         <div class="msg" id="m-pass"></div>
-        <div style="background:#F5F3FF;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:1.05rem;color:#323F45;line-height:1.5;">💡 <strong>Truco:</strong> no hace falta que sea complicada de recordar. Una frase con puntos es más fácil y más segura que una mezcla rara de letras — por ejemplo: <code style="background:#fff;padding:2px 6px;border-radius:4px;">Cafe.con.leche.9</code> (con la primera letra en mayúscula)</div>
+        <div style="background:var(--color-neutro-claro);border-radius:10px;padding:10px 14px;margin-top:8px;font-size:1.05rem;color:var(--color-primario);line-height:1.5;">💡 <strong>Truco:</strong> no hace falta que sea complicada de recordar. Una frase con puntos es más fácil y más segura que una mezcla rara de letras — por ejemplo: <code style="background:#fff;padding:2px 6px;border-radius:4px;">Cafe.con.leche.9</code> (con la primera letra en mayúscula)</div>
       </div>
       <div style="margin-bottom:16px;">
-        <label for="f-pass2">Confirmar contraseña <span style="color:#E53935;">*</span></label>
+        <label for="f-pass2">Confirmar contraseña <span style="color:var(--color-error);">*</span></label>
         <div class="pw">
           <input class="inp" type="password" id="f-pass2" placeholder="Repite tu contraseña" maxlength="64" autocomplete="new-password" spellcheck="false">
           <button class="eye" type="button" id="eye2" aria-label="Mostrar contraseña">👁</button>
@@ -416,10 +424,10 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
       </div>
       <div class="check-row">
         <input type="checkbox" id="f-terms">
-        <label for="f-terms" style="font-size:1.1rem;color:#555;line-height:1.5;font-weight:400;">Acepto los <a href="legal.html#terminos" target="_blank" style="color:#323F45;">Términos</a> y la <a href="legal.html#privacidad" target="_blank" style="color:#323F45;">Aviso de Privacidad</a>.</label>
+        <label for="f-terms" style="font-size:1.1rem;color:#555;line-height:1.5;font-weight:400;">Acepto los <a href="legal.html#terminos" target="_blank" style="color:var(--color-primario);">Términos</a> y la <a href="legal.html#privacidad" target="_blank" style="color:var(--color-primario);">Aviso de Privacidad</a>.</label>
       </div>
       <button class="btn-reg" id="btn-reg" type="button">🎁 Crear cuenta y acceder gratis</button>
-      <p style="text-align:center;margin-top:14px;font-size:1.15rem;color:#555;">¿Ya tienes cuenta? <a href="login.html" style="color:#323F45;">Inicia sesión</a></p>
+      <p style="text-align:center;margin-top:14px;font-size:1.15rem;color:#555;">¿Ya tienes cuenta? <a href="login.html" style="color:var(--color-primario);">Inicia sesión</a></p>
     </div>
     <!-- ÉXITO -->
     <div class="success" id="exito">
@@ -468,11 +476,11 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
     <div id="det-t" style="display:none;margin-bottom:14px;">
       <input type="text" class="minp" id="num-t" placeholder="1234 5678 9012 3456" maxlength="19" style="margin-bottom:8px;" autocomplete="cc-number" inputmode="numeric">
       <div style="display:flex;gap:8px;">
-        <input type="text" class="minp" placeholder="MM/AA" maxlength="5" style="flex:1;margin-bottom:0;">
-        <input type="text" class="minp" placeholder="CVV" maxlength="4" style="flex:1;margin-bottom:0;">
+        <input type="text" class="minp" id="venc-t" placeholder="MM/AA" maxlength="5" inputmode="numeric" style="flex:1;margin-bottom:0;">
+        <input type="text" class="minp" placeholder="CVV" maxlength="4" inputmode="numeric" style="flex:1;margin-bottom:0;">
       </div>
     </div>
-    <div id="det-p" style="display:none;background:#EDF5FF;border-radius:10px;padding:14px;font-size:1.15rem;color:#1565C0;margin-bottom:14px;">
+    <div id="det-p" style="display:none;background:var(--color-neutro-claro);border-radius:10px;padding:14px;font-size:1.15rem;color:var(--color-primario);margin-bottom:14px;">
       📧 Serás redirigido a PayPal para completar el pago.
     </div>
     <div class="merr" id="perr">⚠️ Completa todos los campos requeridos.</div>
@@ -487,12 +495,12 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
     <div style="font-size:3rem;margin-bottom:12px;" aria-hidden="true">✅</div>
     <h3 id="conf-titulo" style="font-size:1.5rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Pago recibido!</h3>
     <p id="cmsg" style="color:#555;font-size:1.15rem;line-height:1.6;margin-bottom:20px;"></p>
-    <div style="background:#F5F3FF;border:2px solid #323F45;border-radius:14px;padding:20px;margin-bottom:20px;text-align:left;">
-      <p style="font-size:1.05rem;font-weight:700;color:#323F45;text-transform:uppercase;margin-bottom:12px;">✅ Resumen de tu acceso</p>
+    <div style="background:var(--color-neutro-claro);border:2px solid var(--color-primario);border-radius:14px;padding:20px;margin-bottom:20px;text-align:left;">
+      <p style="font-size:1.05rem;font-weight:700;color:var(--color-primario);text-transform:uppercase;margin-bottom:12px;">✅ Resumen de tu acceso</p>
       <div style="margin-bottom:8px;"><span style="font-size:1.05rem;color:#757575;display:block;">Correo</span><span id="c-email" style="font-size:1.2rem;font-weight:700;"></span></div>
-      <div><span style="font-size:1.05rem;color:#757575;display:block;">Módulo desbloqueado</span><span id="c-mod" style="font-size:1.2rem;font-weight:700;color:#00897B;"></span></div>
+      <div><span style="font-size:1.05rem;color:#757575;display:block;">Módulo desbloqueado</span><span id="c-mod" style="font-size:1.2rem;font-weight:700;color:var(--color-primario);"</span></div>
     </div>
-    <a id="btn-login-conf" href="#" style="display:block;background:#323F45;color:#fff;padding:14px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Entrar al módulo</a>
+    <a id="btn-login-conf" href="#" style="display:block;background:var(--color-primario);color:#fff;padding:14px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Entrar al módulo</a>
     <button onclick="AccesibilidadModal.cerrar(document.getElementById('mconf'))" style="width:100%;padding:12px;background:#E0E0E0;color:#555;border:none;border-radius:12px;cursor:pointer;font-size:1.15rem;font-weight:600;">📋 Guardar y cerrar</button>
   </div>
 </div>
@@ -529,7 +537,7 @@ function actualizar() {
   var passOk = p.length>=10 && tieneMayus && tieneNumero;
   if (p.length > 0) {
     var s=0; if(p.length>=8)s++; if(tieneMayus)s++; if(tieneNumero)s++; if(/[^A-Za-z0-9]/.test(p))s++;
-    var lvls=[{w:'25%',bg:'#E53935',t:'Muy corta'},{w:'40%',bg:'#FF7043',t:'Débil'},{w:'65%',bg:'#FFA726',t:'Regular'},{w:'85%',bg:'#66BB6A',t:'Buena'},{w:'100%',bg:'#2E7D32',t:'¡Excelente!'}];
+    var lvls=[{w:'25%',bg:'var(--color-error)',t:'Muy corta'},{w:'40%',bg:'#FF7043',t:'Débil'},{w:'65%',bg:'#FFA726',t:'Regular'},{w:'85%',bg:'#66BB6A',t:'Buena'},{w:'100%',bg:'#2E7D32',t:'¡Excelente!'}];
     var idx = p.length<10 ? 0 : Math.min(s+1,4);
     var l=lvls[idx];
     document.getElementById('sfill').style.width=l.w;
@@ -556,7 +564,7 @@ function actualizar() {
   var ok = n.length>=2 && eok && passOk && p2===p && ck;
   var btn = document.getElementById('btn-reg');
   btn.disabled = !ok;
-  btn.style.background = ok ? '#323F45' : '#BDBDBD';
+  btn.style.background = ok ? 'var(--color-primario)' : '#BDBDBD';
   btn.style.cursor = ok ? 'pointer' : 'not-allowed';
 }
 
@@ -700,7 +708,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
     document.getElementById('exito-msg').innerHTML = '✅ ¡Todo listo! Ya puedes entrar al Módulo 1.';
     var a1=document.createElement('a');
     a1.href='modulo1.html'; a1.textContent='🎬 Ir al Módulo 1 ahora';
-    a1.style.cssText='display:block;text-align:center;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
+    a1.style.cssText='display:block;text-align:center;background:var(--color-primario);color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
     document.getElementById('exito-msg').after(a1);
     return;
   }
@@ -726,7 +734,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
               document.getElementById('exito-msg').innerHTML = '👑 ¡Cuenta VIP reconocida! Ya tienes acceso completo a todos los módulos.';
               var aVip=document.createElement('a');
               aVip.href='modulo1.html'; aVip.textContent='🚀 Ir al Módulo 1 ahora';
-              aVip.style.cssText='display:block;text-align:center;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
+              aVip.style.cssText='display:block;text-align:center;background:var(--color-primario);color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
               document.getElementById('exito-msg').after(aVip);
               return;
             }
@@ -740,7 +748,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
             document.getElementById('exito-msg').innerHTML = '✅ ¡Todo listo! Ya puedes entrar al Módulo 1.';
             var a1=document.createElement('a');
             a1.href='modulo1.html'; a1.textContent='🎬 Ir al Módulo 1 ahora';
-            a1.style.cssText='display:block;text-align:center;background:#00897B;color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
+            a1.style.cssText='display:block;text-align:center;background:var(--color-primario);color:#fff;padding:15px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;';
             document.getElementById('exito-msg').after(a1);
           });
         });
@@ -751,7 +759,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
       if (err.code === 'auth/email-already-in-use') msg = '⚠️ Este correo ya tiene una cuenta. <a href="login.html">Inicia sesión aquí</a>.';
       if (err.code === 'auth/weak-password') msg = '⚠️ La contraseña debe tener al menos 6 caracteres.';
       var errDiv = document.getElementById('f-err');
-      if (!errDiv) { errDiv=document.createElement('div'); errDiv.id='f-err'; errDiv.style.cssText='color:#C62828;font-size:1.1rem;margin-top:8px;'; document.getElementById('btn-reg').before(errDiv); }
+      if (!errDiv) { errDiv=document.createElement('div'); errDiv.id='f-err'; errDiv.style.cssText='color:var(--color-error);font-size:1.1rem;margin-top:8px;'; document.getElementById('btn-reg').before(errDiv); }
       errDiv.innerHTML = msg;
     });
 });
@@ -872,7 +880,7 @@ var INFO={
   modulo4:    {titulo:'📅 Módulo 4',    precio:'$9 USD',      color:'#1976D2', mod:'Módulo 4: IA para la Vida Diaria',   archivo:'modulo4.html'},
   modulo5:    {titulo:'✨ Módulo 5',    precio:'$9 USD',      color:'#7B1FA2', mod:'Módulo 5: IA para la Creatividad',   archivo:'modulo5.html'},
   modulo6:    {titulo:'🔒 Módulo 6',    precio:'$9 USD',      color:'#2E7D32', mod:'Módulo 6: Seguridad y Uso Responsable', archivo:'modulo6.html'},
-  plan:       {titulo:'⭐ Plan Completo',precio:'$29.99 USD',  color:'#323F45', mod:'Plan Completo — Todos los módulos',  archivo:'modulo2.html'}
+  plan:       {titulo:'⭐ Plan Completo',precio:'$29.99 USD',  color:'var(--color-primario)', mod:'Plan Completo — Todos los módulos',  archivo:'modulo2.html'}
 };
 function abrirPago(tipo) {
   pagoActual=tipo; metSel='';
@@ -909,6 +917,11 @@ function selMet(m) {
 document.getElementById('num-t').addEventListener('input', function() {
   var v=this.value.replace(/\D/g,'').substring(0,16);
   this.value=v.replace(/(.{4})/g,'$1 ').trim();
+});
+document.getElementById('venc-t').addEventListener('input', function() {
+  var v=this.value.replace(/\D/g,'').substring(0,4);
+  if (v.length>2) v=v.substring(0,2)+'/'+v.substring(2);
+  this.value=v;
 });
 document.getElementById('btn-pay').addEventListener('click', function() {
   var nom=document.getElementById('p-nombre').value.trim();

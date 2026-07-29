@@ -9,21 +9,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:linear-gradient(135deg,#4527A0,#6C3FC4,#00897B);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;line-height:1.6}
+:root{
+  --color-primario:#4527A0;      /* Púrpura — botones y elementos de acción principales */
+  --color-secundario:#083042;    /* Azul marino — nav y fondos estructurales oscuros */
+  --color-acento:#FFD740;        /* Amarillo — resaltados sobre fondo oscuro y detalles de prestigio */
+  --color-neutro-oscuro:#212121; /* Texto principal y fondos oscuros secundarios */
+  --color-neutro-claro:#F5F5F5;  /* Fondos claros de sección y tarjeta */
+  --color-error:#C62828;         /* Validación de errores y alertas */
+}
+body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;background:linear-gradient(135deg,var(--color-primario),var(--color-secundario));min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;line-height:1.6}
 .card{background:#fff;border-radius:20px;padding:40px 36px;max-width:420px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.3)}
-h1{text-align:center;font-size:1.5rem;font-weight:800;color:#212121;margin-bottom:4px}
-label{display:block;font-size:1.1rem;font-weight:600;color:#212121;margin-bottom:5px}
+h1{text-align:center;font-size:1.5rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:4px}
+label{display:block;font-size:1.1rem;font-weight:600;color:var(--color-neutro-oscuro);margin-bottom:5px}
 .inp{width:100%;padding:13px 14px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:1.2rem;font-family:inherit;outline:none;margin-bottom:14px}
-.inp:focus{border-color:#6C3FC4}
-.btn{width:100%;padding:15px;background:#6C3FC4;color:#fff;border:none;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer}
-.btn:hover{background:#4527A0}
+.inp:focus{border-color:var(--color-primario)}
+.btn{width:100%;padding:15px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer}
+.btn:hover{background:var(--color-secundario)}
 .btn:disabled{background:#BDBDBD;cursor:not-allowed}
-.err{background:#FFEBEE;color:#C62828;border-radius:8px;padding:10px 14px;font-size:1.1rem;margin-bottom:14px;display:none}
-.hint{background:#F5F3FF;border-radius:10px;padding:12px 14px;font-size:1.05rem;color:#6C3FC4;margin-bottom:20px;line-height:1.5}
-.forgot{text-align:center;font-size:1.05rem;color:#6C3FC4;cursor:pointer;margin-top:12px;text-decoration:underline}
+.err{background:#FFEBEE;color:var(--color-error);border-radius:8px;padding:10px 14px;font-size:1.1rem;margin-bottom:14px;display:none}
+.hint{background:var(--color-neutro-claro);border-radius:10px;padding:12px 14px;font-size:1.05rem;color:var(--color-primario);margin-bottom:20px;line-height:1.5}
+.forgot{text-align:center;font-size:1.05rem;color:var(--color-primario);cursor:pointer;margin-top:12px;text-decoration:underline}
 .ok-msg{background:#E8F5E9;color:#2E7D32;border-radius:8px;padding:10px 14px;font-size:1.1rem;margin-bottom:14px;display:none}
-.btn-google{width:100%;padding:13px;background:#fff;color:#212121;border:1.5px solid #E0E0E0;border-radius:12px;font-size:1.1rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;font-family:inherit}
-.btn-google:hover{background:#F5F5F5}
+.btn-google{width:100%;padding:13px;background:#fff;color:var(--color-neutro-oscuro);border:1.5px solid #E0E0E0;border-radius:12px;font-size:1.1rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;font-family:inherit}
+.btn-google:hover{background:var(--color-neutro-claro)}
 .btn-google:disabled{opacity:.6;cursor:not-allowed}
 .divider{display:flex;align-items:center;gap:12px;margin-bottom:18px;color:#9E9E9E;font-size:1rem}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:#E0E0E0}
@@ -50,7 +58,7 @@ label{display:block;font-size:1.1rem;font-weight:600;color:#212121;margin-bottom
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
-#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:#083042;--cc-btn-primary-border-color:#083042;--cc-btn-primary-hover-bg:#0a4058;--cc-btn-primary-hover-border-color:#0a4058;--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
+#cc-main{--cc-font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:22px;--cc-btn-primary-bg:var(--color-secundario);--cc-btn-primary-border-color:var(--color-secundario);--cc-btn-primary-hover-bg:color-mix(in srgb, var(--color-secundario) 85%, white);--cc-btn-primary-hover-border-color:color-mix(in srgb, var(--color-secundario) 85%, white);--cc-modal-border-radius:16px;--cc-btn-border-radius:10px}
 </style>
 </head>
 <body>
@@ -74,7 +82,7 @@ label{display:block;font-size:1.1rem;font-weight:600;color:#212121;margin-bottom
   <input class="inp" type="password" id="lp" placeholder="Tu contraseña" autocomplete="current-password" spellcheck="false">
   <button class="btn" id="btn-login">🔓 Entrar a mi curso</button>
   <p class="forgot" id="forgot">¿Olvidaste tu contraseña? Recupérala aquí</p>
-  <p style="text-align:center;font-size:1.05rem;color:#757575;margin-top:16px;">¿No tienes cuenta? <a href="Academia_AI.html#registro" style="color:#6C3FC4;">Regístrate gratis</a></p>
+  <p style="text-align:center;font-size:1.05rem;color:#757575;margin-top:16px;">¿No tienes cuenta? <a href="Academia_AI.html#registro" style="color:var(--color-primario);">Regístrate gratis</a></p>
 </div>
 <script>
 // Pre-fill email if coming from payment
@@ -311,6 +319,6 @@ CookieConsent.run({
   }
 });
 </script>
-<button type="button" onclick="CookieConsent.showPreferences()" aria-label="Cambiar mis preferencias de cookies" style="position:fixed;bottom:20px;left:20px;background:#fff;color:#083042;border:2px solid #083042;padding:9px 16px;border-radius:20px;font-size:1rem;font-weight:700;cursor:pointer;z-index:9998;box-shadow:0 2px 8px rgba(0,0,0,.2);">🍪 Cookies</button>
+<button type="button" onclick="CookieConsent.showPreferences()" aria-label="Cambiar mis preferencias de cookies" style="position:fixed;bottom:20px;left:20px;background:#fff;color:var(--color-secundario);border:2px solid var(--color-secundario);padding:9px 16px;border-radius:20px;font-size:1rem;font-weight:700;cursor:pointer;z-index:9998;box-shadow:0 2px 8px rgba(0,0,0,.2);">🍪 Cookies</button>
 </body>
 </html>
