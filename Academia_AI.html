@@ -118,6 +118,7 @@ footer{background:#212121;padding:32px 24px;text-align:center;color:rgba(255,255
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 <script>
   var firebaseConfig = {
@@ -914,35 +915,57 @@ document.getElementById('btn-pay').addEventListener('click', function() {
   var eml=document.getElementById('p-email').value.trim();
   var eok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(eml);
   if(!nom||!eml||!eok||!metSel) { document.getElementById('perr').style.display='block'; return; }
+  // PUENTE TEMPORAL: el pago sigue simulado (sin Stripe real), pero ahora
+  // otorga acceso de verdad en Firestore vía una Cloud Function que exige
+  // sesión de Firebase Auth — así que, por ahora, hay que haber iniciado
+  // sesión antes de poder "comprar". Cuando se conecte Stripe de verdad
+  // esto se reemplaza por un checkout que no depende de tener cuenta antes.
+  if (!window.fbAuth || !window.fbAuth.currentUser) {
+    document.getElementById('perr').innerHTML = '⚠️ Necesitas iniciar sesión antes de comprar. <a href="login.html" target="_blank">Inicia sesión aquí</a> y vuelve a intentarlo.';
+    document.getElementById('perr').style.display='block';
+    return;
+  }
   document.getElementById('perr').style.display='none';
   this.textContent='⏳ Procesando...'; this.disabled=true;
   var info=INFO[pagoActual];
+  var btnPay=this;
   setTimeout(function() {
-    var nombre_al = nom.split(' ')[0];
-    sessionStorage.setItem('pago_email',  eml);
-    sessionStorage.setItem('pago_archivo', info.archivo);
-    sincronizarCuentaAcceso(eml);
-    if (pagoActual === 'plan') {
-      localStorage.setItem('acceso_plan', '1');
-    } else {
-      localStorage.setItem('acceso_' + pagoActual, '1');
-    }
-    sessionStorage.setItem('alumno_nombre', nombre_al);
-    firebase.analytics().logEvent('purchase', {
-      currency: 'USD',
-      value: parseFloat(info.precio.replace(/[^0-9.]/g,'')),
-      transaction_id: pagoActual + '_' + Date.now(),
-      items: [{item_id: pagoActual, item_name: info.mod}]
-    });
-    document.getElementById('c-email').textContent=eml;
-    document.getElementById('c-mod').textContent=info.mod;
-    document.getElementById('btn-login-conf').href=info.archivo;
-    document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
-    var origenPago = AccesibilidadModal.obtenerOrigen();
-    document.getElementById('mpago').classList.remove('open');
-    AccesibilidadModal.abrir(document.getElementById('mconf'), origenPago);
-    document.getElementById('btn-pay').textContent='🔒 Confirmar pago';
-    document.getElementById('btn-pay').disabled=false;
+    firebase.functions().httpsCallable('otorgarAccesoSimulado')({tipo: pagoActual})
+      .then(function() {
+        var nombre_al = nom.split(' ')[0];
+        sessionStorage.setItem('pago_email',  eml);
+        sessionStorage.setItem('pago_archivo', info.archivo);
+        sincronizarCuentaAcceso(eml);
+        if (pagoActual === 'plan') {
+          localStorage.setItem('acceso_plan', '1');
+        } else {
+          localStorage.setItem('acceso_' + pagoActual, '1');
+        }
+        sessionStorage.setItem('alumno_nombre', nombre_al);
+        firebase.analytics().logEvent('purchase', {
+          currency: 'USD',
+          value: parseFloat(info.precio.replace(/[^0-9.]/g,'')),
+          transaction_id: pagoActual + '_' + Date.now(),
+          items: [{item_id: pagoActual, item_name: info.mod}]
+        });
+        document.getElementById('c-email').textContent=eml;
+        document.getElementById('c-mod').textContent=info.mod;
+        document.getElementById('btn-login-conf').href=info.archivo;
+        document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
+        var origenPago = AccesibilidadModal.obtenerOrigen();
+        document.getElementById('mpago').classList.remove('open');
+        AccesibilidadModal.abrir(document.getElementById('mconf'), origenPago);
+        btnPay.textContent='🔒 Confirmar pago';
+        btnPay.disabled=false;
+      })
+      .catch(function(err) {
+        btnPay.textContent='🔒 Confirmar pago — '+info.precio;
+        btnPay.disabled=false;
+        var msg='⚠️ No se pudo procesar el pago. Intenta de nuevo.';
+        if (err.code==='functions/unauthenticated') { msg='⚠️ Tu sesión expiró. <a href="login.html" target="_blank">Inicia sesión de nuevo</a> y vuelve a intentarlo.'; }
+        document.getElementById('perr').innerHTML=msg;
+        document.getElementById('perr').style.display='block';
+      });
   }, 1800);
 });
 

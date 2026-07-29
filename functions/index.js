@@ -120,6 +120,32 @@ async function otorgarAcceso(email, tipo) {
   );
 }
 
+/**
+ * PUENTE TEMPORAL — el flujo de pago del sitio sigue siendo simulado
+ * (sin Stripe real todavía). `accesos/{email}` tiene `allow write: if false`
+ * en firestore.rules, así que la única forma de escribir ahí es desde una
+ * Cloud Function con el Admin SDK. Esta función deja que el pago simulado
+ * otorgue acceso real en Firestore (usando el mismo `otorgarAcceso()` que
+ * ya usa `webhookStripe`), para poder construir y probar el gateo de
+ * contenido de la guía sin esperar a activar cobros reales.
+ * Cuando se conecte Stripe de verdad, esta función debe eliminarse y el
+ * flujo de pago debe llamar a `crearSesionPago` en su lugar.
+ * Usa el correo YA AUTENTICADO (request.auth), nunca el que el cliente
+ * mande en el body, para que nadie pueda otorgarle acceso a otro correo.
+ * request.data: { tipo: 'modulo2'|...|'modulo6'|'plan' }
+ */
+exports.otorgarAccesoSimulado = onCall(async (request) => {
+  if (!request.auth || !request.auth.token.email) {
+    throw new HttpsError('unauthenticated', 'Debes iniciar sesión para completar la compra.');
+  }
+  const tipo = request.data && request.data.tipo;
+  if (!PRODUCTOS[tipo]) {
+    throw new HttpsError('invalid-argument', 'Producto no válido.');
+  }
+  await otorgarAcceso(request.auth.token.email, tipo);
+  return { ok: true };
+});
+
 const MODULOS_CON_EXAMEN = ['modulo2', 'modulo3', 'modulo4', 'modulo5', 'modulo6'];
 
 /**
