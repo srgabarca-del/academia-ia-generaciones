@@ -198,3 +198,55 @@ exports.calificarExamen = onCall(async (request) => {
     respuestas: correctas,
   };
 });
+
+/**
+ * Revisa si un correo tiene acceso real a un módulo, combinando las dos
+ * fuentes de verdad que ya existen en Firestore: `vip_users` (acceso total,
+ * ver nota técnica 54) y `accesos` (compra individual o Plan Completo, ver
+ * nota técnica 57 — hoy poblada por `otorgarAccesoSimulado`, más adelante
+ * por `webhookStripe` cuando se conecte Stripe real).
+ */
+async function tieneAcceso(email, modulo) {
+  const docId = email.toLowerCase();
+  const [vipDoc, accesoDoc] = await Promise.all([
+    db.collection('vip_users').doc(docId).get(),
+    db.collection('accesos').doc(docId).get(),
+  ]);
+  if (vipDoc.exists) return true;
+  if (accesoDoc.exists) {
+    const datos = accesoDoc.data();
+    return !!(datos.acceso_plan || datos['acceso_' + modulo]);
+  }
+  return false;
+}
+
+/**
+ * Callable desde el frontend. Devuelve el HTML de la Guía y Actividades de
+ * un módulo SOLO si el correo autenticado tiene acceso real (VIP o compra
+ * confirmada en Firestore) — nunca antes. Así, un `curl` anónimo a
+ * modulo3.html ya no obtiene el contenido de la guía, y ni siquiera un
+ * alumno con sesión pero sin ese módulo pagado puede leerlo.
+ * request.data: { modulo: 'modulo2'..'modulo6' }
+ */
+exports.obtenerContenidoModulo = onCall(async (request) => {
+  if (!request.auth || !request.auth.token.email) {
+    throw new HttpsError('unauthenticated', 'Debes iniciar sesión para ver este contenido.');
+  }
+  const modulo = request.data && request.data.modulo;
+  if (!MODULOS_CON_EXAMEN.includes(modulo)) {
+    throw new HttpsError('invalid-argument', 'Módulo no válido.');
+  }
+
+  const autorizado = await tieneAcceso(request.auth.token.email, modulo);
+  if (!autorizado) {
+    throw new HttpsError('permission-denied', 'No tienes acceso a este módulo.');
+  }
+
+  const doc = await db.collection('contenido_modulos').doc(modulo).get();
+  if (!doc.exists) {
+    throw new HttpsError('not-found', 'No se encontró el contenido de este módulo.');
+  }
+
+  return { guiaHtml: doc.data().guiaHtml };
+});
+

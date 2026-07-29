@@ -38,6 +38,17 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Contenido de la Guía y Actividades de cada módulo (2-6). Igual que la
+    // clave de respuestas: nadie lo lee ni lo escribe desde el cliente, ni
+    // siquiera un alumno con sesión iniciada. Solo la Cloud Function
+    // "obtenerContenidoModulo" lo lee con el Admin SDK, y solo lo devuelve
+    // si antes confirmó que ese correo tiene acceso real (VIP o compra en
+    // la colección accesos) — así un `curl` a modulo3.html ya no obtiene
+    // el texto de la guía.
+    match /contenido_modulos/{modulo} {
+      allow read, write: if false;
+    }
+
     // Opiniones de alumnos (calificación + comentario libre) enviadas al
     // terminar el Módulo 6. Cualquiera puede CREAR una opinión (no hace
     // falta haber iniciado sesión con Firebase Auth aquí, el sitio ya
