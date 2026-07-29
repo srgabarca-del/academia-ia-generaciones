@@ -129,48 +129,8 @@ document.getElementById('nav-burger').addEventListener('click', function() {
       <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:4px;">📝 Evaluación del Módulo 3</h2>
       <p style="font-size:1.05rem;opacity:.85;">7 preguntas — necesitas 5 o más para aprobar.</p>
     </div>
-    <div class="qq" id="q1"><p style="font-weight:700;margin-bottom:12px;">1. ¿Qué es un "prompt visual"?</p>
-      <label class="op"><input type="radio" name="q1" value="A"> La descripción de texto que le das a la IA para crear una imagen</label>
-      <label class="op"><input type="radio" name="q1" value="B"> Un filtro de foto de Instagram</label>
-      <label class="op"><input type="radio" name="q1" value="C"> Un tipo de pintura digital</label>
-      <label class="op"><input type="radio" name="q1" value="D"> El nombre de una app de fotos</label>
-    </div>
-    <div class="qq" id="q2"><p style="font-weight:700;margin-bottom:12px;">2. Escribes el prompt "un gato" para generar una imagen, pero el resultado no se parece a lo que imaginabas. ¿Qué le falta a tu prompt?</p>
-      <label class="op"><input type="radio" name="q2" value="A"> Escribir la palabra "gato" en inglés</label>
-      <label class="op"><input type="radio" name="q2" value="B"> Pedir la imagen en blanco y negro</label>
-      <label class="op"><input type="radio" name="q2" value="C"> Describir el estilo, el fondo y los colores que imaginas</label>
-      <label class="op"><input type="radio" name="q2" value="D"> No le falta nada, ya es un prompt completo</label>
-    </div>
-    <div class="qq" id="q3"><p style="font-weight:700;margin-bottom:12px;">3. Para obtener una mejor imagen con IA, ¿qué debes hacer?</p>
-      <label class="op"><input type="radio" name="q3" value="A"> Escribir solo una palabra sin ningún detalle</label>
-      <label class="op"><input type="radio" name="q3" value="B"> Describir con detalle los colores, el estilo y el contexto</label>
-      <label class="op"><input type="radio" name="q3" value="C"> Usar únicamente el idioma inglés para escribir</label>
-      <label class="op"><input type="radio" name="q3" value="D"> No modificar nunca el prompt inicial</label>
-    </div>
-    <div class="qq" id="q4"><p style="font-weight:700;margin-bottom:12px;">4. ¿Qué herramienta gratuita crea imágenes con IA?</p>
-      <label class="op"><input type="radio" name="q4" value="A"> Adobe Photoshop de pago</label>
-      <label class="op"><input type="radio" name="q4" value="B"> Microsoft Excel</label>
-      <label class="op"><input type="radio" name="q4" value="C"> PowerPoint básico</label>
-      <label class="op"><input type="radio" name="q4" value="D"> Canva con IA (DreamLab)</label>
-    </div>
-    <div class="qq" id="q5"><p style="font-weight:700;margin-bottom:12px;">5. ¿Para qué sirve crear imágenes con IA?</p>
-      <label class="op"><input type="radio" name="q5" value="A"> Solamente para artistas y diseñadores profesionales</label>
-      <label class="op"><input type="radio" name="q5" value="B"> Únicamente para campañas de publicidad y marketing</label>
-      <label class="op"><input type="radio" name="q5" value="C"> Para dar vida a ideas creativas de forma rápida y gratuita</label>
-      <label class="op"><input type="radio" name="q5" value="D"> No tiene ningún uso real ni práctico</label>
-    </div>
-    <div class="qq" id="q6"><p style="font-weight:700;margin-bottom:12px;">6. ¿Qué detalles mejoran un prompt visual?</p>
-      <label class="op"><input type="radio" name="q6" value="A"> Solamente el color que elijas para la imagen</label>
-      <label class="op"><input type="radio" name="q6" value="B"> El personaje, el estilo, los colores y el fondo</label>
-      <label class="op"><input type="radio" name="q6" value="C"> Solamente el tamaño final de la imagen</label>
-      <label class="op"><input type="radio" name="q6" value="D"> Únicamente la fecha en que se creó</label>
-    </div>
-    <div class="qq" id="q7"><p style="font-weight:700;margin-bottom:12px;">7. ¿Qué hace la IA cuando recibe un prompt visual?</p>
-      <label class="op"><input type="radio" name="q7" value="A"> Busca la imagen en Google</label>
-      <label class="op"><input type="radio" name="q7" value="B"> Copia una foto existente</label>
-      <label class="op"><input type="radio" name="q7" value="C"> Dibuja a mano la imagen</label>
-      <label class="op"><input type="radio" name="q7" value="D"> Genera una imagen completamente nueva basada en tu descripción</label>
-    </div>
+    <div id="preguntas-examen"></div>
+    
     <div id="qerr" style="display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:12px;margin-top:12px;font-size:1.1rem;">⚠️ Responde todas las preguntas.</div>
     <button class="bn" id="btn-env" style="background:#C2185B;margin-top:16px;">✅ Enviar evaluación</button>
   </div>
@@ -312,6 +272,24 @@ function activarAutoguardadoGuia() {
 // (o es VIP/Plan Completo). Así un `curl` a este archivo ya no revela el
 // contenido de la guía.
 var guiaContenidoCargado = false;
+// Carga (una sola vez, con caché en memoria) tanto la guía como las
+// preguntas del examen desde la misma Cloud Function — así solo se hace
+// una consulta a Firestore sin importar si el alumno abre primero la
+// guía o directamente la evaluación.
+var contenidoModuloPromise = null;
+function cargarContenidoModulo() {
+  if (!contenidoModuloPromise) {
+    contenidoModuloPromise = firebase.functions().httpsCallable('obtenerContenidoModulo')({modulo:'modulo3'})
+      .catch(function(err) { contenidoModuloPromise = null; throw err; });
+  }
+  return contenidoModuloPromise;
+}
+function mensajeErrorContenido(err) {
+  if (err.code === 'functions/unauthenticated') { return '⚠️ Tu sesión expiró. <a href="login.html">Inicia sesión de nuevo</a> y vuelve a intentarlo.'; }
+  if (err.code === 'functions/permission-denied') { return '⚠️ No tienes acceso a este módulo. <a href="Academia_AI.html#planes-pago">Ver planes de pago</a>.'; }
+  return '⚠️ No se pudo cargar el contenido. Intenta de nuevo.';
+}
+
 function toggleGuia() {
   var lista = document.getElementById('guia-lista');
   var arrow = document.getElementById('guia-arrow');
@@ -329,17 +307,14 @@ function toggleGuia() {
   }
   lista.innerHTML = '<p style="text-align:center;color:#757575;padding:40px 0;font-size:1.2rem;">⏳ Cargando guía...</p>';
   lista.scrollIntoView({behavior:'smooth',block:'start'});
-  firebase.functions().httpsCallable('obtenerContenidoModulo')({modulo:'modulo3'})
+  cargarContenidoModulo()
     .then(function(res) {
       lista.innerHTML = res.data.guiaHtml;
       guiaContenidoCargado = true;
       activarAutoguardadoGuia();
     })
     .catch(function(err) {
-      var msg = '⚠️ No se pudo cargar la guía. Intenta de nuevo.';
-      if (err.code === 'functions/unauthenticated') { msg = '⚠️ Tu sesión expiró. <a href="login.html">Inicia sesión de nuevo</a> y vuelve a intentarlo.'; }
-      if (err.code === 'functions/permission-denied') { msg = '⚠️ No tienes acceso a este módulo. <a href="Academia_AI.html#planes-pago">Ver planes de pago</a>.'; }
-      lista.innerHTML = '<p style="text-align:center;color:#C62828;padding:40px 20px;font-size:1.15rem;">'+msg+'</p>';
+      lista.innerHTML = '<p style="text-align:center;color:#C62828;padding:40px 20px;font-size:1.15rem;">'+mensajeErrorContenido(err)+'</p>';
     });
 }
 var N_Q = 7;
@@ -411,11 +386,27 @@ function onYouTubeIframeAPIReady() {
 
 // FIX 2: Botón de evaluación — corregido (el JS original era inaccesible por error de sintaxis)
 document.getElementById('btn-eval').addEventListener('click', function() {
-  document.getElementById('ev').style.display='block';
-  this.style.display='none';
-  document.getElementById('pf').style.width='60%';
-  document.getElementById('pl').textContent='Progreso: 60%';
-  document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
+  var btnEval = this;
+  var preguntas = document.getElementById('preguntas-examen');
+  btnEval.disabled = true;
+  var textoOriginal = btnEval.textContent;
+  btnEval.textContent = '⏳ Cargando evaluación...';
+  cargarContenidoModulo()
+    .then(function(res) {
+      preguntas.innerHTML = res.data.examenHtml;
+      document.getElementById('ev').style.display='block';
+      btnEval.style.display='none';
+      document.getElementById('pf').style.width='60%';
+      document.getElementById('pl').textContent='Progreso: 60%';
+      document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
+    })
+    .catch(function(err) {
+      btnEval.disabled = false;
+      btnEval.textContent = textoOriginal;
+      var qerr = document.getElementById('qerr');
+      qerr.innerHTML = mensajeErrorContenido(err);
+      qerr.style.display = 'block';
+    });
 });
 
 document.getElementById('btn-env').addEventListener('click', function() {

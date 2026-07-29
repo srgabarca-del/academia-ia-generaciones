@@ -247,7 +247,8 @@ exports.obtenerContenidoModulo = onCall(async (request) => {
     throw new HttpsError('not-found', 'No se encontró el contenido de este módulo.');
   }
 
-  return { guiaHtml: doc.data().guiaHtml };
+  return { guiaHtml: doc.data().guiaHtml, examenHtml: doc.data().examenHtml };
 });
+
 
 

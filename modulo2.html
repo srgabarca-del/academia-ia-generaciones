@@ -128,11 +128,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
       <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:4px;">📝 Evaluación del Módulo 2</h2>
       <p style="font-size:1.05rem;opacity:.85;">5 preguntas — necesitas 4 correctas para aprobar.</p>
     </div>
-    <div class="qq" id="q1"><p style="font-weight:700;margin-bottom:12px;">1. Lees este prompt: "Ayúdame a escribir un correo." Según la fórmula de 3 pasos de este módulo, ¿qué le falta?</p><label class="op"><input type="radio" name="q1" value="A"> Está completo, no necesita ningún cambio adicional</label><label class="op"><input type="radio" name="q1" value="B"> Le falta escribir la fecha de hoy en el mensaje</label><label class="op"><input type="radio" name="q1" value="C"> Le falta decirle qué rol debe tomar y cómo quieres el resultado</label><label class="op"><input type="radio" name="q1" value="D"> Le falta usar signos de exclamación al final</label></div>
-    <div class="qq" id="q2"><p style="font-weight:700;margin-bottom:12px;">2. ¿Cómo obtienes mejores respuestas de la IA?</p><label class="op"><input type="radio" name="q2" value="A"> Siendo claro y específico en tu instrucción</label><label class="op"><input type="radio" name="q2" value="B"> Escribiendo muy corto siempre</label><label class="op"><input type="radio" name="q2" value="C"> Usando solo inglés</label><label class="op"><input type="radio" name="q2" value="D"> Repitiendo la misma pregunta varias veces</label></div>
-    <div class="qq" id="q3"><p style="font-weight:700;margin-bottom:12px;">3. ¿Cuál de estas es una IA conversacional gratuita?</p><label class="op"><input type="radio" name="q3" value="A"> Microsoft Word</label><label class="op"><input type="radio" name="q3" value="B"> Google Maps</label><label class="op"><input type="radio" name="q3" value="C"> YouTube</label><label class="op"><input type="radio" name="q3" value="D"> ChatGPT versión gratuita</label></div>
-    <div class="qq" id="q4"><p style="font-weight:700;margin-bottom:12px;">4. Si la IA da una respuesta confusa, ¿qué haces?</p><label class="op"><input type="radio" name="q4" value="A"> Cerrar la app y no volver</label><label class="op"><input type="radio" name="q4" value="B"> Aceptarla sin leer</label><label class="op"><input type="radio" name="q4" value="C"> Pedirle que explique de forma más sencilla</label><label class="op"><input type="radio" name="q4" value="D"> Buscar otra app diferente</label></div>
-    <div class="qq" id="q5"><p style="font-weight:700;margin-bottom:12px;">5. ¿Para qué sirve crear una historia con IA?</p><label class="op"><input type="radio" name="q5" value="A"> Para practicar instrucciones claras y creatividad</label><label class="op"><input type="radio" name="q5" value="B"> Para hacer trampa en la escuela</label><label class="op"><input type="radio" name="q5" value="C"> No tiene ninguna utilidad</label><label class="op"><input type="radio" name="q5" value="D"> La IA no puede crear historias</label></div>
+    <div id="preguntas-examen"></div>
     <div id="qerr" style="display:none;background:#FFEBEE;color:#C62828;border-radius:10px;padding:12px;margin-top:12px;font-size:1.1rem;">⚠️ Responde todas las preguntas.</div>
     <button class="bn" id="btn-env" style="background:#00897B;margin-top:16px;">✅ Enviar evaluación</button>
   </div>
@@ -269,6 +265,24 @@ function activarAutoguardadoGuia() {
 // responde si Firestore confirma que este correo ya pagó este módulo
 // (o es VIP/Plan Completo). Así un `curl` a este archivo ya no revela el
 // contenido de la guía.
+// Carga (una sola vez, con caché en memoria) tanto la guía como las
+// preguntas del examen desde la misma Cloud Function — así solo se hace
+// una consulta a Firestore sin importar si el alumno abre primero la
+// guía o directamente la evaluación.
+var contenidoModuloPromise = null;
+function cargarContenidoModulo() {
+  if (!contenidoModuloPromise) {
+    contenidoModuloPromise = firebase.functions().httpsCallable('obtenerContenidoModulo')({modulo:'modulo2'})
+      .catch(function(err) { contenidoModuloPromise = null; throw err; });
+  }
+  return contenidoModuloPromise;
+}
+function mensajeErrorContenido(err) {
+  if (err.code === 'functions/unauthenticated') { return '⚠️ Tu sesión expiró. <a href="login.html">Inicia sesión de nuevo</a> y vuelve a intentarlo.'; }
+  if (err.code === 'functions/permission-denied') { return '⚠️ No tienes acceso a este módulo. <a href="Academia_AI.html#planes-pago">Ver planes de pago</a>.'; }
+  return '⚠️ No se pudo cargar el contenido. Intenta de nuevo.';
+}
+
 var guiaContenidoCargado = false;
 function toggleGuia() {
   var lista = document.getElementById('guia-lista');
@@ -287,17 +301,14 @@ function toggleGuia() {
   }
   lista.innerHTML = '<p style="text-align:center;color:#757575;padding:40px 0;font-size:1.2rem;">⏳ Cargando guía...</p>';
   lista.scrollIntoView({behavior:'smooth',block:'start'});
-  firebase.functions().httpsCallable('obtenerContenidoModulo')({modulo:'modulo2'})
+  cargarContenidoModulo()
     .then(function(res) {
       lista.innerHTML = res.data.guiaHtml;
       guiaContenidoCargado = true;
       activarAutoguardadoGuia();
     })
     .catch(function(err) {
-      var msg = '⚠️ No se pudo cargar la guía. Intenta de nuevo.';
-      if (err.code === 'functions/unauthenticated') { msg = '⚠️ Tu sesión expiró. <a href="login.html">Inicia sesión de nuevo</a> y vuelve a intentarlo.'; }
-      if (err.code === 'functions/permission-denied') { msg = '⚠️ No tienes acceso a este módulo. <a href="Academia_AI.html#planes-pago">Ver planes de pago</a>.'; }
-      lista.innerHTML = '<p style="text-align:center;color:#C62828;padding:40px 20px;font-size:1.15rem;">'+msg+'</p>';
+      lista.innerHTML = '<p style="text-align:center;color:#C62828;padding:40px 20px;font-size:1.15rem;">'+mensajeErrorContenido(err)+'</p>';
     });
 }
 // ── CONTROL DE ACCESO ────────────────────────────────────────────────────────
@@ -368,11 +379,27 @@ function onYouTubeIframeAPIReady() {
 }
 
 document.getElementById('btn-eval').addEventListener('click', function() {
-  document.getElementById('ev').style.display='block';
-  this.style.display='none';
-  document.getElementById('pf').style.width='60%';
-  document.getElementById('pl').textContent='Progreso: 60%';
-  document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
+  var btnEval = this;
+  var preguntas = document.getElementById('preguntas-examen');
+  btnEval.disabled = true;
+  var textoOriginal = btnEval.textContent;
+  btnEval.textContent = '⏳ Cargando evaluación...';
+  cargarContenidoModulo()
+    .then(function(res) {
+      preguntas.innerHTML = res.data.examenHtml;
+      document.getElementById('ev').style.display='block';
+      btnEval.style.display='none';
+      document.getElementById('pf').style.width='60%';
+      document.getElementById('pl').textContent='Progreso: 60%';
+      document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
+    })
+    .catch(function(err) {
+      btnEval.disabled = false;
+      btnEval.textContent = textoOriginal;
+      var qerr = document.getElementById('qerr');
+      qerr.innerHTML = mensajeErrorContenido(err);
+      qerr.style.display = 'block';
+    });
 });
 
 document.getElementById('btn-env').addEventListener('click', function() {
