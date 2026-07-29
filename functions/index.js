@@ -119,3 +119,56 @@ async function otorgarAcceso(email, tipo) {
     { merge: true }
   );
 }
+
+const MODULOS_CON_EXAMEN = ['modulo2', 'modulo3', 'modulo4', 'modulo5', 'modulo6'];
+
+/**
+ * Callable desde el frontend. Recibe las respuestas que el alumno marcó y
+ * devuelve si aprobó, cuántas acertó, y la clave de respuestas correctas
+ * (para que el HTML pueda pintar cada opción de verde/rojo, igual que antes).
+ * La clave de respuestas vive SOLO en Firestore (colección
+ * examenes_respuestas, con "allow read, write: if false" — nadie la lee
+ * desde el cliente, ni siquiera un alumno con sesión) y nunca se envía al
+ * navegador hasta este momento, es decir, después de que el alumno ya
+ * mandó sus propias respuestas.
+ * Requiere sesión de Firebase Auth — así, un `curl` anónimo al HTML no
+ * obtiene nada, y ya no basta con falsificar `localStorage` para calificar.
+ * request.data: { modulo: 'modulo2'..'modulo6', respuestas: {q1:'A', ...} }
+ */
+exports.calificarExamen = onCall(async (request) => {
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'Debes iniciar sesión para enviar la evaluación.');
+  }
+
+  const modulo = request.data && request.data.modulo;
+  const respuestas = request.data && request.data.respuestas;
+
+  if (!MODULOS_CON_EXAMEN.includes(modulo)) {
+    throw new HttpsError('invalid-argument', 'Módulo no válido.');
+  }
+  if (!respuestas || typeof respuestas !== 'object') {
+    throw new HttpsError('invalid-argument', 'Respuestas no válidas.');
+  }
+
+  const doc = await db.collection('examenes_respuestas').doc(modulo).get();
+  if (!doc.exists) {
+    throw new HttpsError('not-found', 'No se encontró la evaluación de este módulo.');
+  }
+
+  const datos = doc.data();
+  const correctas = datos.respuestas;
+  const minimo = datos.minimo;
+  const total = datos.total;
+
+  let aciertos = 0;
+  for (let i = 1; i <= total; i++) {
+    if (respuestas['q' + i] === correctas['q' + i]) aciertos++;
+  }
+
+  return {
+    aprobado: aciertos >= minimo,
+    aciertos: aciertos,
+    total: total,
+    respuestas: correctas,
+  };
+});

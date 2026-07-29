@@ -243,7 +243,9 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
   if (!firebase.apps.length) {
@@ -373,8 +375,6 @@ function toggleGuia() {
   }
 })();
 
-var RESP2 = {q1:'C',q2:'A',q3:'D',q4:'C',q5:'A'};
-
 var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
 document.getElementById('nav-nombre').textContent = '👤 ' + nombre + ' | Módulo 2';
 document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienvenido/a al Módulo 2 🚀';
@@ -418,43 +418,63 @@ document.getElementById('btn-env').addEventListener('click', function() {
   for(var i=1;i<=5;i++) { if(!document.querySelector('input[name="q'+i+'"]:checked')){ok=false;break;} }
   if(!ok){document.getElementById('qerr').style.display='block';return;}
   document.getElementById('qerr').style.display='none';
-  var c=0;
+
+  var respuestas={};
   for(var i=1;i<=5;i++) {
     var s=document.querySelector('input[name="q'+i+'"]:checked');
-    var d=document.getElementById('q'+i);
-    var r=RESP2['q'+i];
-    d.querySelectorAll('.op').forEach(function(o){
-      var v=o.querySelector('input').value;
-      if(v===r) o.style.background='#C8E6C9';
-      else if(o.querySelector('input').checked) o.style.background='#FFCDD2';
-      o.querySelector('input').disabled=true;
+    respuestas['q'+i]=s?s.value:null;
+  }
+
+  var btnEnv=this;
+  btnEnv.disabled=true; btnEnv.textContent='⏳ Calificando...';
+
+  firebase.functions().httpsCallable('calificarExamen')({modulo:'modulo2', respuestas:respuestas})
+    .then(function(res) {
+      var data=res.data;
+      var c=data.aciertos;
+      for(var i=1;i<=5;i++) {
+        var d=document.getElementById('q'+i);
+        var r=data.respuestas['q'+i];
+        d.querySelectorAll('.op').forEach(function(o){
+          var v=o.querySelector('input').value;
+          if(v===r) o.style.background='#C8E6C9';
+          else if(o.querySelector('input').checked) o.style.background='#FFCDD2';
+          o.querySelector('input').disabled=true;
+        });
+        if(respuestas['q'+i]===r){d.classList.add('ok');}else{d.classList.add('no');}
+      }
+      var rs=document.getElementById('qres');
+      rs.style.display='block';
+      document.getElementById('btn-env').style.display='none';
+      btnEnv.disabled=false; btnEnv.textContent='✅ Enviar evaluación';
+      if(data.aprobado){
+        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/5</h3><button onclick="verCert()" style="background:#00897B;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
+        document.getElementById('pf').style.width='100%';
+        document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 2 completado! 🎉';
+        certOK=true;
+        localStorage.setItem('modulo2_completado','1');
+        // FIX (bug de compra): antes se otorgaba acceso_modulo3 automáticamente aquí,
+        // lo que permitía pasar al Módulo 3 gratis sin comprarlo ni tener el plan mensual.
+        // Ahora mostrarAccesoMod3() solo revisa lo que el alumno realmente ya tiene.
+        // Mostrar acceso al módulo 3
+        setTimeout(function() {
+          mostrarAccesoMod3();
+          document.getElementById('lock-siguiente').style.display='block';
+          document.getElementById('btn-siguiente-alert').style.display='none';
+          document.getElementById('lock-siguiente').scrollIntoView({behavior:'smooth',block:'center'});
+        }, 1200);
+      }else{
+        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 4. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
+      }
+      rs.scrollIntoView({behavior:'smooth',block:'center'});
+    })
+    .catch(function(err) {
+      btnEnv.disabled=false; btnEnv.textContent='✅ Enviar evaluación';
+      var msg='⚠️ No se pudo calificar tu evaluación. Intenta de nuevo.';
+      if (err.code==='functions/unauthenticated') { msg='⚠️ Tu sesión expiró. <a href="login.html">Inicia sesión de nuevo</a> y vuelve a intentar.'; }
+      var qerr=document.getElementById('qerr');
+      qerr.innerHTML=msg; qerr.style.display='block';
     });
-    if(s&&s.value===r){c++;d.classList.add('ok');}else{d.classList.add('no');}
-  }
-  var ap=c>=4;
-  var rs=document.getElementById('qres');
-  rs.style.display='block';
-  document.getElementById('btn-env').style.display='none';
-  if(ap){
-    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/5</h3><button onclick="verCert()" style="background:#00897B;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
-    document.getElementById('pf').style.width='100%';
-    document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 2 completado! 🎉';
-    certOK=true;
-    localStorage.setItem('modulo2_completado','1');
-    // FIX (bug de compra): antes se otorgaba acceso_modulo3 automáticamente aquí,
-    // lo que permitía pasar al Módulo 3 gratis sin comprarlo ni tener el plan mensual.
-    // Ahora mostrarAccesoMod3() solo revisa lo que el alumno realmente ya tiene.
-    // Mostrar acceso al módulo 3
-    setTimeout(function() {
-      mostrarAccesoMod3();
-      document.getElementById('lock-siguiente').style.display='block';
-      document.getElementById('btn-siguiente-alert').style.display='none';
-      document.getElementById('lock-siguiente').scrollIntoView({behavior:'smooth',block:'center'});
-    }, 1200);
-  }else{
-    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 4. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
-  }
-  rs.scrollIntoView({behavior:'smooth',block:'center'});
 });
 
 function mostrarAccesoMod3() {

@@ -28,6 +28,16 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Clave de respuestas correctas de los exámenes (módulos 2-6). Nadie
+    // puede leerla ni escribirla desde el cliente, ni siquiera un alumno
+    // con sesión iniciada — solo la Cloud Function "calificarExamen" la lee,
+    // usando el Admin SDK (que ignora estas reglas). Así la clave nunca
+    // viaja al navegador hasta que el alumno ya envió sus propias
+    // respuestas y la función responde con el resultado.
+    match /examenes_respuestas/{modulo} {
+      allow read, write: if false;
+    }
+
     // Opiniones de alumnos (calificación + comentario libre) enviadas al
     // terminar el Módulo 6. Cualquiera puede CREAR una opinión (no hace
     // falta haber iniciado sesión con Firebase Auth aquí, el sitio ya

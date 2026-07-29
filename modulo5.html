@@ -257,7 +257,9 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
   if (!firebase.apps.length) {
@@ -353,8 +355,6 @@ function toggleGuia() {
 })();
 var N_Q = 7;
 var MIN_OK = 5;
-var RESP = {q1:"C",q2:"A",q3:"D",q4:"B",q5:"C",q6:"C",q7:"D"};
-
 (function() {
   var ok = localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo5');
   if (!ok) { window.location = 'Academia_AI.html#planes-pago'; }
@@ -409,32 +409,52 @@ document.getElementById('btn-env').addEventListener('click', function() {
   for(var i=1;i<=N_Q;i++) { if(!document.querySelector('input[name="q'+i+'"]:checked')){ok=false;break;} }
   if(!ok){document.getElementById('qerr').style.display='block';return;}
   document.getElementById('qerr').style.display='none';
-  var c=0;
+
+  var respuestas={};
   for(var i=1;i<=N_Q;i++) {
     var s=document.querySelector('input[name="q'+i+'"]:checked');
-    var d=document.getElementById('q'+i); var r=RESP['q'+i];
-    d.querySelectorAll('.op').forEach(function(o){
-      var v=o.querySelector('input').value;
-      if(v===r) o.style.background='#C8E6C9';
-      else if(o.querySelector('input').checked) o.style.background='#FFCDD2';
-      o.querySelector('input').disabled=true;
+    respuestas['q'+i]=s?s.value:null;
+  }
+
+  var btnEnv=this;
+  btnEnv.disabled=true; btnEnv.textContent='⏳ Calificando...';
+
+  firebase.functions().httpsCallable('calificarExamen')({modulo:'modulo5', respuestas:respuestas})
+    .then(function(res) {
+      var data=res.data;
+      var c=data.aciertos;
+      for(var i=1;i<=N_Q;i++) {
+        var d=document.getElementById('q'+i); var r=data.respuestas['q'+i];
+        d.querySelectorAll('.op').forEach(function(o){
+          var v=o.querySelector('input').value;
+          if(v===r) o.style.background='#C8E6C9';
+          else if(o.querySelector('input').checked) o.style.background='#FFCDD2';
+          o.querySelector('input').disabled=true;
+        });
+        if(respuestas['q'+i]===r){d.classList.add('ok');}else{d.classList.add('no');}
+      }
+      var rs=document.getElementById('qres');
+      rs.style.display='block'; btnEnv.style.display='none';
+      btnEnv.disabled=false; btnEnv.textContent='✅ Enviar evaluación';
+      if(data.aprobado){
+        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/'+N_Q+'</h3><p style="color:#555;margin-bottom:16px;">Excelente trabajo.</p><button onclick="verCert()" style="background:#6A1B9A;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
+        document.getElementById('pf').style.width='100%';
+        document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 5 completado! 🎉';
+        certOK=true;
+        localStorage.setItem('modulo5_completado','1');
+        setTimeout(mostrarSiguienteModulo, 1200);
+      }else{
+        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
+      }
+      rs.scrollIntoView({behavior:'smooth',block:'center'});
+    })
+    .catch(function(err) {
+      btnEnv.disabled=false; btnEnv.textContent='✅ Enviar evaluación';
+      var msg='⚠️ No se pudo calificar tu evaluación. Intenta de nuevo.';
+      if (err.code==='functions/unauthenticated') { msg='⚠️ Tu sesión expiró. <a href="login.html">Inicia sesión de nuevo</a> y vuelve a intentar.'; }
+      var qerr=document.getElementById('qerr');
+      qerr.innerHTML=msg; qerr.style.display='block';
     });
-    if(s&&s.value===r){c++;d.classList.add('ok');}else{d.classList.add('no');}
-  }
-  var ap=c>=MIN_OK;
-  var rs=document.getElementById('qres');
-  rs.style.display='block'; document.getElementById('btn-env').style.display='none';
-  if(ap){
-    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/'+N_Q+'</h3><p style="color:#555;margin-bottom:16px;">Excelente trabajo.</p><button onclick="verCert()" style="background:#6A1B9A;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
-    document.getElementById('pf').style.width='100%';
-    document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 5 completado! 🎉';
-    certOK=true;
-    localStorage.setItem('modulo5_completado','1');
-    setTimeout(mostrarSiguienteModulo, 1200);
-  }else{
-    rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:#E53935;margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:#F57C00;color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
-  }
-  rs.scrollIntoView({behavior:'smooth',block:'center'});
 });
 
 function reiniciar() {
