@@ -118,52 +118,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
       <span id="guia-arrow" style="font-size:1.2rem;color:#1565C0;transition:transform .3s;">▼</span>
     </div>
 
-    <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;">
-      <h4 style="font-size:1.3rem;font-weight:700;color:#1565C0;margin-bottom:8px;">🚀 De preguntas a encargos: el salto profesional</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:6px;">Hay dos formas de usar la IA: preguntarle cosas o darle encargos completos.</p>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">El aficionado pregunta: "¿Cómo organizo mis tareas?" y recibe consejos generales. El profesional encarga: "Revisa esta lista, ordénala por urgencia y crea un plan de acción para hoy con tiempos estimados" — y la IA lo hace del tirón.</p>
-
-      <h4 style="font-size:1.3rem;font-weight:700;color:#1565C0;margin-bottom:8px;">🧠 Pídele que piense antes de responder</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:8px;">Para decisiones importantes o problemas complejos, agrega esta frase al final de tu prompt:</p>
-      <div style="background:#E3F2FD;border-radius:10px;padding:14px 16px;font-size:1.1rem;color:#000000;margin-bottom:20px;">"Antes de responder, piensa el problema por partes, valora las opciones y dame tu conclusión."</div>
-
-      <h4 style="font-size:1.3rem;font-weight:700;color:#1565C0;margin-bottom:8px;">🗂️ Configura tu espacio de trabajo una vez, úsalo siempre</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">En vez de explicar quién eres cada vez, guarda tu contexto (nombre, edad, situación, intereses, estilo preferido de respuesta). <a href="https://chat.openai.com" target="_blank" rel="noopener" style="color:#1565C0;">ChatGPT</a> usa "Memoria" o GPTs personalizados, Claude usa "Proyectos", <a href="https://gemini.google.com" target="_blank" rel="noopener" style="color:#1565C0;">Gemini</a> usa "Gems".</p>
-
-      <h4 style="font-size:1.3rem;font-weight:700;color:#1565C0;margin-bottom:8px;">✅ Enséñale a decir "no lo sé"</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:24px;">La IA a veces se inventa información con seguridad. Cierra tus peticiones importantes con: "Si no estás seguro de algo, dímelo claramente." / "Prefiero que me digas que no sabes a que inventes una respuesta."</p>
-
-      <div style="border-top:2px dashed #E0E0E0;margin:24px 0;"></div>
-
-      <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">✏️ Actividad práctica 1 — Aprende algo nuevo con tu tutor de IA</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Elige algo que quieras aprender y dale un encargo completo a la IA usando los 3 pasos: Identidad + Intención + Instrucciones.</p>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">IDENTIDAD — Actúa como:</label>
-      <textarea id="modulo4_g1" rows="1" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">INTENCIÓN — Quiero aprender:</label>
-      <textarea id="modulo4_g2" rows="1" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">INSTRUCCIONES — Formato / Tiempo / Nivel de dificultad:</label>
-      <textarea id="modulo4_g3" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Qué te explicó la IA? Resume en tus propias palabras:</label>
-      <textarea id="modulo4_g4" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
-
-      <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">🗓️ Actividad práctica 2 — Mi planificador con IA</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Dale a la IA un encargo completo para planear algo de tu vida real: un viaje, una reunión familiar, una actividad o una compra importante.</p>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Qué quiero planear? ¿Para cuándo y cuántas personas?</label>
-      <textarea id="modulo4_g5" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">Mi encargo completo a la IA (escríbelo antes de enviarlo):</label>
-      <textarea id="modulo4_g6" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿El plan que dio la IA fue útil? ¿Qué cambiarías?</label>
-      <textarea id="modulo4_g7" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
-
-      <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">💭 Reflexión final</h4>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Cuál es la diferencia entre hacerle una pregunta y darle un encargo a la IA?</label>
-      <textarea id="modulo4_g8" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿En qué momento de tu vida diaria le darías un encargo completo a la IA?</label>
-      <textarea id="modulo4_g9" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:20px;box-sizing:border-box;"></textarea>
-
-      <p style="text-align:center;font-size:1rem;color:#757575;margin-bottom:10px;">Puedes imprimir la guía para que te sirva de apoyo para el uso de las herramientas de IA.</p>
-      <button onclick="window.print()" style="width:100%;padding:14px;background:#1565C0;color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir</button>
-    </div>
+    <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;"></div>
   </div>
 
   <button class="bn" id="btn-eval" style="background:#1565C0;">📝 Ir a la Evaluación → Desbloquea el Módulo 5</button>
@@ -325,17 +280,11 @@ function asegurarCertificadoVerificable(numModulo, nombreModulo, nombreAlumno, f
 
 var ACCENT = '#1565C0';
 var certOK = false;
-function toggleGuia() {
-  var lista = document.getElementById('guia-lista');
-  var arrow = document.getElementById('guia-arrow');
-  var abierto = lista.style.display !== 'none';
-  lista.style.display = abierto ? 'none' : 'block';
-  arrow.style.transform = abierto ? 'rotate(0deg)' : 'rotate(180deg)';
-  if (!abierto) { lista.scrollIntoView({behavior:'smooth',block:'start'}); }
-}
-
-// Autoguardado de respuestas de la guía: restaura y guarda cada campo en localStorage
-(function() {
+// Autoguardado de respuestas de la guía: restaura y guarda cada campo en
+// localStorage. Ahora se activa DESPUÉS de inyectar el HTML de la guía
+// (llega de Firestore vía Cloud Function), ya no al cargar la página,
+// porque #guia-lista empieza vacío hasta que el alumno la abre.
+function activarAutoguardadoGuia() {
   var campos = document.querySelectorAll('#guia-lista input[id], #guia-lista textarea[id], #guia-lista select[id]');
   campos.forEach(function(campo) {
     var clave = 'autosave_' + campo.id;
@@ -350,7 +299,44 @@ function toggleGuia() {
       else { localStorage.setItem(clave, campo.value); }
     });
   });
-})();
+}
+
+// La guía ya no viene embebida en el HTML — se pide a la Cloud Function
+// "obtenerContenidoModulo" la primera vez que el alumno la abre, y solo
+// responde si Firestore confirma que este correo ya pagó este módulo
+// (o es VIP/Plan Completo). Así un `curl` a este archivo ya no revela el
+// contenido de la guía.
+var guiaContenidoCargado = false;
+function toggleGuia() {
+  var lista = document.getElementById('guia-lista');
+  var arrow = document.getElementById('guia-arrow');
+  var abierto = lista.style.display !== 'none';
+  if (abierto) {
+    lista.style.display = 'none';
+    arrow.style.transform = 'rotate(0deg)';
+    return;
+  }
+  lista.style.display = 'block';
+  arrow.style.transform = 'rotate(180deg)';
+  if (guiaContenidoCargado) {
+    lista.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  lista.innerHTML = '<p style="text-align:center;color:#757575;padding:40px 0;font-size:1.2rem;">⏳ Cargando guía...</p>';
+  lista.scrollIntoView({behavior:'smooth',block:'start'});
+  firebase.functions().httpsCallable('obtenerContenidoModulo')({modulo:'modulo4'})
+    .then(function(res) {
+      lista.innerHTML = res.data.guiaHtml;
+      guiaContenidoCargado = true;
+      activarAutoguardadoGuia();
+    })
+    .catch(function(err) {
+      var msg = '⚠️ No se pudo cargar la guía. Intenta de nuevo.';
+      if (err.code === 'functions/unauthenticated') { msg = '⚠️ Tu sesión expiró. <a href="login.html">Inicia sesión de nuevo</a> y vuelve a intentarlo.'; }
+      if (err.code === 'functions/permission-denied') { msg = '⚠️ No tienes acceso a este módulo. <a href="Academia_AI.html#planes-pago">Ver planes de pago</a>.'; }
+      lista.innerHTML = '<p style="text-align:center;color:#C62828;padding:40px 20px;font-size:1.15rem;">'+msg+'</p>';
+    });
+}
 var N_Q = 7;
 var MIN_OK = 5;
 (function() {

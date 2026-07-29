@@ -138,87 +138,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
       <span id="guia-arrow" style="font-size:1.2rem;color:#2E7D32;transition:transform .3s;">▼</span>
     </div>
 
-    <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;">
-      <h4 style="font-size:1.3rem;font-weight:700;color:#2E7D32;margin-bottom:12px;">🔐 Las 3 reglas de oro de seguridad digital</h4>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px;">
-        <div style="background:#FFEBEE;border-radius:10px;padding:12px 14px;">
-          <div style="font-weight:700;color:#C62828;font-size:1.1rem;margin-bottom:6px;">🚫 NUNCA compartas</div>
-          <div style="font-size:1rem;color:#000000;">Contraseñas, PINs, número de tarjeta o cuenta bancaria, CURP/INE/pasaporte, fotos de documentos oficiales</div>
-        </div>
-        <div style="background:#FFF3E0;border-radius:10px;padding:12px 14px;">
-          <div style="font-weight:700;color:#EF6C00;font-size:1.1rem;margin-bottom:6px;">🔍 SIEMPRE verifica</div>
-          <div style="font-size:1rem;color:#000000;">Busca la noticia en 3 fuentes diferentes, pregunta a alguien de confianza, y sé honesto cuando uses IA</div>
-        </div>
-        <div style="background:#E8F5E9;border-radius:10px;padding:12px 14px;">
-          <div style="font-weight:700;color:#2E7D32;font-size:1.1rem;margin-bottom:6px;">✅ Buenas prácticas</div>
-          <div style="font-size:1rem;color:#000000;">Cierra sesión en dispositivos ajenos, usa contraseñas diferentes para cada cuenta, actualiza tus apps regularmente</div>
-        </div>
-      </div>
-
-      <h4 style="font-size:1.3rem;font-weight:700;color:#2E7D32;margin-bottom:8px;">🌀 Cuidado con las "alucinaciones" de la IA</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">Recuerda lo que viste en el Módulo 4: la IA a veces se inventa información con total confianza. Sigue cerrando tus peticiones importantes con "Si no estás seguro de algo, dímelo claramente."</p>
-
-      <h4 style="font-size:1.3rem;font-weight:700;color:#2E7D32;margin-bottom:12px;">🕵️ Cómo detectar una noticia o imagen falsa generada con IA</h4>
-      <ul style="font-size:1.1rem;color:#000000;line-height:1.9;margin-bottom:24px;padding-left:20px;">
-        <li>Los dedos de las manos suelen verse deformados o con más de 5 dedos</li>
-        <li>El texto dentro de la imagen tiene errores o letras mezcladas</li>
-        <li>La noticia no aparece en ningún medio de comunicación conocido</li>
-        <li>Te pide actuar de inmediato o con urgencia extrema</li>
-        <li>Genera una emoción muy fuerte (miedo, rabia, euforia) — eso es una señal de alerta</li>
-      </ul>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:24px;"><strong>Regla de oro:</strong> si una imagen o noticia te impacta mucho, espera antes de compartirla.</p>
-
-      <h4 style="font-size:1.3rem;font-weight:700;color:#2E7D32;margin-bottom:8px;">📞 Cuidado con las llamadas de voz clonada por IA</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:8px;">Hoy la IA puede copiar la voz de una persona real con solo unos segundos de audio, por ejemplo de un video en redes sociales. Los estafadores usan esto para llamar haciéndose pasar por un nieto, hijo o familiar, pidiendo dinero con mucha urgencia porque "está en un problema".</p>
-      <div style="background:#FFEBEE;border-radius:10px;padding:14px 16px;font-size:1.1rem;color:#000000;margin-bottom:20px;"><strong>Tu defensa:</strong> cuelga y llama tú mismo/a a esa persona a su número conocido para verificar. Nunca envíes dinero por una sola llamada, aunque la voz suene idéntica a la de tu familiar.</div>
-
-      <div style="border-top:2px dashed #E0E0E0;margin:24px 0;"></div>
-
-      <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">✏️ Actividad práctica 1 — Detective de noticias</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Busca 3 noticias o mensajes que hayas recibido recientemente. Analiza si son verdaderos o falsos usando las pistas que aprendiste.</p>
-      <div style="overflow-x:auto;margin-bottom:12px;">
-        <table style="width:100%;border-collapse:collapse;font-size:1rem;min-width:480px;">
-          <tr style="background:#E8F5E9;">
-            <th style="text-align:left;padding:8px;border:1px solid #E0E0E0;">Noticia o mensaje</th>
-            <th style="text-align:left;padding:8px;border:1px solid #E0E0E0;">¿Verdadera o falsa?</th>
-            <th style="text-align:left;padding:8px;border:1px solid #E0E0E0;">¿Cómo lo comprobé?</th>
-          </tr>
-          <tr>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><input id="modulo6_g1" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"></td>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><select id="modulo6_g2" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"><option value="">—</option><option>Verdadera</option><option>Falsa</option></select></td>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><input id="modulo6_g3" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"></td>
-          </tr>
-          <tr>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><input id="modulo6_g4" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"></td>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><select id="modulo6_g5" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"><option value="">—</option><option>Verdadera</option><option>Falsa</option></select></td>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><input id="modulo6_g6" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"></td>
-          </tr>
-        </table>
-      </div>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Cuál fue la señal más clara de que una noticia era falsa?</label>
-      <textarea id="modulo6_g7" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
-
-      <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">🛡️ Actividad práctica 2 — Mis reglas personales de seguridad digital</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:8px;">Usa <a href="https://chat.openai.com" target="_blank" rel="noopener" style="color:#2E7D32;">ChatGPT</a> o <a href="https://gemini.google.com" target="_blank" rel="noopener" style="color:#2E7D32;">Gemini</a> para crear TUS propias reglas de seguridad. Prueba este prompt:</p>
-      <div style="background:#E8F5E9;border-radius:10px;padding:14px 16px;font-size:1.1rem;color:#000000;margin-bottom:16px;">"Actúa como experto en seguridad digital. Soy una persona mayor de [tu edad] años que usa [WhatsApp / Facebook / correo]. Hazme 3 preguntas sobre cómo uso internet y luego crea para mí una lista personalizada de 5 reglas de seguridad, en lenguaje sencillo, sin tecnicismos."</div>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">Mis 5 reglas personales de seguridad digital:</label>
-      <textarea id="modulo6_g8" rows="5" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Qué fue lo más importante que aprendiste sobre tu seguridad digital?</label>
-      <textarea id="modulo6_g9" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
-
-      <h4 style="font-size:1.35rem;font-weight:800;color:#212121;margin-bottom:14px;">🎓 Resumen del curso</h4>
-      <ul style="font-size:1.1rem;color:#000000;line-height:2;margin-bottom:24px;padding-left:20px;">
-        <li><strong>M1</strong> — Descubriste qué es la IA y cómo ya la usas en tu vida diaria</li>
-        <li><strong>M2</strong> — Aprendiste a hablarle a la IA con Identidad + Intención + Instrucciones</li>
-        <li><strong>M3</strong> — Creaste imágenes con IA usando prompts visuales detallados</li>
-        <li><strong>M4</strong> — Le diste encargos completos a la IA para organizar tu vida</li>
-        <li><strong>M5</strong> — Usaste la IA como compañero creativo para cuentos y proyectos familiares</li>
-        <li><strong>M6</strong> — Aprendiste a usar la IA de forma segura, responsable y verificando siempre</li>
-      </ul>
-
-      <p style="text-align:center;font-size:1rem;color:#757575;margin-bottom:10px;">Puedes imprimir la guía para que te sirva de apoyo para el uso de las herramientas de IA.</p>
-      <button onclick="window.print()" style="width:100%;padding:14px;background:#2E7D32;color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir</button>
-    </div>
+    <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;"></div>
   </div>
 
   <div id="antiestafas-box" style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:24px;overflow:hidden;">
@@ -427,17 +347,11 @@ function asegurarCertificadoVerificable(numModulo, nombreModulo, nombreAlumno, f
 
 var ACCENT = '#2E7D32';
 var certOK = false;
-function toggleGuia() {
-  var lista = document.getElementById('guia-lista');
-  var arrow = document.getElementById('guia-arrow');
-  var abierto = lista.style.display !== 'none';
-  lista.style.display = abierto ? 'none' : 'block';
-  arrow.style.transform = abierto ? 'rotate(0deg)' : 'rotate(180deg)';
-  if (!abierto) { lista.scrollIntoView({behavior:'smooth',block:'start'}); }
-}
-
-// Autoguardado de respuestas de la guía: restaura y guarda cada campo en localStorage
-(function() {
+// Autoguardado de respuestas de la guía: restaura y guarda cada campo en
+// localStorage. Ahora se activa DESPUÉS de inyectar el HTML de la guía
+// (llega de Firestore vía Cloud Function), ya no al cargar la página,
+// porque #guia-lista empieza vacío hasta que el alumno la abre.
+function activarAutoguardadoGuia() {
   var campos = document.querySelectorAll('#guia-lista input[id], #guia-lista textarea[id], #guia-lista select[id]');
   campos.forEach(function(campo) {
     var clave = 'autosave_' + campo.id;
@@ -452,7 +366,44 @@ function toggleGuia() {
       else { localStorage.setItem(clave, campo.value); }
     });
   });
-})();
+}
+
+// La guía ya no viene embebida en el HTML — se pide a la Cloud Function
+// "obtenerContenidoModulo" la primera vez que el alumno la abre, y solo
+// responde si Firestore confirma que este correo ya pagó este módulo
+// (o es VIP/Plan Completo). Así un `curl` a este archivo ya no revela el
+// contenido de la guía.
+var guiaContenidoCargado = false;
+function toggleGuia() {
+  var lista = document.getElementById('guia-lista');
+  var arrow = document.getElementById('guia-arrow');
+  var abierto = lista.style.display !== 'none';
+  if (abierto) {
+    lista.style.display = 'none';
+    arrow.style.transform = 'rotate(0deg)';
+    return;
+  }
+  lista.style.display = 'block';
+  arrow.style.transform = 'rotate(180deg)';
+  if (guiaContenidoCargado) {
+    lista.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  lista.innerHTML = '<p style="text-align:center;color:#757575;padding:40px 0;font-size:1.2rem;">⏳ Cargando guía...</p>';
+  lista.scrollIntoView({behavior:'smooth',block:'start'});
+  firebase.functions().httpsCallable('obtenerContenidoModulo')({modulo:'modulo6'})
+    .then(function(res) {
+      lista.innerHTML = res.data.guiaHtml;
+      guiaContenidoCargado = true;
+      activarAutoguardadoGuia();
+    })
+    .catch(function(err) {
+      var msg = '⚠️ No se pudo cargar la guía. Intenta de nuevo.';
+      if (err.code === 'functions/unauthenticated') { msg = '⚠️ Tu sesión expiró. <a href="login.html">Inicia sesión de nuevo</a> y vuelve a intentarlo.'; }
+      if (err.code === 'functions/permission-denied') { msg = '⚠️ No tienes acceso a este módulo. <a href="Academia_AI.html#planes-pago">Ver planes de pago</a>.'; }
+      lista.innerHTML = '<p style="text-align:center;color:#C62828;padding:40px 20px;font-size:1.15rem;">'+msg+'</p>';
+    });
+}
 function toggleAntiestafas() {
   var lista = document.getElementById('antiestafas-lista');
   var arrow = document.getElementById('antiestafas-arrow');
