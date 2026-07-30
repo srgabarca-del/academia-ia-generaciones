@@ -135,7 +135,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   </div>
 
   <div id="guia-box" style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:24px;overflow:hidden;">
-    <div id="guia-header" onclick="toggleGuia()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);">
+    <button type="button" id="guia-header" onclick="toggleGuia()" aria-expanded="false" aria-controls="guia-lista" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);width:100%;border:none;text-align:left;font-family:inherit;">
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:1.5rem;">📖</span>
         <div>
@@ -144,13 +144,13 @@ document.getElementById('nav-burger').addEventListener('click', function() {
         </div>
       </div>
       <span id="guia-arrow" style="font-size:1.2rem;color:var(--color-primario);transition:transform .3s;">▼</span>
-    </div>
+    </button>
 
     <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;"></div>
   </div>
 
   <div id="antiestafas-box" style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:24px;overflow:hidden;">
-    <div id="antiestafas-header" onclick="toggleAntiestafas()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:#FFF5F5;">
+    <button type="button" id="antiestafas-header" onclick="toggleAntiestafas()" aria-expanded="false" aria-controls="antiestafas-lista" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:#FFF5F5;width:100%;border:none;text-align:left;font-family:inherit;">
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:1.5rem;">🛡️</span>
         <div>
@@ -159,7 +159,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
         </div>
       </div>
       <span id="antiestafas-arrow" style="font-size:1.2rem;color:var(--color-error);transition:transform .3s;">▼</span>
-    </div>
+    </button>
 
     <div id="antiestafas-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;">
       <div style="background:#FFEBEE;border-radius:10px;padding:16px 18px;font-size:1.25rem;font-weight:700;color:var(--color-error);text-align:center;margin-bottom:20px;">"Si tiene dudas, cierre la ventana"</div>
@@ -374,6 +374,7 @@ function toggleGuia() {
   var lista = document.getElementById('guia-lista');
   var arrow = document.getElementById('guia-arrow');
   var abierto = lista.style.display !== 'none';
+  document.getElementById('guia-header').setAttribute('aria-expanded', abierto ? 'false' : 'true');
   if (abierto) {
     lista.style.display = 'none';
     arrow.style.transform = 'rotate(0deg)';
@@ -401,6 +402,7 @@ function toggleAntiestafas() {
   var lista = document.getElementById('antiestafas-lista');
   var arrow = document.getElementById('antiestafas-arrow');
   var abierto = lista.style.display !== 'none';
+  document.getElementById('antiestafas-header').setAttribute('aria-expanded', abierto ? 'false' : 'true');
   lista.style.display = abierto ? 'none' : 'block';
   arrow.style.transform = abierto ? 'rotate(0deg)' : 'rotate(180deg)';
   if (!abierto) { lista.scrollIntoView({behavior:'smooth',block:'start'}); }
