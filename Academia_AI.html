@@ -67,8 +67,10 @@ section{padding:60px 24px}
 .moneda-btn{background:none;border:none;color:rgba(255,255,255,.8);font-size:1.05rem;font-weight:700;padding:7px 18px;border-radius:16px;cursor:pointer;font-family:inherit}
 .moneda-btn.activo{background:var(--color-acento);color:var(--color-primario)}
 .precio-conv{display:block;font-size:1.05rem;font-weight:600;color:rgba(255,255,255,.75);margin-top:4px;min-height:1.3em}
-.chip{display:flex;align-items:center;gap:8px;background:var(--color-neutro-claro);border:1px solid #E0E0E0;border-radius:24px;padding:10px 20px;font-weight:600}
-.dot{width:10px;height:10px;border-radius:50%;background:var(--color-primario)}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;max-width:840px;margin:0 auto}
+.tool-card{background:#fff;border:1px solid #E0E0E0;border-radius:16px;padding:28px 16px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.tool-card svg{width:44px;height:44px;flex-shrink:0}
+.tool-card span{font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);text-align:center}
 .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
 .test{background:#fff;border-radius:16px;padding:28px;border-left:4px solid var(--color-primario);box-shadow:0 2px 12px rgba(0,0,0,.06)}
 .faq-list{max-width:700px;margin:0 auto}
@@ -332,15 +334,37 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
 
 <section>
   <div class="container">
-    <h2 class="title">Solo herramientas 100% gratuitas</h2>
-    <p class="sub">No necesitas comprar nada extra.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
-      <div class="chip"><div class="dot"></div>ChatGPT (gratis)</div>
-      <div class="chip"><div class="dot"></div>Google Gemini</div>
-      <div class="chip"><div class="dot"></div>Microsoft Copilot</div>
-      <div class="chip"><div class="dot"></div>Canva (gratis)</div>
-      <div class="chip"><div class="dot"></div>Google Docs</div>
-      <div class="chip"><div class="dot"></div>YouTube</div>
+    <h2 class="title">Con lo que ya tienes en el celular</h2>
+    <p class="sub">No necesitas comprar nada extra — estas 6 herramientas son 100% gratis.</p>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#000" d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.4592a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>
+        <span>ChatGPT</span>
+      </div>
+      <div class="tool-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="gemGrad" x1="0" y1="0" x2="24" y2="24"><stop offset="0" stop-color="#4285F4"/><stop offset=".5" stop-color="#9B72CB"/><stop offset="1" stop-color="#D96570"/></linearGradient></defs><path fill="url(#gemGrad)" d="M12 2c0 5.5 4.5 10 10 10-5.5 0-10 4.5-10 10 0-5.5-4.5-10-10-10 5.5 0 10-4.5 10-10z"/></svg>
+        <span>Google Gemini</span>
+      </div>
+      <div class="tool-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="copGrad" x1="0" y1="0" x2="24" y2="24"><stop offset="0" stop-color="#00B7C3"/><stop offset=".5" stop-color="#7C5CFC"/><stop offset="1" stop-color="#F72585"/></linearGradient></defs><circle cx="8" cy="12" r="6" fill="url(#copGrad)"/><circle cx="16" cy="12" r="6" fill="url(#copGrad)" opacity=".75"/></svg>
+        <span>Microsoft Copilot</span>
+      </div>
+      <div class="tool-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="canvaGrad" x1="0" y1="24" x2="24" y2="0"><stop offset="0" stop-color="#00C4CC"/><stop offset="1" stop-color="#7D2AE8"/></linearGradient></defs><circle cx="12" cy="12" r="10" fill="url(#canvaGrad)"/><path fill="#fff" d="M12 6.5c-3 0-5.2 2.3-5.2 5.4 0 3.2 2.1 5.6 5 5.6 1.6 0 2.8-.7 3.5-1.5l-1-1.2c-.5.5-1.3.9-2.3.9-1.8 0-3-1.4-3-3.7 0-2.2 1.2-3.6 2.9-3.6 1 0 1.7.4 2.2.9l1-1.2c-.6-.8-1.7-1.6-3.1-1.6z"/></svg>
+        <span>Canva</span>
+      </div>
+      <div class="tool-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path fill="#A1C2FA" d="M14 2v5a1 1 0 0 0 1 1h5z"/><rect x="7" y="12" width="10" height="1.4" fill="#fff"/><rect x="7" y="15" width="10" height="1.4" fill="#fff"/><rect x="7" y="18" width="6" height="1.4" fill="#fff"/></svg>
+        <span>Google Docs</span>
+      </div>
+      <div class="tool-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF0000" d="M23.5 6.2s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.4-1C16.9 2.6 12 2.6 12 2.6h0s-4.9 0-8.2.3c-.5.1-1.5.1-2.4 1-.7.7-.9 2.3-.9 2.3S.2 8.1.2 10v1.9c0 1.9.2 3.8.2 3.8s.2 1.6.9 2.3c.9.9 2.1.9 2.6 1 1.9.2 8.1.3 8.1.3s4.9 0 8.2-.3c.5-.1 1.5-.1 2.4-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8V10c0-1.9-.2-3.8-.2-3.8zM9.7 14.6V7.7l6.5 3.5-6.5 3.4z"/></svg>
+        <span>YouTube</span>
+      </div>
+      <div class="tool-card">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="metaGrad" x1="0" y1="0" x2="24" y2="24"><stop offset="0" stop-color="#0064E0"/><stop offset="1" stop-color="#0080FB"/></linearGradient></defs><path fill="url(#metaGrad)" d="M6.5 8c-2 0-3.5 2-3.5 5s1.3 5 3 5c1.3 0 2.2-.9 3.6-3.1.6-1 1.1-1.9 1.4-2.4-.5-.8-1-1.6-1.5-2.3C8.3 8.7 7.5 8 6.5 8zm11 0c-1 0-1.8.7-3 2.6-.4.6-.9 1.4-1.4 2.3.4.6.8 1.4 1.4 2.4C15.8 17.1 16.7 18 18 18c1.7 0 3-2 3-5s-1.5-5-3.5-5z"/></svg>
+        <span>Meta AI</span>
+      </div>
     </div>
   </div>
 </section>

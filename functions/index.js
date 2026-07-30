@@ -249,6 +249,3 @@ exports.obtenerContenidoModulo = onCall(async (request) => {
 
   return { guiaHtml: doc.data().guiaHtml, examenHtml: doc.data().examenHtml };
 });
-
-
-
