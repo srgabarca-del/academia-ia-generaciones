@@ -285,19 +285,22 @@ var guiaContenidoCargado = false;
 // una consulta a Firestore sin importar si el alumno abre primero la
 // guía o directamente la evaluación.
 var contenidoModuloPromise = null;
-// Espera a que Firebase Auth termine de rehidratar la sesión guardada antes de
-// llamar a la Cloud Function — si se llama demasiado pronto tras cargar la
-// página, currentUser todavía puede estar en null aunque la sesión sí sea
-// válida, y la función responde 'unauthenticated' por error.
-function esperarAuthListo() {
-  if (firebase.auth().currentUser) return Promise.resolve();
-  return new Promise(function(resolve) {
-    var unsub = firebase.auth().onAuthStateChanged(function() { unsub(); resolve(); });
-  });
-}
+// Empieza a esperar la confirmación de sesión desde que carga la página (no
+// desde el primer clic) — Firebase Auth tarda un instante en releer la
+// sesión guardada tras cada carga de página, y si se llama a la Cloud
+// Function antes de esa confirmación, currentUser puede estar en null
+// aunque la sesión sí sea válida ('unauthenticated' por error). Arrancar la
+// espera aquí, en paralelo a que el alumno ve el video o lee la página,
+// hace que para cuando de verdad abra la guía la sesión casi siempre ya
+// esté confirmada y no se sienta ningún retraso.
+var authReadyPromise = firebase.auth().currentUser
+  ? Promise.resolve()
+  : new Promise(function(resolve) {
+      var unsub = firebase.auth().onAuthStateChanged(function() { unsub(); resolve(); });
+    });
 function cargarContenidoModulo() {
   if (!contenidoModuloPromise) {
-    contenidoModuloPromise = esperarAuthListo().then(function() {
+    contenidoModuloPromise = authReadyPromise.then(function() {
       return firebase.functions().httpsCallable('obtenerContenidoModulo')({modulo:'modulo3'});
     }).catch(function(err) { contenidoModuloPromise = null; throw err; });
   }
