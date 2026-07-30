@@ -107,6 +107,28 @@ function esVIP(email) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ── Sincroniza el acceso realmente comprado (Firestore `accesos/{email}`) ──
+// hacia localStorage — así una compra real con Stripe hecha en otro
+// dispositivo o navegador también se refleja aquí al iniciar sesión, sin
+// depender de que sea el mismo navegador donde se hizo la compra.
+function sincronizarAccesoComprado(email) {
+  var correo = (email || '').toLowerCase().trim();
+  return window.fbDb.collection('accesos').doc(correo).get()
+    .then(function(doc) {
+      if (!doc.exists) return;
+      var datos = doc.data();
+      Object.keys(datos).forEach(function(campo) {
+        if (campo.indexOf('acceso_') === 0 && datos[campo] === true) {
+          localStorage.setItem(campo, '1');
+        }
+      });
+    })
+    .catch(function(err) {
+      console.error('No se pudo leer el acceso comprado:', err);
+    });
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 // ── Evita que el acceso comprado por una cuenta se herede a otra cuenta ──────
 // distinta registrada/iniciada después en el mismo navegador (localStorage no
 // se limpia solo al cambiar de cuenta). Llamar SIEMPRE antes de otorgar acceso.
@@ -138,7 +160,8 @@ function procesarUsuarioGoogle(user, esNuevo) {
   sessionStorage.setItem('alumno_email', email);
   sessionStorage.setItem('firebase_uid', user.uid);
   sincronizarCuentaAcceso(email);
-  esVIP(email).then(function(esVip) {
+  Promise.all([esVIP(email), sincronizarAccesoComprado(email)]).then(function(resultados) {
+    var esVip = resultados[0];
     if (esVip) {
       localStorage.setItem('acceso_plan', '1');
       for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
@@ -181,8 +204,10 @@ window.fbAuth.onAuthStateChanged(function(user) {
     sessionStorage.setItem('alumno_email', user.email);
     sessionStorage.setItem('firebase_uid', user.uid);
     sincronizarCuentaAcceso(user.email);
-    // Si es VIP, dar acceso completo a todos los módulos
-    esVIP(user.email).then(function(esVip) {
+    // Si es VIP, dar acceso completo a todos los módulos; en cualquier caso,
+    // sincronizar también el acceso realmente comprado desde Firestore
+    Promise.all([esVIP(user.email), sincronizarAccesoComprado(user.email)]).then(function(resultados) {
+      var esVip = resultados[0];
       if (esVip) {
         localStorage.setItem('acceso_plan', '1');
         for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');
@@ -208,8 +233,10 @@ document.getElementById('btn-login').addEventListener('click', function() {
       // Guardar estado de verificación
       sessionStorage.setItem('email_verificado', user.emailVerified ? 'si' : 'no');
       sincronizarCuentaAcceso(e);
-      // Si es VIP dar acceso completo
-      return esVIP(e).then(function(esVip) {
+      // Si es VIP dar acceso completo; en cualquier caso, sincronizar
+      // también el acceso realmente comprado desde Firestore
+      return Promise.all([esVIP(e), sincronizarAccesoComprado(e)]).then(function(resultados) {
+        var esVip = resultados[0];
         if (esVip) {
           localStorage.setItem('acceso_plan', '1');
           for (var i=1; i<=6; i++) localStorage.setItem('acceso_modulo'+i, '1');

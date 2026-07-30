@@ -115,9 +115,6 @@ label{display:block;font-size:1.1rem;font-weight:600;color:var(--color-neutro-os
 .mclose{position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#666}
 .minp{width:100%;padding:12px 14px;border:1.5px solid #E0E0E0;border-radius:10px;font-size:1.2rem;font-family:inherit;outline:none;margin-bottom:14px}
 .minp:focus{border-color:var(--color-primario)}
-.metodo-row{display:flex;gap:8px;margin-bottom:14px}
-.met{flex:1;border:1.5px solid #E0E0E0;border-radius:10px;padding:10px;cursor:pointer;text-align:center;font-size:1.15rem;font-weight:600;transition:all .15s}
-.met.sel{border-color:var(--color-primario);background:#EDE7F6}
 .btn-pay{width:100%;padding:15px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.2rem;font-weight:700;cursor:pointer}
 .merr{display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:10px 14px;font-size:1.1rem;margin-bottom:12px}
 footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center;color:rgba(255,255,255,.85);font-size:1.1rem}
@@ -488,24 +485,10 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
     <input class="minp" type="text" id="p-nombre" placeholder="Como aparecerá en tu recibo" autocomplete="name">
     <label>Correo electrónico *</label>
     <input class="minp" type="email" id="p-email" placeholder="Para enviarte el acceso" autocomplete="email" inputmode="email" spellcheck="false">
-    <label style="margin-bottom:8px;">Método de pago *</label>
-    <div class="metodo-row">
-      <div class="met" id="lbl-t" onclick="selMet('t')">💳 Tarjeta</div>
-      <div class="met" id="lbl-p" onclick="selMet('p')">🅿️ PayPal</div>
-    </div>
-    <div id="det-t" style="display:none;margin-bottom:14px;">
-      <input type="text" class="minp" id="num-t" placeholder="1234 5678 9012 3456" maxlength="19" style="margin-bottom:8px;" autocomplete="cc-number" inputmode="numeric">
-      <div style="display:flex;gap:8px;">
-        <input type="text" class="minp" id="venc-t" placeholder="MM/AA" maxlength="5" inputmode="numeric" style="flex:1;margin-bottom:0;">
-        <input type="text" class="minp" placeholder="CVV" maxlength="4" inputmode="numeric" style="flex:1;margin-bottom:0;">
-      </div>
-    </div>
-    <div id="det-p" style="display:none;background:var(--color-neutro-claro);border-radius:10px;padding:14px;font-size:1.15rem;color:var(--color-primario);margin-bottom:14px;">
-      📧 Serás redirigido a PayPal para completar el pago.
-    </div>
+    <p style="font-size:1.05rem;color:#757575;margin-bottom:14px;line-height:1.5;">Al continuar, te llevamos a la página segura de Stripe para completar el pago con tarjeta.</p>
     <div class="merr" id="perr">⚠️ Completa todos los campos requeridos.</div>
-    <button class="btn-pay" id="btn-pay">🔒 Confirmar pago</button>
-    <p style="text-align:center;font-size:1.2rem;color:#757575;margin-top:10px;">🔒 Pago seguro · Garantía 7 días</p>
+    <button class="btn-pay" id="btn-pay">🔒 Continuar a pago seguro</button>
+    <p style="text-align:center;font-size:1.2rem;color:#757575;margin-top:10px;">🔒 Pago seguro con Stripe · Garantía 7 días</p>
   </div>
 </div>
 
@@ -518,7 +501,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
     <div style="background:var(--color-neutro-claro);border:2px solid var(--color-primario);border-radius:14px;padding:20px;margin-bottom:20px;text-align:left;">
       <p style="font-size:1.05rem;font-weight:700;color:var(--color-primario);text-transform:uppercase;margin-bottom:12px;">✅ Resumen de tu acceso</p>
       <div style="margin-bottom:8px;"><span style="font-size:1.05rem;color:#757575;display:block;">Correo</span><span id="c-email" style="font-size:1.2rem;font-weight:700;"></span></div>
-      <div><span style="font-size:1.05rem;color:#757575;display:block;">Módulo desbloqueado</span><span id="c-mod" style="font-size:1.2rem;font-weight:700;color:var(--color-primario);"</span></div>
+      <div><span style="font-size:1.05rem;color:#757575;display:block;">Módulo desbloqueado</span><span id="c-mod" style="font-size:1.2rem;font-weight:700;color:var(--color-primario);"></span></div>
     </div>
     <a id="btn-login-conf" href="#" style="display:block;background:var(--color-primario);color:#fff;padding:14px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Entrar al módulo</a>
     <button onclick="AccesibilidadModal.cerrar(document.getElementById('mconf'))" style="width:100%;padding:12px;background:#E0E0E0;color:#555;border:none;border-radius:12px;cursor:pointer;font-size:1.15rem;font-weight:600;">📋 Guardar y cerrar</button>
@@ -893,7 +876,7 @@ var AccesibilidadModal = (function() {
 // ─────────────────────────────────────────────────────────────────────────
 
 // ── PAGO
-var pagoActual='', metSel='';
+var pagoActual='';
 var INFO={
   modulo2:    {titulo:'💬 Módulo 2',    precio:'$7 USD',      color:'#00897B', mod:'Módulo 2: Conversando con una IA',    archivo:'modulo2.html'},
   modulo3:    {titulo:'🎨 Módulo 3',    precio:'$9 USD',      color:'#E91E63', mod:'Módulo 3: Creando Imágenes con IA',   archivo:'modulo3.html'},
@@ -903,7 +886,7 @@ var INFO={
   plan:       {titulo:'⭐ Plan Completo',precio:'$29.99 USD',  color:'var(--color-primario)', mod:'Plan Completo — Todos los módulos',  archivo:'modulo2.html'}
 };
 function abrirPago(tipo) {
-  pagoActual=tipo; metSel='';
+  pagoActual=tipo;
   var info=INFO[tipo];
   document.getElementById('phdr').innerHTML=
     '<span style="background:'+info.color+';color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;">'+info.titulo+'</span>'
@@ -911,11 +894,7 @@ function abrirPago(tipo) {
   document.getElementById('p-nombre').value='';
   document.getElementById('p-email').value='';
   document.getElementById('perr').style.display='none';
-  document.getElementById('det-t').style.display='none';
-  document.getElementById('det-p').style.display='none';
-  document.getElementById('lbl-t').classList.remove('sel');
-  document.getElementById('lbl-p').classList.remove('sel');
-  document.getElementById('btn-pay').textContent='🔒 Confirmar pago — '+info.precio;
+  document.getElementById('btn-pay').textContent='🔒 Continuar a pago seguro — '+info.precio;
   document.getElementById('btn-pay').disabled=false;
   AccesibilidadModal.abrir(document.getElementById('mpago'));
   firebase.analytics().logEvent('begin_checkout', {
@@ -927,79 +906,26 @@ function abrirPago(tipo) {
 document.getElementById('mcerrar').addEventListener('click', function() {
   AccesibilidadModal.cerrar(document.getElementById('mpago'));
 });
-function selMet(m) {
-  metSel=m;
-  document.getElementById('det-t').style.display=m==='t'?'block':'none';
-  document.getElementById('det-p').style.display=m==='p'?'block':'none';
-  document.getElementById('lbl-t').classList.toggle('sel',m==='t');
-  document.getElementById('lbl-p').classList.toggle('sel',m==='p');
-}
-document.getElementById('num-t').addEventListener('input', function() {
-  var v=this.value.replace(/\D/g,'').substring(0,16);
-  this.value=v.replace(/(.{4})/g,'$1 ').trim();
-});
-document.getElementById('venc-t').addEventListener('input', function() {
-  var v=this.value.replace(/\D/g,'').substring(0,4);
-  if (v.length>2) v=v.substring(0,2)+'/'+v.substring(2);
-  this.value=v;
-});
 document.getElementById('btn-pay').addEventListener('click', function() {
   var nom=document.getElementById('p-nombre').value.trim();
   var eml=document.getElementById('p-email').value.trim();
   var eok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(eml);
-  if(!nom||!eml||!eok||!metSel) { document.getElementById('perr').style.display='block'; return; }
-  // PUENTE TEMPORAL: el pago sigue simulado (sin Stripe real), pero ahora
-  // otorga acceso de verdad en Firestore vía una Cloud Function que exige
-  // sesión de Firebase Auth — así que, por ahora, hay que haber iniciado
-  // sesión antes de poder "comprar". Cuando se conecte Stripe de verdad
-  // esto se reemplaza por un checkout que no depende de tener cuenta antes.
-  if (!window.fbAuth || !window.fbAuth.currentUser) {
-    document.getElementById('perr').innerHTML = '⚠️ Necesitas iniciar sesión antes de comprar. <a href="login.html" target="_blank">Inicia sesión aquí</a> y vuelve a intentarlo.';
-    document.getElementById('perr').style.display='block';
-    return;
-  }
+  if(!nom||!eml||!eok) { document.getElementById('perr').style.display='block'; return; }
   document.getElementById('perr').style.display='none';
-  this.textContent='⏳ Procesando...'; this.disabled=true;
-  var info=INFO[pagoActual];
+  this.textContent='⏳ Conectando con Stripe...'; this.disabled=true;
+  sessionStorage.setItem('pago_nombre', nom);
   var btnPay=this;
-  setTimeout(function() {
-    firebase.functions().httpsCallable('otorgarAccesoSimulado')({tipo: pagoActual})
-      .then(function() {
-        var nombre_al = nom.split(' ')[0];
-        sessionStorage.setItem('pago_email',  eml);
-        sessionStorage.setItem('pago_archivo', info.archivo);
-        sincronizarCuentaAcceso(eml);
-        if (pagoActual === 'plan') {
-          localStorage.setItem('acceso_plan', '1');
-        } else {
-          localStorage.setItem('acceso_' + pagoActual, '1');
-        }
-        sessionStorage.setItem('alumno_nombre', nombre_al);
-        firebase.analytics().logEvent('purchase', {
-          currency: 'USD',
-          value: parseFloat(info.precio.replace(/[^0-9.]/g,'')),
-          transaction_id: pagoActual + '_' + Date.now(),
-          items: [{item_id: pagoActual, item_name: info.mod}]
-        });
-        document.getElementById('c-email').textContent=eml;
-        document.getElementById('c-mod').textContent=info.mod;
-        document.getElementById('btn-login-conf').href=info.archivo;
-        document.getElementById('cmsg').innerHTML='Pago de <strong>'+info.precio+'</strong> procesado correctamente.';
-        var origenPago = AccesibilidadModal.obtenerOrigen();
-        document.getElementById('mpago').classList.remove('open');
-        AccesibilidadModal.abrir(document.getElementById('mconf'), origenPago);
-        btnPay.textContent='🔒 Confirmar pago';
-        btnPay.disabled=false;
-      })
-      .catch(function(err) {
-        btnPay.textContent='🔒 Confirmar pago — '+info.precio;
-        btnPay.disabled=false;
-        var msg='⚠️ No se pudo procesar el pago. Intenta de nuevo.';
-        if (err.code==='functions/unauthenticated') { msg='⚠️ Tu sesión expiró. <a href="login.html" target="_blank">Inicia sesión de nuevo</a> y vuelve a intentarlo.'; }
-        document.getElementById('perr').innerHTML=msg;
-        document.getElementById('perr').style.display='block';
-      });
-  }, 1800);
+  var info=INFO[pagoActual];
+  firebase.functions().httpsCallable('crearSesionPago')({tipo: pagoActual, email: eml})
+    .then(function(res) {
+      window.location = res.data.url;
+    })
+    .catch(function(err) {
+      btnPay.textContent='🔒 Continuar a pago seguro — '+info.precio;
+      btnPay.disabled=false;
+      document.getElementById('perr').textContent='⚠️ No se pudo conectar con Stripe. Intenta de nuevo.';
+      document.getElementById('perr').style.display='block';
+    });
 });
 
 // Auto-scroll si regresa del módulo
@@ -1017,6 +943,51 @@ window.addEventListener('load', function() {
     }, 400);
   }
 });
+
+// ── Regreso de Stripe Checkout (success_url / cancel_url) ────────────────
+// Nunca se confía en que la URL diga "?pago=exito" por sí sola — cualquiera
+// podría escribir esa URL a mano. Se verifica el session_id real contra la
+// API de Stripe (Cloud Function verificarSesionPago) antes de otorgar nada.
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var pago = params.get('pago');
+  if (pago !== 'exito' && pago !== 'cancelado') return;
+  var sessionId = params.get('session_id');
+  var tipoUrl = params.get('tipo');
+  // Limpia la URL de inmediato para que un refresh no repita nada.
+  history.replaceState(null, '', window.location.pathname);
+  if (pago === 'cancelado' || !sessionId) return;
+
+  firebase.functions().httpsCallable('verificarSesionPago')({session_id: sessionId})
+    .then(function(res) {
+      var data = res.data;
+      var info = INFO[data.tipo] || INFO[tipoUrl];
+      var nombreGuardado = sessionStorage.getItem('pago_nombre') || '';
+      sessionStorage.setItem('pago_email', data.email);
+      sessionStorage.setItem('pago_archivo', info ? info.archivo : 'dashboard.html');
+      if (nombreGuardado) sessionStorage.setItem('alumno_nombre', nombreGuardado.split(' ')[0]);
+      sincronizarCuentaAcceso(data.email);
+      if (data.tipo === 'plan') {
+        localStorage.setItem('acceso_plan', '1');
+      } else {
+        localStorage.setItem('acceso_' + data.tipo, '1');
+      }
+      firebase.analytics().logEvent('purchase', {
+        currency: 'USD',
+        value: info ? parseFloat(info.precio.replace(/[^0-9.]/g,'')) : 0,
+        transaction_id: sessionId,
+        items: [{item_id: data.tipo, item_name: data.mod}]
+      });
+      document.getElementById('c-email').textContent = data.email;
+      document.getElementById('c-mod').textContent = data.mod;
+      document.getElementById('btn-login-conf').href = info ? info.archivo : 'dashboard.html';
+      document.getElementById('cmsg').innerHTML = 'Tu pago se procesó correctamente.';
+      AccesibilidadModal.abrir(document.getElementById('mconf'));
+    })
+    .catch(function(err) {
+      alert('Recibimos tu pago pero no pudimos confirmarlo automáticamente. Si el cargo se realizó, contáctanos con tu comprobante y activamos tu acceso a mano.');
+    });
+})();
 </script>
 
 <!-- ── Banner de cookies (CookieConsent v3) ──────────────────────────────

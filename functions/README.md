@@ -83,15 +83,23 @@ Cuando todo funcione en modo de prueba:
 2. Repite el paso de guardar `STRIPE_SECRET_KEY` y crear el webhook, pero
    ahora con las llaves que empiezan con `sk_live_...` / `whsec_...` reales.
 
-## Lo que falta después de esto (siguiente sesión con Claude)
+## Estado actual (sesión 46)
 
-El frontend (`academia_ia_pagina_ventas.html`) todavía usa el formulario de
-tarjeta simulado — no llama a `crearSesionPago` todavía. Ese cambio se hace
-en una sesión aparte, una vez que confirmes que las Cloud Functions ya están
-desplegadas y probadas, para poder verificar el flujo completo de punta a
-punta sin dejar el sitio en un estado roto a medias.
+El frontend (`Academia_AI.html`) ya llama a `crearSesionPago` y redirige a
+Stripe Checkout de verdad — el formulario de tarjeta simulado y el puente
+`otorgarAccesoSimulado` se eliminaron. Al volver de Stripe (`success_url`),
+la página llama a `verificarSesionPago` (verifica el pago contra la propia
+API de Stripe usando el `session_id`, nunca confía en el query string por sí
+solo) antes de otorgar cualquier acceso.
 
-También falta migrar el control de acceso de los 6 módulos de
-`sessionStorage` a una lectura de Firestore (colección `accesos`), que es lo
-que de verdad hace imposible que alguien se dé acceso gratis desde la consola
-del navegador.
+`login.html` también sincroniza `accesos/{email}` de Firestore hacia
+`localStorage` en cada inicio de sesión (Google, correo/contraseña, y sesión
+ya iniciada), así que una compra hecha en un dispositivo se refleja al
+iniciar sesión en otro — esto cierra el pendiente de migrar el control de
+acceso fuera de `sessionStorage`/`localStorage` como única fuente de verdad
+en el navegador que hizo la compra.
+
+**Sigue en modo de prueba de Stripe** — para pasar a cobros reales, sigue la
+sección "Pasar a producción" de arriba (activar la cuenta de Stripe y
+cambiar las llaves a `sk_live_...`/`whsec_...`). No hace falta tocar más
+código para eso, solo las llaves.

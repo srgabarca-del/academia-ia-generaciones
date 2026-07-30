@@ -61,11 +61,48 @@ exports.crearSesionPago = onCall({ secrets: [stripeSecretKey] }, async (request)
         quantity: 1,
       },
     ],
-    success_url: `${URL_SITIO}/Academia_AI.html?pago=exito&tipo=${tipo}`,
+    success_url: `${URL_SITIO}/Academia_AI.html?pago=exito&tipo=${tipo}&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${URL_SITIO}/Academia_AI.html?pago=cancelado`,
   });
 
   return { url: session.url };
+});
+
+/**
+ * Callable desde el frontend, al regresar de Stripe Checkout a success_url.
+ * NUNCA hay que confiar en el simple hecho de que la URL diga "?pago=exito"
+ * — cualquiera podría escribir esa URL a mano sin haber pagado. Esta
+ * función verifica el pago contra la propia API de Stripe usando el
+ * session_id real que Stripe generó, y solo si `payment_status` es "paid"
+ * otorga el acceso — así el navegador nunca es la fuente de verdad.
+ * Es seguro llamarla más de una vez para el mismo session_id (idempotente,
+ * ya que otorgarAcceso() usa `set({...}, {merge:true})`), útil porque
+ * `webhookStripe` también puede llegar a otorgar el mismo acceso por su
+ * cuenta — no hay problema si ambos caminos terminan escribiendo lo mismo.
+ * request.data: { session_id: string }
+ */
+exports.verificarSesionPago = onCall({ secrets: [stripeSecretKey] }, async (request) => {
+  const sessionId = request.data && request.data.session_id;
+  if (!sessionId || typeof sessionId !== 'string') {
+    throw new HttpsError('invalid-argument', 'Falta el identificador de la sesión de pago.');
+  }
+  const stripe = Stripe(stripeSecretKey.value());
+  let session;
+  try {
+    session = await stripe.checkout.sessions.retrieve(sessionId);
+  } catch (err) {
+    throw new HttpsError('not-found', 'No se encontró esa sesión de pago.');
+  }
+  if (session.payment_status !== 'paid') {
+    throw new HttpsError('failed-precondition', 'Ese pago todavía no se ha completado.');
+  }
+  const tipo = session.metadata && session.metadata.tipo;
+  const email = session.metadata && session.metadata.email;
+  if (!tipo || !email || !PRODUCTOS[tipo]) {
+    throw new HttpsError('internal', 'La sesión de pago no tiene los datos esperados.');
+  }
+  await otorgarAcceso(email, tipo);
+  return { ok: true, tipo, email, mod: PRODUCTOS[tipo].nombre };
 });
 
 /**
@@ -119,32 +156,6 @@ async function otorgarAcceso(email, tipo) {
     { merge: true }
   );
 }
-
-/**
- * PUENTE TEMPORAL — el flujo de pago del sitio sigue siendo simulado
- * (sin Stripe real todavía). `accesos/{email}` tiene `allow write: if false`
- * en firestore.rules, así que la única forma de escribir ahí es desde una
- * Cloud Function con el Admin SDK. Esta función deja que el pago simulado
- * otorgue acceso real en Firestore (usando el mismo `otorgarAcceso()` que
- * ya usa `webhookStripe`), para poder construir y probar el gateo de
- * contenido de la guía sin esperar a activar cobros reales.
- * Cuando se conecte Stripe de verdad, esta función debe eliminarse y el
- * flujo de pago debe llamar a `crearSesionPago` en su lugar.
- * Usa el correo YA AUTENTICADO (request.auth), nunca el que el cliente
- * mande en el body, para que nadie pueda otorgarle acceso a otro correo.
- * request.data: { tipo: 'modulo2'|...|'modulo6'|'plan' }
- */
-exports.otorgarAccesoSimulado = onCall(async (request) => {
-  if (!request.auth || !request.auth.token.email) {
-    throw new HttpsError('unauthenticated', 'Debes iniciar sesión para completar la compra.');
-  }
-  const tipo = request.data && request.data.tipo;
-  if (!PRODUCTOS[tipo]) {
-    throw new HttpsError('invalid-argument', 'Producto no válido.');
-  }
-  await otorgarAcceso(request.auth.token.email, tipo);
-  return { ok: true };
-});
 
 const MODULOS_CON_EXAMEN = ['modulo2', 'modulo3', 'modulo4', 'modulo5', 'modulo6'];
 
