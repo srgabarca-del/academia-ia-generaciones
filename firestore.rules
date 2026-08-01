@@ -94,5 +94,26 @@ service cloud.firestore {
                     && request.resource.data.fecha is string
                     && request.resource.data.fecha.size() <= 100;
     }
+
+    // Evidencia de consentimiento a Términos y Aviso de Privacidad, un
+    // documento por correo (en minúsculas) como ID. Se crea UNA sola vez,
+    // en el momento real del registro (correo/contraseña o primera vez con
+    // Google) — el propio sitio nunca lo vuelve a escribir en logins
+    // posteriores. Solo el dueño de ese correo, ya autenticado con ese
+    // mismo correo en Firebase Auth, puede crear su propio documento (no
+    // puede crear uno a nombre de otra persona); nadie puede leerlo,
+    // editarlo ni borrarlo desde el cliente — es evidencia de solo lectura
+    // para el dueño del sitio, revisable en la Consola de Firebase.
+    match /consentimientos/{email} {
+      allow read, update, delete: if false;
+      allow create: if request.auth != null
+                    && request.auth.token.email.lower() == email
+                    && request.resource.data.registrationMethod in ['password', 'google']
+                    && request.resource.data.acceptedTermsVersion is string
+                    && request.resource.data.acceptedTermsVersion.size() <= 20
+                    && request.resource.data.acceptedPrivacyVersion is string
+                    && request.resource.data.acceptedPrivacyVersion.size() <= 20
+                    && request.resource.data.acceptedAt is timestamp;
+    }
   }
 }
