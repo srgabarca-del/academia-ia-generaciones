@@ -6,7 +6,7 @@
 <title>Módulo 5 — Academia IA Generaciones</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Playfair+Display:wght@700;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -53,7 +53,21 @@ nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:c
 .op{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;margin-bottom:4px;cursor:pointer;font-size:1.2rem}
 .op:hover{background:#F3E5F5}
 .op input{accent-color:var(--color-primario);width:20px;height:20px;flex-shrink:0;cursor:pointer}
-.cert-box{border-radius:16px;padding:40px 28px;text-align:center;background:#fff;margin-top:20px;display:none}
+.cert-box{padding:0;text-align:center;background:transparent;margin-top:20px;display:none}
+.cert-frame{background:#26296B url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M5 5h8v8h-4v-4h-4z' fill='none' stroke='%23ffffff' stroke-opacity='.3' stroke-width='1.6'/%3E%3C/svg%3E") repeat;padding:14px;border-radius:6px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cert-inner{background:#FDFBF3;border:2px solid #26296B;padding:44px 30px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cert-eyebrow{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:.06em;color:#1A1A2E;text-transform:uppercase;margin-bottom:10px}
+.cert-headline{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:#26296B;margin-bottom:22px}
+.cert-label{font-family:'Quicksand',sans-serif;font-size:1.1rem;color:#424242;margin-bottom:8px}
+.cert-name{font-family:'Quicksand',sans-serif;font-size:1.8rem;font-weight:700;color:#212121;display:inline-block;padding-bottom:8px;border-bottom:2px solid #26296B;margin:0 auto 20px;max-width:90%}
+.cert-module{font-family:'Quicksand',sans-serif;font-size:1.2rem;font-weight:700;color:#212121;margin-bottom:14px}
+.cert-desc{font-family:'Quicksand',sans-serif;font-size:1.1rem;color:#212121;line-height:1.6;max-width:520px;margin:0 auto 24px}
+.cert-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:8px;flex-wrap:wrap}
+.cert-footer-col{flex:1;min-width:110px}
+.cert-footer-col .line{border-top:1px solid #BDBDBD;padding-top:6px;font-family:'Quicksand',sans-serif;font-size:.85rem;color:#616161;word-break:break-all}
+.cert-qr{width:110px;height:110px;flex:none;margin:0 auto}
+.cert-legal-note{font-size:.85rem;color:#757575;line-height:1.5;max-width:600px;margin:14px auto 0;text-align:center}
+.cert-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}
 
 @media print {
   body * { visibility: hidden; }
@@ -145,17 +159,22 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 
   <div id="qres" style="display:none;text-align:center;padding:32px 16px;"></div>
 
-  <div class="cert-box" id="certbox" style="border:3px solid var(--color-acento);">
-    <div style="font-size:3.5rem;margin-bottom:12px;">🏆</div>
-    <div style="font-size:1.1rem;font-weight:700;color:var(--color-primario);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Academia IA Generaciones</div>
-    <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:8px;">Certificado de Módulo</h2>
-    <p style="color:#555;margin-bottom:12px;">Este certificado se otorga a</p>
-    <div id="cn" style="font-size:1.8rem;font-weight:800;color:var(--color-primario);margin-bottom:16px;"></div>
-    <p style="font-weight:700;margin-bottom:16px;">Módulo 5: IA para la Creatividad</p>
-    <div id="cf" style="font-size:1.1rem;color:#757575;margin-bottom:28px;"></div>
-    <div id="cert-qr" style="width:110px;height:110px;margin:0 auto 10px;"></div>
-    <div id="cert-id-info" style="font-size:.95rem;color:#757575;margin-bottom:20px;word-break:break-all;"></div>
-    <button onclick="window.print()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
+  <div class="cert-box" id="certbox">
+    <div class="cert-frame"><div class="cert-inner">
+      <div class="cert-eyebrow">Academia IA Generaciones</div>
+      <div class="cert-headline">Certificado de Módulo</div>
+      <p class="cert-label">Este certificado se otorga a</p>
+      <div id="cn" class="cert-name"></div>
+      <p class="cert-module">Módulo 5: IA para la Creatividad</p>
+      <div class="cert-footer">
+        <div class="cert-footer-col"><div class="line" id="cf"></div></div>
+        <div id="cert-qr" class="cert-qr"></div>
+        <div class="cert-footer-col"><div class="line" id="cert-id-info"></div></div>
+      </div>
+    </div></div>
+    <div class="cert-actions">
+      <button onclick="window.print()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
+    </div>
   </div>
 
   <div id="lock-siguiente" style="display:none;background:#fff;border:2px dashed #BDBDBD;border-radius:14px;padding:32px 24px;text-align:center;margin-top:20px;">
