@@ -626,6 +626,16 @@ function esVIP(email) {
 // ── Evita que el acceso comprado por una cuenta se herede a otra cuenta ──────
 // distinta registrada/iniciada después en el mismo navegador (localStorage no
 // se limpia solo al cambiar de cuenta). Llamar SIEMPRE antes de otorgar acceso.
+// Registra un evento de Analytics SOLO si el alumno ya aceptó la cookie de
+// estadísticas — antes varios eventos (sign_up, begin_checkout, purchase...)
+// llamaban a firebase.analytics() directamente sin revisar el consentimiento,
+// contradiciendo lo que promete la Política de Cookies.
+function logEventoAnalytics(nombre, params) {
+  if (window.CookieConsent && CookieConsent.acceptedCategory('analytics')) {
+    firebase.analytics().logEvent(nombre, params);
+  }
+}
+
 function sincronizarCuentaAcceso(email) {
   var actual = (email || '').toLowerCase().trim();
   var previa = localStorage.getItem('cuenta_acceso');
@@ -681,7 +691,7 @@ function procesarUsuarioGoogle(user, esNuevo) {
       // inmediato al Módulo 1, igual que el registro con correo/contraseña.
       localStorage.setItem('acceso_modulo1', '1');
     }
-    firebase.analytics().logEvent(esNuevo ? 'sign_up' : 'login', {method: 'google'});
+    logEventoAnalytics(esNuevo ? 'sign_up' : 'login', {method: 'google'});
     window.location = 'dashboard.html';
   });
 }
@@ -724,7 +734,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
     sessionStorage.setItem('alumno_email', email);
     sincronizarCuentaAcceso(email);
     localStorage.setItem('acceso_modulo1', '1');
-    firebase.analytics().logEvent('sign_up', {method:'email'});
+    logEventoAnalytics('sign_up', {method:'email'});
     document.getElementById('frm').style.display='none';
     document.getElementById('exito-nombre').textContent=nombre;
     document.getElementById('exito').style.display='block';
@@ -744,7 +754,7 @@ document.getElementById('btn-reg').addEventListener('click', function() {
           sessionStorage.setItem('alumno_email',  email);
           sincronizarCuentaAcceso(email);
           registrarConsentimiento(email, 'password');
-          firebase.analytics().logEvent('sign_up', {method:'email'});
+          logEventoAnalytics('sign_up', {method:'email'});
           document.getElementById('frm').style.display='none';
           // ── Si es VIP, acceso completo inmediato, sin esperar verificación de correo ──
           return esVIP(email).then(function(esVip) {
@@ -918,7 +928,7 @@ function abrirPago(tipo) {
   document.getElementById('btn-pay').textContent='🔒 Continuar a pago seguro — '+info.precio;
   document.getElementById('btn-pay').disabled=false;
   AccesibilidadModal.abrir(document.getElementById('mpago'));
-  firebase.analytics().logEvent('begin_checkout', {
+  logEventoAnalytics('begin_checkout', {
     currency: 'USD',
     value: parseFloat(info.precio.replace(/[^0-9.]/g,'')),
     items: [{item_id: tipo, item_name: info.mod}]
@@ -993,7 +1003,7 @@ window.addEventListener('load', function() {
       } else {
         localStorage.setItem('acceso_' + data.tipo, '1');
       }
-      firebase.analytics().logEvent('purchase', {
+      logEventoAnalytics('purchase', {
         currency: 'USD',
         value: info ? parseFloat(info.precio.replace(/[^0-9.]/g,'')) : 0,
         transaction_id: sessionId,

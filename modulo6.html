@@ -531,7 +531,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
         document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 6 completado! 🎉';
         certOK=true;
         localStorage.setItem('modulo6_completado','1');
-        firebase.analytics().logEvent('course_complete', {course: 'academia_ia_6_modulos'});
+        logEventoAnalytics('course_complete', {course: 'academia_ia_6_modulos'});
       }else{
         rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:var(--color-error);margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
       }
@@ -559,6 +559,15 @@ function reiniciar() {
 // el alumno ya haya hecho los otros 5. Esta función revisa cuáles módulos
 // le faltan y lo invita a completarlos, o le avisa que su Certificado
 // Final de Graduación (que vive en el panel, no aquí) ya está disponible.
+// Registra un evento de Analytics SOLO si el alumno ya aceptó la cookie de
+// estadísticas — antes "course_complete" llamaba a firebase.analytics()
+// directamente sin revisar el consentimiento.
+function logEventoAnalytics(nombre, params) {
+  if (window.CookieConsent && CookieConsent.acceptedCategory('analytics')) {
+    firebase.analytics().logEvent(nombre, params);
+  }
+}
+
 function mostrarInvitacionProgreso() {
   var NOMBRES = {1:'Descubriendo la Inteligencia Artificial',2:'Conversando con una IA',3:'Creando Imágenes con IA',4:'IA para la Vida Diaria',5:'IA para la Creatividad',6:'Seguridad y Uso Responsable'};
   var faltantes = [];

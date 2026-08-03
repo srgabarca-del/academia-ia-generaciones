@@ -133,6 +133,16 @@ function sincronizarAccesoComprado(email) {
 // ── Evita que el acceso comprado por una cuenta se herede a otra cuenta ──────
 // distinta registrada/iniciada después en el mismo navegador (localStorage no
 // se limpia solo al cambiar de cuenta). Llamar SIEMPRE antes de otorgar acceso.
+// Registra un evento de Analytics SOLO si el alumno ya aceptó la cookie de
+// estadísticas — antes el login/registro con Google llamaba a
+// firebase.analytics() directamente sin revisar el consentimiento,
+// contradiciendo lo que promete la Política de Cookies.
+function logEventoAnalytics(nombre, params) {
+  if (window.CookieConsent && CookieConsent.acceptedCategory('analytics')) {
+    firebase.analytics().logEvent(nombre, params);
+  }
+}
+
 function sincronizarCuentaAcceso(email) {
   var actual = (email || '').toLowerCase().trim();
   var previa = localStorage.getItem('cuenta_acceso');
@@ -189,7 +199,7 @@ function procesarUsuarioGoogle(user, esNuevo) {
       // igual que el registro con correo/contraseña de Academia_AI.html.
       localStorage.setItem('acceso_modulo1', '1');
     }
-    firebase.analytics().logEvent(esNuevo ? 'sign_up' : 'login', {method: 'google'});
+    logEventoAnalytics(esNuevo ? 'sign_up' : 'login', {method: 'google'});
     window.location = 'dashboard.html';
   });
 }
