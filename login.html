@@ -209,6 +209,10 @@ document.getElementById('btn-google').addEventListener('click', function() {
   btn.disabled = true;
   document.getElementById('err-google').style.display = 'none';
   var provider = new firebase.auth.GoogleAuthProvider();
+  // Sin esto, Google reutiliza en silencio la última cuenta usada en este
+  // navegador — un problema real en una computadora compartida en familia,
+  // donde cada quien necesita poder elegir su propia cuenta cada vez.
+  provider.setCustomParameters({ prompt: 'select_account' });
   window.fbAuth.signInWithPopup(provider)
     .then(function(result) {
       var esNuevo = !!(result.additionalUserInfo && result.additionalUserInfo.isNewUser);
