@@ -148,7 +148,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   <div id="ev" style="display:none;margin-top:8px;">
     <div style="background:var(--color-primario);border-radius:14px;padding:20px 24px;margin-bottom:20px;color:#fff;">
       <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:4px;">📝 Evaluación del Módulo 2</h2>
-      <p style="font-size:1.05rem;opacity:.85;">5 preguntas — necesitas 4 correctas para aprobar.</p>
+      <p style="font-size:1.05rem;opacity:.85;">7 preguntas — necesitas 5 correctas para aprobar.</p>
     </div>
     <div id="preguntas-examen"></div>
     <div id="qerr" style="display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:12px;margin-top:12px;font-size:1.1rem;">⚠️ Responde todas las preguntas.</div>
@@ -442,12 +442,12 @@ document.getElementById('btn-eval').addEventListener('click', function() {
 
 document.getElementById('btn-env').addEventListener('click', function() {
   var ok=true;
-  for(var i=1;i<=5;i++) { if(!document.querySelector('input[name="q'+i+'"]:checked')){ok=false;break;} }
+  for(var i=1;i<=7;i++) { if(!document.querySelector('input[name="q'+i+'"]:checked')){ok=false;break;} }
   if(!ok){document.getElementById('qerr').style.display='block';return;}
   document.getElementById('qerr').style.display='none';
 
   var respuestas={};
-  for(var i=1;i<=5;i++) {
+  for(var i=1;i<=7;i++) {
     var s=document.querySelector('input[name="q'+i+'"]:checked');
     respuestas['q'+i]=s?s.value:null;
   }
@@ -459,7 +459,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
     .then(function(res) {
       var data=res.data;
       var c=data.aciertos;
-      for(var i=1;i<=5;i++) {
+      for(var i=1;i<=7;i++) {
         var d=document.getElementById('q'+i);
         var r=data.respuestas['q'+i];
         d.querySelectorAll('.op').forEach(function(o){
@@ -475,7 +475,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
       document.getElementById('btn-env').style.display='none';
       btnEnv.disabled=false; btnEnv.textContent='✅ Enviar evaluación';
       if(data.aprobado){
-        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:var(--color-primario);margin-bottom:8px;">¡Aprobaste! '+c+'/5</h3><button onclick="verCert()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
+        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:var(--color-primario);margin-bottom:8px;">¡Aprobaste! '+c+'/7</h3><button onclick="verCert()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado</button>';
         document.getElementById('pf').style.width='100%';
         document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 2 completado! 🎉';
         certOK=true;
@@ -491,7 +491,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
           document.getElementById('lock-siguiente').scrollIntoView({behavior:'smooth',block:'center'});
         }, 1200);
       }else{
-        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:var(--color-error);margin-bottom:8px;">Necesitas 4. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
+        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:var(--color-error);margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><button onclick="reiniciar()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
       }
       rs.scrollIntoView({behavior:'smooth',block:'center'});
     })
@@ -525,7 +525,7 @@ function comprarModulo3() {
 }
 
 function reiniciar() {
-  for(var i=1;i<=5;i++) {
+  for(var i=1;i<=7;i++) {
     var d=document.getElementById('q'+i);
     d.classList.remove('ok','no');
     d.querySelectorAll('.op').forEach(function(o){o.style.background='';o.querySelector('input').disabled=false;o.querySelector('input').checked=false;});
