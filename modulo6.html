@@ -218,11 +218,10 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   <div class="cert-box" id="certbox-final">
     <div class="cert-frame"><div class="cert-inner">
       <div class="cert-eyebrow">Academia IA Generaciones</div>
-      <div class="cert-headline">¡Curso Completo!</div>
+      <div class="cert-headline">Certificado de Módulo</div>
       <p class="cert-label">Este certificado se otorga a</p>
       <div id="cn" class="cert-name"></div>
       <p class="cert-module">Módulo 6: Seguridad y Uso Responsable</p>
-      <p class="cert-desc">Ha completado satisfactoriamente el programa "Academia IA Generaciones", integrado por seis módulos formativos.</p>
       <div class="cert-footer">
         <div class="cert-footer-col"><div class="line" id="cf"></div></div>
         <div id="cert-qr" class="cert-qr"></div>
@@ -231,6 +230,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
     </div></div>
     <p class="cert-legal-note">Este certificado fue emitido electrónicamente por Academia IA Generaciones. Su autenticidad puede verificarse mediante el código QR o el identificador único mostrado en este documento.</p>
     <p class="cert-legal-note">Este certificado acredita la finalización satisfactoria del módulo o programa indicado. No constituye un título oficial, grado académico ni certificación profesional con reconocimiento gubernamental.</p>
+    <div id="progreso-final-invite" style="background:#EDE7F6;border-radius:12px;padding:18px 22px;margin-top:16px;text-align:center;font-size:1.05rem;color:#212121;line-height:1.5;"></div>
     <div class="cert-actions">
       <button onclick="window.print()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
       <a href="dashboard.html" style="display:inline-block;background:#fff;color:#424242;border:2px solid #BDBDBD;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;">🏠 Volver a mi panel</a>
@@ -555,6 +555,24 @@ function reiniciar() {
   document.getElementById('btn-env').style.display='block';
 }
 
+// El certificado de este módulo certifica SOLO el Módulo 6 — no asume que
+// el alumno ya haya hecho los otros 5. Esta función revisa cuáles módulos
+// le faltan y lo invita a completarlos, o le avisa que su Certificado
+// Final de Graduación (que vive en el panel, no aquí) ya está disponible.
+function mostrarInvitacionProgreso() {
+  var NOMBRES = {1:'Descubriendo la Inteligencia Artificial',2:'Conversando con una IA',3:'Creando Imágenes con IA',4:'IA para la Vida Diaria',5:'IA para la Creatividad',6:'Seguridad y Uso Responsable'};
+  var faltantes = [];
+  for (var i=1;i<=6;i++){ if(!localStorage.getItem('modulo'+i+'_completado')) faltantes.push(i); }
+  var div = document.getElementById('progreso-final-invite');
+  if (!div) return;
+  if (faltantes.length === 0) {
+    div.innerHTML = '🎉 <strong>¡Completaste los 6 módulos!</strong><br>Tu Certificado Final de Graduación ya está disponible en tu panel. <a href="dashboard.html" style="color:var(--color-primario);font-weight:700;">Ir a mi panel →</a>';
+  } else {
+    var lista = faltantes.map(function(n){ return 'Módulo ' + n + ': ' + NOMBRES[n]; }).join(', ');
+    div.innerHTML = '🎓 Para obtener tu <strong>Certificado Final de Graduación</strong>, te falta completar: ' + lista + '. <a href="dashboard.html" style="color:var(--color-primario);font-weight:700;">Ver mi progreso →</a>';
+  }
+}
+
 function verCert() {
   if(!certOK){alert('Completa la evaluación primero.');return;}
   var n=sessionStorage.getItem('alumno_nombre')||'Alumno';
@@ -563,6 +581,7 @@ function verCert() {
   document.getElementById('cf').textContent='Fecha de emisión: '+f;
   document.getElementById('certbox-final').style.display='block';
   asegurarCertificadoVerificable(6, 'Módulo 6: Seguridad y Uso Responsable', n, f);
+  mostrarInvitacionProgreso();
   document.getElementById('certbox-final').scrollIntoView({behavior:'smooth',block:'center'});
   document.getElementById('opinion-box').style.display='block';
 }
@@ -586,6 +605,7 @@ function verCert() {
     document.getElementById('cf').textContent = 'Fecha de emisión: ' + f;
     document.getElementById('certbox-final').style.display = 'block';
     asegurarCertificadoVerificable(6, 'Módulo 6: Seguridad y Uso Responsable', n, f);
+    mostrarInvitacionProgreso();
     document.getElementById('opinion-box').style.display = 'block';
   }
 })();

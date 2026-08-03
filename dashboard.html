@@ -6,7 +6,7 @@
 <title>Mi Panel — Academia IA Generaciones</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Playfair+Display:wght@700;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;color:#212121;background:#F5F5F5;line-height:1.6}
@@ -38,10 +38,37 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
 .salir-box{text-align:center;margin-top:12px}
 .btn-salir{background:#fff;color:#C62828;border:2px solid #C62828;padding:16px 44px;border-radius:14px;font-size:1.2rem;font-weight:700;cursor:pointer;font-family:inherit}
 @media(max-width:520px){.saludo-box{flex-direction:column;text-align:center}}
+
+.cert-final-locked{background:#fff;border-radius:16px;padding:28px;margin-bottom:32px;box-shadow:0 2px 12px rgba(0,0,0,.06);text-align:center;border:2px dashed #BDBDBD}
+.cert-final-locked h3{font-size:1.2rem;font-weight:800;color:#212121;margin-bottom:8px}
+.cert-final-locked p{color:#555;font-size:1.05rem}
+.cert-final-unlock-btn{display:inline-block;margin-top:16px;background:#26296B;color:#fff;font-weight:800;font-size:1.1rem;padding:14px 30px;border-radius:12px;border:none;cursor:pointer;font-family:inherit}
+.cert-box{padding:0;text-align:center;background:transparent;margin-bottom:32px;display:none}
+.cert-frame{background:#26296B url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M5 5h8v8h-4v-4h-4z' fill='none' stroke='%23ffffff' stroke-opacity='.3' stroke-width='1.6'/%3E%3C/svg%3E") repeat;padding:14px;border-radius:6px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cert-inner{background:#FDFBF3;border:2px solid #26296B;padding:44px 30px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cert-eyebrow{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:.06em;color:#1A1A2E;text-transform:uppercase;margin-bottom:10px}
+.cert-headline{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:#26296B;margin-bottom:22px}
+.cert-label{font-family:'Quicksand',sans-serif;font-size:1.1rem;color:#424242;margin-bottom:8px}
+.cert-name{font-family:'Quicksand',sans-serif;font-size:1.8rem;font-weight:700;color:#212121;display:inline-block;padding-bottom:8px;border-bottom:2px solid #26296B;margin:0 auto 20px;max-width:90%}
+.cert-module{font-family:'Quicksand',sans-serif;font-size:1.2rem;font-weight:700;color:#212121;margin-bottom:14px}
+.cert-desc{font-family:'Quicksand',sans-serif;font-size:1.1rem;color:#212121;line-height:1.6;max-width:520px;margin:0 auto 24px}
+.cert-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:8px;flex-wrap:wrap}
+.cert-footer-col{flex:1;min-width:110px}
+.cert-footer-col .line{border-top:1px solid #BDBDBD;padding-top:6px;font-family:'Quicksand',sans-serif;font-size:.85rem;color:#616161;word-break:break-all}
+.cert-qr{width:110px;height:110px;flex:none;margin:0 auto}
+.cert-legal-note{font-size:.85rem;color:#757575;line-height:1.5;max-width:600px;margin:14px auto 0;text-align:center}
+.cert-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+@media print {
+  body * { visibility: hidden; }
+  .cert-box, .cert-box * { visibility: visible; }
+  .cert-box { position: absolute; top: 0; left: 0; width: 100%; margin: 0; }
+}
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
   if (!firebase.apps.length) {
     firebase.initializeApp({
@@ -57,6 +84,7 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
   // firebase.analytics() ya no se llama aquí — solo se activa tras aceptar
   // cookies de estadísticas, ver cc_activarAnalytics() al final del body.
   window.fbAuth = firebase.auth();
+  window.fbDb = firebase.firestore();
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
@@ -92,6 +120,34 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
 
   <h3 class="grid-title">Tus módulos</h3>
   <div class="grid" id="modulos-grid"></div>
+
+  <h3 class="grid-title" id="cert-final-titulo">Certificado Final de Graduación</h3>
+  <div class="cert-final-locked" id="cert-final-locked">
+    <div style="font-size:2.5rem;margin-bottom:10px;">🔒</div>
+    <h3>Completa los 6 módulos para desbloquearlo</h3>
+    <p id="cert-final-locked-desc">Llevas 0 de 6 módulos completados.</p>
+  </div>
+
+  <div class="cert-box" id="cert-final-box">
+    <div class="cert-frame"><div class="cert-inner">
+      <div class="cert-eyebrow">Academia IA Generaciones</div>
+      <div class="cert-headline">¡Curso Completo!</div>
+      <p class="cert-label">Este certificado se otorga a</p>
+      <div id="cert-final-nombre" class="cert-name"></div>
+      <p class="cert-module">Programa completo — 6 módulos</p>
+      <p class="cert-desc">Ha completado satisfactoriamente el programa "Academia IA Generaciones", integrado por seis módulos formativos.</p>
+      <div class="cert-footer">
+        <div class="cert-footer-col"><div class="line" id="cert-final-fecha"></div></div>
+        <div id="cert-final-qr" class="cert-qr"></div>
+        <div class="cert-footer-col"><div class="line" id="cert-final-id-info"></div></div>
+      </div>
+    </div></div>
+    <p class="cert-legal-note">Este certificado fue emitido electrónicamente por Academia IA Generaciones. Su autenticidad puede verificarse mediante el código QR o el identificador único mostrado en este documento.</p>
+    <p class="cert-legal-note">Este certificado acredita la finalización satisfactoria del módulo o programa indicado. No constituye un título oficial, grado académico ni certificación profesional con reconocimiento gubernamental.</p>
+    <div class="cert-actions">
+      <button onclick="window.print()" style="background:var(--color-primario, #4527A0);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🖨️ Imprimir / Guardar</button>
+    </div>
+  </div>
 
   <div class="salir-box">
     <button class="btn-salir" onclick="cerrarSesion()">🚪 Cerrar sesión</button>
@@ -156,8 +212,8 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
   var sigCta = document.getElementById('sig-cta');
   if (totalCompletados === 6) {
     sigTitulo.textContent = '🎉 ¡Completaste los 6 módulos!';
-    sigDesc.textContent = 'Ya tienes tu Certificado Final del curso completo. Puedes repasar cualquier módulo cuando quieras.';
-    sigCta.innerHTML = '<a href="modulo6.html#certbox-final" class="cta-btn">🏆 Ver mi Certificado Final</a>';
+    sigDesc.textContent = 'Ya tienes tu Certificado Final de Graduación aquí mismo, más abajo. Puedes repasar cualquier módulo cuando quieras.';
+    sigCta.innerHTML = '<a href="#cert-final-box" class="cta-btn">🏆 Ver mi Certificado Final</a>';
   } else {
     var siguiente = 1;
     for (var j = 1; j <= 6; j++) { if (!completado(j)) { siguiente = j; break; } }
@@ -211,7 +267,70 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
       + '<div class="btns">' + botones + '</div>';
     grid.appendChild(card);
   });
+
+  // ── Certificado Final de Graduación — solo se desbloquea con 6/6 ──────
+  var certLocked = document.getElementById('cert-final-locked');
+  var certBox = document.getElementById('cert-final-box');
+  if (totalCompletados === 6) {
+    certLocked.style.display = 'none';
+    certBox.style.display = 'block';
+    var fFinal = new Date().toLocaleDateString('es-MX', {year:'numeric', month:'long', day:'numeric'});
+    document.getElementById('cert-final-nombre').textContent = nombre;
+    document.getElementById('cert-final-fecha').textContent = 'Fecha de emisión: ' + fFinal;
+    asegurarCertificadoFinalVerificable(nombre, email, fFinal);
+  } else {
+    document.getElementById('cert-final-locked-desc').textContent = 'Llevas ' + totalCompletados + ' de 6 módulos completados.';
+  }
 })();
+
+// Certificado Final de Graduación — certifica el programa completo (6
+// módulos), distinto del certificado individual de cada módulo (que vive
+// en su propia página, moduloN.html). Usa "modulo:7" como identificador
+// especial en Firestore para no mezclarse con el certificado del Módulo 6.
+// Mismo patrón que asegurarCertificadoVerificable() en los 6 módulos: UUID
+// generado una sola vez y guardado en localStorage, Firestore escrito una
+// sola vez (serverTimestamp, no falsificable desde el navegador).
+function asegurarCertificadoFinalVerificable(nombreAlumno, email, fechaTexto) {
+  var claveId = 'modulofinal_cert_id';
+  var claveSync = 'modulofinal_cert_synced';
+  var id = localStorage.getItem(claveId);
+  if (!id) {
+    id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (
+      'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      })
+    );
+    localStorage.setItem(claveId, id);
+  }
+  if (localStorage.getItem(claveSync) !== '1' && window.fbDb) {
+    window.fbDb.collection('certificados').doc(id).set({
+      nombre: nombreAlumno,
+      email: email || '',
+      modulo: 7,
+      moduloNombre: 'Programa completo — 6 módulos',
+      fecha: fechaTexto,
+      fechaEmision: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function() {
+      localStorage.setItem(claveSync, '1');
+    }).catch(function(err) {
+      console.error('No se pudo guardar el Certificado Final verificable:', err);
+    });
+  }
+  var baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'verificar.html';
+  var urlVerif = baseUrl + '?id=' + id;
+  var qrDiv = document.getElementById('cert-final-qr');
+  if (qrDiv && typeof QRCode !== 'undefined') {
+    qrDiv.innerHTML = '';
+    new QRCode(qrDiv, { text: urlVerif, width: 110, height: 110, correctLevel: QRCode.CorrectLevel.M });
+    var qrImg = qrDiv.querySelector('img');
+    if (qrImg) { qrImg.alt = 'Código QR para verificar este certificado en línea'; qrImg.removeAttribute('title'); }
+  }
+  var idDiv = document.getElementById('cert-final-id-info');
+  if (idDiv) {
+    idDiv.innerHTML = 'ID de verificación: <code>' + id + '</code><br><a href="' + urlVerif + '" target="_blank" rel="noopener">Verificar este certificado →</a>';
+  }
+}
 
 function cerrarSesion() {
   if (window.fbAuth) {

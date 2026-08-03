@@ -77,6 +77,11 @@ service cloud.firestore {
     // extraer todos los nombres/correos de golpe. El sitio crea el
     // documento automáticamente al aprobar un examen; nadie puede editarlo
     // ni borrarlo después desde el cliente.
+    // "modulo" va de 1 a 6 para los certificados de cada módulo individual,
+    // y usa el valor 7 como identificador especial para el Certificado
+    // Final de Graduación (que certifica los 6 módulos juntos, ver
+    // dashboard.html) — necesita su propio ID/documento, distinto al del
+    // certificado del Módulo 6, para no mezclar sus datos de verificación.
     match /certificados/{certId} {
       allow get: if true;
       allow list: if false;
@@ -88,7 +93,7 @@ service cloud.firestore {
                     && request.resource.data.email.size() <= 200
                     && request.resource.data.modulo is int
                     && request.resource.data.modulo >= 1
-                    && request.resource.data.modulo <= 6
+                    && request.resource.data.modulo <= 7
                     && request.resource.data.moduloNombre is string
                     && request.resource.data.moduloNombre.size() <= 200
                     && request.resource.data.fecha is string
