@@ -526,7 +526,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
       rs.style.display='block'; btnEnv.style.display='none';
       btnEnv.disabled=false; btnEnv.textContent='✅ Enviar evaluación';
       if(data.aprobado){
-        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/'+N_Q+'</h3><p style="color:#555;margin-bottom:16px;">¡Felicidades! Has completado el curso.</p><button onclick="verCert()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🏆 Ver mi Certificado Final</button>';
+        rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">🎉</div><h3 style="font-size:1.4rem;font-weight:800;color:#2E7D32;margin-bottom:8px;">¡Aprobaste! '+c+'/'+N_Q+'</h3><p style="color:#555;margin-bottom:16px;">¡Felicidades! Has completado el curso.</p><button onclick="verCert()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">Ver mi Certificado</button>';
         document.getElementById('pf').style.width='100%';
         document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 6 completado! 🎉';
         certOK=true;
