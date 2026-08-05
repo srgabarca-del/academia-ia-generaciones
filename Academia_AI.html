@@ -27,10 +27,13 @@ a:focus-visible,button:focus-visible{outline:3px solid #0D47A1;outline-offset:3p
 body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;color:var(--color-neutro-oscuro);background:#fff;line-height:1.6}
 nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .logo{color:#fff;font-size:1.25rem;font-weight:700}
-.cta-nav{background:var(--color-primario);color:#fff;padding:8px 20px;border-radius:24px;font-weight:700;font-size:1.15rem;text-decoration:none}
+.cta-nav{background:var(--color-primario);color:#fff;padding:8px 20px;border-radius:24px;font-weight:700;font-size:1.15rem;text-decoration:none;white-space:nowrap}
 .nav-burger{display:none;background:none;border:none;color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;padding:6px 8px}
 .nav-links{display:flex;align-items:center;gap:12px}
-@media(max-width:600px){
+/* El menú ahora tiene 6 enlaces (antes solo 2), así que necesita más ancho
+   antes de mostrarse en una sola fila — el punto de quiebre subió de 600px
+   a 1260px (el mínimo real donde los 6 caben sin encimarse, verificado). */
+@media(max-width:1260px){
   .logo-full{display:none}
   .cta-full{display:none}
   .nav-burger{display:block}
@@ -156,7 +159,11 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
   <div style="display:flex;align-items:center;gap:12px;">
     <button type="button" class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
     <div class="nav-links" id="nav-links">
-      <a href="login.html" id="nav-login-link" style="color:#fff;font-size:1.15rem;font-weight:600;text-decoration:none;opacity:.85;">Iniciar sesión</a>
+      <a href="#como-funciona" style="color:#fff;font-size:1.1rem;font-weight:600;text-decoration:none;opacity:.85;white-space:nowrap;">Cómo funciona</a>
+      <a href="#planes-pago" style="color:#fff;font-size:1.1rem;font-weight:600;text-decoration:none;opacity:.85;white-space:nowrap;">Precios</a>
+      <a href="#herramientas" style="color:#fff;font-size:1.1rem;font-weight:600;text-decoration:none;opacity:.85;white-space:nowrap;">Herramientas</a>
+      <a href="#faq" style="color:#fff;font-size:1.1rem;font-weight:600;text-decoration:none;opacity:.85;white-space:nowrap;">Preguntas frecuentes</a>
+      <a href="login.html" id="nav-login-link" style="color:#fff;font-size:1.15rem;font-weight:600;text-decoration:none;opacity:.85;white-space:nowrap;">Iniciar sesión</a>
       <a href="#registro" class="cta-nav">Crear cuenta<span class="cta-full"> gratis &rarr;</span></a>
     </div>
   </div>
@@ -201,7 +208,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
   <p style="color:rgba(255,255,255,.85);margin-top:12px;font-size:1.15rem;">✅ Sin conocimientos previos &nbsp;·&nbsp; ✅ En español &nbsp;·&nbsp; ✅ Herramientas gratuitas</p>
 </section>
 
-<section>
+<section id="como-funciona">
   <div class="container">
     <h2 class="title">¿Cómo funciona?</h2>
     <div class="steps">
@@ -331,7 +338,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
   </div>
 </section>
 
-<section>
+<section id="herramientas">
   <div class="container">
     <h2 class="title">Con lo que ya tienes en tu equipo</h2>
     <p class="sub" style="font-size:1.3rem;">No necesitas comprar nada extra — estas 7 herramientas son 100% gratis.</p>
@@ -369,7 +376,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
 </section>
 
 
-<section style="background:var(--color-neutro-claro);">
+<section id="faq" style="background:var(--color-neutro-claro);">
   <div class="container">
     <h2 class="title">Preguntas frecuentes</h2>
     <div class="faq-list" style="margin-top:32px;">
