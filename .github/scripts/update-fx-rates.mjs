@@ -35,8 +35,9 @@ async function main() {
 
   const mxnLinea = /MXN: [\d.]+, \/\/ referencia \d{4}-\d{2}-\d{2} — revisar cada pocos meses/;
   const eurLinea = /EUR: [\d.]+  \/\/ referencia \d{4}-\d{2}-\d{2} — revisar cada pocos meses/;
+  const fechaLinea = /var FX_RATES_FECHA = '\d{4}-\d{2}-\d{2}';/;
 
-  if (!mxnLinea.test(html) || !eurLinea.test(html)) {
+  if (!mxnLinea.test(html) || !eurLinea.test(html) || !fechaLinea.test(html)) {
     throw new Error(
       `No se encontró el bloque FX_RATES esperado en ${FILE}. ` +
       'Puede que el formato del código haya cambiado — revisar manualmente ' +
@@ -46,6 +47,7 @@ async function main() {
 
   html = html.replace(mxnLinea, `MXN: ${mxnRounded}, // referencia ${hoy} — revisar cada pocos meses`);
   html = html.replace(eurLinea, `EUR: ${eurRounded}  // referencia ${hoy} — revisar cada pocos meses`);
+  html = html.replace(fechaLinea, `var FX_RATES_FECHA = '${hoy}';`);
 
   writeFileSync(FILE, html);
   console.log(`Tipos de cambio actualizados: MXN=${mxnRounded}, EUR=${eurRounded} (referencia ${hoy})`);
