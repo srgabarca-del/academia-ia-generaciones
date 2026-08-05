@@ -289,6 +289,40 @@ function activarAutoguardadoGuia() {
   });
 }
 
+// Combina las 3 respuestas de "Actividad práctica 1" (nombre/personaje,
+// cómo se ve, lugar y estilo) en un prompt sugerido según la fórmula del
+// módulo, listo para copiar — el alumno lo puede ajustar en el campo "Mi
+// prompt completo" antes de pegarlo en Canva IA o Gemini.
+function activarPromptCompilado() {
+  var g1 = document.getElementById('modulo3_g1');
+  var g2 = document.getElementById('modulo3_g2');
+  var g3 = document.getElementById('modulo3_g3');
+  var caja = document.getElementById('modulo3_prompt_compilado');
+  var btnCopiar = document.getElementById('modulo3_copiar_prompt');
+  if (!g1 || !g2 || !g3 || !caja || !btnCopiar) return;
+  function actualizar() {
+    var v1 = g1.value.trim(), v2 = g2.value.trim(), v3 = g3.value.trim();
+    if (!v1 && !v2 && !v3) {
+      caja.textContent = 'Escribe los campos de arriba para armar tu prompt aquí.';
+      return;
+    }
+    caja.textContent = (v1 || '...') + ', ' + (v2 || '...') + ', ' + (v3 || '...');
+  }
+  [g1, g2, g3].forEach(function(campo) { campo.addEventListener('input', actualizar); });
+  actualizar();
+  btnCopiar.addEventListener('click', function() {
+    var msg = document.getElementById('modulo3_copiado_msg');
+    navigator.clipboard.writeText(caja.textContent).then(function() {
+      msg.textContent = '¡Copiado!';
+    }).catch(function() {
+      msg.textContent = 'No se pudo copiar — selecciona el texto y cópialo a mano.';
+    }).then(function() {
+      msg.style.display = 'inline';
+      setTimeout(function() { msg.style.display = 'none'; }, 3000);
+    });
+  });
+}
+
 // La guía ya no viene embebida en el HTML — se pide a la Cloud Function
 // "obtenerContenidoModulo" la primera vez que el alumno la abre, y solo
 // responde si Firestore confirma que este correo ya pagó este módulo
@@ -350,6 +384,7 @@ function toggleGuia() {
       lista.innerHTML = res.data.guiaHtml;
       guiaContenidoCargado = true;
       activarAutoguardadoGuia();
+      activarPromptCompilado();
     })
     .catch(function(err) {
       lista.innerHTML = '<p style="text-align:center;color:var(--color-error);padding:40px 20px;font-size:1.15rem;">'+mensajeErrorContenido(err)+'</p>';
