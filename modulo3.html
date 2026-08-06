@@ -323,6 +323,38 @@ function activarPromptCompilado() {
   });
 }
 
+// Igual que activarPromptCompilado(), pero para la Actividad práctica 2
+// ("Recreando un recuerdo familiar"), que tiene el mismo patrón de 2
+// campos sueltos que había que combinar a mano en "Mi prompt completo".
+function activarPromptCompilado2() {
+  var g8 = document.getElementById('modulo3_g8');
+  var g9 = document.getElementById('modulo3_g9');
+  var caja = document.getElementById('modulo3_prompt_compilado2');
+  var btnCopiar = document.getElementById('modulo3_copiar_prompt2');
+  if (!g8 || !g9 || !caja || !btnCopiar) return;
+  function actualizar() {
+    var v8 = g8.value.trim(), v9 = g9.value.trim();
+    if (!v8 && !v9) {
+      caja.textContent = 'Escribe los campos de arriba para armar tu prompt aquí.';
+      return;
+    }
+    caja.textContent = (v8 || '...') + ', ' + (v9 || '...');
+  }
+  [g8, g9].forEach(function(campo) { campo.addEventListener('input', actualizar); });
+  actualizar();
+  btnCopiar.addEventListener('click', function() {
+    var msg = document.getElementById('modulo3_copiado_msg2');
+    navigator.clipboard.writeText(caja.textContent).then(function() {
+      msg.textContent = '¡Copiado!';
+    }).catch(function() {
+      msg.textContent = 'No se pudo copiar — selecciona el texto y cópialo a mano.';
+    }).then(function() {
+      msg.style.display = 'inline';
+      setTimeout(function() { msg.style.display = 'none'; }, 3000);
+    });
+  });
+}
+
 // La guía ya no viene embebida en el HTML — se pide a la Cloud Function
 // "obtenerContenidoModulo" la primera vez que el alumno la abre, y solo
 // responde si Firestore confirma que este correo ya pagó este módulo
@@ -385,6 +417,7 @@ function toggleGuia() {
       guiaContenidoCargado = true;
       activarAutoguardadoGuia();
       activarPromptCompilado();
+      activarPromptCompilado2();
     })
     .catch(function(err) {
       lista.innerHTML = '<p style="text-align:center;color:var(--color-error);padding:40px 20px;font-size:1.15rem;">'+mensajeErrorContenido(err)+'</p>';
