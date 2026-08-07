@@ -600,24 +600,46 @@ function verCert() {
 // FIX: si el alumno ya aprobó este módulo antes (al volver a revisitarlo),
 // restaurar el estado "completado" y mostrar directamente el Certificado Final
 // en vez de mostrar todo desde cero.
+function restaurarEstadoCompletadoModulo6(n, f, certId) {
+  certOK = true;
+  document.getElementById('pf').style.width = '100%';
+  document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 6 completado! ✅';
+  document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
+  document.getElementById('btn-eval').disabled = true;
+  document.getElementById('btn-eval').style.opacity = '0.6';
+  document.getElementById('btn-eval').style.cursor = 'default';
+  document.getElementById('cn').textContent = n;
+  document.getElementById('cf').textContent = 'Fecha de emisión: ' + f;
+  document.getElementById('certbox-final').style.display = 'block';
+  if (certId) {
+    localStorage.setItem('modulo6_cert_id', certId);
+    localStorage.setItem('modulo6_cert_synced', '1');
+  }
+  asegurarCertificadoVerificable(6, 'Módulo 6: Seguridad y Uso Responsable', n, f);
+  mostrarInvitacionProgreso();
+  document.getElementById('opinion-box').style.display = 'block';
+}
 (function() {
   if (localStorage.getItem('modulo6_completado')) {
-    certOK = true;
-    document.getElementById('pf').style.width = '100%';
-    document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 6 completado! ✅';
-    document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
-    document.getElementById('btn-eval').disabled = true;
-    document.getElementById('btn-eval').style.opacity = '0.6';
-    document.getElementById('btn-eval').style.cursor = 'default';
     var n = sessionStorage.getItem('alumno_nombre') || 'Alumno';
     var f = new Date().toLocaleDateString('es-MX', {year:'numeric', month:'long', day:'numeric'});
-    document.getElementById('cn').textContent = n;
-    document.getElementById('cf').textContent = 'Fecha de emisión: ' + f;
-    document.getElementById('certbox-final').style.display = 'block';
-    asegurarCertificadoVerificable(6, 'Módulo 6: Seguridad y Uso Responsable', n, f);
-    mostrarInvitacionProgreso();
-    document.getElementById('opinion-box').style.display = 'block';
+    restaurarEstadoCompletadoModulo6(n, f);
+    return;
   }
+  authReadyPromise.then(function() {
+    if (!firebase.auth().currentUser) return null;
+    return firebase.functions().httpsCallable('obtenerCertificadosDelAlumno')({});
+  }).then(function(res) {
+    if (!res) return;
+    var cert = res.data.certificados && res.data.certificados['6'];
+    if (!cert) return;
+    localStorage.setItem('modulo6_completado', '1');
+    var n = cert.nombre || sessionStorage.getItem('alumno_nombre') || 'Alumno';
+    var f = cert.fecha || new Date().toLocaleDateString('es-MX', {year:'numeric', month:'long', day:'numeric'});
+    restaurarEstadoCompletadoModulo6(n, f, cert.id);
+  }).catch(function(err) {
+    console.error('No se pudo verificar certificados existentes:', err);
+  });
 })();
 
 var calificacionSel = 0;

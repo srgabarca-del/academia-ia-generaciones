@@ -268,3 +268,30 @@ exports.obtenerContenidoModulo = onCall(async (request) => {
 
   return { guiaHtml: doc.data().guiaHtml, examenHtml: doc.data().examenHtml };
 });
+
+/**
+ * Callable desde el frontend. Devuelve los certificados que el alumno
+ * autenticado ya tiene registrados en Firestore, indexados por número de
+ * módulo. Sirve para restaurar el estado "completado" de una página de
+ * módulo cuando `localStorage` no tiene la marca correspondiente — por
+ * ejemplo, si el alumno entra desde otro dispositivo, otro navegador, o
+ * el sitio cambió de dominio (localStorage no viaja entre dominios). Sin
+ * esto, un alumno que ya aprobó un módulo tendría que repetir el examen
+ * y generaría sin darse cuenta un certificado duplicado.
+ * No necesita parámetros de entrada — usa el correo de la sesión.
+ * La colección `certificados` tiene `allow list: if false` para el
+ * cliente (nadie puede listar certificados ajenos), pero esta función usa
+ * el Admin SDK, que no está sujeto a esas reglas.
+ */
+exports.obtenerCertificadosDelAlumno = onCall(async (request) => {
+  if (!request.auth || !request.auth.token.email) {
+    throw new HttpsError('unauthenticated', 'Debes iniciar sesión.');
+  }
+  const snap = await db.collection('certificados').where('email', '==', request.auth.token.email).get();
+  const certificados = {};
+  snap.forEach((doc) => {
+    const data = doc.data();
+    certificados[data.modulo] = { id: doc.id, nombre: data.nombre, fecha: data.fecha };
+  });
+  return { certificados };
+});

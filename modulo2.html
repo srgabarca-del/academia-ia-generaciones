@@ -398,28 +398,55 @@ function toggleGuia() {
 
 // FIX: si el alumno ya aprobó este módulo antes (al volver desde otro módulo),
 // restaurar el estado "completado" en vez de mostrar todo desde cero.
+function restaurarEstadoCompletadoModulo2(nRestore, fRestore, certId) {
+  certOK = true;
+  document.getElementById('pf').style.width = '100%';
+  document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 2 completado! ✅';
+  document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
+  document.getElementById('btn-eval').disabled = true;
+  document.getElementById('btn-eval').style.opacity = '0.6';
+  document.getElementById('btn-eval').style.cursor = 'default';
+  document.getElementById('cn').textContent = nRestore;
+  document.getElementById('cf').textContent = 'Fecha de emisión: ' + fRestore;
+  document.getElementById('certbox').style.display = 'block';
+  if (certId) {
+    localStorage.setItem('modulo2_cert_id', certId);
+    localStorage.setItem('modulo2_cert_synced', '1');
+  }
+  asegurarCertificadoVerificable(2, 'Módulo 2: Conversando con una IA', nRestore, fRestore);
+  if (location.hash === '#certbox') {
+    setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
+  }
+  mostrarAccesoMod3();
+  document.getElementById('lock-siguiente').style.display = 'block';
+  document.getElementById('btn-siguiente-alert').style.display = 'none';
+}
 (function() {
   if (localStorage.getItem('modulo2_completado')) {
-    certOK = true;
-    document.getElementById('pf').style.width = '100%';
-    document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 2 completado! ✅';
-    document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
-    document.getElementById('btn-eval').disabled = true;
-    document.getElementById('btn-eval').style.opacity = '0.6';
-    document.getElementById('btn-eval').style.cursor = 'default';
     var nRestore = sessionStorage.getItem('alumno_nombre') || 'Alumno';
     var fRestore = new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
-    document.getElementById('cn').textContent = nRestore;
-    document.getElementById('cf').textContent = 'Fecha de emisión: ' + fRestore;
-    document.getElementById('certbox').style.display = 'block';
-    asegurarCertificadoVerificable(2, 'Módulo 2: Conversando con una IA', nRestore, fRestore);
-    if (location.hash === '#certbox') {
-      setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
-    }
-    mostrarAccesoMod3();
-    document.getElementById('lock-siguiente').style.display = 'block';
-    document.getElementById('btn-siguiente-alert').style.display = 'none';
+    restaurarEstadoCompletadoModulo2(nRestore, fRestore);
+    return;
   }
+  // No hay marca local — puede ser que el alumno ya haya aprobado este
+  // módulo antes desde otro dispositivo/navegador, o que el sitio haya
+  // cambiado de dominio (localStorage no viaja entre dominios). Se revisa
+  // contra Firestore para no pedirle repetir el examen ni generar un
+  // certificado duplicado.
+  authReadyPromise.then(function() {
+    if (!firebase.auth().currentUser) return null;
+    return firebase.functions().httpsCallable('obtenerCertificadosDelAlumno')({});
+  }).then(function(res) {
+    if (!res) return;
+    var cert = res.data.certificados && res.data.certificados['2'];
+    if (!cert) return;
+    localStorage.setItem('modulo2_completado', '1');
+    var nRestore = cert.nombre || sessionStorage.getItem('alumno_nombre') || 'Alumno';
+    var fRestore = cert.fecha || new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+    restaurarEstadoCompletadoModulo2(nRestore, fRestore, cert.id);
+  }).catch(function(err) {
+    console.error('No se pudo verificar certificados existentes:', err);
+  });
 })();
 
 var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';

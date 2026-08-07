@@ -349,6 +349,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
   if (!firebase.apps.length) {
@@ -431,6 +432,14 @@ function asegurarCertificadoVerificable(numModulo, nombreModulo, nombreAlumno, f
 
 var RESP = {"q1": "B", "q2": "C", "q3": "B", "q4": "C", "q5": "B", "q6": "B", "q7": "B"};
 var certOK = false;
+// Empieza a esperar la confirmación de sesión desde que carga la página —
+// mismo patrón usado en modulo2-6.html, necesario para poder llamar a
+// obtenerCertificadosDelAlumno con la sesión ya lista.
+var authReadyPromise = firebase.auth().currentUser
+  ? Promise.resolve()
+  : new Promise(function(resolve) {
+      var unsub = firebase.auth().onAuthStateChanged(function() { unsub(); resolve(); });
+    });
 
 // Personalizar con sessionStorage
 var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
@@ -440,24 +449,46 @@ document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienven
 // FIX: si el alumno ya aprobó este módulo antes (al volver desde el panel u
 // otro módulo), restaurar el estado "completado" en vez de mostrar todo desde
 // cero — mismo patrón ya usado en modulo2-6.html.
+function restaurarEstadoCompletadoModulo1(nRestore, fCert, certId) {
+  certOK = true;
+  document.getElementById('pf').style.width = '100%';
+  document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo completado! ✅';
+  document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
+  document.getElementById('btn-eval').disabled = true;
+  document.getElementById('btn-eval').style.opacity = '0.6';
+  document.getElementById('btn-eval').style.cursor = 'default';
+  document.getElementById('cn').textContent = nRestore;
+  document.getElementById('cf').textContent = 'Fecha de emisión: ' + fCert;
+  document.getElementById('certbox').style.display = 'block';
+  if (certId) {
+    localStorage.setItem('modulo1_cert_id', certId);
+    localStorage.setItem('modulo1_cert_synced', '1');
+  }
+  asegurarCertificadoVerificable(1, 'Módulo 1: Descubriendo la Inteligencia Artificial', nRestore, fCert);
+  if (location.hash === '#certbox') {
+    setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
+  }
+}
 (function() {
   if (localStorage.getItem('modulo1_completado')) {
-    certOK = true;
-    document.getElementById('pf').style.width = '100%';
-    document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo completado! ✅';
-    document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
-    document.getElementById('btn-eval').disabled = true;
-    document.getElementById('btn-eval').style.opacity = '0.6';
-    document.getElementById('btn-eval').style.cursor = 'default';
     var fCert = new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
-    document.getElementById('cn').textContent = nombre;
-    document.getElementById('cf').textContent = 'Fecha de emisión: ' + fCert;
-    document.getElementById('certbox').style.display = 'block';
-    asegurarCertificadoVerificable(1, 'Módulo 1: Descubriendo la Inteligencia Artificial', nombre, fCert);
-    if (location.hash === '#certbox') {
-      setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
-    }
+    restaurarEstadoCompletadoModulo1(nombre, fCert);
+    return;
   }
+  authReadyPromise.then(function() {
+    if (!firebase.auth().currentUser) return null;
+    return firebase.functions().httpsCallable('obtenerCertificadosDelAlumno')({});
+  }).then(function(res) {
+    if (!res) return;
+    var cert = res.data.certificados && res.data.certificados['1'];
+    if (!cert) return;
+    localStorage.setItem('modulo1_completado', '1');
+    var nRestore = cert.nombre || nombre;
+    var fRestore = cert.fecha || new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+    restaurarEstadoCompletadoModulo1(nRestore, fRestore, cert.id);
+  }).catch(function(err) {
+    console.error('No se pudo verificar certificados existentes:', err);
+  });
 })();
 
 setTimeout(function() {

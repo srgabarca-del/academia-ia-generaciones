@@ -547,26 +547,48 @@ function comprarSiguiente() {
 
 // FIX: si el alumno ya aprobó este módulo antes (al volver desde otro módulo),
 // restaurar el estado "completado" en vez de mostrar todo desde cero.
+function restaurarEstadoCompletadoModulo4(nRestore, fRestore, certId) {
+  certOK = true;
+  document.getElementById('pf').style.width = '100%';
+  document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 4 completado! ✅';
+  document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
+  document.getElementById('btn-eval').disabled = true;
+  document.getElementById('btn-eval').style.opacity = '0.6';
+  document.getElementById('btn-eval').style.cursor = 'default';
+  document.getElementById('cn').textContent = nRestore;
+  document.getElementById('cf').textContent = 'Fecha de emisión: ' + fRestore;
+  document.getElementById('certbox').style.display = 'block';
+  if (certId) {
+    localStorage.setItem('modulo4_cert_id', certId);
+    localStorage.setItem('modulo4_cert_synced', '1');
+  }
+  asegurarCertificadoVerificable(4, 'Módulo 4: IA para la Vida Diaria', nRestore, fRestore);
+  if (location.hash === '#certbox') {
+    setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
+  }
+  mostrarSiguienteModulo(true);
+}
 (function() {
   if (localStorage.getItem('modulo4_completado')) {
-    certOK = true;
-    document.getElementById('pf').style.width = '100%';
-    document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 4 completado! ✅';
-    document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
-    document.getElementById('btn-eval').disabled = true;
-    document.getElementById('btn-eval').style.opacity = '0.6';
-    document.getElementById('btn-eval').style.cursor = 'default';
     var nRestore = sessionStorage.getItem('alumno_nombre') || 'Alumno';
     var fRestore = new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
-    document.getElementById('cn').textContent = nRestore;
-    document.getElementById('cf').textContent = 'Fecha de emisión: ' + fRestore;
-    document.getElementById('certbox').style.display = 'block';
-    asegurarCertificadoVerificable(4, 'Módulo 4: IA para la Vida Diaria', nRestore, fRestore);
-    if (location.hash === '#certbox') {
-      setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
-    }
-    mostrarSiguienteModulo(true);
+    restaurarEstadoCompletadoModulo4(nRestore, fRestore);
+    return;
   }
+  authReadyPromise.then(function() {
+    if (!firebase.auth().currentUser) return null;
+    return firebase.functions().httpsCallable('obtenerCertificadosDelAlumno')({});
+  }).then(function(res) {
+    if (!res) return;
+    var cert = res.data.certificados && res.data.certificados['4'];
+    if (!cert) return;
+    localStorage.setItem('modulo4_completado', '1');
+    var nRestore = cert.nombre || sessionStorage.getItem('alumno_nombre') || 'Alumno';
+    var fRestore = cert.fecha || new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+    restaurarEstadoCompletadoModulo4(nRestore, fRestore, cert.id);
+  }).catch(function(err) {
+    console.error('No se pudo verificar certificados existentes:', err);
+  });
 })();
 
 function cerrarSesion() {

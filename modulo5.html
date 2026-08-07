@@ -514,26 +514,48 @@ function comprarSiguiente() {
 
 // FIX: si el alumno ya aprobó este módulo antes (al volver desde otro módulo),
 // restaurar el estado "completado" en vez de mostrar todo desde cero.
+function restaurarEstadoCompletadoModulo5(nRestore, fRestore, certId) {
+  certOK = true;
+  document.getElementById('pf').style.width = '100%';
+  document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 5 completado! ✅';
+  document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
+  document.getElementById('btn-eval').disabled = true;
+  document.getElementById('btn-eval').style.opacity = '0.6';
+  document.getElementById('btn-eval').style.cursor = 'default';
+  document.getElementById('cn').textContent = nRestore;
+  document.getElementById('cf').textContent = 'Fecha de emisión: ' + fRestore;
+  document.getElementById('certbox').style.display = 'block';
+  if (certId) {
+    localStorage.setItem('modulo5_cert_id', certId);
+    localStorage.setItem('modulo5_cert_synced', '1');
+  }
+  asegurarCertificadoVerificable(5, 'Módulo 5: IA para la Creatividad', nRestore, fRestore);
+  if (location.hash === '#certbox') {
+    setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
+  }
+  mostrarSiguienteModulo(true);
+}
 (function() {
   if (localStorage.getItem('modulo5_completado')) {
-    certOK = true;
-    document.getElementById('pf').style.width = '100%';
-    document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 5 completado! ✅';
-    document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
-    document.getElementById('btn-eval').disabled = true;
-    document.getElementById('btn-eval').style.opacity = '0.6';
-    document.getElementById('btn-eval').style.cursor = 'default';
     var nRestore = sessionStorage.getItem('alumno_nombre') || 'Alumno';
     var fRestore = new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
-    document.getElementById('cn').textContent = nRestore;
-    document.getElementById('cf').textContent = 'Fecha de emisión: ' + fRestore;
-    document.getElementById('certbox').style.display = 'block';
-    asegurarCertificadoVerificable(5, 'Módulo 5: IA para la Creatividad', nRestore, fRestore);
-    if (location.hash === '#certbox') {
-      setTimeout(function() { document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
-    }
-    mostrarSiguienteModulo(true);
+    restaurarEstadoCompletadoModulo5(nRestore, fRestore);
+    return;
   }
+  authReadyPromise.then(function() {
+    if (!firebase.auth().currentUser) return null;
+    return firebase.functions().httpsCallable('obtenerCertificadosDelAlumno')({});
+  }).then(function(res) {
+    if (!res) return;
+    var cert = res.data.certificados && res.data.certificados['5'];
+    if (!cert) return;
+    localStorage.setItem('modulo5_completado', '1');
+    var nRestore = cert.nombre || sessionStorage.getItem('alumno_nombre') || 'Alumno';
+    var fRestore = cert.fecha || new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+    restaurarEstadoCompletadoModulo5(nRestore, fRestore, cert.id);
+  }).catch(function(err) {
+    console.error('No se pudo verificar certificados existentes:', err);
+  });
 })();
 
 function cerrarSesion() {
