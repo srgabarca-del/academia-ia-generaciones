@@ -30,7 +30,7 @@ const PRODUCTOS = {
 };
 const MONEDAS_VALIDAS = ['usd', 'mxn', 'eur'];
 
-const URL_SITIO = 'https://srgabarca-del.github.io/academia-ia-generaciones';
+const URL_SITIO = 'https://iageneraciones.com';
 
 /**
  * Callable desde el frontend (firebase/functions SDK, httpsCallable).
