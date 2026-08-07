@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /modulo1.html
+Disallow: /modulo2.html
+Disallow: /modulo3.html
+Disallow: /modulo4.html
+Disallow: /modulo5.html
+Disallow: /modulo6.html
+
+Sitemap: https://iageneraciones.com/sitemap.xml
