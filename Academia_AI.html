@@ -251,20 +251,19 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
   <div class="container">
     <h2 class="title" style="color:#fff;">Continúa tu aprendizaje</h2>
     <p class="sub" style="color:rgba(255,255,255,.9);max-width:700px;">Elige la opción que mejor se adapte a ti. Cada módulo se compra por separado y da acceso únicamente a ese módulo — si quieres los 6, el Plan Completo te conviene más.</p>
-    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px;flex-wrap:wrap;">
-      <span style="color:rgba(255,255,255,.85);font-size:1.05rem;">💱 Ver precio de referencia en:</span>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+      <span style="color:rgba(255,255,255,.85);font-size:1.05rem;">💱 Elige tu moneda de pago:</span>
       <div class="moneda-selector" id="moneda-selector">
         <button type="button" class="moneda-btn" data-moneda="USD">USD</button>
         <button type="button" class="moneda-btn" data-moneda="MXN">MXN</button>
         <button type="button" class="moneda-btn" data-moneda="EUR">EUR</button>
       </div>
     </div>
-    <p style="text-align:center;color:rgba(255,255,255,.75);font-size:.9rem;max-width:600px;margin:-20px auto 4px;">Las equivalencias en moneda local son únicamente informativas. El cargo se procesará en dólares estadounidenses (USD). Tu banco realizará la conversión final conforme a su propio tipo de cambio y condiciones.</p>
-    <p style="text-align:center;color:rgba(255,255,255,.6);font-size:.85rem;margin:0 auto 32px;" id="fx-fecha"></p>
+    <p style="text-align:center;color:rgba(255,255,255,.75);font-size:.9rem;max-width:600px;margin:-4px auto 32px;">El precio se cobra directamente en la moneda que elijas — sin conversión de tu banco de por medio.</p>
     <div class="planes-grid">
       <div class="plan-card">
         <div style="display:inline-block;background:#00897B;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:18px;height:18px;display:inline-block;vertical-align:-4px;margin-right:5px;" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>MÓDULO 2</div>
-        <div class="precio-usd" data-usd="7" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$7 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
+        <div class="precio-real" data-tipo="modulo2" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$7 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Conversando con una IA — Pago único</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Qué es un prompt y cómo usarlo</li>
@@ -272,12 +271,12 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Crear una historia con IA</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 2</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo2')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 2 — $7 USD</button>
+        <button class="plan-btn" data-tipo="modulo2" onclick="abrirPago('modulo2')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 2 — $7 USD</button>
       </div>
 
       <div class="plan-card">
         <div style="display:inline-block;background:#E91E63;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:18px;height:18px;display:inline-block;vertical-align:-4px;margin-right:5px;" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42"/></svg>MÓDULO 3</div>
-        <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
+        <div class="precio-real" data-tipo="modulo3" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Creando Imágenes con IA</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Prompts visuales efectivos</li>
@@ -285,12 +284,12 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Héroe fantástico / recuerdo familiar</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 3</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo3')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 3 — $9 USD</button>
+        <button class="plan-btn" data-tipo="modulo3" onclick="abrirPago('modulo3')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 3 — $9 USD</button>
       </div>
 
       <div class="plan-card">
         <div style="display:inline-block;background:#1976D2;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:18px;height:18px;display:inline-block;vertical-align:-4px;margin-right:5px;" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>MÓDULO 4</div>
-        <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
+        <div class="precio-real" data-tipo="modulo4" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">IA para la Vida Diaria</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Ayuda escolar y organización</li>
@@ -298,12 +297,12 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Práctica con casos reales</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 4</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo4')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 4 — $9 USD</button>
+        <button class="plan-btn" data-tipo="modulo4" onclick="abrirPago('modulo4')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 4 — $9 USD</button>
       </div>
 
       <div class="plan-card">
         <div style="display:inline-block;background:#7B1FA2;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:18px;height:18px;display:inline-block;vertical-align:-4px;margin-right:5px;" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/></svg>MÓDULO 5</div>
-        <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
+        <div class="precio-real" data-tipo="modulo5" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">IA para la Creatividad</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Cuentos y tarjetas con IA</li>
@@ -311,12 +310,12 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Proyecto familiar creativo</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado del Módulo 5</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo5')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 5 — $9 USD</button>
+        <button class="plan-btn" data-tipo="modulo5" onclick="abrirPago('modulo5')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 5 — $9 USD</button>
       </div>
 
       <div class="plan-card">
         <div style="display:inline-block;background:#2E7D32;color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:18px;height:18px;display:inline-block;vertical-align:-4px;margin-right:5px;" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>MÓDULO 6</div>
-        <div class="precio-usd" data-usd="9" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
+        <div class="precio-real" data-tipo="modulo6" style="font-size:2.8rem;font-weight:900;color:#fff;line-height:1;">$9 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Seguridad y Uso Responsable</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Privacidad y datos personales</li>
@@ -324,13 +323,13 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Buenas prácticas digitales</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Certificado final de Graduación (de participación) 🎓</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('modulo6')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 6 — $9 USD</button>
+        <button class="plan-btn" data-tipo="modulo6" onclick="abrirPago('modulo6')" style="background:var(--color-primario);color:#fff;">💳 Comprar Módulo 6 — $9 USD</button>
       </div>
 
       <div class="plan-card" style="border-color:var(--color-acento);position:relative;">
         <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--color-acento);color:var(--color-primario);font-size:1.05rem;font-weight:800;padding:4px 16px;border-radius:20px;white-space:nowrap;">⭐ MEJOR VALOR</div>
         <div style="display:inline-block;background:var(--color-primario);color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:14px;margin-top:6px;">PLAN COMPLETO</div>
-        <div class="precio-usd" data-usd="29.99" style="font-size:2.8rem;font-weight:900;color:var(--color-acento);line-height:1;">$29.99 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span><span class="precio-conv"></span></div>
+        <div class="precio-real" data-tipo="plan" style="font-size:2.8rem;font-weight:900;color:var(--color-acento);line-height:1;">$29.99 <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">USD</span></div>
         <p style="color:rgba(255,255,255,.9);font-size:1.15rem;margin:10px 0 18px;">Pago único — Todos los módulos incluidos</p>
         <ul style="list-style:none;text-align:left;margin-bottom:20px;">
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Los 6 módulos completos</li>
@@ -338,7 +337,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.15);display:flex;gap:8px;">✓ Todos los certificados incluidos</li>
           <li style="color:rgba(255,255,255,.9);font-size:1.15rem;padding:6px 0;display:flex;gap:8px;">✓ Un solo pago, sin mensualidades</li>
         </ul>
-        <button class="plan-btn" onclick="abrirPago('plan')" style="background:var(--color-acento);color:var(--color-primario);">⭐ Obtener Plan Completo — $29.99 USD</button>
+        <button class="plan-btn" data-tipo="plan" onclick="abrirPago('plan')" style="background:var(--color-acento);color:var(--color-primario);">⭐ Obtener Plan Completo — $29.99 USD</button>
       </div>
     </div>
     <div style="text-align:center;margin-top:32px;"><a href="#main" class="volver-menu" style="color:#fff;">↑ Volver al menú</a></div>
@@ -819,40 +818,44 @@ document.getElementById('btn-reg').addEventListener('click', function() {
     });
 });
 
-// ── SELECTOR DE MONEDA DE REFERENCIA ──────────────────────────────────────
-// El cobro real siempre es en USD (así lo espera el checkout/Stripe); esto
-// solo muestra un precio aproximado al lado para que el alumno se ubique.
-// Tipos de cambio fijos — el NAVEGADOR del alumno nunca llama a ninguna API
-// de tipo de cambio, así que el precio nunca falla, tarda ni parpadea por un
-// servicio externo caído. Los valores se actualizan solos una vez por semana
-// mediante un GitHub Action (.github/workflows/update-fx-rates.yml, que
-// corre .github/scripts/update-fx-rates.mjs y hace commit del cambio) — si
-// alguna semana la API de referencia falla, el Action simplemente no toca
-// el archivo y los valores existentes se quedan como están, nunca en blanco.
-// También puedes editarlos aquí a mano si hace falta.
-var FX_RATES = {
-  USD: 1,
-  MXN: 17.32, // referencia 2026-08-03 — revisar cada pocos meses
-  EUR: 0.87  // referencia 2026-08-03 — revisar cada pocos meses
-};
-var FX_RATES_FECHA = '2026-08-03'; // debe coincidir con las fechas de arriba — el GitHub Action la actualiza sola
+// ── SELECTOR DE MONEDA DE PAGO ────────────────────────────────────────────
+// La moneda elegida aquí SÍ determina lo que se cobra (a diferencia del
+// selector anterior, que solo mostraba una conversión de referencia).
+// Cuentas de Stripe en México solo pueden cobrar tarjetas mexicanas en MXN
+// (confirmado con Soporte de Stripe en sesión 50) — de ahí que el precio
+// mostrado y cobrado cambie según la moneda que el alumno elija, en vez de
+// forzar siempre USD. Los precios por moneda viven en el objeto INFO, más
+// abajo en este mismo script.
 function detectarMonedaInicial() {
   var lang = (navigator.language || '').toLowerCase();
   if (lang === 'es-mx') return 'MXN';
   if (lang === 'es-es') return 'EUR';
   return 'USD';
 }
+var PREFIJOS_BOTON = {
+  modulo2: '💳 Comprar Módulo 2 — ',
+  modulo3: '💳 Comprar Módulo 3 — ',
+  modulo4: '💳 Comprar Módulo 4 — ',
+  modulo5: '💳 Comprar Módulo 5 — ',
+  modulo6: '💳 Comprar Módulo 6 — ',
+  plan: '⭐ Obtener Plan Completo — '
+};
+var monedaActual = 'USD';
 function aplicarMoneda(moneda) {
-  document.querySelectorAll('.precio-usd').forEach(function(el) {
-    var usd = parseFloat(el.getAttribute('data-usd'));
-    var conv = el.querySelector('.precio-conv');
-    if (moneda === 'USD' || !FX_RATES[moneda]) {
-      conv.textContent = '';
-      return;
-    }
-    var valor = usd * FX_RATES[moneda];
-    var texto = moneda === 'EUR' ? valor.toFixed(2) : Math.round(valor).toLocaleString('es-MX');
-    conv.textContent = '≈ ' + texto + ' ' + moneda;
+  monedaActual = moneda;
+  document.querySelectorAll('.precio-real').forEach(function(el) {
+    var info = INFO[el.getAttribute('data-tipo')];
+    if (!info) return;
+    var texto = info.precios[moneda] || info.precios.USD;
+    var partes = texto.split(' ');
+    var codigo = partes.pop();
+    el.innerHTML = partes.join(' ') + ' <span style="font-size:1.15rem;color:rgba(255,255,255,.85);">' + codigo + '</span>';
+  });
+  document.querySelectorAll('.plan-btn[data-tipo]').forEach(function(btn) {
+    var tipo = btn.getAttribute('data-tipo');
+    var info = INFO[tipo];
+    if (!info || !PREFIJOS_BOTON[tipo]) return;
+    btn.textContent = PREFIJOS_BOTON[tipo] + (info.precios[moneda] || info.precios.USD);
   });
   document.querySelectorAll('.moneda-btn').forEach(function(btn) {
     btn.classList.toggle('activo', btn.getAttribute('data-moneda') === moneda);
@@ -861,15 +864,8 @@ function aplicarMoneda(moneda) {
 document.querySelectorAll('.moneda-btn').forEach(function(btn) {
   btn.addEventListener('click', function() { aplicarMoneda(btn.getAttribute('data-moneda')); });
 });
-aplicarMoneda(detectarMonedaInicial());
-(function() {
-  var fechaEl = document.getElementById('fx-fecha');
-  if (!fechaEl) return;
-  var partes = FX_RATES_FECHA.split('-');
-  var fecha = new Date(Number(partes[0]), Number(partes[1]) - 1, Number(partes[2]));
-  var texto = fecha.toLocaleDateString('es-MX', {year:'numeric', month:'long', day:'numeric'});
-  fechaEl.textContent = 'Tipo de cambio de referencia actualizado el ' + texto;
-})();
+// aplicarMoneda(detectarMonedaInicial()) se llama más abajo, después de
+// definir INFO — ver el bloque "// ── PAGO".
 // ─────────────────────────────────────────────────────────────────────────
 
 // ── ACCESIBILIDAD DE MODALES (mpago / mconf) ──────────────────────────────
@@ -939,28 +935,30 @@ var AccesibilidadModal = (function() {
 // ── PAGO
 var pagoActual='';
 var INFO={
-  modulo2:    {titulo:'💬 Módulo 2',    precio:'$7 USD',      color:'#00897B', mod:'Módulo 2: Conversando con una IA',    archivo:'modulo2.html'},
-  modulo3:    {titulo:'🎨 Módulo 3',    precio:'$9 USD',      color:'#E91E63', mod:'Módulo 3: Creando Imágenes con IA',   archivo:'modulo3.html'},
-  modulo4:    {titulo:'📅 Módulo 4',    precio:'$9 USD',      color:'#1976D2', mod:'Módulo 4: IA para la Vida Diaria',   archivo:'modulo4.html'},
-  modulo5:    {titulo:'✨ Módulo 5',    precio:'$9 USD',      color:'#7B1FA2', mod:'Módulo 5: IA para la Creatividad',   archivo:'modulo5.html'},
-  modulo6:    {titulo:'🔒 Módulo 6',    precio:'$9 USD',      color:'#2E7D32', mod:'Módulo 6: Seguridad y Uso Responsable', archivo:'modulo6.html'},
-  plan:       {titulo:'⭐ Plan Completo',precio:'$29.99 USD',  color:'var(--color-primario)', mod:'Plan Completo — Todos los módulos',  archivo:'modulo2.html'}
+  modulo2:    {titulo:'💬 Módulo 2',    precios:{USD:'$7 USD', MXN:'$120 MXN', EUR:'€6 EUR'},      color:'#00897B', mod:'Módulo 2: Conversando con una IA',    archivo:'modulo2.html'},
+  modulo3:    {titulo:'🎨 Módulo 3',    precios:{USD:'$9 USD', MXN:'$160 MXN', EUR:'€8 EUR'},      color:'#E91E63', mod:'Módulo 3: Creando Imágenes con IA',   archivo:'modulo3.html'},
+  modulo4:    {titulo:'📅 Módulo 4',    precios:{USD:'$9 USD', MXN:'$160 MXN', EUR:'€8 EUR'},      color:'#1976D2', mod:'Módulo 4: IA para la Vida Diaria',   archivo:'modulo4.html'},
+  modulo5:    {titulo:'✨ Módulo 5',    precios:{USD:'$9 USD', MXN:'$160 MXN', EUR:'€8 EUR'},      color:'#7B1FA2', mod:'Módulo 5: IA para la Creatividad',   archivo:'modulo5.html'},
+  modulo6:    {titulo:'🔒 Módulo 6',    precios:{USD:'$9 USD', MXN:'$160 MXN', EUR:'€8 EUR'},      color:'#2E7D32', mod:'Módulo 6: Seguridad y Uso Responsable', archivo:'modulo6.html'},
+  plan:       {titulo:'⭐ Plan Completo',precios:{USD:'$29.99 USD', MXN:'$550 MXN', EUR:'€26 EUR'},  color:'var(--color-primario)', mod:'Plan Completo — Todos los módulos',  archivo:'modulo2.html'}
 };
+aplicarMoneda(detectarMonedaInicial());
 function abrirPago(tipo) {
   pagoActual=tipo;
   var info=INFO[tipo];
+  var precioTexto=info.precios[monedaActual]||info.precios.USD;
   document.getElementById('phdr').innerHTML=
     '<span style="background:'+info.color+';color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;">'+info.titulo+'</span>'
-    +'<div style="font-size:2rem;font-weight:900;color:'+info.color+';margin-top:8px;">'+info.precio+'</div>';
+    +'<div style="font-size:2rem;font-weight:900;color:'+info.color+';margin-top:8px;">'+precioTexto+'</div>';
   document.getElementById('p-nombre').value='';
   document.getElementById('p-email').value='';
   document.getElementById('perr').style.display='none';
-  document.getElementById('btn-pay').textContent='🔒 Continuar a pago seguro — '+info.precio;
+  document.getElementById('btn-pay').textContent='🔒 Continuar a pago seguro — '+precioTexto;
   document.getElementById('btn-pay').disabled=false;
   AccesibilidadModal.abrir(document.getElementById('mpago'));
   logEventoAnalytics('begin_checkout', {
-    currency: 'USD',
-    value: parseFloat(info.precio.replace(/[^0-9.]/g,'')),
+    currency: monedaActual,
+    value: parseFloat(precioTexto.replace(/[^0-9.]/g,'')),
     items: [{item_id: tipo, item_name: info.mod}]
   });
 }
@@ -977,12 +975,13 @@ document.getElementById('btn-pay').addEventListener('click', function() {
   sessionStorage.setItem('pago_nombre', nom);
   var btnPay=this;
   var info=INFO[pagoActual];
-  firebase.functions().httpsCallable('crearSesionPago')({tipo: pagoActual, email: eml})
+  var precioTexto=info.precios[monedaActual]||info.precios.USD;
+  firebase.functions().httpsCallable('crearSesionPago')({tipo: pagoActual, email: eml, moneda: monedaActual.toLowerCase()})
     .then(function(res) {
       window.location = res.data.url;
     })
     .catch(function(err) {
-      btnPay.textContent='🔒 Continuar a pago seguro — '+info.precio;
+      btnPay.textContent='🔒 Continuar a pago seguro — '+precioTexto;
       btnPay.disabled=false;
       document.getElementById('perr').textContent='⚠️ No se pudo conectar con Stripe. Intenta de nuevo.';
       document.getElementById('perr').style.display='block';
@@ -1033,9 +1032,11 @@ window.addEventListener('load', function() {
       } else {
         localStorage.setItem('acceso_' + data.tipo, '1');
       }
+      var monedaPagada = (data.moneda || 'usd').toUpperCase();
+      var precioPagado = info ? (info.precios[monedaPagada] || info.precios.USD) : '';
       logEventoAnalytics('purchase', {
-        currency: 'USD',
-        value: info ? parseFloat(info.precio.replace(/[^0-9.]/g,'')) : 0,
+        currency: monedaPagada,
+        value: precioPagado ? parseFloat(precioPagado.replace(/[^0-9.]/g,'')) : 0,
         transaction_id: sessionId,
         items: [{item_id: data.tipo, item_name: data.mod}]
       });

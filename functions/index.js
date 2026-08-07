@@ -14,16 +14,21 @@ const db = admin.firestore();
 const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
 
-// Precios definidos SOLO aquí, en el servidor.
-// El cliente nunca debe poder decidir cuánto paga — solo elige qué producto quiere.
+// Precios definidos SOLO aquí, en el servidor, uno por moneda soportada.
+// El cliente nunca debe poder decidir cuánto paga — solo elige qué producto
+// quiere y en qué moneda (de una lista fija), nunca el monto.
+// Cuentas de Stripe en México solo pueden cobrar tarjetas mexicanas en MXN
+// (confirmado con Soporte de Stripe en sesión 50) — de ahí la necesidad de
+// cobrar en la moneda real del alumno en vez de forzar siempre USD.
 const PRODUCTOS = {
-  modulo2: { nombre: 'Módulo 2: Conversando con una IA', centavos: 700 },
-  modulo3: { nombre: 'Módulo 3: Creando Imágenes con IA', centavos: 900 },
-  modulo4: { nombre: 'Módulo 4: IA para la Vida Diaria', centavos: 900 },
-  modulo5: { nombre: 'Módulo 5: IA para la Creatividad', centavos: 900 },
-  modulo6: { nombre: 'Módulo 6: Seguridad y Uso Responsable', centavos: 900 },
-  plan: { nombre: 'Plan Completo — Todos los módulos', centavos: 2999 },
+  modulo2: { nombre: 'Módulo 2: Conversando con una IA', precios: { usd: 700, mxn: 12000, eur: 600 } },
+  modulo3: { nombre: 'Módulo 3: Creando Imágenes con IA', precios: { usd: 900, mxn: 16000, eur: 800 } },
+  modulo4: { nombre: 'Módulo 4: IA para la Vida Diaria', precios: { usd: 900, mxn: 16000, eur: 800 } },
+  modulo5: { nombre: 'Módulo 5: IA para la Creatividad', precios: { usd: 900, mxn: 16000, eur: 800 } },
+  modulo6: { nombre: 'Módulo 6: Seguridad y Uso Responsable', precios: { usd: 900, mxn: 16000, eur: 800 } },
+  plan: { nombre: 'Plan Completo — Todos los módulos', precios: { usd: 2999, mxn: 55000, eur: 2600 } },
 };
+const MONEDAS_VALIDAS = ['usd', 'mxn', 'eur'];
 
 const URL_SITIO = 'https://srgabarca-del.github.io/academia-ia-generaciones';
 
@@ -36,6 +41,7 @@ exports.crearSesionPago = onCall({ secrets: [stripeSecretKey] }, async (request)
   const stripe = Stripe(stripeSecretKey.value());
   const tipo = request.data && request.data.tipo;
   const email = request.data && request.data.email;
+  const monedaSolicitada = ((request.data && request.data.moneda) || 'usd').toLowerCase();
   const producto = PRODUCTOS[tipo];
 
   if (!producto) {
@@ -44,19 +50,20 @@ exports.crearSesionPago = onCall({ secrets: [stripeSecretKey] }, async (request)
   if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     throw new HttpsError('invalid-argument', 'Correo no válido.');
   }
+  const moneda = MONEDAS_VALIDAS.includes(monedaSolicitada) ? monedaSolicitada : 'usd';
 
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
     payment_method_types: ['card'],
     customer_email: email,
     client_reference_id: `${email}|${tipo}`,
-    metadata: { tipo, email },
+    metadata: { tipo, email, moneda },
     line_items: [
       {
         price_data: {
-          currency: 'usd',
+          currency: moneda,
           product_data: { name: producto.nombre },
-          unit_amount: producto.centavos,
+          unit_amount: producto.precios[moneda],
         },
         quantity: 1,
       },
@@ -98,11 +105,12 @@ exports.verificarSesionPago = onCall({ secrets: [stripeSecretKey] }, async (requ
   }
   const tipo = session.metadata && session.metadata.tipo;
   const email = session.metadata && session.metadata.email;
+  const moneda = (session.metadata && session.metadata.moneda) || 'usd';
   if (!tipo || !email || !PRODUCTOS[tipo]) {
     throw new HttpsError('internal', 'La sesión de pago no tiene los datos esperados.');
   }
   await otorgarAcceso(email, tipo);
-  return { ok: true, tipo, email, mod: PRODUCTOS[tipo].nombre };
+  return { ok: true, tipo, email, moneda, mod: PRODUCTOS[tipo].nombre };
 });
 
 /**
