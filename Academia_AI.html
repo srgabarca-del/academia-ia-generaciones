@@ -45,10 +45,11 @@ nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:c
 .nav-divider{width:2px;height:24px;background:rgba(255,255,255,.45);flex-shrink:0;border-radius:1px}
 .volver-menu{color:var(--color-primario);font-weight:700;text-decoration:none;font-size:1.05rem}
 .volver-menu:hover{text-decoration:underline}
-/* El menú ahora tiene 6 enlaces (antes solo 2), así que necesita más ancho
+/* El menú ahora tiene 7 enlaces (antes solo 2), así que necesita más ancho
    antes de mostrarse en una sola fila — el punto de quiebre subió de 600px
-   a 1260px (el mínimo real donde los 6 caben sin encimarse, verificado). */
-@media(max-width:1260px){
+   a 1260px y luego a 1400px al agregar "Por qué nacimos" (el mínimo real
+   donde los 7 caben sin encimarse ni desbordar, verificado). */
+@media(max-width:1400px){
   .logo-full{display:none}
   .cta-full{display:none}
   .nav-burger{display:block}
@@ -175,6 +176,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
   <div style="display:flex;align-items:center;gap:12px;">
     <button type="button" class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
     <div class="nav-links" id="nav-links">
+      <a href="nosotros.html" style="color:#fff;font-size:1.1rem;font-weight:600;text-decoration:none;opacity:.85;white-space:nowrap;">Por qué nacimos</a>
       <a href="#como-funciona" style="color:#fff;font-size:1.1rem;font-weight:600;text-decoration:none;opacity:.85;white-space:nowrap;">Cómo funciona</a>
       <a href="#planes-pago" style="color:#fff;font-size:1.1rem;font-weight:600;text-decoration:none;opacity:.85;white-space:nowrap;">Precios</a>
       <a href="#herramientas" style="color:#fff;font-size:1.1rem;font-weight:600;text-decoration:none;opacity:.85;white-space:nowrap;">Herramientas</a>
