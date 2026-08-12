@@ -942,7 +942,7 @@ footer{text-align:center;padding:28px 24px;color:#757575;font-size:.95rem}
         <li>Proteger los derechos de Academia IA Generaciones y de sus usuarios.</li>
       </ul>
       <p>Cuando los datos dejen de ser necesarios para dichas finalidades, serán eliminados o anonimizados conforme a los procedimientos internos aplicables.</p>
-      <div class="capitulo">CAPÍTULO IV. TRANSFERENCIA Y DIVULGACIÓN DE DATOS PERSONALES</div>
+      <div class="capitulo" id="cap-transferencia-datos">CAPÍTULO IV. TRANSFERENCIA Y DIVULGACIÓN DE DATOS PERSONALES</div>
       <h2>13. Transferencia de datos</h2>
       <p>Academia IA Generaciones no vende, alquila, comercializa ni transfiere los datos personales de sus usuarios a terceros para fines comerciales o publicitarios.</p>
       <p>Los datos personales únicamente podrán ser compartidos cuando resulte necesario para la operación de la plataforma o exista una obligación legal.</p>
@@ -2016,8 +2016,16 @@ var TITULOS = {
 };
 var SECCIONES = Object.keys(TITULOS);
 
-function mostrarSeccion(id) {
-  if (SECCIONES.indexOf(id) === -1) id = 'terminos';
+// Acepta también un ancla secundaria dentro de la sección, con el formato
+// "#seccion:id-del-capitulo" (ej. "#privacidad:cap-transferencia-datos"),
+// para poder enlazar directo a un capítulo específico desde fuera de esta
+// página (ej. el registro de Academia_AI.html) sin depender de que el
+// alumno navegue manualmente hasta ahí.
+function mostrarSeccion(idRaw) {
+  var partes = (idRaw || '').split(':');
+  var id = partes[0];
+  var subAncla = partes[1] || '';
+  if (SECCIONES.indexOf(id) === -1) { id = 'terminos'; subAncla = ''; }
   SECCIONES.forEach(function(s) {
     document.getElementById('sec-' + s).style.display = (s === id) ? 'block' : 'none';
     var boton = document.getElementById('nav-' + s);
@@ -2025,8 +2033,13 @@ function mostrarSeccion(id) {
     boton.setAttribute('aria-current', s === id ? 'page' : 'false');
   });
   document.title = TITULOS[id] + ' — Academia IA Generaciones';
-  history.replaceState(null, '', '#' + id);
-  window.scrollTo(0, 0);
+  history.replaceState(null, '', '#' + id + (subAncla ? ':' + subAncla : ''));
+  var elCapitulo = subAncla ? document.getElementById(subAncla) : null;
+  if (elCapitulo) {
+    elCapitulo.scrollIntoView({behavior: 'smooth', block: 'start'});
+  } else {
+    window.scrollTo(0, 0);
+  }
 }
 
 document.querySelectorAll('.legal-nav-item').forEach(function(btn) {
