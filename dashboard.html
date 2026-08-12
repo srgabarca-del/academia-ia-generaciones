@@ -316,9 +316,21 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
     if (!res || !res.data || !res.data.certificados) return;
     var certs = res.data.certificados;
     var huboCambios = false;
+    // Firestore es la fuente de verdad para esta cuenta autenticada — no
+    // solo se AGREGA lo que falte, también se QUITA cualquier marca de
+    // "completado" que haya quedado en este navegador de una cuenta
+    // distinta usada antes aquí mismo (bug real reportado por el usuario:
+    // tras iniciar sesión con una cuenta VIP sin módulos aprobados, el
+    // panel seguía mostrando el progreso de otra cuenta usada antes en el
+    // mismo navegador/celular, porque antes solo se agregaban certificados
+    // encontrados y nunca se corregían los que sobraban).
     for (var n = 1; n <= 6; n++) {
-      if (!completado(n) && certs[String(n)]) {
+      var tieneCertReal = !!certs[String(n)];
+      if (tieneCertReal && !completado(n)) {
         localStorage.setItem('modulo' + n + '_completado', '1');
+        huboCambios = true;
+      } else if (!tieneCertReal && completado(n)) {
+        localStorage.removeItem('modulo' + n + '_completado');
         huboCambios = true;
       }
     }
