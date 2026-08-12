@@ -68,6 +68,7 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
@@ -203,87 +204,128 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
     window.location.href = 'Academia_AI.html#planes-pago';
   };
 
-  // ── Progreso general ──────────────────────────────────────────────────
-  var totalCompletados = 0;
-  for (var i = 1; i <= 6; i++) { if (completado(i)) totalCompletados++; }
-  document.getElementById('progreso-txt').textContent = 'Has completado ' + totalCompletados + ' de 6 módulos';
-  document.getElementById('pfill').style.width = Math.round(totalCompletados / 6 * 100) + '%';
+  // ── Dibuja todo el panel a partir del estado actual de localStorage ────
+  // Se llama dos veces: (1) de inmediato, con lo que ya haya en este
+  // navegador, para pintar sin demora; (2) otra vez si el respaldo de
+  // Firestore de más abajo encuentra un módulo completado que este
+  // navegador no tenía marcado (mismo patrón ya usado en los 6 módulos,
+  // ver nota técnica 89 de CLAUDE.md — a este panel se le había quedado
+  // fuera ese fix).
+  function renderDashboard() {
+    // ── Progreso general ──────────────────────────────────────────────
+    var totalCompletados = 0;
+    for (var i = 1; i <= 6; i++) { if (completado(i)) totalCompletados++; }
+    document.getElementById('progreso-txt').textContent = 'Has completado ' + totalCompletados + ' de 6 módulos';
+    document.getElementById('pfill').style.width = Math.round(totalCompletados / 6 * 100) + '%';
 
-  // ── Tu siguiente paso ─────────────────────────────────────────────────
-  var sigTitulo = document.getElementById('sig-titulo');
-  var sigDesc = document.getElementById('sig-desc');
-  var sigCta = document.getElementById('sig-cta');
-  if (totalCompletados === 6) {
-    sigTitulo.textContent = '🎉 ¡Completaste los 6 módulos!';
-    sigDesc.textContent = 'Ya tienes tu Certificado Final de Graduación aquí mismo, más abajo. Puedes repasar cualquier módulo cuando quieras.';
-    sigCta.innerHTML = '<a href="#cert-final-box" class="cta-btn">🏆 Ver mi Certificado Final</a>';
-  } else {
-    var siguiente = 1;
-    for (var j = 1; j <= 6; j++) { if (!completado(j)) { siguiente = j; break; } }
-    var m = MODULOS[siguiente - 1];
-    var estado = estadoModulo(siguiente);
-    if (estado === 'bloqueado') {
-      sigTitulo.textContent = '🔒 Desbloquea el Módulo ' + siguiente + ': ' + m.titulo;
-      sigDesc.textContent = 'Adquiere este módulo o el Plan Completo para seguir avanzando en tu curso.';
-      sigCta.innerHTML = '<button class="cta-btn" onclick="comprarModulo(' + siguiente + ')">🔓 Desbloquear por ' + m.precio + '</button>';
-    } else if (estado === 'progreso') {
-      sigTitulo.textContent = '▶ Continúa el Módulo ' + siguiente + ': ' + m.titulo;
-      sigDesc.textContent = 'Ya empezaste este módulo. Retómalo donde lo dejaste.';
-      sigCta.innerHTML = '<a href="' + m.archivo + '" class="cta-btn">▶ Continuar donde lo dejaste</a>';
+    // ── Tu siguiente paso ───────────────────────────────────────────────
+    var sigTitulo = document.getElementById('sig-titulo');
+    var sigDesc = document.getElementById('sig-desc');
+    var sigCta = document.getElementById('sig-cta');
+    if (totalCompletados === 6) {
+      sigTitulo.textContent = '🎉 ¡Completaste los 6 módulos!';
+      sigDesc.textContent = 'Ya tienes tu Certificado Final de Graduación aquí mismo, más abajo. Puedes repasar cualquier módulo cuando quieras.';
+      sigCta.innerHTML = '<a href="#cert-final-box" class="cta-btn">🏆 Ver mi Certificado Final</a>';
     } else {
-      sigTitulo.textContent = (siguiente === 1 ? '🚀 Empieza tu curso: ' : '🚀 Empieza el Módulo ' + siguiente + ': ') + m.titulo;
-      sigDesc.textContent = m.desc;
-      sigCta.innerHTML = '<a href="' + m.archivo + '" class="cta-btn">🚀 Empezar</a>';
+      var siguiente = 1;
+      for (var j = 1; j <= 6; j++) { if (!completado(j)) { siguiente = j; break; } }
+      var m = MODULOS[siguiente - 1];
+      var estado = estadoModulo(siguiente);
+      if (estado === 'bloqueado') {
+        sigTitulo.textContent = '🔒 Desbloquea el Módulo ' + siguiente + ': ' + m.titulo;
+        sigDesc.textContent = 'Adquiere este módulo o el Plan Completo para seguir avanzando en tu curso.';
+        sigCta.innerHTML = '<button class="cta-btn" onclick="comprarModulo(' + siguiente + ')">🔓 Desbloquear por ' + m.precio + '</button>';
+      } else if (estado === 'progreso') {
+        sigTitulo.textContent = '▶ Continúa el Módulo ' + siguiente + ': ' + m.titulo;
+        sigDesc.textContent = 'Ya empezaste este módulo. Retómalo donde lo dejaste.';
+        sigCta.innerHTML = '<a href="' + m.archivo + '" class="cta-btn">▶ Continuar donde lo dejaste</a>';
+      } else {
+        sigTitulo.textContent = (siguiente === 1 ? '🚀 Empieza tu curso: ' : '🚀 Empieza el Módulo ' + siguiente + ': ') + m.titulo;
+        sigDesc.textContent = m.desc;
+        sigCta.innerHTML = '<a href="' + m.archivo + '" class="cta-btn">🚀 Empezar</a>';
+      }
+    }
+
+    // ── Grid de módulos ─────────────────────────────────────────────────
+    var ESTADOS = {
+      completado: {label:'✅ Completado', bg:'#E8F5E9', color:'#2E7D32'},
+      progreso:   {label:'🟡 En progreso', bg:'#FFF8E1', color:'#F57F17'},
+      disponible: {label:'🔵 Disponible', bg:'#E3F2FD', color:'#1565C0'},
+      bloqueado:  {label:'🔒 Bloqueado', bg:'#F5F5F5', color:'#757575'}
+    };
+    var grid = document.getElementById('modulos-grid');
+    grid.innerHTML = '';
+    MODULOS.forEach(function(m) {
+      var estado = estadoModulo(m.n);
+      var e = ESTADOS[estado];
+      var botones = '';
+      if (estado === 'completado') {
+        botones = '<a href="' + m.archivo + '" style="background:#F5F5F5;color:#212121;">🔁 Repasar</a>'
+          + '<a href="' + m.archivo + '#' + m.cert + '" style="background:' + m.color + ';color:#fff;">🏆 Certificado</a>';
+      } else if (estado === 'progreso') {
+        botones = '<a href="' + m.archivo + '" style="background:' + m.color + ';color:#fff;">▶ Continuar donde lo dejaste</a>';
+      } else if (estado === 'disponible') {
+        botones = '<a href="' + m.archivo + '" style="background:' + m.color + ';color:#fff;">🚀 Empezar</a>';
+      } else {
+        botones = '<button onclick="comprarModulo(' + m.n + ')" style="background:#757575;color:#fff;">🔒 Desbloquear ' + (m.precio || '') + '</button>';
+      }
+      var card = document.createElement('div');
+      card.className = 'card';
+      card.style.borderTopColor = m.color;
+      card.innerHTML =
+        '<span class="pill" style="background:' + e.bg + ';color:' + e.color + ';">' + e.label + '</span>'
+        + '<div class="num">MÓDULO ' + m.n + (m.gratis ? ' · GRATIS' : '') + '</div>'
+        + '<h4>' + m.icon + ' ' + m.titulo + '</h4>'
+        + '<p class="desc">' + m.desc + '</p>'
+        + '<div class="btns">' + botones + '</div>';
+      grid.appendChild(card);
+    });
+
+    // ── Certificado Final de Graduación — solo se desbloquea con 6/6 ────
+    var certLocked = document.getElementById('cert-final-locked');
+    var certBox = document.getElementById('cert-final-box');
+    if (totalCompletados === 6) {
+      certLocked.style.display = 'none';
+      certBox.style.display = 'block';
+      var fFinal = new Date().toLocaleDateString('es-MX', {year:'numeric', month:'long', day:'numeric'});
+      document.getElementById('cert-final-nombre').textContent = nombre;
+      document.getElementById('cert-final-fecha').textContent = 'Fecha de emisión: ' + fFinal;
+      asegurarCertificadoFinalVerificable(nombre, email, fFinal);
+    } else {
+      document.getElementById('cert-final-locked-desc').textContent = 'Llevas ' + totalCompletados + ' de 6 módulos completados.';
     }
   }
 
-  // ── Grid de módulos ───────────────────────────────────────────────────
-  var ESTADOS = {
-    completado: {label:'✅ Completado', bg:'#E8F5E9', color:'#2E7D32'},
-    progreso:   {label:'🟡 En progreso', bg:'#FFF8E1', color:'#F57F17'},
-    disponible: {label:'🔵 Disponible', bg:'#E3F2FD', color:'#1565C0'},
-    bloqueado:  {label:'🔒 Bloqueado', bg:'#F5F5F5', color:'#757575'}
-  };
-  var grid = document.getElementById('modulos-grid');
-  MODULOS.forEach(function(m) {
-    var estado = estadoModulo(m.n);
-    var e = ESTADOS[estado];
-    var botones = '';
-    if (estado === 'completado') {
-      botones = '<a href="' + m.archivo + '" style="background:#F5F5F5;color:#212121;">🔁 Repasar</a>'
-        + '<a href="' + m.archivo + '#' + m.cert + '" style="background:' + m.color + ';color:#fff;">🏆 Certificado</a>';
-    } else if (estado === 'progreso') {
-      botones = '<a href="' + m.archivo + '" style="background:' + m.color + ';color:#fff;">▶ Continuar donde lo dejaste</a>';
-    } else if (estado === 'disponible') {
-      botones = '<a href="' + m.archivo + '" style="background:' + m.color + ';color:#fff;">🚀 Empezar</a>';
-    } else {
-      botones = '<button onclick="comprarModulo(' + m.n + ')" style="background:#757575;color:#fff;">🔒 Desbloquear ' + (m.precio || '') + '</button>';
+  renderDashboard();
+
+  // ── Respaldo en Firestore para módulos completados en otro dispositivo,
+  // otro navegador, o antes de un cambio de dominio ─────────────────────
+  // Mismo patrón ya usado en los 6 módulos: espera a que Firebase Auth
+  // confirme la sesión y solo entonces pregunta por los certificados reales
+  // del alumno — si encuentra alguno que este navegador no tenía marcado
+  // en localStorage, lo marca y vuelve a dibujar el panel completo.
+  var authReadyPromise = firebase.auth().currentUser
+    ? Promise.resolve()
+    : new Promise(function(resolve) {
+        var unsub = firebase.auth().onAuthStateChanged(function() { unsub(); resolve(); });
+      });
+  authReadyPromise.then(function() {
+    if (!firebase.auth().currentUser) return null;
+    return firebase.functions().httpsCallable('obtenerCertificadosDelAlumno')({});
+  }).then(function(res) {
+    if (!res || !res.data || !res.data.certificados) return;
+    var certs = res.data.certificados;
+    var huboCambios = false;
+    for (var n = 1; n <= 6; n++) {
+      if (!completado(n) && certs[String(n)]) {
+        localStorage.setItem('modulo' + n + '_completado', '1');
+        huboCambios = true;
+      }
     }
-    var card = document.createElement('div');
-    card.className = 'card';
-    card.style.borderTopColor = m.color;
-    card.innerHTML =
-      '<span class="pill" style="background:' + e.bg + ';color:' + e.color + ';">' + e.label + '</span>'
-      + '<div class="num">MÓDULO ' + m.n + (m.gratis ? ' · GRATIS' : '') + '</div>'
-      + '<h4>' + m.icon + ' ' + m.titulo + '</h4>'
-      + '<p class="desc">' + m.desc + '</p>'
-      + '<div class="btns">' + botones + '</div>';
-    grid.appendChild(card);
+    if (huboCambios) { renderDashboard(); }
+  }).catch(function(err) {
+    console.error('No se pudo verificar certificados existentes:', err);
   });
-
-  // ── Certificado Final de Graduación — solo se desbloquea con 6/6 ──────
-  var certLocked = document.getElementById('cert-final-locked');
-  var certBox = document.getElementById('cert-final-box');
-  if (totalCompletados === 6) {
-    certLocked.style.display = 'none';
-    certBox.style.display = 'block';
-    var fFinal = new Date().toLocaleDateString('es-MX', {year:'numeric', month:'long', day:'numeric'});
-    document.getElementById('cert-final-nombre').textContent = nombre;
-    document.getElementById('cert-final-fecha').textContent = 'Fecha de emisión: ' + fFinal;
-    asegurarCertificadoFinalVerificable(nombre, email, fFinal);
-  } else {
-    document.getElementById('cert-final-locked-desc').textContent = 'Llevas ' + totalCompletados + ' de 6 módulos completados.';
-  }
 })();
 
 // Certificado Final de Graduación — certifica el programa completo (6
