@@ -271,11 +271,16 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
     <div class="free-box">
       <div class="free-badge">🆓 ACCESO GRATUITO</div>
       <h3 style="font-size:1.5rem;color:var(--color-primario);margin-bottom:10px;">Descubriendo la Inteligencia Artificial</h3>
+      <!-- ── Adelanto en video — DESACTIVADO temporalmente ──────────────────
+           Pendiente: el video (mismo que usa modulo1.html) está mostrando la
+           tarjeta "Ver en YouTube" de YouTube en vez de reproducirse embebido
+           -- afecta también al Módulo 1 real, no solo aquí. Hay que revisar
+           en YouTube Studio si "Permitir insertar el video" sigue activado
+           para este video, y si tiene alguna restricción de edad o reclamo de
+           derechos de autor. Se comentó todo el bloque (sin borrarlo) para
+           retomarlo con calma. Para reactivar, quitar este comentario.
       <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;margin-bottom:12px;background:#000;">
         <div id="video-adelanto-player" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>
-        <!-- Bloquea el logo de YouTube (esquina inferior derecha) para que no
-             se pueda saltar al video completo en YouTube.com — deja libre el
-             borde derecho para no tapar el botón de pantalla completa. -->
         <div style="position:absolute;bottom:0;right:34px;width:56px;height:34px;z-index:5;cursor:default;" title=""></div>
         <div id="video-adelanto-fin" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);color:#fff;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;box-sizing:border-box;">
           <p style="font-size:1.2rem;font-weight:700;margin-bottom:14px;">🎬 Ahí termina el adelanto</p>
@@ -284,12 +289,6 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
       </div>
       <p style="text-align:center;color:#555;font-size:1rem;margin-bottom:20px;">👆 Un adelanto de 45 segundos — el video completo lo desbloqueas al registrarte gratis.</p>
       <script>
-      // Antes se usaba un iframe simple con "?end=45", pero el parámetro
-      // "end" de YouTube no siempre se respeta en el reproductor embebido
-      // sin la API de JS (el usuario confirmó que reproducía el video
-      // completo). Se cambió a la IFrame Player API real (mismo patrón que
-      // modulo1.html) con un chequeo activo del tiempo transcurrido, que sí
-      // fuerza la pausa exacta a los 45 segundos.
       (function() {
         var ytTag = document.createElement('script');
         ytTag.src = 'https://www.youtube.com/iframe_api';
@@ -318,6 +317,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
         };
       })();
       </script>
+      ── Fin del bloque desactivado ── -->
       <ul class="free-inc">
         <li><div class="ico">🎬</div><span><strong>Video en español</strong> pensado para adultos mayores</span></li>
         <li><div class="ico">📖</div><span><strong>Guía del Módulo 1</strong> — PDF ilustrado para leer primero</span></li>
