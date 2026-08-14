@@ -343,11 +343,42 @@ document.getElementById('nav-burger').addEventListener('click', function() {
     </div>
   </div>
 
+  <div id="nota-fundador" style="display:none;background:var(--color-neutro-claro);border-radius:14px;padding:22px 24px;margin:0 0 24px;max-width:600px;margin-left:auto;margin-right:auto;">
+    <p style="font-size:1.1rem;color:var(--color-primario);font-weight:700;margin-bottom:10px;">👋 Un mensaje de Sergio, quien creó este curso</p>
+    <p style="font-size:1.15rem;color:#000000;line-height:1.7;margin-bottom:12px;">"Diseñé Academia IA Generaciones porque vi de cerca lo rápido que cambió la tecnología, dejando atrás a quienes no tuvieron tiempo de alcanzarla. Ya diste el paso más difícil: entender qué es la Inteligencia Artificial. El Módulo 2 es donde empiezas a usarla de verdad — a conversar con ella como si fuera un asistente que te ayuda con cartas, recetas, mensajes para la familia y mucho más."</p>
+    <a href="nosotros.html" target="_blank" style="color:var(--color-primario);font-weight:700;text-decoration:underline;font-size:1.1rem;">Conoce por qué nacimos →</a>
+  </div>
+
   <div class="btn-row">
     <button class="bn" id="btn-mod2" style="background:var(--color-primario);">🚀 Continuar al Módulo 2</button>
     <a href="dashboard.html" style="display:block;width:100%;padding:14px;background:#fff;color:var(--color-primario);border:2px solid var(--color-primario);border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Volver a mi panel</a>
     <a href="Academia_AI.html" style="display:block;width:100%;padding:14px;background:#fff;color:#757575;border:2px solid #E0E0E0;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
   </div>
+
+  <div id="opinion-box" style="display:none;background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-top:24px;padding:24px 22px;max-width:600px;margin-left:auto;margin-right:auto;">
+    <h3 style="font-size:1.25rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:6px;">💬 ¿Qué te pareció este primer módulo?</h3>
+    <p style="font-size:1.05rem;color:#757575;margin-bottom:18px;">Tu opinión nos ayuda a mejorar el curso — es opcional.</p>
+    <div id="opinion-form">
+      <div style="text-align:center;margin-bottom:18px;">
+        <div id="estrellas-m1" style="font-size:2.4rem;letter-spacing:10px;">
+          <span class="estrella-m1" data-val="1" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="2" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="3" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="4" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="5" style="cursor:pointer;color:#E0E0E0;">★</span>
+        </div>
+      </div>
+      <label for="opinion-texto-m1" style="display:block;font-size:1.05rem;color:#424242;margin-bottom:8px;">Cuéntanos en pocas palabras:</label>
+      <textarea id="opinion-texto-m1" rows="3" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:12px;font-size:1.05rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;" placeholder="Escribe aquí tu opinión..."></textarea>
+      <label style="display:flex;align-items:flex-start;gap:10px;font-size:1rem;color:#000000;margin-bottom:16px;cursor:pointer;">
+        <input type="checkbox" id="opinion-permiso-m1" style="width:20px;height:20px;flex-shrink:0;margin-top:2px;cursor:pointer;accent-color:var(--color-primario);">
+        Sí, pueden usar mi comentario (solo con mi nombre de pila) como testimonio en el sitio
+      </label>
+      <div id="opinion-err-m1" style="display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:10px 14px;font-size:1rem;margin-bottom:14px;">⚠️ Selecciona una calificación y escribe tu opinión.</div>
+      <button id="btn-enviar-opinion-m1" style="width:100%;padding:14px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">📩 Enviar mi opinión</button>
+    </div>
+    <div id="opinion-gracias-m1" style="display:none;text-align:center;padding:16px 0;">
+      <div style="font-size:2.5rem;margin-bottom:10px;">🙏</div>
+      <p style="font-size:1.15rem;color:var(--color-neutro-oscuro);font-weight:700;">¡Gracias por tu opinión!</p>
+    </div>
+  </div>
+
   <div class="footer-social-bar">
   <button type="button" onclick="CookieConsent.showPreferences()" aria-label="Cambiar mis preferencias de cookies" style="background:none;border:none;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 10px;">🍪 Cookies</button>
 </div>
@@ -457,6 +488,16 @@ document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienven
 // FIX: si el alumno ya aprobó este módulo antes (al volver desde el panel u
 // otro módulo), restaurar el estado "completado" en vez de mostrar todo desde
 // cero — mismo patrón ya usado en modulo2-6.html.
+// Muestra la nota del fundador (siempre) y la caja de opinión (solo si el
+// alumno no la ha enviado ya en este navegador) — se llama tanto al
+// aprobar el examen por primera vez como al restaurar el estado
+// "completado" al revisitar el módulo.
+function mostrarNotaYOpinion() {
+  document.getElementById('nota-fundador').style.display = 'block';
+  if (!localStorage.getItem('modulo1_opinion_enviada')) {
+    document.getElementById('opinion-box').style.display = 'block';
+  }
+}
 function restaurarEstadoCompletadoModulo1(nRestore, fCert, certId) {
   certOK = true;
   document.getElementById('pf').style.width = '100%';
@@ -468,6 +509,7 @@ function restaurarEstadoCompletadoModulo1(nRestore, fCert, certId) {
   document.getElementById('cn').textContent = nRestore;
   document.getElementById('cf').textContent = 'Fecha de emisión: ' + fCert;
   document.getElementById('certbox').style.display = 'block';
+  mostrarNotaYOpinion();
   if (certId) {
     localStorage.setItem('modulo1_cert_id', certId);
     localStorage.setItem('modulo1_cert_synced', '1');
@@ -585,6 +627,62 @@ function reiniciar() {
   document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+// ── Opinión real del alumno al terminar el Módulo 1 ────────────────────────
+// Antes solo se pedía hasta el Módulo 6; empezamos a recolectar aquí
+// también para tener testimonios reales que mostrar en este mismo punto
+// (justo antes del botón al Módulo 2) más adelante. Mismo patrón que
+// modulo6.html (colección "opiniones", timeout de 8s para no dejar el
+// botón colgado si Firestore tarda) — con un checkbox de permiso explícito
+// para poder usar el comentario como testimonio público, y una marca en
+// localStorage para no volver a pedir la opinión si el alumno revisita.
+var calificacionSelM1 = 0;
+document.querySelectorAll('.estrella-m1').forEach(function(el) {
+  el.addEventListener('click', function() {
+    calificacionSelM1 = parseInt(this.getAttribute('data-val'), 10);
+    document.querySelectorAll('.estrella-m1').forEach(function(e2) {
+      var val = parseInt(e2.getAttribute('data-val'), 10);
+      e2.style.color = val <= calificacionSelM1 ? 'var(--color-acento)' : '#E0E0E0';
+    });
+  });
+});
+document.getElementById('btn-enviar-opinion-m1').addEventListener('click', function() {
+  var texto = document.getElementById('opinion-texto-m1').value.trim();
+  var btn = this;
+  if (calificacionSelM1 < 1 || !texto) {
+    document.getElementById('opinion-err-m1').textContent = '⚠️ Selecciona una calificación y escribe tu opinión.';
+    document.getElementById('opinion-err-m1').style.display = 'block';
+    return;
+  }
+  document.getElementById('opinion-err-m1').style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+  var nombreOp = sessionStorage.getItem('alumno_nombre') || 'Alumno';
+  var emailOp = sessionStorage.getItem('alumno_email') || sessionStorage.getItem('pago_email') || '';
+  var permiso = document.getElementById('opinion-permiso-m1').checked;
+  var envio = firebase.firestore().collection('opiniones').add({
+    nombre: nombreOp,
+    email: emailOp,
+    calificacion: calificacionSelM1,
+    comentario: texto,
+    permiso_testimonio: permiso,
+    modulo: 'modulo1',
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  });
+  var tiempoLimite = new Promise(function(resolve, reject) {
+    setTimeout(function() { reject(new Error('tiempo-agotado')); }, 8000);
+  });
+  Promise.race([envio, tiempoLimite]).then(function() {
+    localStorage.setItem('modulo1_opinion_enviada', '1');
+    document.getElementById('opinion-form').style.display = 'none';
+    document.getElementById('opinion-gracias-m1').style.display = 'block';
+  }).catch(function(err) {
+    document.getElementById('opinion-err-m1').textContent = '⚠️ No se pudo enviar tu opinión. Intenta de nuevo.';
+    document.getElementById('opinion-err-m1').style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '📩 Enviar mi opinión';
+  });
+});
+
 function cerrarSesion() {
   if (window.fbAuth) {
     window.fbAuth.signOut().then(function() {
@@ -604,6 +702,7 @@ function verCert() {
   document.getElementById('cn').textContent=n;
   document.getElementById('cf').textContent='Fecha de emisión: '+f;
   document.getElementById('certbox').style.display='block';
+  mostrarNotaYOpinion();
   asegurarCertificadoVerificable(1, 'Módulo 1: Descubriendo la Inteligencia Artificial', n, f);
   document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'});
 }
