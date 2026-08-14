@@ -45,8 +45,20 @@ footer a{color:inherit}
 
 <nav>
   <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:56px;width:56px;border-radius:50%;">Academia IA Generaciones</div>
-  <a href="Academia_AI.html" class="volver">← Volver</a>
+  <a href="Academia_AI.html" class="volver" id="volver-link">← Volver</a>
 </nav>
+<script>
+// "Volver" regresa a la página desde la que se llegó (ej. Módulo 1, en
+// medio de su certificado) en vez de mandar siempre al inicio — solo cae
+// en Academia_AI.html si esta página se abrió directo, sin historial
+// previo en esta pestaña (ej. un enlace externo o marcador).
+document.getElementById('volver-link').addEventListener('click', function(e) {
+  if (history.length > 1) {
+    e.preventDefault();
+    history.back();
+  }
+});
+</script>
 
 <section class="hero">
   <div class="eyebrow">Nuestra historia</div>

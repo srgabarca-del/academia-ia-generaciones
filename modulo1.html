@@ -343,6 +343,30 @@ document.getElementById('nav-burger').addEventListener('click', function() {
     </div>
   </div>
 
+  <div id="opinion-box" style="display:none;background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:24px;padding:24px 22px;max-width:600px;margin-left:auto;margin-right:auto;">
+    <h3 style="font-size:1.25rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:6px;">💬 ¿Qué te pareció este primer módulo?</h3>
+    <p style="font-size:1.05rem;color:#757575;margin-bottom:18px;">Tu opinión nos ayuda a mejorar el curso — es opcional.</p>
+    <div id="opinion-form">
+      <div style="text-align:center;margin-bottom:18px;">
+        <div id="estrellas-m1" style="font-size:2.4rem;letter-spacing:10px;">
+          <span class="estrella-m1" data-val="1" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="2" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="3" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="4" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="5" style="cursor:pointer;color:#E0E0E0;">★</span>
+        </div>
+      </div>
+      <label for="opinion-texto-m1" style="display:block;font-size:1.05rem;color:#424242;margin-bottom:8px;">Cuéntanos en pocas palabras:</label>
+      <textarea id="opinion-texto-m1" rows="3" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:12px;font-size:1.05rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;" placeholder="Escribe aquí tu opinión..."></textarea>
+      <label style="display:flex;align-items:flex-start;gap:10px;font-size:1rem;color:#000000;margin-bottom:16px;cursor:pointer;">
+        <input type="checkbox" id="opinion-permiso-m1" style="width:20px;height:20px;flex-shrink:0;margin-top:2px;cursor:pointer;accent-color:var(--color-primario);">
+        Sí, pueden usar mi comentario (solo con mi nombre de pila) como testimonio en el sitio
+      </label>
+      <div id="opinion-err-m1" style="display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:10px 14px;font-size:1rem;margin-bottom:14px;">⚠️ Selecciona una calificación y escribe tu opinión.</div>
+      <button id="btn-enviar-opinion-m1" style="width:100%;padding:14px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">📩 Enviar mi opinión</button>
+    </div>
+    <div id="opinion-gracias-m1" style="display:none;text-align:center;padding:16px 0;">
+      <div style="font-size:2.5rem;margin-bottom:10px;">🙏</div>
+      <p style="font-size:1.15rem;color:var(--color-neutro-oscuro);font-weight:700;">¡Gracias por tu opinión!</p>
+    </div>
+  </div>
+
   <div id="antes-despues-box" style="display:none;background:#fff;border:1px solid #E0E0E0;border-radius:14px;padding:22px 24px;margin:0 0 24px;max-width:600px;margin-left:auto;margin-right:auto;">
     <p style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:6px;">👀 Una probada de lo que aprenderás</p>
     <p style="font-size:1.05rem;color:#555;margin-bottom:16px;">Mira la diferencia que hace un buen prompt (la instrucción que le das a la IA):</p>
@@ -374,37 +398,13 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   <div id="nota-fundador" style="display:none;background:var(--color-neutro-claro);border-radius:14px;padding:22px 24px;margin:0 0 24px;max-width:600px;margin-left:auto;margin-right:auto;">
     <p style="font-size:1.1rem;color:var(--color-primario);font-weight:700;margin-bottom:10px;">👋 Un mensaje de Sergio, quien creó este curso</p>
     <p style="font-size:1.15rem;color:#000000;line-height:1.7;margin-bottom:12px;">"Diseñé Academia IA Generaciones porque vi de cerca lo rápido que cambió la tecnología, dejando atrás a quienes no tuvieron tiempo de alcanzarla. Ya diste el paso más difícil: entender qué es la Inteligencia Artificial. El Módulo 2 es donde empiezas a usarla de verdad — a conversar con ella como si fuera un asistente que te ayuda con cartas, recetas, mensajes para la familia y mucho más."</p>
-    <a href="nosotros.html" target="_blank" style="color:var(--color-primario);font-weight:700;text-decoration:underline;font-size:1.1rem;">Conoce por qué nacimos →</a>
+    <a href="nosotros.html" style="color:var(--color-primario);font-weight:700;text-decoration:underline;font-size:1.1rem;">Conoce por qué nacimos →</a>
   </div>
 
   <div class="btn-row">
     <button class="bn" id="btn-mod2" style="background:var(--color-primario);">🚀 Continuar al Módulo 2</button>
     <a href="dashboard.html" style="display:block;width:100%;padding:14px;background:#fff;color:var(--color-primario);border:2px solid var(--color-primario);border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Volver a mi panel</a>
     <a href="Academia_AI.html" style="display:block;width:100%;padding:14px;background:#fff;color:#757575;border:2px solid #E0E0E0;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
-  </div>
-
-  <div id="opinion-box" style="display:none;background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-top:24px;padding:24px 22px;max-width:600px;margin-left:auto;margin-right:auto;">
-    <h3 style="font-size:1.25rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:6px;">💬 ¿Qué te pareció este primer módulo?</h3>
-    <p style="font-size:1.05rem;color:#757575;margin-bottom:18px;">Tu opinión nos ayuda a mejorar el curso — es opcional.</p>
-    <div id="opinion-form">
-      <div style="text-align:center;margin-bottom:18px;">
-        <div id="estrellas-m1" style="font-size:2.4rem;letter-spacing:10px;">
-          <span class="estrella-m1" data-val="1" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="2" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="3" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="4" style="cursor:pointer;color:#E0E0E0;">★</span><span class="estrella-m1" data-val="5" style="cursor:pointer;color:#E0E0E0;">★</span>
-        </div>
-      </div>
-      <label for="opinion-texto-m1" style="display:block;font-size:1.05rem;color:#424242;margin-bottom:8px;">Cuéntanos en pocas palabras:</label>
-      <textarea id="opinion-texto-m1" rows="3" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:12px;font-size:1.05rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;" placeholder="Escribe aquí tu opinión..."></textarea>
-      <label style="display:flex;align-items:flex-start;gap:10px;font-size:1rem;color:#000000;margin-bottom:16px;cursor:pointer;">
-        <input type="checkbox" id="opinion-permiso-m1" style="width:20px;height:20px;flex-shrink:0;margin-top:2px;cursor:pointer;accent-color:var(--color-primario);">
-        Sí, pueden usar mi comentario (solo con mi nombre de pila) como testimonio en el sitio
-      </label>
-      <div id="opinion-err-m1" style="display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:10px 14px;font-size:1rem;margin-bottom:14px;">⚠️ Selecciona una calificación y escribe tu opinión.</div>
-      <button id="btn-enviar-opinion-m1" style="width:100%;padding:14px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">📩 Enviar mi opinión</button>
-    </div>
-    <div id="opinion-gracias-m1" style="display:none;text-align:center;padding:16px 0;">
-      <div style="font-size:2.5rem;margin-bottom:10px;">🙏</div>
-      <p style="font-size:1.15rem;color:var(--color-neutro-oscuro);font-weight:700;">¡Gracias por tu opinión!</p>
-    </div>
   </div>
 
   <div class="footer-social-bar">
