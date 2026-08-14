@@ -201,25 +201,33 @@ document.getElementById('nav-burger').addEventListener('click', function() {
       <div style="border-top:2px dashed #E0E0E0;margin:24px 0;"></div>
 
       <h4 style="font-size:1.35rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:14px;">✏️ Actividad práctica 1 — Encuentra la IA en tus apps</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Abre 3 de tus apps favoritas y busca señales de inteligencia artificial. Completa la tabla:</p>
-      <div style="overflow-x:auto;margin-bottom:12px;">
-        <table style="width:100%;border-collapse:collapse;font-size:1rem;min-width:480px;">
-          <tr style="background:var(--color-neutro-claro);">
-            <th style="text-align:left;padding:8px;border:1px solid #E0E0E0;">App</th>
-            <th style="text-align:left;padding:8px;border:1px solid #E0E0E0;">¿Qué hace la IA ahí?</th>
-            <th style="text-align:left;padding:8px;border:1px solid #E0E0E0;">¿Es útil?</th>
-          </tr>
-          <tr>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><input id="modulo1_g1" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"></td>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><input id="modulo1_g2" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"></td>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><select id="modulo1_g3" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"><option value="">—</option><option>Sí</option><option>No</option></select></td>
-          </tr>
-          <tr>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><input id="modulo1_g4" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"></td>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><input id="modulo1_g5" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"></td>
-            <td style="padding:6px;border:1px solid #E0E0E0;"><select id="modulo1_g6" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:6px;font-size:1rem;"><option value="">—</option><option>Sí</option><option>No</option></select></td>
-          </tr>
-        </table>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Abre 3 de tus apps favoritas y busca señales de inteligencia artificial. Completa esto por cada una:</p>
+      <div style="background:var(--color-neutro-claro);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+        <div style="font-weight:700;font-size:1.1rem;color:var(--color-primario);margin-bottom:8px;">App 1</div>
+        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">Nombre de la app</label>
+        <input id="modulo1_g1" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
+        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Qué hace la IA ahí?</label>
+        <input id="modulo1_g2" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
+        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Es útil?</label>
+        <select id="modulo1_g3" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;"><option value="">—</option><option>Sí</option><option>No</option></select>
+      </div>
+      <div style="background:var(--color-neutro-claro);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+        <div style="font-weight:700;font-size:1.1rem;color:var(--color-primario);margin-bottom:8px;">App 2</div>
+        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">Nombre de la app</label>
+        <input id="modulo1_g4" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
+        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Qué hace la IA ahí?</label>
+        <input id="modulo1_g5" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
+        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Es útil?</label>
+        <select id="modulo1_g6" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;"><option value="">—</option><option>Sí</option><option>No</option></select>
+      </div>
+      <div style="background:var(--color-neutro-claro);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+        <div style="font-weight:700;font-size:1.1rem;color:var(--color-primario);margin-bottom:8px;">App 3</div>
+        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">Nombre de la app</label>
+        <input id="modulo1_g16" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
+        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Qué hace la IA ahí?</label>
+        <input id="modulo1_g17" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
+        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Es útil?</label>
+        <select id="modulo1_g18" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;"><option value="">—</option><option>Sí</option><option>No</option></select>
       </div>
       <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Cuál fue la señal de IA más sorprendente que encontraste?</label>
       <textarea id="modulo1_g7" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
