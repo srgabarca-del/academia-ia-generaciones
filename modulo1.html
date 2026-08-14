@@ -343,6 +343,34 @@ document.getElementById('nav-burger').addEventListener('click', function() {
     </div>
   </div>
 
+  <div id="antes-despues-box" style="display:none;background:#fff;border:1px solid #E0E0E0;border-radius:14px;padding:22px 24px;margin:0 0 24px;max-width:600px;margin-left:auto;margin-right:auto;">
+    <p style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:6px;">👀 Una probada de lo que aprenderás</p>
+    <p style="font-size:1.05rem;color:#555;margin-bottom:16px;">Mira la diferencia que hace un buen prompt (la instrucción que le das a la IA):</p>
+    <div style="background:#FFEBEE;border-radius:10px;padding:14px 16px;margin-bottom:12px;">
+      <p style="font-size:.95rem;font-weight:700;color:var(--color-error);margin-bottom:6px;">❌ Prompt genérico</p>
+      <p style="font-size:1.05rem;color:#000;font-style:italic;margin-bottom:8px;">"Escríbeme un mensaje para mi familia"</p>
+      <p style="font-size:1rem;color:#555;">→ "¡Hola familia! Espero que estén bien. Los quiero mucho." <span style="color:#757575;">(genérico, podría ser de cualquiera)</span></p>
+    </div>
+    <div style="background:#E8F5E9;border-radius:10px;padding:14px 16px;">
+      <p style="font-size:.95rem;font-weight:700;color:#2E7D32;margin-bottom:6px;">✅ Prompt con la fórmula del Módulo 2</p>
+      <p style="font-size:1.05rem;color:#000;font-style:italic;margin-bottom:8px;">"Ayúdame a escribir un mensaje corto y cálido para el grupo de WhatsApp de mi familia, invitándolos a comer el domingo en mi casa. Que suene como si lo escribiera yo, cariñoso pero sin ser cursi, máximo 3 líneas."</p>
+      <p style="font-size:1rem;color:#555;">→ "¡Hola mi gente hermosa! 🥰 Los espero este domingo a comer en mi casa — ya extraño verlos a todos juntos. ¡Avísenme si vienen para hacer suficiente comida!" <span style="color:#757575;">(personal, lista para copiar y pegar)</span></p>
+    </div>
+    <p style="font-size:1.05rem;color:var(--color-primario);font-weight:700;margin-top:14px;">En el Módulo 2 aprendes esta fórmula, paso a paso.</p>
+  </div>
+
+  <div id="personalizacion-box" style="display:none;background:#fff;border:1px solid #E0E0E0;border-radius:14px;padding:22px 24px;margin:0 0 24px;max-width:600px;margin-left:auto;margin-right:auto;">
+    <p style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:14px;">✨ ¿Para qué te gustaría usar la Inteligencia Artificial?</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+      <button type="button" class="chip-interes" data-tema="familia" style="background:var(--color-neutro-claro);border:2px solid transparent;border-radius:20px;padding:10px 16px;font-size:1.02rem;cursor:pointer;font-family:inherit;">👨‍👩‍👧 Hablar con la familia</button>
+      <button type="button" class="chip-interes" data-tema="diaria" style="background:var(--color-neutro-claro);border:2px solid transparent;border-radius:20px;padding:10px 16px;font-size:1.02rem;cursor:pointer;font-family:inherit;">🍲 Recetas y vida diaria</button>
+      <button type="button" class="chip-interes" data-tema="tramites" style="background:var(--color-neutro-claro);border:2px solid transparent;border-radius:20px;padding:10px 16px;font-size:1.02rem;cursor:pointer;font-family:inherit;">📋 Trámites y finanzas</button>
+      <button type="button" class="chip-interes" data-tema="crear" style="background:var(--color-neutro-claro);border:2px solid transparent;border-radius:20px;padding:10px 16px;font-size:1.02rem;cursor:pointer;font-family:inherit;">🎨 Crear cosas (imágenes, historias)</button>
+      <button type="button" class="chip-interes" data-tema="curiosidad" style="background:var(--color-neutro-claro);border:2px solid transparent;border-radius:20px;padding:10px 16px;font-size:1.02rem;cursor:pointer;font-family:inherit;">🤔 Solo tengo curiosidad</button>
+    </div>
+    <div id="personalizacion-respuesta" style="display:none;background:var(--color-neutro-claro);border-radius:10px;padding:14px 16px;font-size:1.1rem;color:var(--color-primario);font-weight:600;line-height:1.5;"></div>
+  </div>
+
   <div id="nota-fundador" style="display:none;background:var(--color-neutro-claro);border-radius:14px;padding:22px 24px;margin:0 0 24px;max-width:600px;margin-left:auto;margin-right:auto;">
     <p style="font-size:1.1rem;color:var(--color-primario);font-weight:700;margin-bottom:10px;">👋 Un mensaje de Sergio, quien creó este curso</p>
     <p style="font-size:1.15rem;color:#000000;line-height:1.7;margin-bottom:12px;">"Diseñé Academia IA Generaciones porque vi de cerca lo rápido que cambió la tecnología, dejando atrás a quienes no tuvieron tiempo de alcanzarla. Ya diste el paso más difícil: entender qué es la Inteligencia Artificial. El Módulo 2 es donde empiezas a usarla de verdad — a conversar con ella como si fuera un asistente que te ayuda con cartas, recetas, mensajes para la familia y mucho más."</p>
@@ -488,11 +516,14 @@ document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienven
 // FIX: si el alumno ya aprobó este módulo antes (al volver desde el panel u
 // otro módulo), restaurar el estado "completado" en vez de mostrar todo desde
 // cero — mismo patrón ya usado en modulo2-6.html.
-// Muestra la nota del fundador (siempre) y la caja de opinión (solo si el
-// alumno no la ha enviado ya en este navegador) — se llama tanto al
-// aprobar el examen por primera vez como al restaurar el estado
-// "completado" al revisitar el módulo.
+// Muestra el bloque de conversión hacia el Módulo 2 — el ejemplo
+// antes/después, la pregunta de personalización, la nota del fundador y
+// (solo si el alumno no la ha enviado ya en este navegador) la caja de
+// opinión — se llama tanto al aprobar el examen por primera vez como al
+// restaurar el estado "completado" al revisitar el módulo.
 function mostrarNotaYOpinion() {
+  document.getElementById('antes-despues-box').style.display = 'block';
+  document.getElementById('personalizacion-box').style.display = 'block';
   document.getElementById('nota-fundador').style.display = 'block';
   if (!localStorage.getItem('modulo1_opinion_enviada')) {
     document.getElementById('opinion-box').style.display = 'block';
@@ -626,6 +657,32 @@ function reiniciar() {
   document.getElementById('btn-env').style.display='block';
   document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+// ── Personalizar la promesa del Módulo 2 según el interés del alumno ──────
+// Al elegir un tema, se resalta el botón elegido y aparece un mensaje
+// adaptado justo debajo — sin guardar nada en Firestore por ahora, es solo
+// para reforzar la relevancia del Módulo 2 en el momento de decidir.
+var MENSAJES_INTERES = {
+  familia: '¡Perfecto! En el Módulo 2 aprenderás a pedirle a la IA que te ayude a escribir mensajes, invitaciones y cartas para tu familia — con tu propio tono, no genéricos.',
+  diaria: '¡Excelente! El Módulo 2 te enseña a pedirle recetas, listas y ayuda para organizar tu día a día, adaptadas a lo que tú necesitas.',
+  tramites: '¡Muy útil! En el Módulo 2 aprenderás a pedirle a la IA que te explique trámites y documentos en palabras simples, sin tecnicismos.',
+  crear: '¡Te va a encantar! El Módulo 2 es justo donde empiezas a crear con IA — y en el Módulo 3 profundizamos en imágenes.',
+  curiosidad: '¡Así se empieza! El Módulo 2 te da las bases para explorar la IA con confianza, a tu propio ritmo.'
+};
+document.querySelectorAll('.chip-interes').forEach(function(chip) {
+  chip.addEventListener('click', function() {
+    document.querySelectorAll('.chip-interes').forEach(function(c) {
+      c.style.borderColor = 'transparent';
+      c.style.background = 'var(--color-neutro-claro)';
+    });
+    this.style.borderColor = 'var(--color-primario)';
+    this.style.background = '#EDE7F6';
+    var tema = this.getAttribute('data-tema');
+    var respuesta = document.getElementById('personalizacion-respuesta');
+    respuesta.textContent = MENSAJES_INTERES[tema] || '';
+    respuesta.style.display = 'block';
+  });
+});
 
 // ── Opinión real del alumno al terminar el Módulo 1 ────────────────────────
 // Antes solo se pedía hasta el Módulo 6; empezamos a recolectar aquí
