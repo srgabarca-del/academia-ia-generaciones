@@ -601,7 +601,23 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
       <div style="margin-bottom:8px;"><span style="font-size:1.05rem;color:#757575;display:block;">Correo</span><span id="c-email" style="font-size:1.2rem;font-weight:700;"></span></div>
       <div><span style="font-size:1.05rem;color:#757575;display:block;">Módulo desbloqueado</span><span id="c-mod" style="font-size:1.2rem;font-weight:700;color:var(--color-primario);"></span></div>
     </div>
-    <a id="btn-login-conf" href="#" style="display:block;background:var(--color-primario);color:#fff;padding:14px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Entrar al módulo</a>
+    <div id="mconf-acceso-directo">
+      <a id="btn-login-conf" href="#" style="display:block;background:var(--color-primario);color:#fff;padding:14px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;margin-bottom:10px;">🚀 Entrar al módulo</a>
+    </div>
+    <div id="mconf-crear-cuenta" style="display:none;text-align:left;margin-bottom:14px;">
+      <p style="font-size:1.05rem;color:#555;margin-bottom:10px;">Para entrar a tu módulo, primero crea una contraseña para tu cuenta:</p>
+      <label for="mc-pass" style="font-size:1rem;font-weight:700;">Contraseña <span style="font-weight:400;color:#000;">(mín. 10 caracteres, con mayúscula y número)</span></label>
+      <div style="position:relative;margin:8px 0 10px;">
+        <input class="inp" type="password" id="mc-pass" placeholder="Mínimo 10 caracteres" maxlength="64" autocomplete="new-password" spellcheck="false" style="width:100%;box-sizing:border-box;padding-right:46px;">
+        <button type="button" id="mc-eye" aria-label="Mostrar contraseña" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:1.3rem;cursor:pointer;">👁</button>
+      </div>
+      <div id="mc-crear-err" style="color:var(--color-error);font-size:1rem;margin-bottom:10px;display:none;"></div>
+      <button id="btn-crear-cuenta-conf" style="width:100%;background:var(--color-primario);color:#fff;padding:14px;border-radius:12px;font-size:1.15rem;font-weight:700;border:none;cursor:pointer;margin-bottom:10px;">🔑 Crear cuenta y entrar al módulo</button>
+    </div>
+    <div id="mconf-ya-existe" style="display:none;text-align:left;margin-bottom:14px;background:#FFF3E0;border-radius:12px;padding:14px;">
+      <p style="font-size:1.05rem;color:#555;margin-bottom:10px;">Este correo ya tiene una cuenta en Academia IA. Tu acceso ya quedó guardado — inicia sesión para entrar a tu módulo.</p>
+      <a href="login.html" style="display:block;text-align:center;background:var(--color-primario);color:#fff;padding:14px;border-radius:12px;font-size:1.15rem;font-weight:700;text-decoration:none;">🔑 Iniciar sesión</a>
+    </div>
     <button onclick="AccesibilidadModal.cerrar(document.getElementById('mconf'))" style="width:100%;padding:12px;background:#E0E0E0;color:#555;border:none;border-radius:12px;cursor:pointer;font-size:1.15rem;font-weight:600;">📋 Guardar y cerrar</button>
   </div>
 </div>
@@ -1120,14 +1136,78 @@ window.addEventListener('load', function() {
       });
       document.getElementById('c-email').textContent = data.email;
       document.getElementById('c-mod').textContent = data.mod;
-      document.getElementById('btn-login-conf').href = info ? info.archivo : 'dashboard.html';
+      var destino = info ? info.archivo : 'dashboard.html';
+      document.getElementById('btn-login-conf').href = destino;
       document.getElementById('cmsg').innerHTML = 'Tu pago se procesó correctamente.';
+
+      // Quien compra directo desde el modal de pago nunca crea una cuenta de
+      // Firebase (solo se le pide nombre+correo) — si no hay una sesión real
+      // con ese correo, el módulo lo rechazaría al pedir la guía/examen pese
+      // a ya haber pagado. Si ya está logueado con ese mismo correo, entra
+      // directo como siempre; si no, se le pide crear su contraseña aquí mismo.
+      var yaEsMismaSesion = window.fbAuth && window.fbAuth.currentUser && window.fbAuth.currentUser.email === data.email;
+      if (!window.fbAuth || yaEsMismaSesion) {
+        AccesibilidadModal.abrir(document.getElementById('mconf'));
+        return;
+      }
+      document.getElementById('mconf-acceso-directo').style.display = 'none';
+      document.getElementById('mconf-crear-cuenta').style.display = 'block';
+      window.__mconfEmail = data.email;
+      window.__mconfDestino = destino;
       AccesibilidadModal.abrir(document.getElementById('mconf'));
     })
     .catch(function(err) {
       alert('Recibimos tu pago pero no pudimos confirmarlo automáticamente. Si el cargo se realizó, contáctanos con tu comprobante y activamos tu acceso a mano.');
     });
 })();
+
+// ── Crear cuenta desde la confirmación de pago (comprador sin registro previo) ──
+document.getElementById('mc-eye').addEventListener('click', function() {
+  var i = document.getElementById('mc-pass');
+  i.type = i.type === 'password' ? 'text' : 'password';
+  this.textContent = i.type === 'password' ? '👁' : '🙈';
+  this.setAttribute('aria-label', i.type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña');
+});
+document.getElementById('btn-crear-cuenta-conf').addEventListener('click', function() {
+  var pass = document.getElementById('mc-pass').value;
+  var tieneMayus = /[A-Z]/.test(pass);
+  var tieneNumero = /[0-9]/.test(pass);
+  var errDiv = document.getElementById('mc-crear-err');
+  if (pass.length < 10 || !tieneMayus || !tieneNumero) {
+    errDiv.textContent = '⚠️ La contraseña debe tener al menos 10 caracteres, una mayúscula y un número.';
+    errDiv.style.display = 'block';
+    return;
+  }
+  errDiv.style.display = 'none';
+  var self = this;
+  self.disabled = true; self.textContent = '⏳ Creando tu cuenta...';
+  var email = window.__mconfEmail;
+  var destino = window.__mconfDestino;
+  var nombreGuardado = sessionStorage.getItem('pago_nombre') || '';
+  window.fbAuth.createUserWithEmailAndPassword(email, pass)
+    .then(function(cred) {
+      if (!nombreGuardado) return cred;
+      return cred.user.updateProfile({ displayName: nombreGuardado.split(' ')[0] }).then(function() { return cred; });
+    })
+    .then(function() {
+      sessionStorage.setItem('alumno_email', email);
+      if (nombreGuardado) sessionStorage.setItem('alumno_nombre', nombreGuardado.split(' ')[0]);
+      registrarConsentimiento(email, 'password');
+      window.location = destino;
+    })
+    .catch(function(err) {
+      self.disabled = false; self.textContent = '🔑 Crear cuenta y entrar al módulo';
+      if (err.code === 'auth/email-already-in-use') {
+        document.getElementById('mconf-crear-cuenta').style.display = 'none';
+        document.getElementById('mconf-ya-existe').style.display = 'block';
+        return;
+      }
+      var msg = '⚠️ Error: ' + err.message;
+      if (err.code === 'auth/weak-password') msg = '⚠️ La contraseña es muy débil, intenta con otra.';
+      errDiv.textContent = msg;
+      errDiv.style.display = 'block';
+    });
+});
 </script>
 
 <!-- ── Banner de cookies (CookieConsent v3) ──────────────────────────────
