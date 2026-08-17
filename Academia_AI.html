@@ -583,8 +583,23 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
     <input class="minp" type="text" id="p-nombre" placeholder="Como aparecerá en tu recibo" autocomplete="name">
     <label>Correo electrónico *</label>
     <input class="minp" type="email" id="p-email" placeholder="Para enviarte el acceso" autocomplete="email" inputmode="email" spellcheck="false">
+    <div id="mpago-campos-cuenta">
+      <label for="p-pass">Contraseña * <span style="font-weight:400;color:#000;font-size:.95rem;">(mín. 10 caracteres, con mayúscula y número)</span></label>
+      <div class="pw">
+        <input class="minp" type="password" id="p-pass" placeholder="Crea una contraseña para tu cuenta" maxlength="64" autocomplete="new-password" spellcheck="false" style="padding-right:44px;">
+        <button class="eye" type="button" id="p-eye" aria-label="Mostrar contraseña">👁</button>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="p-terms">
+        <label for="p-terms" style="font-size:1.1rem;color:#000;line-height:1.5;font-weight:400;">Acepto los <a href="legal.html#terminos" target="_blank" style="color:var(--color-primario);">Términos</a> y la <a href="legal.html#privacidad" target="_blank" style="color:var(--color-primario);">Aviso de Privacidad</a>.</label>
+      </div>
+    </div>
     <p style="font-size:1.05rem;color:#757575;margin-bottom:14px;line-height:1.5;">Al continuar, te llevamos a la página segura de Stripe para completar el pago con tarjeta.</p>
     <div class="merr" id="perr">⚠️ Completa todos los campos requeridos.</div>
+    <div id="mpago-ya-existe" style="display:none;background:#FFF3E0;border-radius:12px;padding:14px;margin-bottom:14px;text-align:left;">
+      <p style="font-size:1.05rem;color:#555;margin-bottom:10px;">Este correo ya tiene una cuenta en Academia IA. Inicia sesión y compra el módulo desde tu panel.</p>
+      <a href="login.html" style="display:block;text-align:center;background:var(--color-primario);color:#fff;padding:12px;border-radius:10px;font-size:1.1rem;font-weight:700;text-decoration:none;">🔑 Iniciar sesión</a>
+    </div>
     <button class="btn-pay" id="btn-pay">🔒 Continuar a pago seguro</button>
     <p style="text-align:center;font-size:1.2rem;color:#757575;margin-top:10px;">🔒 Pago seguro con Stripe · Garantía 7 días</p>
   </div>
@@ -1044,9 +1059,24 @@ function abrirPago(tipo) {
   document.getElementById('phdr').innerHTML=
     '<span style="background:'+info.color+';color:#fff;font-size:1.05rem;font-weight:700;padding:4px 14px;border-radius:20px;">'+info.titulo+'</span>'
     +'<div style="font-size:2rem;font-weight:900;color:'+info.color+';margin-top:8px;">'+precioTexto+'</div>';
-  document.getElementById('p-nombre').value='';
-  document.getElementById('p-email').value='';
   document.getElementById('perr').style.display='none';
+  document.getElementById('mpago-ya-existe').style.display='none';
+  document.getElementById('p-pass').value='';
+  document.getElementById('p-terms').checked=false;
+  var sesionActiva = window.fbAuth && window.fbAuth.currentUser;
+  if (sesionActiva) {
+    // Ya tiene sesión iniciada: no hace falta pedirle contraseña ni términos
+    // de nuevo, solo confirmar nombre/correo (precargados de su cuenta).
+    document.getElementById('p-nombre').value = window.fbAuth.currentUser.displayName || sessionStorage.getItem('alumno_nombre') || '';
+    document.getElementById('p-email').value = window.fbAuth.currentUser.email;
+    document.getElementById('p-email').readOnly = true;
+    document.getElementById('mpago-campos-cuenta').style.display = 'none';
+  } else {
+    document.getElementById('p-nombre').value='';
+    document.getElementById('p-email').value='';
+    document.getElementById('p-email').readOnly = false;
+    document.getElementById('mpago-campos-cuenta').style.display = 'block';
+  }
   document.getElementById('btn-pay').textContent='🔒 Continuar a pago seguro — '+precioTexto;
   document.getElementById('btn-pay').disabled=false;
   AccesibilidadModal.abrir(document.getElementById('mpago'));
@@ -1059,17 +1089,18 @@ function abrirPago(tipo) {
 document.getElementById('mcerrar').addEventListener('click', function() {
   AccesibilidadModal.cerrar(document.getElementById('mpago'));
 });
-document.getElementById('btn-pay').addEventListener('click', function() {
-  var nom=document.getElementById('p-nombre').value.trim();
-  var eml=document.getElementById('p-email').value.trim();
-  var eok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(eml);
-  if(!nom||!eml||!eok) { document.getElementById('perr').style.display='block'; return; }
-  document.getElementById('perr').style.display='none';
-  this.textContent='⏳ Conectando con Stripe...'; this.disabled=true;
+document.getElementById('p-eye').addEventListener('click', function() {
+  var i = document.getElementById('p-pass');
+  i.type = i.type === 'password' ? 'text' : 'password';
+  this.textContent = i.type === 'password' ? '👁' : '🙈';
+  this.setAttribute('aria-label', i.type === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña');
+});
+function procederAStripe(nom, eml) {
   sessionStorage.setItem('pago_nombre', nom);
-  var btnPay=this;
+  var btnPay=document.getElementById('btn-pay');
   var info=INFO[pagoActual];
   var precioTexto=info.precios[monedaActual]||info.precios.USD;
+  btnPay.textContent='⏳ Conectando con Stripe...'; btnPay.disabled=true;
   firebase.functions().httpsCallable('crearSesionPago')({tipo: pagoActual, email: eml, moneda: monedaActual.toLowerCase()})
     .then(function(res) {
       window.location = res.data.url;
@@ -1079,6 +1110,76 @@ document.getElementById('btn-pay').addEventListener('click', function() {
       btnPay.disabled=false;
       document.getElementById('perr').textContent='⚠️ No se pudo conectar con Stripe. Intenta de nuevo.';
       document.getElementById('perr').style.display='block';
+    });
+}
+document.getElementById('btn-pay').addEventListener('click', function() {
+  var nom=document.getElementById('p-nombre').value.trim();
+  var eml=document.getElementById('p-email').value.trim();
+  var eok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(eml);
+  var perr=document.getElementById('perr');
+  document.getElementById('mpago-ya-existe').style.display='none';
+
+  var yaEsMismaSesion = window.fbAuth && window.fbAuth.currentUser && window.fbAuth.currentUser.email === eml;
+  if (yaEsMismaSesion) {
+    if(!nom||!eml||!eok) {
+      perr.textContent='⚠️ Completa todos los campos requeridos.';
+      perr.style.display='block';
+      return;
+    }
+    perr.style.display='none';
+    procederAStripe(nom, eml);
+    return;
+  }
+
+  if (!window.fbAuth) {
+    // Sin Firebase disponible: no se puede crear la cuenta aquí, se procede
+    // igual que antes (solo nombre y correo).
+    if(!nom||!eml||!eok) {
+      perr.textContent='⚠️ Completa todos los campos requeridos.';
+      perr.style.display='block';
+      return;
+    }
+    perr.style.display='none';
+    procederAStripe(nom, eml);
+    return;
+  }
+
+  var pass=document.getElementById('p-pass').value;
+  var terms=document.getElementById('p-terms').checked;
+  var tieneMayus = /[A-Z]/.test(pass);
+  var tieneNumero = /[0-9]/.test(pass);
+  var passOk = pass.length>=10 && tieneMayus && tieneNumero;
+  if(!nom||!eml||!eok||!passOk||!terms) {
+    perr.textContent='⚠️ Completa tu nombre, correo, una contraseña válida (mín. 10 caracteres, con mayúscula y número) y acepta los términos.';
+    perr.style.display='block';
+    return;
+  }
+  perr.style.display='none';
+  var btnPay=this;
+  btnPay.textContent='⏳ Creando tu cuenta...'; btnPay.disabled=true;
+  window.fbAuth.createUserWithEmailAndPassword(eml, pass)
+    .then(function(cred) {
+      return cred.user.updateProfile({ displayName: nom.split(' ')[0] }).then(function() { return cred; });
+    })
+    .then(function() {
+      sessionStorage.setItem('alumno_nombre', nom.split(' ')[0]);
+      sessionStorage.setItem('alumno_email', eml);
+      if (typeof sincronizarCuentaAcceso === 'function') sincronizarCuentaAcceso(eml);
+      if (typeof registrarConsentimiento === 'function') registrarConsentimiento(eml, 'password');
+      procederAStripe(nom, eml);
+    })
+    .catch(function(err) {
+      btnPay.disabled=false;
+      var info=INFO[pagoActual];
+      btnPay.textContent='🔒 Continuar a pago seguro — '+(info.precios[monedaActual]||info.precios.USD);
+      if (err.code === 'auth/email-already-in-use') {
+        document.getElementById('mpago-ya-existe').style.display='block';
+        return;
+      }
+      var msg = '⚠️ ' + err.message;
+      if (err.code === 'auth/weak-password') msg = '⚠️ La contraseña es muy débil, intenta con otra.';
+      perr.textContent = msg;
+      perr.style.display='block';
     });
 });
 
