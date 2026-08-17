@@ -22,6 +22,7 @@
 - paula.abarca.rodriguez@gmail.com
 - gelaabarca@gmail.com
 - barbosamx@gmail.com
+- elenaatg2@gmail.com
 
 ---
 
@@ -885,6 +886,9 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - ✅ **Eliminado el workflow de tipos de cambio (`update-fx-rates.yml`/`.mjs`), que había empezado a fallar ese mismo lunes** (ver nota técnica 101): diagnosticado como código muerto desde la sesión 50 (buscaba un bloque `FX_RATES` que ya no existe en `Academia_AI.html`) — se eliminó en vez de repararlo
 - 🐛 **Fuga real de conversión reportada por el usuario y corregida — comprar un módulo sin registro previo dejaba al alumno pagado sin poder entrar** (ver nota técnica 102): primera versión pedía la contraseña después del pago; a petición del usuario se rediseñó para pedir cuenta ANTES de ir a Stripe — el modal de compra ahora muestra nombre+correo+contraseña+términos si no hay sesión activa (o los oculta y precarga si ya la hay), crea la cuenta con `createUserWithEmailAndPassword` y solo entonces continúa a Stripe; si el correo ya tenía cuenta, avisa "inicia sesión" en vez de duplicarla
 - ✅ **Agregado "Continuar con Google" al modal de compra**, tras probar el usuario en el sitio real con capturas y notar que faltaba (ver nota técnica 102): permite entrar con la cuenta de Google sin salir del modal ni escribir contraseña, y de paso se corrigió un bug real encontrado en consola — el botón flotante "Empieza gratis" fallaba en cada scroll por buscar `#registro` antes de que existiera en el HTML
+- ✅ **Enlace "¿Ya tienes cuenta? Inicia sesión aquí" agregado bajo el botón de Google en el modal de compra** (ver nota técnica 102), propuesto por el usuario tras probar en vivo: con una cuenta ya registrada por correo/contraseña (no Google) y sin sesión activa, el formulario solo mostraba el error genérico de "completa los campos" al dejar la contraseña vacía, sin forma de saber que ya tenía cuenta hasta fallar al crearla
+- ⚠️ **Incidente real de GitHub (Pages/Actions/Git Operations), no relacionado con el código:** un `pages build and deployment` falló con un 503 de la infraestructura de GitHub durante un apagón activo de varias horas (confirmado en githubstatus.com). Se esperó a que se mitigara y se forzó un redeploy con un commit vacío — resuelto sin tocar código
+- ✅ **VIP:** agregado `elenaatg2@gmail.com` a la colección `vip_users` en Firestore (el usuario lo hizo directamente en Firebase Console, siguiendo el mismo procedimiento de la nota técnica 54 — Claude no puede escribir ahí, la colección bloquea toda escritura de cliente) y a la lista de referencia de este documento
 - 📁 Archivos modificados: Academia_AI.html, CLAUDE.md
 - 📁 Archivos eliminados: .github/workflows/update-fx-rates.yml, .github/scripts/update-fx-rates.mjs
 
