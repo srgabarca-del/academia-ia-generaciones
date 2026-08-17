@@ -277,7 +277,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
            sí se reproduce bien), no un problema real del video ni del sitio. -->
       <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;margin-bottom:12px;background:#000;">
         <div id="video-adelanto-player" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>
-        <div style="position:absolute;bottom:0;right:34px;width:56px;height:34px;z-index:5;cursor:default;" title=""></div>
+        <div style="position:absolute;bottom:0;right:0;width:90px;height:40px;z-index:5;cursor:default;" title=""></div>
         <div id="video-adelanto-fin" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);color:#fff;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;box-sizing:border-box;">
           <p style="font-size:1.2rem;font-weight:700;margin-bottom:14px;">🎬 Ahí termina el adelanto</p>
           <button onclick="window.location='#registro'" style="background:var(--color-acento);color:var(--color-primario);border:none;padding:14px 26px;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">Ver el video completo — Regístrate gratis</button>
@@ -293,7 +293,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
         window.onYouTubeIframeAPIReady = function() {
           new YT.Player('video-adelanto-player', {
             videoId: 'V-cZbZtjpeY',
-            playerVars: { rel: 0, modestbranding: 1 },
+            playerVars: { rel: 0, modestbranding: 1, fs: 0 },
             events: {
               onStateChange: function(event) {
                 if (event.data === YT.PlayerState.PLAYING) {
