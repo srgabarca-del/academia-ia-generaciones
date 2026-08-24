@@ -325,6 +325,17 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 
   <div id="qres" style="display:none;text-align:center;padding:32px 16px;"></div>
 
+  <div id="cert-datos-box" style="display:none;background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:24px;padding:24px 22px;max-width:600px;margin-left:auto;margin-right:auto;">
+    <h3 style="font-size:1.25rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:6px;">🏆 ¡Aprobaste! Antes de ver tu certificado…</h3>
+    <p style="font-size:1.05rem;color:#757575;margin-bottom:18px;">Solo necesitamos tu nombre y correo para emitir tu certificado y avisarte cuando quieras continuar al Módulo 2.</p>
+    <label for="cd-nombre" style="display:block;font-size:1.05rem;color:#424242;margin-bottom:6px;">Nombre completo</label>
+    <input type="text" id="cd-nombre" autocomplete="name" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:12px;font-size:1.1rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;" placeholder="Tu nombre y apellido">
+    <label for="cd-email" style="display:block;font-size:1.05rem;color:#424242;margin-bottom:6px;">Correo electrónico</label>
+    <input type="email" id="cd-email" autocomplete="email" inputmode="email" spellcheck="false" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:12px;font-size:1.1rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;" placeholder="tucorreo@ejemplo.com">
+    <div id="cd-err" style="display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:10px 14px;font-size:1rem;margin-bottom:14px;">⚠️ Escribe tu nombre y un correo válido.</div>
+    <button id="btn-cd-continuar" style="width:100%;padding:14px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">Ver mi certificado 🏆</button>
+  </div>
+
   <div class="cert-box" id="certbox">
     <div class="cert-frame"><div class="cert-inner">
       <div class="cert-eyebrow">Academia IA Generaciones</div>
@@ -508,8 +519,10 @@ var authReadyPromise = firebase.auth().currentUser
       var unsub = firebase.auth().onAuthStateChanged(function() { unsub(); resolve(); });
     });
 
-// Personalizar con sessionStorage
-var nombre = sessionStorage.getItem('alumno_nombre') || 'Alumno';
+// Personalizar con sessionStorage — si no hay sesión (visitante sin cuenta
+// que ya completó el módulo antes en este mismo equipo), cae al nombre
+// guardado en localStorage al pedir su certificado (ver #cert-datos-box).
+var nombre = sessionStorage.getItem('alumno_nombre') || localStorage.getItem('modulo1_alumno_nombre') || 'Alumno';
 document.getElementById('nav-nombre').textContent = '👤 ' + nombre;
 document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienvenido/a a tu primer módulo 🎉';
 
@@ -552,7 +565,9 @@ function restaurarEstadoCompletadoModulo1(nRestore, fCert, certId) {
 }
 (function() {
   if (localStorage.getItem('modulo1_completado')) {
-    var fCert = new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+    // Usa la fecha real guardada al emitir el certificado (visitante sin
+    // cuenta) en vez de recalcular "hoy" en cada revisita, si está disponible.
+    var fCert = localStorage.getItem('modulo1_alumno_fecha') || new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
     restaurarEstadoCompletadoModulo1(nombre, fCert);
     return;
   }
@@ -752,8 +767,25 @@ function cerrarSesion() {
   }
 }
 
+// ── Captura de nombre+correo solo al pedir el certificado ────────────────
+// Antes se pedían al registrarse, antes de ver nada del módulo. Ahora se
+// puede entrar al Módulo 1 sin registro — el nombre y correo se piden aquí,
+// en el momento de mayor motivación (ya aprobó y quiere su certificado), y
+// se aprovecha ese correo para avisarle cuando termine (ver
+// enviarCorreoFinalizacionModulo1). Si ya hay una sesión/registro previo
+// (alumno_nombre ya en sessionStorage), se salta este paso por completo.
 function verCert() {
   if(!certOK){alert('Completa la evaluación para desbloquear.');return;}
+  if (!sessionStorage.getItem('alumno_nombre')) {
+    var box = document.getElementById('cert-datos-box');
+    box.style.display = 'block';
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  mostrarCertificadoReal();
+}
+
+function mostrarCertificadoReal() {
   var n=sessionStorage.getItem('alumno_nombre')||'Alumno';
   var f=new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
   document.getElementById('cn').textContent=n;
@@ -763,6 +795,49 @@ function verCert() {
   asegurarCertificadoVerificable(1, 'Módulo 1: Descubriendo la Inteligencia Artificial', n, f);
   document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'});
 }
+
+// Encola un correo de aviso ("terminaste el Módulo 1") escribiendo un
+// documento en la colección "mail" — la extensión de Firebase "Trigger
+// Email from Firestore" (Gmail, hola.academiaia@gmail.com) lo toma de ahí
+// y lo envía de verdad. Solo una vez por alumno (bandera en localStorage).
+function enviarCorreoFinalizacionModulo1(nombre, email) {
+  if (localStorage.getItem('modulo1_correo_enviado') === '1') return;
+  if (typeof firebase === 'undefined' || !firebase.firestore) return;
+  var urlSitio = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + 'Academia_AI.html';
+  firebase.firestore().collection('mail').add({
+    to: [email],
+    message: {
+      subject: '¡Terminaste el Módulo 1! 🎉 — Academia IA Generaciones',
+      html: '<p>Hola ' + nombre + ',</p>' +
+            '<p>¡Felicidades por terminar el Módulo 1 de Academia IA Generaciones! Tu certificado ya está listo — puedes verlo cuando quieras volviendo a entrar al módulo.</p>' +
+            '<p>Cuando estés listo/a, el Módulo 2 te enseña a usar la Inteligencia Artificial de verdad: a conversar con ella para escribir mensajes, cartas y mucho más.</p>' +
+            '<p><a href="' + urlSitio + '">Continuar con Academia IA Generaciones →</a></p>'
+    }
+  }).then(function() {
+    localStorage.setItem('modulo1_correo_enviado', '1');
+  }).catch(function(err) {
+    console.error('No se pudo encolar el correo de finalización:', err);
+  });
+}
+
+document.getElementById('btn-cd-continuar').addEventListener('click', function() {
+  var nombreCd = document.getElementById('cd-nombre').value.trim();
+  var emailCd = document.getElementById('cd-email').value.trim();
+  var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailCd);
+  if (!nombreCd || !emailOk) {
+    document.getElementById('cd-err').style.display = 'block';
+    return;
+  }
+  document.getElementById('cd-err').style.display = 'none';
+  sessionStorage.setItem('alumno_nombre', nombreCd);
+  sessionStorage.setItem('alumno_email', emailCd);
+  localStorage.setItem('modulo1_alumno_nombre', nombreCd);
+  localStorage.setItem('modulo1_alumno_email', emailCd);
+  localStorage.setItem('modulo1_alumno_fecha', new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'}));
+  document.getElementById('cert-datos-box').style.display = 'none';
+  enviarCorreoFinalizacionModulo1(nombreCd, emailCd);
+  mostrarCertificadoReal();
+});
 
 // FIX (bug VIP): antes este botón SIEMPRE mandaba a la página de pagos,
 // incluso si el alumno ya tenía acceso (VIP o plan/módulo ya comprado).

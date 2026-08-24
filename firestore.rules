@@ -100,6 +100,31 @@ service cloud.firestore {
                     && request.resource.data.fecha.size() <= 100;
     }
 
+    // Cola de correos para la extensión de Firebase "Trigger Email from
+    // Firestore" (Gmail, hola.academiaia@gmail.com) — hoy se usa para
+    // avisarle al alumno que terminó el Módulo 1 (ver modulo1.html,
+    // enviarCorreoFinalizacionModulo1). Igual que "opiniones", cualquiera
+    // puede CREAR un documento (no hace falta sesión de Firebase Auth para
+    // un visitante que nunca se registró) pero nadie puede leer, listar,
+    // editar ni borrar desde el cliente. A diferencia de "opiniones", esta
+    // colección sí dispara un envío real de correo, así que la validación es
+    // más estricta: exactamente un destinatario con forma de correo válida,
+    // y el asunto/cuerpo con un tope de tamaño razonable — reduce (sin
+    // eliminar del todo) el riesgo de que alguien técnico use esta colección
+    // para mandar correos arbitrarios a través de esta cuenta de Gmail.
+    match /mail/{mailId} {
+      allow read, update, delete: if false;
+      allow create: if request.resource.data.to is list
+                    && request.resource.data.to.size() == 1
+                    && request.resource.data.to[0] is string
+                    && request.resource.data.to[0].matches('^[^@\\s]+@[^@\\s]+[.][^@\\s]+$')
+                    && request.resource.data.message is map
+                    && request.resource.data.message.subject is string
+                    && request.resource.data.message.subject.size() <= 300
+                    && request.resource.data.message.html is string
+                    && request.resource.data.message.html.size() <= 5000;
+    }
+
     // Evidencia de consentimiento a Términos y Aviso de Privacidad, un
     // documento por correo (en minúsculas) como ID. Se crea UNA sola vez,
     // en el momento real del registro (correo/contraseña o primera vez con
