@@ -329,7 +329,15 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
       if (tieneCertReal && !completado(n)) {
         localStorage.setItem('modulo' + n + '_completado', '1');
         huboCambios = true;
-      } else if (!tieneCertReal && completado(n)) {
+      } else if (!tieneCertReal && completado(n) && n !== 1) {
+        // El Módulo 1 se puede completar sin ninguna cuenta (sesión 55) —
+        // su certificado nunca queda ligado a la cuenta de Firebase Auth
+        // que esté activa en este navegador, así que no tiene sentido
+        // "corregirlo" solo porque esa cuenta no tenga uno que coincida.
+        // Bug real reportado por el usuario: completó el Módulo 1 sin
+        // registrarse, y al volver al panel aparecía como no completado,
+        // porque el navegador tenía una sesión de Firebase de una prueba
+        // anterior sin relación con ese certificado.
         localStorage.removeItem('modulo' + n + '_completado');
         huboCambios = true;
       }
