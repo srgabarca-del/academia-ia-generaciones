@@ -161,15 +161,20 @@ h3.grid-title{font-size:1.3rem;font-weight:800;margin-bottom:16px;color:#212121}
 <script>
 (function() {
   // ── Identidad del alumno ──────────────────────────────────────────────
+  // Antes, sin nombre/correo en sessionStorage, esto mandaba directo a
+  // login.html — correcto cuando el panel solo era alcanzable habiendo
+  // creado una cuenta. Ya no: el Módulo 1 se puede empezar sin ninguna
+  // cuenta (sesión 55), y el nombre/correo recién se capturan al pedir el
+  // certificado — alguien que solo vio el video y le dio clic a "Mi panel"
+  // no tiene identidad todavía, y no debería terminar mandado a iniciar
+  // sesión en una cuenta que nunca creó. El resto del panel (tarjetas de
+  // módulo, accesos) ya funciona solo con localStorage, sin depender de
+  // esto — así que ahora se muestra igual, con un saludo genérico.
   var nombre = sessionStorage.getItem('alumno_nombre');
   var email = sessionStorage.getItem('alumno_email') || localStorage.getItem('cuenta_acceso') || '';
-  if (!nombre && !email) {
-    window.location = 'login.html';
-    return;
-  }
-  nombre = nombre || email.split('@')[0];
-  document.getElementById('saludo').textContent = '¡Hola de nuevo, ' + nombre + '!';
-  document.getElementById('avatar').textContent = nombre.charAt(0).toUpperCase();
+  nombre = nombre || (email ? email.split('@')[0] : '');
+  document.getElementById('saludo').textContent = nombre ? '¡Hola de nuevo, ' + nombre + '!' : '¡Hola!';
+  document.getElementById('avatar').textContent = nombre ? nombre.charAt(0).toUpperCase() : '🙂';
 
   // ── Datos de los 6 módulos ────────────────────────────────────────────
   var MODULOS = [
