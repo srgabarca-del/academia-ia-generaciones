@@ -99,7 +99,7 @@ nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:c
     <div class="al" id="nav-nombre">👤 Alumno</div>
     <button type="button" class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
     <div class="nav-links" id="nav-links">
-      <a href="dashboard.html" style="color:#fff;font-size:1.05rem;font-weight:600;text-decoration:none;opacity:.85;">🏠 Mi panel</a>
+      <a href="dashboard.html" id="nav-panel-link" style="color:#fff;font-size:1.05rem;font-weight:600;text-decoration:none;opacity:.85;display:none;">🏠 Mi panel</a>
     </div>
     <button onclick="cerrarSesion()" style="background:rgba(255,255,255,.15);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:1.05rem;cursor:pointer;">🚪 Salir</button>
   </div>
@@ -414,7 +414,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 
   <div class="btn-row">
     <button class="bn" id="btn-mod2" style="background:var(--color-primario);">🚀 Continuar al Módulo 2</button>
-    <a href="dashboard.html" style="display:block;width:100%;padding:14px;background:#fff;color:var(--color-primario);border:2px solid var(--color-primario);border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Volver a mi panel</a>
+    <a href="dashboard.html" id="btnrow-panel-link" style="display:none;width:100%;padding:14px;background:#fff;color:var(--color-primario);border:2px solid var(--color-primario);border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Volver a mi panel</a>
     <a href="Academia_AI.html" style="display:block;width:100%;padding:14px;background:#fff;color:#757575;border:2px solid #E0E0E0;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
   </div>
 
@@ -454,6 +454,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
         var parts = nav.textContent.split('|');
         nav.textContent = '👤 ' + (user.displayName || user.email.split('@')[0]) + (parts[1] ? ' |' + parts[1] : '');
       }
+      if (typeof actualizarVisibilidadPanel === 'function') actualizarVisibilidadPanel();
     }
   });
 </script>
@@ -533,6 +534,23 @@ var authReadyPromise = firebase.auth().currentUser
 var nombre = sessionStorage.getItem('alumno_nombre') || localStorage.getItem('modulo1_alumno_nombre') || 'Alumno';
 document.getElementById('nav-nombre').textContent = '👤 ' + nombre;
 document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienvenido/a a tu primer módulo 🎉';
+
+// ── Acceso al panel oculto hasta tener identidad ──────────────────────────
+// Un visitante sin cuenta (el Módulo 1 ya no la exige) no tiene nada que
+// consultar en el panel hasta que termine la evaluación y capture su
+// nombre/correo al pedir el certificado (#cert-datos-box) — antes de eso,
+// "Mi panel" solo lo mandaba a un panel vacío o, peor, a iniciar sesión.
+// Se muestra en cuanto exista una identidad real: por sesión (registrado/
+// VIP) o por el respaldo en localStorage del flujo anónimo.
+function actualizarVisibilidadPanel() {
+  var tieneIdentidad = !!(sessionStorage.getItem('alumno_nombre') || localStorage.getItem('modulo1_alumno_nombre'));
+  var display = tieneIdentidad ? '' : 'none';
+  var navLink = document.getElementById('nav-panel-link');
+  if (navLink) navLink.style.display = display;
+  var btnRowLink = document.getElementById('btnrow-panel-link');
+  if (btnRowLink) btnRowLink.style.display = tieneIdentidad ? 'block' : 'none';
+}
+actualizarVisibilidadPanel();
 
 // FIX: si el alumno ya aprobó este módulo antes (al volver desde el panel u
 // otro módulo), restaurar el estado "completado" en vez de mostrar todo desde
@@ -848,6 +866,7 @@ document.getElementById('btn-cd-continuar').addEventListener('click', function()
   localStorage.setItem('modulo1_alumno_email', emailCd);
   localStorage.setItem('modulo1_alumno_fecha', new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'}));
   document.getElementById('cert-datos-box').style.display = 'none';
+  actualizarVisibilidadPanel();
   // El certificado se guarda primero; el correo de aviso se encadena hasta
   // que esa escritura ya terminó (bug real detectado: si el alumno cerraba
   // la pestaña o navegaba justo después de ver el certificado, ambas
