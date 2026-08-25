@@ -465,6 +465,12 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 // "certificados") junto con el nombre/fecha reales, y se muestra un código
 // QR + enlace que apuntan a verificar.html?id=UUID — cualquiera puede
 // confirmar ahí que ese certificado específico existe de verdad.
+// Devuelve una Promise que resuelve cuando el certificado ya quedó
+// guardado en Firestore (o de inmediato si no hacía falta escribir nada) —
+// necesario para que quien llama pueda esperar a que esto termine antes de
+// disparar cualquier otra cosa (ver enviarCorreoFinalizacionModulo1), en
+// vez de dejar ambas escrituras corriendo en paralelo sin ninguna garantía
+// de cuál gana si el alumno cierra la pestaña o navega justo después.
 function asegurarCertificadoVerificable(numModulo, nombreModulo, nombreAlumno, fechaTexto) {
   var claveId = 'modulo' + numModulo + '_cert_id';
   var claveSync = 'modulo' + numModulo + '_cert_synced';
@@ -478,8 +484,9 @@ function asegurarCertificadoVerificable(numModulo, nombreModulo, nombreAlumno, f
     );
     localStorage.setItem(claveId, id);
   }
+  var escrituraCert = Promise.resolve();
   if (localStorage.getItem(claveSync) !== '1' && typeof firebase !== 'undefined' && firebase.firestore) {
-    firebase.firestore().collection('certificados').doc(id).set({
+    escrituraCert = firebase.firestore().collection('certificados').doc(id).set({
       nombre: nombreAlumno,
       email: sessionStorage.getItem('alumno_email') || '',
       modulo: numModulo,
@@ -505,6 +512,7 @@ function asegurarCertificadoVerificable(numModulo, nombreModulo, nombreAlumno, f
   if (idDiv) {
     idDiv.innerHTML = 'ID de verificación: <code>' + id + '</code><br><a href="' + urlVerif + '" target="_blank" rel="noopener">Verificar este certificado →</a>';
   }
+  return escrituraCert;
 }
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -785,6 +793,10 @@ function verCert() {
   mostrarCertificadoReal();
 }
 
+// Devuelve la misma Promise de asegurarCertificadoVerificable, para que
+// quien llame pueda esperar a que el certificado ya quede guardado antes
+// de hacer algo más (ver el submit de #cert-datos-box, que encadena el
+// correo de aviso después de esto en vez de dispararlo en paralelo).
 function mostrarCertificadoReal() {
   var n=sessionStorage.getItem('alumno_nombre')||'Alumno';
   var f=new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
@@ -792,8 +804,9 @@ function mostrarCertificadoReal() {
   document.getElementById('cf').textContent='Fecha de emisión: '+f;
   document.getElementById('certbox').style.display='block';
   mostrarNotaYOpinion();
-  asegurarCertificadoVerificable(1, 'Módulo 1: Descubriendo la Inteligencia Artificial', n, f);
+  var promesaCert = asegurarCertificadoVerificable(1, 'Módulo 1: Descubriendo la Inteligencia Artificial', n, f);
   document.getElementById('certbox').scrollIntoView({behavior:'smooth',block:'center'});
+  return promesaCert;
 }
 
 // Encola un correo de aviso ("terminaste el Módulo 1") escribiendo un
@@ -835,8 +848,14 @@ document.getElementById('btn-cd-continuar').addEventListener('click', function()
   localStorage.setItem('modulo1_alumno_email', emailCd);
   localStorage.setItem('modulo1_alumno_fecha', new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'}));
   document.getElementById('cert-datos-box').style.display = 'none';
-  enviarCorreoFinalizacionModulo1(nombreCd, emailCd);
-  mostrarCertificadoReal();
+  // El certificado se guarda primero; el correo de aviso se encadena hasta
+  // que esa escritura ya terminó (bug real detectado: si el alumno cerraba
+  // la pestaña o navegaba justo después de ver el certificado, ambas
+  // escrituras corrían en paralelo y a veces el correo alcanzaba a
+  // completarse mientras el certificado se quedaba a medias).
+  mostrarCertificadoReal().then(function() {
+    enviarCorreoFinalizacionModulo1(nombreCd, emailCd);
+  });
 });
 
 // FIX (bug VIP): antes este botón SIEMPRE mandaba a la página de pagos,
