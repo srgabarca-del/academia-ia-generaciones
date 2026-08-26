@@ -568,6 +568,27 @@ function mostrarNotaYOpinion() {
     document.getElementById('opinion-box').style.display = 'block';
   }
 }
+// FIX (bug real reportado por el usuario): si el alumno aprueba el examen
+// pero cierra la pestaña sin llenar #cert-datos-box (sin dar nombre/correo),
+// esta función restaura solo el "examen ya aprobado" — deja el botón listo
+// para pedir el certificado, pero NO lo muestra ni escribe nada en Firestore
+// todavía. Antes, `modulo1_completado` se marcaba en cuanto se aprobaba el
+// examen (sin esperar la identidad), así que al revisitar se generaba un
+// certificado real con el nombre por defecto "Alumno" y sin correo.
+function restaurarExamenAprobadoSinCert() {
+  certOK = true;
+  document.getElementById('pf').style.width = '100%';
+  document.getElementById('pl').textContent = 'Progreso: 100% — Evaluación aprobada, falta tu certificado';
+  document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
+  document.getElementById('btn-eval').disabled = true;
+  document.getElementById('btn-eval').style.opacity = '0.6';
+  document.getElementById('btn-eval').style.cursor = 'default';
+  document.getElementById('btn-cert').textContent = '🏆 Ver';
+  document.getElementById('btn-cert').style.background = '#EDE7F6';
+  document.getElementById('btn-cert').style.color = 'var(--color-primario)';
+  document.getElementById('btn-cert').onclick = verCert;
+  document.getElementById('cert-note').textContent = '¡Desbloqueado!';
+}
 function restaurarEstadoCompletadoModulo1(nRestore, fCert, certId) {
   certOK = true;
   document.getElementById('pf').style.width = '100%';
@@ -597,6 +618,10 @@ function restaurarEstadoCompletadoModulo1(nRestore, fCert, certId) {
     restaurarEstadoCompletadoModulo1(nombre, fCert);
     return;
   }
+  if (localStorage.getItem('modulo1_examen_aprobado')) {
+    restaurarExamenAprobadoSinCert();
+    return;
+  }
   authReadyPromise.then(function() {
     if (!firebase.auth().currentUser) return null;
     return firebase.functions().httpsCallable('obtenerCertificadosDelAlumno')({});
@@ -614,7 +639,7 @@ function restaurarEstadoCompletadoModulo1(nRestore, fCert, certId) {
 })();
 
 setTimeout(function() {
-  if (localStorage.getItem('modulo1_completado')) { return; }
+  if (localStorage.getItem('modulo1_completado') || localStorage.getItem('modulo1_examen_aprobado')) { return; }
   document.getElementById('pf').style.width = '15%';
   document.getElementById('pl').textContent = 'Progreso: 15% — Elige tu video';
 }, 400);
@@ -676,7 +701,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
     document.getElementById('pf').style.width='100%';
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo completado! 🎉';
     certOK=true;
-    localStorage.setItem('modulo1_completado','1');
+    localStorage.setItem('modulo1_examen_aprobado','1');
     document.getElementById('btn-cert').textContent='🏆 Ver';
     document.getElementById('btn-cert').style.background='#EDE7F6';
     document.getElementById('btn-cert').style.color='var(--color-primario)';
@@ -816,6 +841,7 @@ function verCert() {
 // de hacer algo más (ver el submit de #cert-datos-box, que encadena el
 // correo de aviso después de esto en vez de dispararlo en paralelo).
 function mostrarCertificadoReal() {
+  localStorage.setItem('modulo1_completado', '1');
   var n=sessionStorage.getItem('alumno_nombre')||'Alumno';
   var f=new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
   document.getElementById('cn').textContent=n;
