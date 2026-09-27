@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-08-26 (sesión 56)
+> **Última actualización:** 2026-09-27 (sesión 57)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -23,6 +23,7 @@
 - gelaabarca@gmail.com
 - barbosamx@gmail.com
 - elenaatg2@gmail.com
+- sciotaracely@gmail.com
 
 ---
 
@@ -927,6 +928,10 @@ sessionStorage.setItem('acceso_modulo6', '1');
 - ✅ Verificado de punta a punta en el preview local reproduciendo el escenario exacto del usuario — sin datos, el certificado ya no se muestra ni se guarda; al pedirlo, vuelve a pedir nombre/correo; al llenarlos, se emite correctamente y se restaura bien en una recarga posterior
 - ⚠️ Pendiente — el usuario puede borrar desde Firebase Console los certificados de prueba a nombre de "Alumno" (de sus pruebas) y uno adicional "María de Prueba" (de la verificación de Claude en esta sesión)
 - 📁 Archivos modificados: modulo1.html, CLAUDE.md
+
+### 2026-09-27 (sesión 57)
+- ✅ **Enlace a Instagram (`https://www.instagram.com/academia.ia.gen/`) agregado en la franja del footer**, a petición del usuario: píldora con degradado de marca de Instagram, ícono SVG inline (sin librería) y texto "Instagram", a la derecha de "🍪 Cookies" dentro de `.footer-social-bar` — mismo lugar que ocupaba el botón de WhatsApp antes de retirarlo (nota técnica 68). Abre en pestaña nueva con `rel="noopener"` y `aria-label` descriptivo. Aplicado en `Academia_AI.html` y `modulo1.html`–`modulo6.html`. Verificado en el preview local: sin desbordamiento horizontal en escritorio ni en móvil (375px), los dos botones caben lado a lado sin encimarse
+- 📁 Archivos modificados: Academia_AI.html, modulo1.html–modulo6.html, CLAUDE.md
 
 <!--
 PLANTILLA para nueva entrada de historial:
