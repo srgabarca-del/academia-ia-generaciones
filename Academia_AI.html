@@ -249,7 +249,11 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
     var pasadoHero = window.scrollY > 500;
     var r = registro.getBoundingClientRect();
     var registroVisible = r.top < window.innerHeight && r.bottom > 0;
-    cta.style.display = (pasadoHero && !registroVisible) ? 'block' : 'none';
+    // También se oculta al llegar al footer, para no tapar los botones de
+    // Cookies/Instagram de la franja inferior.
+    var footer = document.querySelector('footer');
+    var footerVisible = footer && footer.getBoundingClientRect().top < window.innerHeight;
+    cta.style.display = (pasadoHero && !registroVisible && !footerVisible) ? 'block' : 'none';
   }
   window.addEventListener('scroll', actualizarCtaFlotante, {passive: true});
   actualizarCtaFlotante();
