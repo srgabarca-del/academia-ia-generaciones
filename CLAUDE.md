@@ -26,6 +26,7 @@
 - sciotaracely@gmail.com
 - alsesa56@hotmail.com
 - swrondito@gmail.com
+- patylascurain@gmail.com
 
 ---
 
@@ -934,7 +935,7 @@ sessionStorage.setItem('acceso_modulo6', '1');
 ### 2026-09-27 (sesión 57)
 - ✅ **Enlace a Instagram (`https://www.instagram.com/academia.ia.gen/`) agregado en la franja del footer**, a petición del usuario: píldora con degradado de marca de Instagram, ícono SVG inline (sin librería) y texto "Instagram", a la derecha de "🍪 Cookies" dentro de `.footer-social-bar` — mismo lugar que ocupaba el botón de WhatsApp antes de retirarlo (nota técnica 68). Abre en pestaña nueva con `rel="noopener"` y `aria-label` descriptivo. Aplicado en `Academia_AI.html` y `modulo1.html`–`modulo6.html`. Verificado en el preview local: sin desbordamiento horizontal en escritorio ni en móvil (375px), los dos botones caben lado a lado sin encimarse
 - 🐛 **Bug real reportado por el usuario y corregido — el botón flotante amarillo "🎁 Empieza gratis" tapaba el enlace de Instagram del footer** en `Academia_AI.html` (ambos están en la esquina inferior derecha). `actualizarCtaFlotante()` ahora también oculta el botón flotante en cuanto el `<footer>` entra en pantalla, igual que ya hacía con la sección `#registro`. Verificado en el preview local: el botón se sigue viendo a media página y se oculta al llegar al fondo
-- ✅ **Showreel publicitario de 30 s creado** (fuera del repositorio): página animada publicada como Artifact privado (https://claude.ai/artifact/9XWaJZCQnjB9KvUjJU5SBp, con formatos 16:9, 1:1 post y 9:16 historia) y renderizada a MP4 cuadro por cuadro con Chrome sin ventana + FFmpeg (instalado en esta sesión vía `winget install Gyan.FFmpeg`, solo para el usuario). Los 3 videos, con y sin la música "Welcoming Pulse" (canción propia del usuario en Suno), están en `D:DocumentosClaudeVideos Academia`. Usa la paleta, tipografías y logotipo reales del sitio
+- ✅ **Showreel publicitario de 30 s creado** (fuera del repositorio): página animada publicada como Artifact privado (https://claude.ai/artifact/9XWaJZCQnjB9KvUjJU5SBp, con formatos 16:9, 1:1 post y 9:16 historia) y renderizada a MP4 cuadro por cuadro con Chrome sin ventana + FFmpeg (instalado en esta sesión vía `winget install Gyan.FFmpeg`, solo para el usuario). Los 3 videos, con y sin la música "Welcoming Pulse" (canción propia del usuario en Suno), están en `D:/Documentos/Claude/Videos Academia`. Usa la paleta, tipografías y logotipo reales del sitio
 - 📁 Archivos modificados: Academia_AI.html, modulo1.html–modulo6.html, CLAUDE.md
 
 <!--
