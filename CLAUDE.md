@@ -947,8 +947,9 @@ PLANTILLA para nueva entrada de historial:
 -->
 
 ### 2026-10-11 (sesión 58)
-- 📊 **Revisión de Analytics (13 sept – 10 oct):** 16 usuarios activos en 28 días (3 en 7 días), 14 visitas nuevas, 28 vistas de la página de ventas y 18 del Módulo 1, 1 , retención casi nula después de la primera semana. Países: México 8, España 4, EE. UU. 2, Perú 1. Solo cuenta a quien acepta cookies de estadísticas, así que el tráfico real es mayor. Conclusión compartida con el usuario: el problema es volumen de tráfico, no precio — pasar todo a gratis con donaciones no se decidió todavía
-- ✅ ** conserva los parámetros UTM al redirigir a ** (antes el  los borraba). Verificado en el sitio en vivo. Commit - ✅ **Enlaces con UTM por canal entregados y guardados por el usuario:** formato . Resultados en Google Analytics → Informes → Adquisición → Adquisición de tráfico ("Fuente/medio de la sesión" o "Campaña de la sesión")
+- 📊 **Revisión de Analytics (13 sept – 10 oct):** 16 usuarios activos en 28 días (3 en 7 días), 14 visitas nuevas, 28 vistas de la página de ventas y 18 del Módulo 1, 1 `begin_checkout`, retención casi nula después de la primera semana. Países: México 8, España 4, EE. UU. 2, Perú 1. Solo cuenta a quien acepta cookies de estadísticas, así que el tráfico real es mayor. Conclusión compartida con el usuario: el problema es volumen de tráfico, no precio — pasar todo a gratis con donaciones no se decidió todavía
+- ✅ **`index.html` conserva los parámetros UTM al redirigir a `Academia_AI.html`** (antes el `meta refresh` los borraba). Verificado en el sitio en vivo. Commit `028cf96`
+- ✅ **Enlaces con UTM por canal entregados y guardados por el usuario:** formato `https://iageneraciones.com/?utm_source=<whatsapp|instagram|facebook|correo>&utm_medium=<social|email>&utm_campaign=<nombre del grupo / bio / historias>`. Resultados en Google Analytics → Informes → Adquisición → Adquisición de tráfico ("Fuente/medio de la sesión" o "Campaña de la sesión")
 - ⏭️ Siguientes opciones ofrecidas: contador propio en Firestore que no dependa del consentimiento de cookies; o pasar todo el curso a gratis con donación
 - 📁 Archivos modificados: index.html, CLAUDE.md
 
