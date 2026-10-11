@@ -1,6 +1,6 @@
 # 🤖 Academia IA Generaciones — Contexto del Proyecto
 
-> **Última actualización:** 2026-09-27 (sesión 57)
+> **Última actualización:** 2026-10-11 (sesión 58)
 > **Instrucciones:** Al abrir un nuevo chat, sube este archivo y di: *"Este es el contexto de mi proyecto, continúa desde aquí"*. Al terminar la sesión, actualiza las secciones de Estado y Pendientes.
 
 ---
@@ -945,3 +945,10 @@ PLANTILLA para nueva entrada de historial:
 - ⚠️ [qué quedó pendiente o surgió nuevo]
 - 📁 [archivos modificados]
 -->
+
+### 2026-10-11 (sesión 58)
+- 📊 **Revisión de Analytics (13 sept – 10 oct):** 16 usuarios activos en 28 días (3 en 7 días), 14 visitas nuevas, 28 vistas de la página de ventas y 18 del Módulo 1, 1 , retención casi nula después de la primera semana. Países: México 8, España 4, EE. UU. 2, Perú 1. Solo cuenta a quien acepta cookies de estadísticas, así que el tráfico real es mayor. Conclusión compartida con el usuario: el problema es volumen de tráfico, no precio — pasar todo a gratis con donaciones no se decidió todavía
+- ✅ ** conserva los parámetros UTM al redirigir a ** (antes el  los borraba). Verificado en el sitio en vivo. Commit - ✅ **Enlaces con UTM por canal entregados y guardados por el usuario:** formato . Resultados en Google Analytics → Informes → Adquisición → Adquisición de tráfico ("Fuente/medio de la sesión" o "Campaña de la sesión")
+- ⏭️ Siguientes opciones ofrecidas: contador propio en Firestore que no dependa del consentimiento de cookies; o pasar todo el curso a gratis con donación
+- 📁 Archivos modificados: index.html, CLAUDE.md
+
