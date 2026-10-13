@@ -953,5 +953,6 @@ PLANTILLA para nueva entrada de historial:
 - ⏭️ Siguientes opciones ofrecidas: contador propio en Firestore que no dependa del consentimiento de cookies; o pasar todo el curso a gratis con donación
 - ✅ **Enlaces cortos por canal en el propio dominio** (sesión 58, continuación, 2026-10-12): el usuario observó que un enlace largo con `?utm_...` genera desconfianza en adultos mayores. Se crearon `ig/`, `fb/`, `tiktok/` y `wa/` (cada uno con un `index.html` `noindex` que redirige con `location.replace` + `meta refresh` de respaldo a `../Academia_AI.html?utm_source=<instagram|facebook|tiktok|whatsapp>&utm_medium=social&utm_campaign=<bio|pagina|bio|grupos>`). Así se comparte `iageneraciones.com/ig` y Analytics sigue sabiendo el canal. Se descartaron acortadores tipo bit.ly porque ocultan el destino. Instagram agrega por su cuenta `?utm_source=ig...&fbclid=...` al enlace de la bio; la redirección los reemplaza por los propios. Verificado en vivo: las 4 rutas responden 200 y `/ig` llega a `Academia_AI.html` con las etiquetas correctas. Commit `5d073b0`
 - 📁 Archivos modificados: index.html, CLAUDE.md
-- 📁 Archivos nuevos: ig/index.html, fb/index.html, tiktok/index.html, wa/index.html
+- ✅ Agregado también `invitacion/` (`utm_source=whatsapp`, `utm_campaign=directo`) para mensajes personales de WhatsApp, a petición del usuario — nombre elegido por ser fácil de leer y sonar a invitación personal. Verificado en vivo
+- 📁 Archivos nuevos: ig/index.html, fb/index.html, tiktok/index.html, wa/index.html, invitacion/index.html
 
