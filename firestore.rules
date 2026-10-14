@@ -125,6 +125,39 @@ service cloud.firestore {
                     && request.resource.data.message.html.size() <= 5000;
     }
 
+    // Contador anónimo del embudo del Módulo 1 (ver modulo1.html,
+    // contarEmbudo). Un documento por día (ID "AAAA-MM-DD"; "prueba" se usa
+    // solo desde localhost) con un número por paso del recorrido. Sin
+    // nombre, correo ni ID de usuario. Desde el cliente solo se puede SUMAR
+    // EXACTAMENTE 1 a UNO de los campos conocidos por escritura; nadie
+    // puede leer, listar ni borrar — el dueño lo revisa en la Consola.
+    match /embudo_modulo1/{dia} {
+      function camposEmbudo() {
+        return ['entrada', 'video_terminado', 'guia_terminada',
+                'evaluacion_abierta', 'aprobado', 'certificado'];
+      }
+      function diaValido() {
+        return dia == 'prueba' || dia.matches('^20[0-9]{2}-[0-9]{2}-[0-9]{2}$');
+      }
+      function sumaUno(k) {
+        return request.resource.data[k] == (k in resource.data ? resource.data[k] : 0) + 1;
+      }
+      allow read, delete: if false;
+      allow create: if diaValido()
+                    && request.resource.data.keys().hasOnly(camposEmbudo())
+                    && request.resource.data.keys().size() == 1
+                    && request.resource.data.values().hasOnly([1]);
+      allow update: if diaValido()
+                    && request.resource.data.keys().hasOnly(camposEmbudo())
+                    && request.resource.data.diff(resource.data).affectedKeys().size() == 1
+                    && (!('entrada' in request.resource.data.diff(resource.data).affectedKeys()) || sumaUno('entrada'))
+                    && (!('video_terminado' in request.resource.data.diff(resource.data).affectedKeys()) || sumaUno('video_terminado'))
+                    && (!('guia_terminada' in request.resource.data.diff(resource.data).affectedKeys()) || sumaUno('guia_terminada'))
+                    && (!('evaluacion_abierta' in request.resource.data.diff(resource.data).affectedKeys()) || sumaUno('evaluacion_abierta'))
+                    && (!('aprobado' in request.resource.data.diff(resource.data).affectedKeys()) || sumaUno('aprobado'))
+                    && (!('certificado' in request.resource.data.diff(resource.data).affectedKeys()) || sumaUno('certificado'));
+    }
+
     // Evidencia de consentimiento a Términos y Aviso de Privacidad, un
     // documento por correo (en minúsculas) como ID. Se crea UNA sola vez,
     // en el momento real del registro (correo/contraseña o primera vez con

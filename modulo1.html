@@ -711,6 +711,7 @@ document.getElementById('btn-eval').addEventListener('click', function() {
   document.getElementById('ev').style.display='block';
   this.style.display='none';
   ponerProgreso(75, 'Evaluación en curso');
+  contarEmbudo('evaluacion_abierta');
   document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
 });
 
@@ -742,6 +743,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
     document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo completado! 🎉';
     certOK=true;
     localStorage.setItem('modulo1_examen_aprobado','1');
+    contarEmbudo('aprobado');
     document.getElementById('btn-cert').textContent='🏆 Ver';
     document.getElementById('btn-cert').style.background='#EDE7F6';
     document.getElementById('btn-cert').style.color='var(--color-primario)';
@@ -883,6 +885,7 @@ function verCert() {
 // correo de aviso después de esto en vez de dispararlo en paralelo).
 function mostrarCertificadoReal() {
   localStorage.setItem('modulo1_completado', '1');
+  contarEmbudo('certificado');
   pintarPasos();
   var n=sessionStorage.getItem('alumno_nombre')||'Alumno';
   var f=new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
@@ -965,6 +968,33 @@ function toggleComp() {
   lista.style.display = abierto ? 'none' : 'block';
   arrow.style.transform = abierto ? 'rotate(0deg)' : 'rotate(180deg)';
 }
+// ── CONTADOR ANÓNIMO DEL EMBUDO ───────────────────────────────────────────────
+// Suma 1 al contador del día en Firestore (embudo_modulo1/AAAA-MM-DD) cuando
+// alguien llega a cada paso del recorrido. Sin nombre, correo ni ID: solo
+// números por día. Cada evento cuenta una sola vez por navegador (bandera en
+// localStorage, que solo se pone si la escritura tuvo éxito). No depende del
+// banner de cookies porque no identifica a nadie. En localhost escribe en el
+// documento "prueba" para no ensuciar los números reales.
+function contarEmbudo(evento) {
+  var bandera = 'embudo_m1_' + evento;
+  try { if (localStorage.getItem(bandera) === '1') return; } catch (e) { return; }
+  if (typeof firebase === 'undefined' || !firebase.firestore) return;
+  var h = location.hostname;
+  var local = (h === 'localhost' || h === '127.0.0.1' || h === '' || h === '[::1]');
+  var d = new Date();
+  var dia = local ? 'prueba' : d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  var datos = {};
+  datos[evento] = firebase.firestore.FieldValue.increment(1);
+  firebase.firestore().collection('embudo_modulo1').doc(dia).set(datos, { merge: true }).then(function() {
+    try { localStorage.setItem(bandera, '1'); } catch (e) {}
+  }).catch(function(err) {
+    console.warn('Contador del embudo no disponible:', err && err.code);
+  });
+}
+// Entrada: solo quien todavía no había terminado el módulo (no contar a
+// alumnos que ya tenían su certificado y solo vuelven a repasar).
+if (!localStorage.getItem('modulo1_completado')) { contarEmbudo('entrada'); }
+
 // ── RECORRIDO DE 3 PASOS ──────────────────────────────────────────────────────
 // Video → Guía → Evaluación. Solo orienta: nada bloquea saltarse un paso.
 // Pasos 1 y 2 se recuerdan en localStorage (modulo1_paso_video/_guia); el 3 se
@@ -1006,6 +1036,7 @@ function ponerProgreso(pct, texto) {
 }
 function marcarVideoVisto() {
   localStorage.setItem('modulo1_paso_video', '1');
+  contarEmbudo('video_terminado');
   document.getElementById('fin-video').style.display = 'block';
   document.getElementById('saltar-video').style.display = 'none';
   if (!pasoHecho(2)) ponerProgreso(40, 'Video terminado ✓');
@@ -1017,6 +1048,7 @@ function irAPasoGuia() {
 }
 function irAPasoEval() {
   localStorage.setItem('modulo1_paso_guia', '1');
+  contarEmbudo('guia_terminada');
   ponerProgreso(60, 'Guía completada ✓');
   pintarPasos();
   var be = document.getElementById('btn-eval');
