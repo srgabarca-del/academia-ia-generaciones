@@ -77,6 +77,23 @@ nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:c
   #guia-box { position: absolute; top: 0; left: 0; width: 100%; margin: 0; }
   #guia-header, #guia-box button { display: none !important; }
 }
+/* Recorrido de 3 pasos (mismo patrón que modulo1.html) */
+.pasos{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 28px;position:sticky;top:64px;z-index:50;background:#fff;padding:8px 0}
+.pasos a{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;text-decoration:none;color:#616161;font-size:1rem;font-weight:700;line-height:1.25;padding:10px 6px;border-radius:12px;border:2px solid #E0E0E0;background:var(--color-neutro-claro);height:100%}
+.paso-num{width:34px;height:34px;border-radius:50%;background:#BDBDBD;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.pasos li.activo a{border-color:var(--color-primario);color:var(--color-primario);background:#EDE7F6}
+.pasos li.activo .paso-num{background:var(--color-primario)}
+.pasos li.hecho a{border-color:#2E7D32;color:#2E7D32;background:#E8F5E9}
+.pasos li.hecho .paso-num{background:#2E7D32}
+.paso-titulo{font-size:1.45rem;font-weight:800;color:var(--color-neutro-oscuro);margin:8px 0 12px;scroll-margin-top:170px}
+.paso-titulo span{display:inline-block;background:var(--color-primario);color:#fff;font-size:1rem;padding:3px 12px;border-radius:14px;margin-right:6px;vertical-align:middle}
+.paso-titulo small{font-size:1rem;font-weight:400;color:#757575}
+.siguiente-paso{background:#E8F5E9;border:2px solid #2E7D32;border-radius:14px;padding:18px;margin:0 0 20px;text-align:center}
+.siguiente-paso p{font-size:1.25rem;font-weight:700;color:#2E7D32;margin-bottom:12px}
+.saltar-paso{margin:0 0 32px;font-size:1.1rem}
+.saltar-paso a{color:var(--color-primario);font-weight:700}
+/* En móvil el nav no es fijo y la pantalla es chica: el indicador tampoco se queda fijo */
+@media(max-width:600px){.pasos a{font-size:.9rem;padding:8px 4px}.pasos{position:static}.paso-titulo{scroll-margin-top:16px}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
@@ -110,10 +127,20 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   <p style="color:#555;font-size:1.2rem;margin-bottom:24px;">Herramientas: ChatGPT · Gemini · Copilot · Meta AI (versiones gratuitas)</p>
   <div style="background:linear-gradient(135deg,var(--color-primario),var(--color-secundario));border-radius:14px;padding:20px 24px;margin-bottom:24px;color:#fff;">
     <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:4px;" id="saludo">¡Bienvenido/a al Módulo 2! 🚀</h2>
-    <p style="font-size:1.15rem;opacity:.85;">Hoy aprenderás a conversar con una IA y crear tu primera historia.</p>
+    <p style="font-size:1.15rem;opacity:.85;">Tu recorrido tiene 3 pasos: mira el video, practica con la guía y presenta la evaluación para obtener tu certificado.</p>
   </div>
   <div class="pbr"><div class="pf" id="pf"></div></div>
-  <p style="font-size:1rem;color:#757575;margin-bottom:24px;" id="pl">Progreso: 0%</p>
+  <p style="font-size:1rem;color:#757575;margin-bottom:20px;" id="pl">Progreso: 0%</p>
+
+  <!-- Recorrido de 3 pasos: indicador siempre visible arriba. Cada paso se marca
+       con ✅ al completarse (ver pintarPasos() en el script). -->
+  <ol class="pasos" id="pasos" aria-label="Tu recorrido en este módulo">
+    <li id="paso-ind-1"><a href="#paso-video"><span class="paso-num">1</span><span class="paso-txt">Ve el video</span></a></li>
+    <li id="paso-ind-2"><a href="#paso-guia"><span class="paso-num">2</span><span class="paso-txt">Practica con la guía</span></a></li>
+    <li id="paso-ind-3"><a href="#paso-eval"><span class="paso-num">3</span><span class="paso-txt">Evaluación y certificado</span></a></li>
+  </ol>
+
+  <h2 class="paso-titulo" id="paso-video"><span>Paso 1</span> Ve el video <small>(unos 20 minutos)</small></h2>
 
   <div class="vw">
     <div style="position:relative;width:100%;padding-top:56.25%;">
@@ -122,20 +149,22 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   </div>
   <p style="color:#555;font-size:1.2rem;font-weight:600;margin-bottom:24px;" id="vt">📱 Habla con ChatGPT desde tu Celular</p>
 
-  <div class="grid">
-    <div class="sc"><div class="sn">Sección 1</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">¿Qué es un prompt?</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">La instrucción que le das a la IA.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 0:00–15:00</div></div>
-    <div class="sc"><div class="sn">Sección 2</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Mejores preguntas</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Técnicas para respuestas increíbles.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 15:00–35:00</div></div>
-    <div class="sc"><div class="sn">Sección 3</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Práctica guiada</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Conversaciones reales con ChatGPT.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 35:00–50:00</div></div>
-    <div class="sc"><div class="sn">Sección 4</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Corrige como un experto</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Ajusta las respuestas de la IA con una sola frase.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 50:00–60:00</div></div>
+  <div id="fin-video" class="siguiente-paso" style="display:none;">
+    <p>🎉 ¡Muy bien, terminaste el video!</p>
+    <button type="button" class="bn" onclick="irAPasoGuia()" style="background:var(--color-primario);">✅ Continuar al Paso 2: la guía →</button>
   </div>
+  <p class="saltar-paso" id="saltar-video"><a href="#paso-guia" onclick="irAPasoGuia();return false;">¿Ya viste el video? Ir al Paso 2 ↓</a></p>
 
-  <div id="guia-box" style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:24px;overflow:hidden;">
+  <h2 class="paso-titulo" id="paso-guia"><span>Paso 2</span> Practica con la guía <small>(unos 15–20 minutos)</small></h2>
+  <p style="font-size:1.15rem;color:#424242;margin-bottom:14px;">Lee la explicación y completa las actividades aquí mismo. Tus respuestas se guardan solas.</p>
+
+  <div id="guia-box" style="background:#fff;border-radius:14px;border:2px solid var(--color-primario);margin-bottom:24px;overflow:hidden;">
     <button type="button" id="guia-header" onclick="toggleGuia()" aria-expanded="false" aria-controls="guia-lista" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);width:100%;border:none;text-align:left;font-family:inherit;">
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:1.5rem;">📖</span>
         <div>
           <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);">Guía y Actividades del Módulo 2</div>
-          <div style="font-size:.95rem;color:#757575;">Léela y completa las actividades aquí mismo</div>
+          <div style="font-size:1rem;color:var(--color-primario);font-weight:700;" id="guia-accion">Toca aquí para abrir la guía</div>
         </div>
       </div>
       <span id="guia-arrow" style="font-size:1.2rem;color:var(--color-primario);transition:transform .3s;">▼</span>
@@ -144,6 +173,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
     <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;"></div>
   </div>
 
+  <h2 class="paso-titulo" id="paso-eval"><span>Paso 3</span> Evaluación y certificado <small>(7 preguntas)</small></h2>
   <button class="bn" id="btn-eval" style="background:var(--color-primario);">📝 Ir a la Evaluación → Desbloquea tu Certificado</button>
 
   <div id="ev" style="display:none;margin-top:8px;">
@@ -359,12 +389,67 @@ function mensajeErrorContenido(err) {
   return '⚠️ No se pudo cargar el contenido. Intenta de nuevo.';
 }
 
+// ── RECORRIDO DE 3 PASOS ──────────────────────────────────────────────────────
+// Video → Guía → Evaluación (mismo patrón que modulo1.html). Solo orienta:
+// nada bloquea saltarse un paso. Pasos 1 y 2 se recuerdan en localStorage
+// (modulo2_paso_video/_guia); el 3 es modulo2_completado (examen aprobado).
+function pasoHecho(n) {
+  if (localStorage.getItem('modulo2_completado')) return true;
+  if (n === 1) return localStorage.getItem('modulo2_paso_video') === '1';
+  if (n === 2) return localStorage.getItem('modulo2_paso_guia') === '1';
+  return false;
+}
+function pintarPasos() {
+  var activoMarcado = false;
+  for (var n = 1; n <= 3; n++) {
+    var li = document.getElementById('paso-ind-' + n);
+    var a = li.querySelector('a');
+    li.classList.remove('hecho', 'activo');
+    a.removeAttribute('aria-current');
+    if (pasoHecho(n)) {
+      li.classList.add('hecho');
+      li.querySelector('.paso-num').textContent = '✓';
+    } else {
+      li.querySelector('.paso-num').textContent = n;
+      if (!activoMarcado) { li.classList.add('activo'); a.setAttribute('aria-current', 'step'); activoMarcado = true; }
+    }
+  }
+}
+function ponerProgreso(pct, texto) {
+  if (pasoHecho(3)) return; // no pisar el 100% del examen ya aprobado
+  document.getElementById('pf').style.width = pct + '%';
+  document.getElementById('pl').textContent = 'Progreso: ' + pct + '% — ' + texto;
+}
+function marcarVideoVisto() {
+  localStorage.setItem('modulo2_paso_video', '1');
+  document.getElementById('fin-video').style.display = 'block';
+  document.getElementById('saltar-video').style.display = 'none';
+  if (!pasoHecho(2)) ponerProgreso(40, 'Video terminado ✓');
+  pintarPasos();
+}
+function irAPasoGuia() {
+  if (document.getElementById('guia-lista').style.display === 'none') toggleGuia();
+  document.getElementById('paso-guia').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function irAPasoEval() {
+  localStorage.setItem('modulo2_paso_guia', '1');
+  ponerProgreso(60, 'Guía completada ✓');
+  pintarPasos();
+  var be = document.getElementById('btn-eval');
+  if (!be.disabled && be.style.display !== 'none') { be.click(); }
+  else { document.getElementById('paso-eval').scrollIntoView({behavior:'smooth', block:'start'}); }
+}
+// La guía llega de Firestore, así que el botón de "Ya terminé" se agrega al
+// final del contenido cada vez que se inyecta (ver toggleGuia).
+var BOTON_FIN_GUIA = '<button type="button" class="bn" onclick="irAPasoEval()" style="background:var(--color-primario);margin-top:14px;">✅ Ya terminé la guía → Ir al Paso 3: Evaluación</button>';
+
 var guiaContenidoCargado = false;
 function toggleGuia() {
   var lista = document.getElementById('guia-lista');
   var arrow = document.getElementById('guia-arrow');
   var abierto = lista.style.display !== 'none';
   document.getElementById('guia-header').setAttribute('aria-expanded', abierto ? 'false' : 'true');
+  document.getElementById('guia-accion').textContent = abierto ? 'Toca aquí para abrir la guía' : 'Toca aquí para cerrar la guía';
   if (abierto) {
     lista.style.display = 'none';
     arrow.style.transform = 'rotate(0deg)';
@@ -382,6 +467,7 @@ function toggleGuia() {
     .then(function(res) {
       lista.innerHTML = res.data.guiaHtml;
       guiaContenidoCargado = true;
+      lista.insertAdjacentHTML('beforeend', BOTON_FIN_GUIA);
       activarAutoguardadoGuia();
       activarPromptCompilado();
     })
@@ -404,6 +490,7 @@ function toggleGuia() {
 // restaurar el estado "completado" en vez de mostrar todo desde cero.
 function restaurarEstadoCompletadoModulo2(nRestore, fRestore, certId) {
   certOK = true;
+  pintarPasos();
   document.getElementById('pf').style.width = '100%';
   document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo 2 completado! ✅';
   document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
@@ -459,9 +546,12 @@ document.getElementById('saludo').textContent = '¡Hola, ' + nombre + '! Bienven
 
 setTimeout(function() {
   if (localStorage.getItem('modulo2_completado')) { return; }
-  document.getElementById('pf').style.width = '15%';
-  document.getElementById('pl').textContent = 'Progreso: 15%';
+  if (pasoHecho(2)) { ponerProgreso(60, 'Guía completada ✓'); }
+  else if (pasoHecho(1)) { ponerProgreso(40, 'Video terminado ✓'); }
+  else { ponerProgreso(15, 'Empieza por el video'); }
 }, 400);
+pintarPasos();
+if (pasoHecho(1)) { document.getElementById('saltar-video').style.display = 'none'; }
 
 var ytTag = document.createElement('script');
 ytTag.src = 'https://www.youtube.com/iframe_api';
@@ -473,8 +563,10 @@ function onYouTubeIframeAPIReady() {
     playerVars: { rel: 0 },
     events: {
       onStateChange: function(event) {
+        if (event.data === YT.PlayerState.ENDED) { marcarVideoVisto(); }
         if (event.data === YT.PlayerState.PLAYING && !ytProgresoMarcado) {
           ytProgresoMarcado = true;
+          if (pasoHecho(1)) return;
           document.getElementById('pf').style.width='30%';
           document.getElementById('pl').textContent='Progreso: 30% — Video en reproducción ✓';
         }
@@ -494,8 +586,7 @@ document.getElementById('btn-eval').addEventListener('click', function() {
       preguntas.innerHTML = res.data.examenHtml;
       document.getElementById('ev').style.display='block';
       btnEval.style.display='none';
-      document.getElementById('pf').style.width='60%';
-      document.getElementById('pl').textContent='Progreso: 60%';
+      ponerProgreso(75, 'Evaluación en curso');
       document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
     })
     .catch(function(err) {
@@ -547,6 +638,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
         document.getElementById('pl').textContent='Progreso: 100% — ¡Módulo 2 completado! 🎉';
         certOK=true;
         localStorage.setItem('modulo2_completado','1');
+        pintarPasos();
         // FIX (bug de compra): antes se otorgaba acceso_modulo3 automáticamente aquí,
         // lo que permitía pasar al Módulo 3 gratis sin comprarlo ni tener el plan mensual.
         // Ahora mostrarAccesoMod3() solo revisa lo que el alumno realmente ya tiene.
