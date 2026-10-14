@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Tips para ti — Academia IA Generaciones</title>
+<link rel="canonical" href="https://iageneraciones.com/tips.html">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="description" content="Tips gratis de Inteligencia Artificial para adultos mayores: usa la IA de tu WhatsApp, detecta mensajes falsos, crea imágenes y aprende las palabras básicas, paso a paso y sin tecnicismos.">
+<meta property="og:title" content="Tips para ti — Academia IA Generaciones">
+<meta property="og:description" content="Tips gratis de Inteligencia Artificial, explicados paso a paso y sin tecnicismos.">
+<meta property="og:image" content="https://iageneraciones.com/og-image.png">
+<meta property="og:url" content="https://iageneraciones.com/tips.html">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --color-primario:#4527A0;      /* Púrpura — botones y elementos de acción principales */
+  --color-secundario:#083042;    /* Azul marino — nav y fondos estructurales oscuros */
+  --color-acento:#FFD740;        /* Amarillo — resaltados sobre fondo oscuro y detalles de prestigio */
+  --color-neutro-oscuro:#212121; /* Texto principal y fondos oscuros secundarios */
+  --color-neutro-claro:#F5F5F5;  /* Fondos claros de sección y tarjeta */
+  --color-error:#C62828;         /* Validación de errores y alertas */
+}
+.skip-link{position:absolute;left:-9999px;top:0;background:#0D47A1;color:#fff;padding:14px 22px;font-size:1.1rem;font-weight:700;z-index:99999;border-radius:0 0 10px 0;text-decoration:none}
+.skip-link:focus{left:0}
+a:focus-visible,button:focus-visible{outline:3px solid #0D47A1;outline-offset:3px}
+body{font-family:'Atkinson Hyperlegible',system-ui,sans-serif;color:var(--color-neutro-oscuro);background:#fff;line-height:1.6}
+nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px}
+.logo{color:#fff;font-size:1.1rem;font-weight:700}
+.volver{color:#fff;font-size:1.1rem;text-decoration:none;opacity:.9;white-space:nowrap}
+.hero{background:var(--color-secundario);padding:56px 24px 64px;text-align:center}
+.eyebrow{display:inline-block;background:rgba(255,255,255,.15);color:#fff;padding:6px 18px;border-radius:20px;font-size:1.05rem;margin-bottom:20px}
+.hero h1{color:#fff;font-size:clamp(2rem,4.5vw,2.9rem);font-weight:800;line-height:1.25}
+.hero h1 span{color:var(--color-acento)}
+.hero p{color:rgba(255,255,255,.9);font-size:1.25rem;max-width:640px;margin:16px auto 0}
+
+/* Índice de temas: enlaces grandes tipo píldora que bajan a cada sección */
+.temas{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:900px;margin:32px auto 0;padding:0 16px}
+.temas a{background:var(--color-neutro-claro);color:var(--color-secundario);border:2px solid #E0E0E0;border-radius:30px;padding:10px 20px;font-size:1.1rem;font-weight:700;text-decoration:none}
+.temas a:hover{border-color:var(--color-primario)}
+
+main{max-width:1000px;margin:0 auto;padding:16px 20px 20px}
+.tema{padding-top:40px;scroll-margin-top:90px}
+.tema h2{font-size:1.7rem;color:var(--color-secundario);margin-bottom:6px}
+.tema > p{font-size:1.15rem;color:#424242;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+
+.tip{background:#fff;border:1px solid #E0E0E0;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column}
+.tip-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:12px;flex:1}
+.tipo{align-self:flex-start;background:#EDE7F6;color:var(--color-primario);font-weight:700;font-size:.95rem;padding:4px 12px;border-radius:14px}
+.tip h3{font-size:1.35rem;line-height:1.35;color:var(--color-neutro-oscuro)}
+.tip p,.tip li{font-size:1.15rem;color:#212121;line-height:1.65}
+.tip ol,.tip ul{padding-left:24px;display:flex;flex-direction:column;gap:4px}
+.prompt{background:var(--color-neutro-claro);border-left:4px solid var(--color-acento);border-radius:0 10px 10px 0;padding:12px 16px;font-size:1.1rem;font-style:italic}
+.tip-links{margin-top:auto;padding-top:8px;display:flex;flex-direction:column;gap:8px}
+.tip-links a{font-size:1.05rem;font-weight:700;text-decoration:none}
+.link-mod{color:var(--color-primario)}
+.tip-links a:hover{text-decoration:underline}
+
+/* Medios: video vertical (YouTube Short), carrusel de imágenes o imagen sola.
+   Mientras no exista el archivo/enlace, se muestra un espacio reservado. */
+.media{background:var(--color-secundario);position:relative}
+.media-vacio{aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,.85);font-size:1.1rem;text-align:center;padding:20px}
+.media-vacio span{font-size:2.6rem}
+.video{aspect-ratio:9/16;max-height:560px;margin:0 auto;width:100%}
+.video button{all:unset;cursor:pointer;display:block;width:100%;height:100%;position:relative;background-size:cover;background-position:center}
+.video button::after{content:"▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;background:rgba(69,39,160,.92);color:#fff;font-size:2rem;display:flex;align-items:center;justify-content:center;padding-left:6px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.video button:focus-visible{outline:3px solid var(--color-acento);outline-offset:-6px}
+.video iframe{width:100%;height:100%;border:0;display:block}
+.carrusel-pista{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.carrusel-pista::-webkit-scrollbar{display:none}
+.carrusel-pista img{flex:0 0 100%;width:100%;aspect-ratio:1/1;object-fit:cover;scroll-snap-align:center;display:block}
+.carrusel-ctrl{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--color-neutro-claro);padding:8px 10px}
+.carrusel-ctrl button{background:var(--color-primario);color:#fff;border:none;border-radius:24px;font-family:inherit;font-size:1rem;font-weight:700;padding:8px 12px;cursor:pointer;min-height:44px;white-space:nowrap}
+.carrusel-ctrl output{white-space:nowrap}
+.carrusel-ctrl button:disabled{background:#BDBDBD;cursor:default}
+.carrusel-ctrl output{font-size:1.05rem;font-weight:700;color:#424242}
+
+.cta-final{background:var(--color-secundario);border-radius:20px;text-align:center;padding:40px 24px;margin:56px 0 24px;color:#fff}
+.cta-final h2{font-size:1.7rem;margin-bottom:10px}
+.cta-final p{font-size:1.2rem;color:rgba(255,255,255,.9);margin-bottom:22px}
+.btn-cta{display:inline-block;background:var(--color-acento);color:var(--color-secundario);font-size:1.25rem;font-weight:700;padding:16px 36px;border-radius:40px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.sigue{text-align:center;font-size:1.15rem;color:#424242;margin-bottom:8px}
+.sigue a{color:#C13584;font-weight:700}
+footer{text-align:center;padding:28px 24px;color:#757575;font-size:.95rem}
+footer a{color:inherit}
+@media(max-width:600px){
+  .hero{padding:40px 20px 48px}
+  .logo-full{display:none}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Ir al contenido</a>
+
+<nav>
+  <div class="logo" style="display:flex;align-items:center;gap:10px;"><img src="logo.png" alt="" style="height:56px;width:56px;border-radius:50%;">Academia IA<span class="logo-full"> Generaciones</span></div>
+  <a href="Academia_AI.html" class="volver" id="volver-link">← Volver</a>
+</nav>
+<script>
+// Mismo patrón que nosotros.html: "Volver" regresa a donde estaba el alumno;
+// solo cae en Academia_AI.html si la página se abrió directo (sin historial).
+document.getElementById('volver-link').addEventListener('click', function(e) {
+  if (history.length > 1) {
+    e.preventDefault();
+    history.back();
+  }
+});
+</script>
+
+<section class="hero">
+  <div class="eyebrow">💡 Gratis · Nuevos cada semana</div>
+  <h1>Tips <span>para ti</span></h1>
+  <p>Ideas cortas para usar la Inteligencia Artificial en tu día a día — sin tecnicismos y con lo que ya tienes en tu celular.</p>
+</section>
+
+<div class="temas" role="navigation" aria-label="Temas de los tips">
+  <a href="#primeros-pasos">🌱 Primeros pasos</a>
+  <a href="#celular">📱 Tu celular y WhatsApp</a>
+  <a href="#pedirle">💬 Cómo pedirle las cosas</a>
+  <a href="#crear">🎨 Crear con IA</a>
+  <a href="#seguridad">🛡️ Seguridad</a>
+</div>
+
+<!--
+  CÓMO AGREGAR UN TIP NUEVO
+  Copia una tarjeta <article class="tip"> del mismo tipo dentro del tema que
+  corresponda y cambia textos y enlaces. El medio se configura con atributos:
+    · Video (YouTube Short):  <div class="media video" data-yt="ID_DEL_SHORT">
+    · Carrusel:  <div class="media carrusel" data-imgs="tips-img/nombre-1.jpg,tips-img/nombre-2.jpg,..." data-alt="Descripción">
+    · Imagen sola: igual que carrusel, con un solo archivo en data-imgs.
+  Si el atributo está vacío se muestra el espacio reservado "Próximamente".
+-->
+
+<main id="main">
+
+  <section class="tema" id="primeros-pasos">
+    <h2>🌱 Primeros pasos</h2>
+    <p>Si apenas vas a empezar, comienza por aquí.</p>
+    <div class="grid">
+
+      <article class="tip">
+        <div class="media carrusel" data-imgs="tips-img/miedos-1.webp,tips-img/miedos-2.webp,tips-img/miedos-3.webp,tips-img/miedos-4.webp,tips-img/miedos-5.webp,tips-img/miedos-6.webp" data-alt="¿Te da miedo usar la IA? 4 mitos y realidades"></div>
+        <div class="tip-body">
+          <span class="tipo">🖼️ Desliza para ver</span>
+          <h3>¿Te da miedo usar la IA? Es normal</h3>
+          <p>Las 4 dudas más comunes, resueltas:</p>
+          <ul>
+            <li>No vas a meter un virus.</li>
+            <li>No vas a romper tu computadora.</li>
+            <li>Tu información está segura si sigues reglas simples.</li>
+            <li>Practicar no pone en riesgo tu trabajo.</li>
+          </ul>
+          <div class="tip-links">
+            <a class="link-mod" href="modulo1.html">➜ Empieza sin miedo en el Módulo 1 (gratis)</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tip">
+        <div class="media video" data-yt="RRMU0CLVfnU" data-titulo="Cómo abrir ChatGPT por primera vez"></div>
+        <div class="tip-body">
+          <span class="tipo">🎬 Video corto · 🤖 Personajes creados con IA</span>
+          <h3>Cómo abrir ChatGPT por primera vez</h3>
+          <p>El primer paso para empezar a conversar con una Inteligencia Artificial: dónde encontrarla y cómo abrirla, sin instalar nada complicado.</p>
+          <div class="tip-links">
+            <a class="link-mod" href="modulo1.html">➜ Da tus primeros pasos en el Módulo 1 (gratis)</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tip">
+        <div class="media carrusel" data-imgs="tips-img/5cosas-1.webp,tips-img/5cosas-2.webp,tips-img/5cosas-3.webp,tips-img/5cosas-4.webp,tips-img/5cosas-5.webp,tips-img/5cosas-6.webp,tips-img/5cosas-7.webp,tips-img/5cosas-8.webp" data-alt="5 cosas que puedes hacer hoy con la Inteligencia Artificial"></div>
+        <div class="tip-body">
+          <span class="tipo">🖼️ Desliza para ver</span>
+          <h3>5 cosas que puedes hacer HOY con la IA</h3>
+          <p>Sin ser experto, sin instalar nada y solo con tu celular — cada una con un ejemplo para copiar y pegar:</p>
+          <ol>
+            <li>Escribe las historias de tu familia.</li>
+            <li>Crea tarjetas y recuerdos.</li>
+            <li>Organiza tu día y tus viajes.</li>
+            <li>Detecta noticias falsas y fraudes.</li>
+            <li>Redacta mensajes y cartas fácilmente.</li>
+          </ol>
+          <div class="tip-links">
+            <a class="link-mod" href="modulo1.html">➜ Aprende paso a paso en el Módulo 1 (gratis)</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tip">
+        <div class="media carrusel" data-imgs="tips-img/6palabras-1.webp,tips-img/6palabras-2.webp,tips-img/6palabras-3.webp,tips-img/6palabras-4.webp,tips-img/6palabras-5.webp,tips-img/6palabras-6.webp,tips-img/6palabras-7.webp,tips-img/6palabras-8.webp" data-alt="6 palabras de la Inteligencia Artificial explicadas en una frase"></div>
+        <div class="tip-body">
+          <span class="tipo">🖼️ Desliza para ver</span>
+          <h3>6 palabras de la IA explicadas en una frase</h3>
+          <p>¿Has escuchado “prompt”, “chatbot” o “la nube” y no supiste qué significaban? No eres el único. Aquí van explicadas con ejemplos de todos los días: IA, chatbot, prompt, app, la nube y algoritmo.</p>
+          <div class="tip-links">
+            <a class="link-mod" href="modulo1.html">➜ Entiende la IA desde cero en el Módulo 1 (gratis)</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tip">
+        <div class="media carrusel" data-imgs="tips-img/70anos-1.webp" data-alt="La Inteligencia Artificial ya cumplió 70 años"></div>
+        <div class="tip-body">
+          <span class="tipo">📷 Dato curioso</span>
+          <h3>¿Sabías que la IA ya cumplió 70 años?</h3>
+          <p>El término nació en 1956, cuando un grupo de científicos se reunió en la Universidad de Dartmouth (EE.&nbsp;UU.) con una idea de película: enseñar a las máquinas a “pensar”. Es más antigua que la llegada del hombre a la Luna… y hoy cabe en tu bolsillo.</p>
+          <div class="tip-links">
+            <a class="link-mod" href="modulo1.html">➜ Conoce su historia en el Módulo 1 (gratis)</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="tema" id="celular">
+    <h2>📱 Tu celular y WhatsApp</h2>
+    <p>No necesitas descargar nada nuevo: la IA ya está en las apps que usas.</p>
+    <div class="grid">
+
+      <article class="tip">
+        <div class="media video" data-yt="mnx2pCt-rQc" data-titulo="Meta AI en WhatsApp: escribe un mensaje de cumpleaños"></div>
+        <div class="tip-body">
+          <span class="tipo">🎬 Video corto · 🤖 Personajes creados con IA</span>
+          <h3>Tu WhatsApp ya tiene IA: escribe un mensaje de cumpleaños</h3>
+          <ol>
+            <li>Abre WhatsApp y toca el ícono de Meta AI (o escríbelo en la barra de búsqueda).</li>
+            <li>Escribe lo que necesitas.</li>
+            <li>¿No te convence? Pídele cambios.</li>
+          </ol>
+          <div class="tip-links">
+            <a class="link-mod" href="Academia_AI.html#planes-pago">➜ Más usos como este en el Módulo 2</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tip">
+        <div class="media carrusel" data-imgs="tips-img/3apps-1.webp,tips-img/3apps-2.webp,tips-img/3apps-3.webp,tips-img/3apps-4.webp,tips-img/3apps-5.webp,tips-img/3apps-6.webp" data-alt="3 apps de tu celular que ya tienen Inteligencia Artificial"></div>
+        <div class="tip-body">
+          <span class="tipo">🖼️ Desliza para ver</span>
+          <h3>3 apps de tu celular que ya tienen IA</h3>
+          <ol>
+            <li><strong>WhatsApp con Meta AI</strong> — para escribir mensajes y resolver dudas.</li>
+            <li><strong>Google Lens</strong> — la cámara que traduce y reconoce lo que ve.</li>
+            <li><strong>Tu asistente de voz</strong> — Gemini en Android o Siri en iPhone.</li>
+          </ol>
+          <div class="tip-links">
+            <a class="link-mod" href="modulo1.html">➜ Descubre más en el Módulo 1 (gratis)</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="tema" id="pedirle">
+    <h2>💬 Cómo pedirle las cosas a la IA</h2>
+    <p>Mientras más detalles le das, mejor te responde.</p>
+    <div class="grid">
+
+      <article class="tip">
+        <div class="media video" data-yt="Co6YnTVuWr0" data-titulo="Receta express: cómo pedirle una receta a la IA"></div>
+        <div class="tip-body">
+          <span class="tipo">🎬 Video corto · 🤖 Personajes creados con IA</span>
+          <h3>No le pidas “una receta”: dale tus ingredientes</h3>
+          <p>En vez de escribir “dame una receta”, dile lo que tienes y lo que necesitas:</p>
+          <p class="prompt">“Actúa como chef mexicano. Dame una receta en 10 minutos con huevo, tortilla y queso, para 1 persona y sin horno.”</p>
+          <p>Así salieron unos chilaquiles express en segundos.</p>
+          <div class="tip-links">
+            <a class="link-mod" href="Academia_AI.html#planes-pago">➜ Aprende la fórmula completa en el Módulo 2</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="tema" id="crear">
+    <h2>🎨 Crear con IA</h2>
+    <p>Imágenes, tarjetas y recuerdos, solo describiendo lo que imaginas.</p>
+    <div class="grid">
+
+      <article class="tip">
+        <div class="media video" data-yt="t1sESUgXRx8" data-titulo="Crea tu primera imagen con Inteligencia Artificial"></div>
+        <div class="tip-body">
+          <span class="tipo">🎬 Video corto · 🤖 Personajes creados con IA</span>
+          <h3>Así de fácil es crear tu primera imagen con IA</h3>
+          <p>No necesitas saber de diseño: solo escribe lo que imaginas y deja que la IA haga su magia.</p>
+          <div class="tip-links">
+            <a class="link-mod" href="Academia_AI.html#planes-pago">➜ Paso a paso en el Módulo 3</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="tema" id="seguridad">
+    <h2>🛡️ Seguridad</h2>
+    <p>Aprende a reconocer engaños antes de caer en la trampa.</p>
+    <div class="grid">
+
+      <article class="tip">
+        <div class="media video" data-yt="yxBO0xeiuUs" data-titulo="Cómo reconocer un mensaje falso"></div>
+        <div class="tip-body">
+          <span class="tipo">🎬 Video corto · 🤖 Personajes creados con IA</span>
+          <h3>Reconoce un mensaje falso en 20 segundos</h3>
+          <p>Un tip rápido para detectar un mensaje falso antes de caer en la trampa. Compártelo con quien lo necesite.</p>
+          <div class="tip-links">
+            <a class="link-mod" href="Academia_AI.html#planes-pago">➜ Más sobre seguridad en el Módulo 6</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <div class="cta-final">
+    <h2>¿Quieres aprender esto paso a paso?</h2>
+    <p>El Módulo 1 es 100% gratis — sin registro y sin tarjeta.</p>
+    <a href="modulo1.html" class="btn-cta">🎁 Empezar el Módulo 1 gratis</a>
+  </div>
+
+  <p class="sigue">¿Quieres un tip nuevo cada semana? Síguenos en <a href="https://www.instagram.com/academia.ia.gen/" target="_blank" rel="noopener">Instagram</a> y en <a href="https://www.youtube.com/@academia.ia.generaciones" target="_blank" rel="noopener">YouTube</a></p>
+
+</main>
+
+<footer>
+  <p>© <span id="anio-actual">2026</span> Academia IA Generaciones · Todos los derechos reservados</p>
+  <p style="margin-top:8px;">
+    <a href="legal.html#terminos" style="text-decoration:underline;">Términos y Condiciones</a>
+    ·
+    <a href="legal.html#privacidad" style="text-decoration:underline;">Aviso de Privacidad</a>
+    ·
+    <a href="legal.html#cookies" style="text-decoration:underline;">Política de Cookies</a>
+  </p>
+</footer>
+<script>
+document.getElementById('anio-actual').textContent = new Date().getFullYear();
+
+// Videos (YouTube Shorts): se muestra solo la miniatura y el reproductor se
+// carga hasta que el alumno toca ▶. Así la página no carga nada de YouTube
+// ni sus cookies hasta que de verdad quiere ver el video (youtube-nocookie).
+document.querySelectorAll('.media.video').forEach(function(caja) {
+  var id = (caja.getAttribute('data-yt') || '').trim();
+  var titulo = caja.getAttribute('data-titulo') || 'Video';
+  if (!id) {
+    caja.classList.remove('video');
+    caja.innerHTML = '<div class="media-vacio"><span>🎬</span>Video próximamente</div>';
+    return;
+  }
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.setAttribute('aria-label', 'Reproducir video: ' + titulo);
+  btn.style.backgroundImage = 'url(https://i.ytimg.com/vi/' + id + '/hqdefault.jpg)';
+  btn.addEventListener('click', function() {
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
+    f.title = titulo;
+    f.allow = 'autoplay; encrypted-media; picture-in-picture';
+    f.allowFullscreen = true;
+    caja.innerHTML = '';
+    caja.appendChild(f);
+  });
+  caja.appendChild(btn);
+});
+
+// Carruseles e imágenes: deslizar con el dedo o con botones grandes
+// "Anterior/Siguiente" (más fácil para quien no está acostumbrado a deslizar).
+document.querySelectorAll('.media.carrusel').forEach(function(caja) {
+  var imgs = (caja.getAttribute('data-imgs') || '').split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+  var alt = caja.getAttribute('data-alt') || '';
+  if (!imgs.length) {
+    caja.innerHTML = '<div class="media-vacio"><span>🖼️</span>Imágenes próximamente</div>';
+    return;
+  }
+  var pista = document.createElement('div');
+  pista.className = 'carrusel-pista';
+  imgs.forEach(function(src, i) {
+    var img = document.createElement('img');
+    img.src = src;
+    img.loading = 'lazy';
+    img.alt = imgs.length > 1 ? alt + ' — imagen ' + (i + 1) + ' de ' + imgs.length : alt;
+    pista.appendChild(img);
+  });
+  caja.appendChild(pista);
+  if (imgs.length < 2) return;
+
+  var ctrl = document.createElement('div');
+  ctrl.className = 'carrusel-ctrl';
+  ctrl.innerHTML = '<button type="button">← Anterior</button><output aria-live="polite"></output><button type="button">Siguiente →</button>';
+  caja.appendChild(ctrl);
+  var prev = ctrl.children[0], cont = ctrl.children[1], next = ctrl.children[2];
+  // "objetivo" guarda la imagen a la que se pidió ir con los botones, para que
+  // dos toques rápidos avancen dos imágenes aunque la animación no termine.
+  var objetivo = 0, timer = null;
+  function pintar(n) {
+    cont.textContent = (n + 1) + ' de ' + imgs.length;
+    prev.disabled = n === 0;
+    next.disabled = n === imgs.length - 1;
+  }
+  function ir(n) {
+    objetivo = Math.max(0, Math.min(imgs.length - 1, n));
+    pintar(objetivo);
+    pista.scrollTo({ left: objetivo * pista.clientWidth, behavior: 'smooth' });
+  }
+  prev.addEventListener('click', function() { ir(objetivo - 1); });
+  next.addEventListener('click', function() { ir(objetivo + 1); });
+  // Al deslizar con el dedo, sincroniza el contador cuando termina el movimiento.
+  pista.addEventListener('scroll', function() {
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      objetivo = Math.round(pista.scrollLeft / pista.clientWidth);
+      pintar(objetivo);
+    }, 120);
+  });
+  pintar(0);
+});
+</script>
+</body>
+</html>
