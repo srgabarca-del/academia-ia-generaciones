@@ -937,6 +937,10 @@ document.getElementById('btn-cd-continuar').addEventListener('click', function()
   localStorage.setItem('modulo1_alumno_email', emailCd);
   localStorage.setItem('modulo1_alumno_fecha', new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'}));
   document.getElementById('cert-datos-box').style.display = 'none';
+  // El menú y el saludo solo leían el nombre al cargar la página; se
+  // actualizan aquí para que muestren el nombre recién capturado sin recargar.
+  document.getElementById('nav-nombre').textContent = '👤 ' + nombreCd;
+  document.getElementById('saludo').textContent = '¡Hola, ' + nombreCd + '! Bienvenido/a a tu primer módulo 🎉';
   actualizarVisibilidadPanel();
   // El certificado se guarda primero; el correo de aviso se encadena hasta
   // que esa escritura ya terminó (bug real detectado: si el alumno cerraba
