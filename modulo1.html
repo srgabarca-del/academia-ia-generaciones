@@ -85,6 +85,23 @@ nav{background:var(--color-secundario);padding:0 24px;display:flex;align-items:c
   #guia-header, #guia-box button { display: none !important; }
 }
 .btn-row{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+/* Recorrido de 3 pasos */
+.pasos{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 28px;position:sticky;top:64px;z-index:50;background:#fff;padding:8px 0}
+.pasos a{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;text-decoration:none;color:#616161;font-size:1rem;font-weight:700;line-height:1.25;padding:10px 6px;border-radius:12px;border:2px solid #E0E0E0;background:var(--color-neutro-claro);height:100%}
+.paso-num{width:34px;height:34px;border-radius:50%;background:#BDBDBD;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.pasos li.activo a{border-color:var(--color-primario);color:var(--color-primario);background:#EDE7F6}
+.pasos li.activo .paso-num{background:var(--color-primario)}
+.pasos li.hecho a{border-color:#2E7D32;color:#2E7D32;background:#E8F5E9}
+.pasos li.hecho .paso-num{background:#2E7D32}
+.paso-titulo{font-size:1.45rem;font-weight:800;color:var(--color-neutro-oscuro);margin:8px 0 12px;scroll-margin-top:170px}
+.paso-titulo span{display:inline-block;background:var(--color-primario);color:#fff;font-size:1rem;padding:3px 12px;border-radius:14px;margin-right:6px;vertical-align:middle}
+.paso-titulo small{font-size:1rem;font-weight:400;color:#757575}
+.siguiente-paso{background:#E8F5E9;border:2px solid #2E7D32;border-radius:14px;padding:18px;margin:0 0 20px;text-align:center}
+.siguiente-paso p{font-size:1.25rem;font-weight:700;color:#2E7D32;margin-bottom:12px}
+.saltar-paso{margin:0 0 32px;font-size:1.1rem}
+.saltar-paso a{color:var(--color-primario);font-weight:700}
+/* En móvil el nav no es fijo y la pantalla es chica: el indicador tampoco se queda fijo */
+@media(max-width:600px){.pasos a{font-size:.9rem;padding:8px 4px}.pasos{position:static}.paso-titulo{scroll-margin-top:16px}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
 <style>
@@ -114,13 +131,23 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 <div class="body" id="main">
   <span class="badge">🆓 MÓDULO 1 — GRATUITO</span>
   <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:var(--color-primario);margin-bottom:8px;">Descubriendo la Inteligencia Artificial</h1>
-  <p style="color:#555;font-size:1.2rem;margin-bottom:24px;">Duración: 45–75 min · Sin conocimientos previos · En español</p>
+  <p style="color:#555;font-size:1.2rem;margin-bottom:24px;">Duración: unos 30–45 min · Sin conocimientos previos · En español</p>
   <div style="background:linear-gradient(135deg,var(--color-primario),var(--color-secundario));border-radius:14px;padding:20px 24px;margin-bottom:24px;color:#fff;">
     <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:4px;" id="saludo">¡Bienvenido/a a tu primer módulo! 🎉</h2>
-    <p style="font-size:1.15rem;opacity:.85;">Comienza viendo el video, descarga el PDF y completa la evaluación.</p>
+    <p style="font-size:1.15rem;opacity:.85;">Tu recorrido tiene 3 pasos: mira el video, practica con la guía y presenta la evaluación para obtener tu certificado.</p>
   </div>
   <div class="pbr"><div class="pf" id="pf" style="background:var(--color-primario);"></div></div>
-  <p style="font-size:1rem;color:#757575;margin-bottom:24px;" id="pl">Progreso: 0%</p>
+  <p style="font-size:1rem;color:#757575;margin-bottom:20px;" id="pl">Progreso: 0%</p>
+
+  <!-- Recorrido de 3 pasos: indicador siempre visible arriba. Cada paso se marca
+       con ✅ al completarse (ver pintarPasos() en el script). -->
+  <ol class="pasos" id="pasos" aria-label="Tu recorrido en este módulo">
+    <li id="paso-ind-1"><a href="#paso-video"><span class="paso-num">1</span><span class="paso-txt">Ve el video</span></a></li>
+    <li id="paso-ind-2"><a href="#paso-guia"><span class="paso-num">2</span><span class="paso-txt">Practica con la guía</span></a></li>
+    <li id="paso-ind-3"><a href="#paso-eval"><span class="paso-num">3</span><span class="paso-txt">Evaluación y certificado</span></a></li>
+  </ol>
+
+  <h2 class="paso-titulo" id="paso-video"><span>Paso 1</span> Ve el video <small>(unos 5 minutos)</small></h2>
 
   <div class="vw">
     <div style="position:relative;width:100%;padding-top:56.25%;">
@@ -129,28 +156,26 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   </div>
   <p style="color:#555;font-size:1.2rem;font-weight:600;margin-bottom:24px;" id="vt">🎬 ¿Qué es la IA? — Video Animado</p>
 
-  <div class="grid">
-    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 1</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">¿Qué es la IA?</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Definición simple y clara.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 0:00–5:00</div></div>
-    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 2</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">¿Cómo funciona?</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Datos, entrenamiento y respuesta.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 5:00–18:00</div></div>
-    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 3</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">IA en tu vida diaria</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">YouTube, WhatsApp, Maps y más.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 18:00–30:00</div></div>
-    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 4</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Beneficios y límites</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Lo que la IA puede y no puede hacer.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 30:00–40:00</div></div>
-    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 5</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Actividades prácticas</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Cazadores de IA · Mi Día con IA.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 40:00–55:00</div></div>
-    <div class="sc"><div class="sn" style="color:var(--color-primario);">Sección 6</div><h4 style="font-size:1.15rem;font-weight:700;margin-bottom:5px;">Cierre y certificado</h4><p style="font-size:1.05rem;color:#555;line-height:1.5;">Resumen y descarga de certificado.</p><div style="font-size:.95rem;color:#757575;margin-top:7px;">⏱ 55:00–60:00</div></div>
+  <div id="fin-video" class="siguiente-paso" style="display:none;">
+    <p>🎉 ¡Muy bien, terminaste el video!</p>
+    <button type="button" class="bn" onclick="irAPasoGuia()" style="background:var(--color-primario);">✅ Continuar al Paso 2: la guía →</button>
   </div>
+  <p class="saltar-paso" id="saltar-video"><a href="#paso-guia" onclick="irAPasoGuia();return false;">¿Ya viste el video? Ir al Paso 2 ↓</a></p>
 
-  <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:14px;">📎 Materiales del módulo</h3>
+  <h2 class="paso-titulo" id="paso-guia"><span>Paso 2</span> Practica con la guía <small>(unos 10–15 minutos)</small></h2>
+  <p style="font-size:1.15rem;color:#424242;margin-bottom:14px;">Lee la explicación y completa las actividades aquí mismo. Tus respuestas se guardan solas.</p>
 
   <!-- ══════════════════════════════════════════════════════════════ -->
   <!-- GUÍA Y ACTIVIDADES — contenido embebido directamente en HTML  -->
   <!-- (ya no es un PDF descargable/visible en modal, es rellenable) -->
   <!-- ══════════════════════════════════════════════════════════════ -->
-  <div id="guia-box" style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:28px;overflow:hidden;">
+  <div id="guia-box" style="background:#fff;border-radius:14px;border:2px solid var(--color-primario);margin-bottom:28px;overflow:hidden;">
     <button type="button" id="guia-header" onclick="toggleGuia()" aria-expanded="false" aria-controls="guia-lista" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);width:100%;border:none;text-align:left;font-family:inherit;">
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:1.5rem;">📖</span>
         <div>
           <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);">Guía y Actividades del Módulo 1</div>
-          <div style="font-size:.95rem;color:#757575;">Léela y completa las actividades aquí mismo</div>
+          <div style="font-size:1rem;color:var(--color-primario);font-weight:700;" id="guia-accion">Toca aquí para abrir la guía</div>
         </div>
       </div>
       <span id="guia-arrow" style="font-size:1.2rem;color:var(--color-primario);transition:transform .3s;">▼</span>
@@ -255,62 +280,11 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 
       <p style="text-align:center;font-size:1rem;color:#757575;margin-bottom:10px;">Puedes imprimir la guía para que te sirva de apoyo para el uso de las herramientas de IA.</p>
       <button onclick="window.print()" style="width:100%;padding:14px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir</button>
+      <button type="button" class="bn" onclick="irAPasoEval()" style="background:var(--color-primario);margin-top:14px;">✅ Ya terminé la guía → Ir al Paso 3: Evaluación</button>
     </div>
   </div>
 
-  <div class="res">
-    <ul class="rl">
-      <li><div class="ri" style="background:#FCE4EC;">🏆</div><div><span>Certificado de participación</span><br><small id="cert-note" style="color:#757575;">Completa la evaluación para desbloquearlo</small></div><button class="bdl" id="btn-cert" style="background:#E0E0E0;color:#616161;">🔒 Bloqueado</button></li>
-    </ul>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- VIDEOS COMPLEMENTARIOS -->
-  <!-- Para agregar más videos: copia un bloque .vid-card y cambia   -->
-  <!-- el ID de YouTube, el título y la descripción                  -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:28px;overflow:hidden;">
-    <!-- Encabezado colapsable -->
-    <div id="comp-header" onclick="toggleComp()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span style="font-size:1.5rem;">🎬</span>
-        <div>
-          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);">Videos Complementarios</div>
-          <div style="font-size:1.05rem;color:#757575;">Contenido adicional sobre Inteligencia Artificial</div>
-        </div>
-      </div>
-      <span id="comp-arrow" style="font-size:1.2rem;color:var(--color-primario);transition:transform .3s;">▼</span>
-    </div>
-
-    <!-- Lista de videos (colapsable) -->
-    <div id="comp-lista" style="display:none;padding:16px 24px;border-top:1px solid #E0E0E0;">
-
-      <!-- ── VIDEO 1 ── -->
-      <div class="vid-card" style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--color-neutro-claro);">
-        <div style="flex-shrink:0;width:120px;height:68px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;" onclick="abrirVideo('9-W1VbQNt5Y')">
-          <span style="font-size:1.8rem;">▶</span>
-        </div>
-        <div style="flex:1;">
-          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:4px;">El TeledIArio del Futuro — Desafío de la Inteligencia Artificial</div>
-          <div style="font-size:1.05rem;color:#757575;margin-bottom:8px;">📺 RTVE — Televisión Española · Especial informativo</div>
-          <div style="font-size:1.05rem;color:#555;line-height:1.5;margin-bottom:10px;">Cómo se ha desarrollado la IA, sus características y los riesgos del futuro. Un especial producido por TVE bajo la dirección de Pepa Bueno.</div>
-          <button onclick="abrirVideo('9-W1VbQNt5Y')" style="background:var(--color-primario);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:1.05rem;font-weight:700;cursor:pointer;">▶ Ver en YouTube</button>
-        </div>
-      </div>
-      <!-- ── FIN VIDEO 1 ── -->
-
-      <!-- ── AQUÍ PUEDES AGREGAR MÁS VIDEOS ── -->
-      <!-- Copia el bloque de arriba desde <div class="vid-card"> -->
-      <!-- hasta <!-- FIN VIDEO --> y cambia el ID de YouTube,     -->
-      <!-- el título, el canal y la descripción                     -->
-
-      <div style="text-align:center;padding:16px 0 4px;color:#757575;font-size:1.05rem;">
-        🔜 Próximamente más videos sobre IA
-      </div>
-
-    </div>
-  </div>
-
+  <h2 class="paso-titulo" id="paso-eval"><span>Paso 3</span> Evaluación y certificado <small>(7 preguntas)</small></h2>
   <button class="bn" id="btn-eval" style="background:var(--color-primario);">📝 Ir a la Evaluación → Desbloquea tu Certificado</button>
 
   <div id="ev" style="display:none;margin-top:8px;">
@@ -413,10 +387,66 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   </div>
 
   <div class="btn-row">
-    <button class="bn" id="btn-mod2" style="background:var(--color-primario);">🚀 Continuar al Módulo 2</button>
+    <p class="saltar-paso" id="saltar-mod2" style="display:none;text-align:center;"><a href="modulo2.html">¿Ya conoces este tema? Ir al Módulo 2 →</a></p>
+    <button class="bn" id="btn-mod2" style="background:var(--color-primario);display:none;">🚀 Continuar al Módulo 2</button>
     <a href="dashboard.html" id="btnrow-panel-link" style="display:none;width:100%;padding:14px;background:#fff;color:var(--color-primario);border:2px solid var(--color-primario);border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Volver a mi panel</a>
     <a href="Academia_AI.html" style="display:block;width:100%;padding:14px;background:#fff;color:#757575;border:2px solid #E0E0E0;border-radius:12px;font-size:1.2rem;font-weight:700;text-align:center;text-decoration:none;box-sizing:border-box;">🏠 Regresar al inicio</a>
   </div>
+
+  <h3 style="font-size:1.15rem;font-weight:700;margin:32px 0 14px;">📎 Material extra</h3>
+  <div class="res">
+    <ul class="rl">
+      <li><div class="ri" style="background:#FCE4EC;">🏆</div><div><span>Certificado de participación</span><br><small id="cert-note" style="color:#757575;">Completa la evaluación para desbloquearlo</small></div><button class="bdl" id="btn-cert" style="background:#E0E0E0;color:#616161;">🔒 Bloqueado</button></li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- VIDEOS COMPLEMENTARIOS -->
+  <!-- Para agregar más videos: copia un bloque .vid-card y cambia   -->
+  <!-- el ID de YouTube, el título y la descripción                  -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:28px;overflow:hidden;">
+    <!-- Encabezado colapsable -->
+    <div id="comp-header" onclick="toggleComp()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:1.5rem;">🎬</span>
+        <div>
+          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);">Videos Complementarios</div>
+          <div style="font-size:1.05rem;color:#757575;">Contenido adicional sobre Inteligencia Artificial</div>
+        </div>
+      </div>
+      <span id="comp-arrow" style="font-size:1.2rem;color:var(--color-primario);transition:transform .3s;">▼</span>
+    </div>
+
+    <!-- Lista de videos (colapsable) -->
+    <div id="comp-lista" style="display:none;padding:16px 24px;border-top:1px solid #E0E0E0;">
+
+      <!-- ── VIDEO 1 ── -->
+      <div class="vid-card" style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--color-neutro-claro);">
+        <div style="flex-shrink:0;width:120px;height:68px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;" onclick="abrirVideo('9-W1VbQNt5Y')">
+          <span style="font-size:1.8rem;">▶</span>
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:4px;">El TeledIArio del Futuro — Desafío de la Inteligencia Artificial</div>
+          <div style="font-size:1.05rem;color:#757575;margin-bottom:8px;">📺 RTVE — Televisión Española · Especial informativo</div>
+          <div style="font-size:1.05rem;color:#555;line-height:1.5;margin-bottom:10px;">Cómo se ha desarrollado la IA, sus características y los riesgos del futuro. Un especial producido por TVE bajo la dirección de Pepa Bueno.</div>
+          <button onclick="abrirVideo('9-W1VbQNt5Y')" style="background:var(--color-primario);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:1.05rem;font-weight:700;cursor:pointer;">▶ Ver en YouTube</button>
+        </div>
+      </div>
+      <!-- ── FIN VIDEO 1 ── -->
+
+      <!-- ── AQUÍ PUEDES AGREGAR MÁS VIDEOS ── -->
+      <!-- Copia el bloque de arriba desde <div class="vid-card"> -->
+      <!-- hasta <!-- FIN VIDEO --> y cambia el ID de YouTube,     -->
+      <!-- el título, el canal y la descripción                     -->
+
+      <div style="text-align:center;padding:16px 0 4px;color:#757575;font-size:1.05rem;">
+        🔜 Próximamente más videos sobre IA
+      </div>
+
+    </div>
+  </div>
+
 
   <div class="footer-social-bar">
   <button type="button" onclick="CookieConsent.showPreferences()" aria-label="Cambiar mis preferencias de cookies" style="background:none;border:none;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 10px;">🍪 Cookies</button>
@@ -581,6 +611,7 @@ function mostrarNotaYOpinion() {
 // certificado real con el nombre por defecto "Alumno" y sin correo.
 function restaurarExamenAprobadoSinCert() {
   certOK = true;
+  pintarPasos();
   document.getElementById('pf').style.width = '100%';
   document.getElementById('pl').textContent = 'Progreso: 100% — Evaluación aprobada, falta tu certificado';
   document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
@@ -595,6 +626,8 @@ function restaurarExamenAprobadoSinCert() {
 }
 function restaurarEstadoCompletadoModulo1(nRestore, fCert, certId) {
   certOK = true;
+  localStorage.setItem('modulo1_completado', '1');
+  pintarPasos();
   document.getElementById('pf').style.width = '100%';
   document.getElementById('pl').textContent = 'Progreso: 100% — ¡Módulo completado! ✅';
   document.getElementById('btn-eval').textContent = '✅ Evaluación ya aprobada';
@@ -644,9 +677,12 @@ function restaurarEstadoCompletadoModulo1(nRestore, fCert, certId) {
 
 setTimeout(function() {
   if (localStorage.getItem('modulo1_completado') || localStorage.getItem('modulo1_examen_aprobado')) { return; }
-  document.getElementById('pf').style.width = '15%';
-  document.getElementById('pl').textContent = 'Progreso: 15% — Elige tu video';
+  if (pasoHecho(2)) { ponerProgreso(60, 'Guía completada ✓'); }
+  else if (pasoHecho(1)) { ponerProgreso(40, 'Video terminado ✓'); }
+  else { ponerProgreso(15, 'Empieza por el video'); }
 }, 400);
+pintarPasos();
+if (pasoHecho(1)) { document.getElementById('saltar-video').style.display = 'none'; }
 
 // Video
 var ytTag = document.createElement('script');
@@ -664,6 +700,7 @@ function onYouTubeIframeAPIReady() {
           document.getElementById('pf').style.width='30%';
           document.getElementById('pl').textContent='Progreso: 30% — Video en reproducción ✓';
         }
+        if (event.data === YT.PlayerState.ENDED) { marcarVideoVisto(); }
       }
     }
   });
@@ -673,8 +710,7 @@ function onYouTubeIframeAPIReady() {
 document.getElementById('btn-eval').addEventListener('click', function() {
   document.getElementById('ev').style.display='block';
   this.style.display='none';
-  document.getElementById('pf').style.width='60%';
-  document.getElementById('pl').textContent='Progreso: 60% — Evaluación en curso';
+  ponerProgreso(75, 'Evaluación en curso');
   document.getElementById('ev').scrollIntoView({behavior:'smooth',block:'start'});
 });
 
@@ -711,6 +747,7 @@ document.getElementById('btn-env').addEventListener('click', function() {
     document.getElementById('btn-cert').style.color='var(--color-primario)';
     document.getElementById('btn-cert').onclick=verCert;
     document.getElementById('cert-note').textContent='¡Desbloqueado!';
+    pintarPasos();
   }else{
     rs.innerHTML='<div style="font-size:3rem;margin-bottom:12px;">📖</div><h3 style="font-size:1.3rem;font-weight:800;color:var(--color-error);margin-bottom:8px;">Necesitas 5. Tuviste '+c+'.</h3><p style="color:#555;margin-bottom:16px;">Revisa el video e intenta de nuevo.</p><button onclick="reiniciar()" style="background:var(--color-primario);color:#fff;border:none;padding:14px 28px;border-radius:12px;font-size:1.15rem;font-weight:700;cursor:pointer;">🔄 Intentar de nuevo</button>';
   }
@@ -846,6 +883,7 @@ function verCert() {
 // correo de aviso después de esto en vez de dispararlo en paralelo).
 function mostrarCertificadoReal() {
   localStorage.setItem('modulo1_completado', '1');
+  pintarPasos();
   var n=sessionStorage.getItem('alumno_nombre')||'Alumno';
   var f=new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
   document.getElementById('cn').textContent=n;
@@ -927,6 +965,64 @@ function toggleComp() {
   lista.style.display = abierto ? 'none' : 'block';
   arrow.style.transform = abierto ? 'rotate(0deg)' : 'rotate(180deg)';
 }
+// ── RECORRIDO DE 3 PASOS ──────────────────────────────────────────────────────
+// Video → Guía → Evaluación. Solo orienta: nada bloquea saltarse un paso.
+// Pasos 1 y 2 se recuerdan en localStorage (modulo1_paso_video/_guia); el 3 se
+// da por hecho con las banderas que ya existían del examen/certificado.
+function pasoHecho(n) {
+  // Quien ya terminó el módulo (incluso antes de existir este recorrido) ve los 3 pasos completos.
+  if (localStorage.getItem('modulo1_completado')) return true;
+  if (n === 1) return localStorage.getItem('modulo1_paso_video') === '1';
+  if (n === 2) return localStorage.getItem('modulo1_paso_guia') === '1';
+  return !!(localStorage.getItem('modulo1_completado') || localStorage.getItem('modulo1_examen_aprobado'));
+}
+function pintarPasos() {
+  var activoMarcado = false;
+  for (var n = 1; n <= 3; n++) {
+    var li = document.getElementById('paso-ind-' + n);
+    var a = li.querySelector('a');
+    li.classList.remove('hecho', 'activo');
+    a.removeAttribute('aria-current');
+    if (pasoHecho(n)) {
+      li.classList.add('hecho');
+      li.querySelector('.paso-num').textContent = '✓';
+    } else {
+      li.querySelector('.paso-num').textContent = n;
+      if (!activoMarcado) { li.classList.add('activo'); a.setAttribute('aria-current', 'step'); activoMarcado = true; }
+    }
+  }
+  // "Continuar al Módulo 2" (botón grande) solo aparece al terminar el módulo,
+  // para que no compita con los pasos. Quien ya tiene acceso al Módulo 2 ve
+  // solo un enlace pequeño para saltar si ya conoce el tema.
+  var terminado = !!localStorage.getItem('modulo1_completado');
+  var tieneAcceso = !!(localStorage.getItem('acceso_plan') || localStorage.getItem('acceso_modulo2'));
+  document.getElementById('btn-mod2').style.display = terminado ? 'block' : 'none';
+  document.getElementById('saltar-mod2').style.display = (!terminado && tieneAcceso) ? 'block' : 'none';
+}
+function ponerProgreso(pct, texto) {
+  if (pasoHecho(3)) return; // no pisar el 100% del examen ya aprobado
+  document.getElementById('pf').style.width = pct + '%';
+  document.getElementById('pl').textContent = 'Progreso: ' + pct + '% — ' + texto;
+}
+function marcarVideoVisto() {
+  localStorage.setItem('modulo1_paso_video', '1');
+  document.getElementById('fin-video').style.display = 'block';
+  document.getElementById('saltar-video').style.display = 'none';
+  if (!pasoHecho(2)) ponerProgreso(40, 'Video terminado ✓');
+  pintarPasos();
+}
+function irAPasoGuia() {
+  if (document.getElementById('guia-lista').style.display === 'none') toggleGuia();
+  document.getElementById('paso-guia').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function irAPasoEval() {
+  localStorage.setItem('modulo1_paso_guia', '1');
+  ponerProgreso(60, 'Guía completada ✓');
+  pintarPasos();
+  var be = document.getElementById('btn-eval');
+  if (!be.disabled && be.style.display !== 'none') { be.click(); }
+  else { document.getElementById('paso-eval').scrollIntoView({behavior:'smooth', block:'start'}); }
+}
 function toggleGuia() {
   var lista = document.getElementById('guia-lista');
   var arrow = document.getElementById('guia-arrow');
@@ -934,6 +1030,7 @@ function toggleGuia() {
   document.getElementById('guia-header').setAttribute('aria-expanded', abierto ? 'false' : 'true');
   lista.style.display = abierto ? 'none' : 'block';
   arrow.style.transform = abierto ? 'rotate(0deg)' : 'rotate(180deg)';
+  document.getElementById('guia-accion').textContent = abierto ? 'Toca aquí para abrir la guía' : 'Toca aquí para cerrar la guía';
   if (!abierto) { lista.scrollIntoView({behavior:'smooth',block:'start'}); }
 }
 
