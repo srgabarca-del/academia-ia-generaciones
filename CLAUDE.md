@@ -966,3 +966,4 @@ PLANTILLA para nueva entrada de historial:
 - 💬 Se decidió no reactivar claude-mem (credenciales vencidas): CLAUDE.md es suficiente. Queda propuesta una tarea aparte para resumir el historial de este archivo, a iniciar cuando termine lo de Tips (para no editar CLAUDE.md desde dos sesiones a la vez)
 - 📁 Archivos modificados: Academia_AI.html, sitemap.xml, CLAUDE.md
 - 📁 Archivos nuevos: tips.html, tips/index.html, tips-img/ (29 WebP)
+- 📌 **Redes sociales (dato operativo del usuario):** las publicaciones de Instagram se programan con **Metricool** y las de Facebook con **Meta Business Suite**. Calendario: reel lunes, carrusel miércoles, post viernes. Los reels se suben además como Shorts a YouTube (@academia.ia.generaciones). Esta sesión tiene herramientas de Metricool disponibles (ver publicaciones programadas, analíticas), útiles para detectar tips nuevos que agregar a `tips.html`
