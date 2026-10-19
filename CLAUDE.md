@@ -185,6 +185,7 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 ---
 
 ## 🔧 Pendientes activos
+- [ ] **Miércoles 21/10, 10:00: mostrar el carrusel de estafas en `tips.html`** — su tarjeta está comentada entre `<!-- CARRUSEL-ESTAFAS` y `FIN CARRUSEL-ESTAFAS -->` (§ Seguridad); quitar esas dos líneas, commit y push. Imágenes ya en `tips-img/estafas-1..7.webp`
 - [ ] **Primer depósito de Stripe:** confirmar que llegó a la cuenta bancaria (depósitos semanales). El usuario quería verlo antes de anunciar el sitio
 - [ ] **Google Search Console:** validación de "Duplicada sin canónica" iniciada el 20/8/26 — confirmar que se resolvió (NT 103)
 - [ ] **Medir el recorrido de 3 pasos:** revisar `embudo_modulo1` en Firestore (dividir `certificado` / `entrada` por día) para ver si mejora la finalización del M1
@@ -225,4 +226,4 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 - **27/9–12/10 (s57-58):** Instagram en el footer; showreel de 30 s (fuera del repo); revisión de Analytics; UTM conservados en `index.html`; enlaces cortos por canal
 - **14/10 (s59):** `tips.html` con Shorts y carruseles; recorrido de 3 pasos en los 6 módulos; contador `embudo_modulo1`; canal de YouTube configurado; Facebook/YouTube en el footer; `/yt` y `/lectura`
 - **15/10 (s59, cont.):** CLAUDE.md condensado; detalle movido a `docs/HISTORIAL.md`
-- **16-17/10 (s60):** reel semana 7 hecho con HyperFrames (fuera del repo, `Videos Academia\Reel Sem 7`); tarjetas del reel y del carrusel de estafas agregadas a `tips.html` (publicadas el 19/10)
+- **16-17/10 (s60):** reel semana 7 hecho con HyperFrames (fuera del repo, `Videos Academia\Reel Sem 7`); tarjetas del reel y del carrusel de estafas agregadas a `tips.html` (reel publicado el 19/10; carrusel oculto hasta el 21/10)
