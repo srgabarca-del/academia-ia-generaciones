@@ -180,12 +180,11 @@ Fuera del repo (no subir): `Caracteristicas_Legales_Academia_IA.docx`, `Logo cur
 Herramientas enseñadas (grid de `Academia_AI.html`): ChatGPT, Gemini, Copilot, Meta AI, Canva, Google Docs, YouTube.
 
 ### Tips para ti (NT 106)
-Shorts conectados: cómo abrir ChatGPT `RRMU0CLVfnU`, WhatsApp cumpleaños `mnx2pCt-rQc`, chilaquiles `Co6YnTVuWr0`, primera imagen `t1sESUgXRx8`, mensaje falso `yxBO0xeiuUs`. Medios por atributos `data-yt="ID"` (iframe youtube-nocookie solo al tocar ▶) y `data-imgs="tips-img/…webp,…"`. Para agregar tips nuevos, seguir el comentario HTML de instrucciones dentro de `tips.html`.
+Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz creada con IA"), cómo abrir ChatGPT `RRMU0CLVfnU`, WhatsApp cumpleaños `mnx2pCt-rQc`, chilaquiles `Co6YnTVuWr0`, primera imagen `t1sESUgXRx8`, mensaje falso `yxBO0xeiuUs`. Medios por atributos `data-yt="ID"` (iframe youtube-nocookie solo al tocar ▶) y `data-imgs="tips-img/…webp,…"`. Para agregar tips nuevos, seguir el comentario HTML de instrucciones dentro de `tips.html`.
 
 ---
 
 ## 🔧 Pendientes activos
-- [ ] **Lunes 19/10: subir tips de la semana 7** (listos en `tips.html` § Seguridad, sin commit): reel "3 señales de una estafa" (Short `02iAbCZ7Fcw`, programado 19/10 10:00, etiqueta "🎙️ Voz creada con IA") y carrusel "Cómo protegerte de estafas con IA" (`tips-img/estafas-1..7.webp`, IG 21/10 10:00). Tras publicarse el Short, comprobar que su miniatura carga (mientras es privado se ve gris)
 - [ ] **Primer depósito de Stripe:** confirmar que llegó a la cuenta bancaria (depósitos semanales). El usuario quería verlo antes de anunciar el sitio
 - [ ] **Google Search Console:** validación de "Duplicada sin canónica" iniciada el 20/8/26 — confirmar que se resolvió (NT 103)
 - [ ] **Medir el recorrido de 3 pasos:** revisar `embudo_modulo1` en Firestore (dividir `certificado` / `entrada` por día) para ver si mejora la finalización del M1
@@ -226,4 +225,4 @@ Shorts conectados: cómo abrir ChatGPT `RRMU0CLVfnU`, WhatsApp cumpleaños `mnx2
 - **27/9–12/10 (s57-58):** Instagram en el footer; showreel de 30 s (fuera del repo); revisión de Analytics; UTM conservados en `index.html`; enlaces cortos por canal
 - **14/10 (s59):** `tips.html` con Shorts y carruseles; recorrido de 3 pasos en los 6 módulos; contador `embudo_modulo1`; canal de YouTube configurado; Facebook/YouTube en el footer; `/yt` y `/lectura`
 - **15/10 (s59, cont.):** CLAUDE.md condensado; detalle movido a `docs/HISTORIAL.md`
-- **16-17/10 (s60):** reel semana 7 hecho con HyperFrames (fuera del repo, `Videos Academia\Reel Sem 7`); tarjetas del reel y del carrusel de estafas agregadas a `tips.html` (sin publicar, se suben el 19/10)
+- **16-17/10 (s60):** reel semana 7 hecho con HyperFrames (fuera del repo, `Videos Academia\Reel Sem 7`); tarjetas del reel y del carrusel de estafas agregadas a `tips.html` (publicadas el 19/10)
