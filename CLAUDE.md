@@ -19,7 +19,7 @@
 
 ## 👑 Emails VIP (acceso completo sin pago)
 > La lista vive en la colección Firestore `vip_users` (un doc por correo en minúsculas, campo `vip:true`), **no** en el código (NT 54). Para agregar/quitar: el usuario lo hace en Firebase Console (el cliente no puede escribir ahí). Esta lista es solo referencia.
-- crisjus@hotmail.com · srg.abarca@gmail.com · abarcadabra@gmail.com · mayca.ar@gmail.com · paula.abarca.rodriguez@gmail.com · gelaabarca@gmail.com · barbosamx@gmail.com · elenaatg2@gmail.com · sciotaracely@gmail.com · alsesa56@hotmail.com · swrondito@gmail.com · patylascurain@gmail.com
+- crisjus@hotmail.com · srg.abarca@gmail.com · abarcadabra@gmail.com · mayca.ar@gmail.com · paula.abarca.rodriguez@gmail.com · gelaabarca@gmail.com · barbosamx@gmail.com · elenaatg2@gmail.com · sciotaracely@gmail.com · alsesa56@hotmail.com · swrondito@gmail.com · patylascurain@gmail.com · anita_montana5@hotmail.com
 
 ---
 
@@ -227,3 +227,4 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 - **14/10 (s59):** `tips.html` con Shorts y carruseles; recorrido de 3 pasos en los 6 módulos; contador `embudo_modulo1`; canal de YouTube configurado; Facebook/YouTube en el footer; `/yt` y `/lectura`
 - **15/10 (s59, cont.):** CLAUDE.md condensado; detalle movido a `docs/HISTORIAL.md`
 - **16-17/10 (s60):** reel semana 7 hecho con HyperFrames (fuera del repo, `Videos Academia\Reel Sem 7`); tarjetas del reel y del carrusel de estafas agregadas a `tips.html` (reel publicado el 19/10; carrusel oculto hasta el 21/10)
+- **20/10 (s61):** VIP nuevo: anita_montana5@hotmail.com (ya dado de alta en Firestore `vip_users` por el usuario)
