@@ -192,7 +192,7 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 - [ ] **Aviso de Privacidad 5.2** menciona "progreso dentro del curso"; el sitio solo guarda señales binarias. Decidir con el usuario si se ajusta (NT 85)
 - [ ] **Limpieza en Firestore (cuando el usuario quiera, desde la Consola):** certificados de prueba ("Alumno", "María de Prueba", "María Prueba González"), ~8 docs de prueba en `mail`, doc `prueba` en `embudo_modulo1`
 - [ ] Baja prioridad: pasar los hex de las guías en Firestore a la paleta unificada (NT 65)
-- ⏭️ **Siguiente tema acordado:** video de bienvenida del curso
+- Video de bienvenida del curso: descartado por ahora (decisión del usuario, 21/10)
 - Ideas discutidas, no decididas: pasar todo a gratis con donaciones; contador de alumnos en la página de ventas (pospuesto, un número chico resta credibilidad)
 
 ---
