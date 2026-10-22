@@ -185,6 +185,7 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 ---
 
 ## 🔧 Pendientes activos
+- [ ] **Publicar el 23/10 la tarjeta "¿Ya tienes una palabra clave con tu familia?" en `tips.html`** (post semana 7, sale en Instagram/Facebook el 23/10 a las 10:00). Ya está hecha **solo en esta computadora, sin subir**: cambio en `tips.html` (sección Seguridad, después del carrusel de estafas) + `tips-img/palabra-clave-1.webp`. El usuario avisa ese día para hacer commit y push
 - [ ] **Primer depósito de Stripe:** confirmar que llegó a la cuenta bancaria (depósitos semanales). El usuario quería verlo antes de anunciar el sitio
 - [ ] **Google Search Console:** validación de "Duplicada sin canónica" iniciada el 20/8/26 — confirmar que se resolvió (NT 103)
 - [ ] **Medir el recorrido de 3 pasos:** revisar `embudo_modulo1` en Firestore (dividir `certificado` / `entrada` por día) para ver si mejora la finalización del M1
