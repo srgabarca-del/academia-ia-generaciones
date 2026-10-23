@@ -207,7 +207,7 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 - **GitHub Pages atorado** (`Deployment failed` / Queued): esperar a githubstatus.com y forzar un commit nuevo (`git commit --allow-empty`); cancelar el run no funciona
 - Esta máquina no tiene Python, pandoc ni LibreOffice. Sí: Node, `npx sharp-cli` (imágenes), FFmpeg (instalado en sesión 57), `pdftotext` de Git Bash
 - Crédito de prueba de Google Cloud vence 19/10/26; después sigue en Blaze cobrando solo lo que exceda las cuotas gratis. Alerta de presupuesto: $100 MXN/mes (50/90/100%)
-- `samuelcejamolina@gmail.com` es una cuenta del propio usuario (pruebas): no contarla como alumno ni como compra real al revisar Auth/`accesos`
+- `samuelcejamolina@gmail.com` y `dobleuconstrucciones@gmail.com` son cuentas del propio usuario (pruebas; sus compras del M6 del 3/8 fueron las pruebas de pago real): no contarla como alumno ni como compra real al revisar Auth/`accesos`
 - YouTube: el número del usuario ya no verifica canales nuevos (ver memoria `canales-youtube-usuario`)
 
 ---
@@ -229,5 +229,5 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 - **16-17/10 (s60):** reel semana 7 hecho con HyperFrames (fuera del repo, `Videos Academia\Reel Sem 7`); tarjetas del reel y del carrusel de estafas agregadas a `tips.html` (reel publicado el 19/10; carrusel publicado el 21/10)
 - **22/10 (s62):** reel semana 8 "El nuevo pincel de Elena" (cuento de Gemini Storybook del usuario, adelanto del M5) hecho con HyperFrames en `Videos Academia\Reel Sem 8`; ilustraciones sueltas en `Carrusel Instagram\Reel Sem 8\ilustraciones`
 - **20/10 (s61):** VIP nuevo: anita_montana5@hotmail.com (ya dado de alta en Firestore `vip_users` por el usuario)
-- **23/10 (s64):** revisión de números para la decisión gratis+donación: 28 días ≈40 sesiones en GA, Search Console 5 clics/82 impresiones en 2+ meses ("Duplicada sin canónica" ya validada como Correcto), embudo M1 sin registros desde el 18/10, sin compras nuevas desde el 3/8. Decisión pospuesta: primero más contenido en redes. Metricool: IG ~15 seguidores, alcance medio ~10 por post; el único que salió de seguidores fue el reel chilaquiles (16/9, 160 alcance); FB 1-8 por post
+- **23/10 (s64):** revisión de números para la decisión gratis+donación: 28 días ≈40 sesiones en GA, Search Console 5 clics/82 impresiones en 2+ meses ("Duplicada sin canónica" ya validada como Correcto), embudo M1 sin registros desde el 18/10, ninguna compra de alumnos reales (las 2 de `accesos` son del usuario). Decisión pospuesta: primero más contenido en redes. Metricool: IG ~15 seguidores, alcance medio ~10 por post; el único que salió de seguidores fue el reel chilaquiles (16/9, 160 alcance); FB 1-8 por post
 - **23/10 (s63):** enlace "💡 Ver tips gratis" del hero pasado a botón con contorno amarillo (`.btn-tips`, ancho completo en móvil); publicada la tarjeta "palabra clave" (post semana 7) en `tips.html`
