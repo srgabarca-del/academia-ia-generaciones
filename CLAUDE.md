@@ -185,7 +185,7 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 ---
 
 ## 🔧 Pendientes activos
-- [ ] **Publicar el 23/10 la tarjeta "¿Ya tienes una palabra clave con tu familia?" en `tips.html`** (post semana 7, sale en Instagram/Facebook el 23/10 a las 10:00). Ya está hecha **solo en esta computadora, sin subir**: cambio en `tips.html` (sección Seguridad, después del carrusel de estafas) + `tips-img/palabra-clave-1.webp`. El usuario avisa ese día para hacer commit y push
+- [ ] **Semana 8 en `tips.html`** (sección 🎨 Crear con IA): las 3 tarjetas ya están subidas, ocultas en comentarios `<!-- PUBLICAR dd/10 … FIN dd/10 -->`; sus imágenes (`cuento-1..7.webp`, `dia-muertos-1.webp`) siguen **sin subir, solo en la PC donde se hicieron** — agregarlas al commit de su fecha. Ya programados en IG/FB: reel **lunes 26/10**, carrusel **miércoles 28/10** (`tips-img/cuento-1..7.webp`), post Día de Muertos **viernes 30/10** (`tips-img/dia-muertos-1.webp`). En cada fecha, cuando el usuario avise: quitar las dos líneas del comentario de esa tarjeta, commit y push. El reel ya tiene su Short `gZNwctdYVWQ` (programado en YouTube para el 26/10). No decir "Storybook" en lo público: el nombre/atajo se reserva para el M5 (decisión del usuario, 22/10)
 - [ ] **Primer depósito de Stripe:** confirmar que llegó a la cuenta bancaria (depósitos semanales). El usuario quería verlo antes de anunciar el sitio
 - [ ] **Google Search Console:** validación de "Duplicada sin canónica" iniciada el 20/8/26 — confirmar que se resolvió (NT 103)
 - [ ] **Medir el recorrido de 3 pasos:** revisar `embudo_modulo1` en Firestore (dividir `certificado` / `entrada` por día) para ver si mejora la finalización del M1
@@ -227,4 +227,6 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 - **14/10 (s59):** `tips.html` con Shorts y carruseles; recorrido de 3 pasos en los 6 módulos; contador `embudo_modulo1`; canal de YouTube configurado; Facebook/YouTube en el footer; `/yt` y `/lectura`
 - **15/10 (s59, cont.):** CLAUDE.md condensado; detalle movido a `docs/HISTORIAL.md`
 - **16-17/10 (s60):** reel semana 7 hecho con HyperFrames (fuera del repo, `Videos Academia\Reel Sem 7`); tarjetas del reel y del carrusel de estafas agregadas a `tips.html` (reel publicado el 19/10; carrusel publicado el 21/10)
+- **22/10 (s62):** reel semana 8 "El nuevo pincel de Elena" (cuento de Gemini Storybook del usuario, adelanto del M5) hecho con HyperFrames en `Videos Academia\Reel Sem 8`; ilustraciones sueltas en `Carrusel Instagram\Reel Sem 8\ilustraciones`
 - **20/10 (s61):** VIP nuevo: anita_montana5@hotmail.com (ya dado de alta en Firestore `vip_users` por el usuario)
+- **23/10 (s63):** enlace "💡 Ver tips gratis" del hero pasado a botón con contorno amarillo (`.btn-tips`, ancho completo en móvil); publicada la tarjeta "palabra clave" (post semana 7) en `tips.html`
