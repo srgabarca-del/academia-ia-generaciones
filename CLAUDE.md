@@ -100,7 +100,7 @@ Fuera del repo (no subir): `Caracteristicas_Legales_Academia_IA.docx`, `Logo cur
 
 ### Medición
 - Firebase Analytics `G-FJR421N496`, solo con consentimiento (CookieConsent v3.1.0, `localStorage`, 182 días). Eventos siempre vía `logEventoAnalytics()` que revisa el consentimiento (NT 41, 76)
-- Contador propio sin cookies: `embudo_modulo1` (NT 108). Desde localhost escribe en el doc `prueba`
+- Contador propio sin cookies: `embudo_modulo1` (NT 108), pasos `entrada`, `video_terminado`, `primera_conversacion` (primer "Copiar" de la Actividad 1, desde sesión 65), `guia_terminada`, `evaluacion_abierta`, `aprobado`, `certificado`. Desde localhost escribe en el doc `prueba`
 - Enlaces cortos con UTM (sesión 58): `/ig` instagram·bio, `/fb` facebook·pagina, `/tiktok` tiktok·bio, `/wa` whatsapp·grupos, `/invitacion` whatsapp·directo, `/yt` youtube·academia, `/lectura` youtube·prolalectura (canal personal del usuario), `/tips` → tips.html. Formato largo: `https://iageneraciones.com/?utm_source=…&utm_medium=social|email&utm_campaign=…`. Ver en GA → Adquisición de tráfico
 - Google Search Console verificado (DNS) y `sitemap.xml` enviado (NT 97)
 
@@ -160,7 +160,7 @@ Fuera del repo (no subir): `Caracteristicas_Legales_Academia_IA.docx`, `Logo cur
 ### Respuestas correctas (7 preguntas, mínimo 5 en todos)
 | Módulo | Respuestas | Dónde vive |
 |--------|-----------|-----------|
-| 1 | q1:A, q2:D, q3:C, q4:B, q5:D, q6:A, q7:C (reordenadas en sesión 51, NT 96) | `modulo1.html` |
+| 1 | q1:A, q2:C, q3:D, q4:B, q5:A, q6:C, q7:C (renovado en sesión 65) | `modulo1.html` |
 | 2 | q1:C, q2:B, q3:D, q4:A, q5:C, q6:B, q7:A (renovado en sesión 65) | Firestore `examenes_respuestas` |
 | 3 | q1:C, q2:A, q3:B, q4:D, q5:B, q6:C, q7:D (renovado en sesión 65) | Firestore |
 | 4 | q1:C, q2:A, q3:D, q4:B, q5:A, q6:D, q7:B (renovado en sesión 65) | Firestore |
@@ -186,11 +186,11 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 
 ## 🔧 Pendientes activos
 - [ ] **Semana 8 en `tips.html`** (sección 🎨 Crear con IA): las 3 tarjetas ya están subidas, ocultas en comentarios `<!-- PUBLICAR dd/10 … FIN dd/10 -->`; sus imágenes (`cuento-1..7.webp`, `dia-muertos-1.webp`) siguen **sin subir, solo en la PC donde se hicieron** — agregarlas al commit de su fecha. Ya programados en IG/FB: reel **lunes 26/10 a las 10:00** (destaparlo solo después de confirmar que YouTube ya muestra el Short público), carrusel **miércoles 28/10** (`tips-img/cuento-1..7.webp`), post Día de Muertos **viernes 30/10** (`tips-img/dia-muertos-1.webp`). En cada fecha, cuando el usuario avise: quitar las dos líneas del comentario de esa tarjeta, commit y push. El reel ya tiene su Short `gZNwctdYVWQ` (programado en YouTube para el 26/10). No decir "Storybook" en lo público: el nombre/atajo se reserva para el M5 (decisión del usuario, 22/10)
-- [ ] **M1 más atractivo**, en otra sesión (es la puerta del embudo; está en `modulo1.html`, ir con calma y no rehacerlo todo)
+- [ ] **Video propio del M1 con HyperFrames** (idea aprobada en lo general, 24/10): explicador horizontal de 60–90 s "¿Qué es la IA?" en vez del video de terceros de ~5 min (donde más gente se va), que cierre con "Ahora pruébala tú: baja a la Actividad 1". Primero el guion para que el usuario lo revise; él lo sube a YouTube y se cambia el `videoId` en `modulo1.html`
+- [ ] **Medir el M1 renovado:** comparar en `embudo_modulo1` `entrada` → `primera_conversacion` → `certificado` en las próximas semanas
 - [ ] Decidir si se quita también "Duración: 45–60 min" del encabezado de `modulo4.html` (solo se quitó el tiempo del Paso 2)
 - [ ] **Reel semana 9:** idea "Lo que le preguntabas a tu nieto, pregúntaselo a la IA" (subtítulos de la tele, audífonos Bluetooth), adelanto del M4 renovado. No usar fragmentos del video del M4 (es de un canal de terceros). Guion pendiente
 - [ ] **Primer depósito de Stripe:** confirmar que llegó a la cuenta bancaria (depósitos semanales). El usuario quería verlo antes de anunciar el sitio
-- [ ] **Medir el recorrido de 3 pasos:** revisar `embudo_modulo1` en Firestore (dividir `certificado` / `entrada` por día) para ver si mejora la finalización del M1
 - [ ] **Comprobar avance para la Política de Reembolsos** (sin implementar): registrar eventos clave por correo en Firestore para revisar casos a mano (pendiente abierto en sesión 32)
 - [ ] **Aviso de Privacidad 5.2** menciona "progreso dentro del curso"; el sitio solo guarda señales binarias. Decidir con el usuario si se ajusta (NT 85)
 - [ ] **Limpieza en Firestore (cuando el usuario quiera, desde la Consola):** certificados de prueba ("Alumno", "María de Prueba", "María Prueba González"), ~8 docs de prueba en `mail`, doc `prueba` en `embudo_modulo1`
@@ -234,6 +234,7 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 - **20/10 (s61):** VIP nuevo: anita_montana5@hotmail.com (ya dado de alta en Firestore `vip_users` por el usuario)
 - **23/10 (s64):** revisión de números para la decisión gratis+donación: 28 días ≈40 sesiones en GA, Search Console 5 clics/82 impresiones en 2+ meses ("Duplicada sin canónica" ya validada como Correcto), embudo M1 sin registros desde el 18/10, ninguna compra de alumnos reales (las 2 de `accesos` son del usuario). Decisión pospuesta: primero más contenido en redes. Metricool: IG ~15 seguidores, alcance medio ~10 por post; el único que salió de seguidores fue el reel chilaquiles (16/9, 160 alcance); FB 1-8 por post
 - **24/10 (s65):** **M4 renovado** en Firestore: guía de 5 secciones (voz, foto, encargo, planear, salud/dinero con cuidado, lista "Lo logré") con campos `modulo4_n1..n15`, `modulo4_c1..c5` y `modulo4_p_identidad/intencion/instrucciones` (caja de Copiar), y examen de 7 casos prácticos con clave nueva; quitado el tiempo del Paso 2. Respaldo del M4 anterior en `D:\Documentos\Claude\Respaldo_M4_firestore_2026-10-24.json` (fuera del repo). Propuesta de M2/M3/M6 escrita, pendiente de decisiones
+- **24/10 (s65, cont.):** **M1 más atractivo** (`modulo1.html`): Actividad 1 "Tu primera plática con la IA" al inicio de la guía (3 preguntas con botón Copiar + respaldo `execCommand`, casilla con festejo), guía de ~17 campos a 5 opcionales + casillas (IDs nuevos `modulo1_n1..n5`, `modulo1_c1..c6`), recuadro "Hoy vas a lograr", sin tiempos, examen de casos de la vida diaria, tarjeta a `tips.html` en lugar del especial de RTVE, y corregido el comentario roto que mostraba "y cambia el ID de YouTube". Regla de Firestore desplegada con el paso nuevo `primera_conversacion`
 - **24/10 (s65, cont.):** **M5 renovado**: la guía ahora enseña Storybook paso a paso (antes no lo mencionaba aunque el video sí), con "El nuevo pincel de Elena" como ejemplo (`img-guias/m5-elena-portada.webp` y `m5-elena-pagina.webp`, públicas en el repo) y el aviso del usuario: al reabrir un cuento a veces no salen las ilustraciones hasta pedir "Vuelve a generar las ilustraciones". Actividad 2 = "La historia de mi familia"; examen nuevo. Respaldo en `D:\Documentos\Claude\Respaldo_modulo5_firestore_2026-10-24.json`. Con esto, los 5 módulos de pago quedaron revisados
 - **24/10 (s65, cont.):** arreglado Analytics en módulos 2-5 (faltaba el SDK `firebase-analytics-compat`; solo se medían Academia_AI, login, dashboard, M1 y M6)
 - **24/10 (s65, cont.):** **M2, M3 y M6 renovados** en Firestore según `D:\Documentos\Claude\Propuesta_M2_M3_M6.md`: M2 con sección de voz (como el video) y metáfora del pastel; M3 con recuadros "no son fotos reales"/"fotos de niños" y actividad de tarjeta (`modulo3_g14/g15`); M6 con los 4 hábitos del carrusel, Google Lens, 3 tarjetas de noticias (`modulo6_g12-14`) y casillas `g10/g11`. Se conservaron los IDs de campos existentes. Exámenes de casos prácticos con claves nuevas; sección 1 del M4 ya remite al M2. Tiempo del Paso 2 quitado en M2/M3/M6. Respaldos previos en `D:\Documentos\Claude\Respaldo_moduloN_firestore_2026-10-24b.json`
