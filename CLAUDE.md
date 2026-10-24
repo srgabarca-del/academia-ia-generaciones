@@ -161,11 +161,11 @@ Fuera del repo (no subir): `Caracteristicas_Legales_Academia_IA.docx`, `Logo cur
 | Módulo | Respuestas | Dónde vive |
 |--------|-----------|-----------|
 | 1 | q1:A, q2:D, q3:C, q4:B, q5:D, q6:A, q7:C (reordenadas en sesión 51, NT 96) | `modulo1.html` |
-| 2 | q1:C, q2:A, q3:D, q4:C, q5:A, q6:A, q7:A | Firestore `examenes_respuestas` |
-| 3 | q1:A, q2:C, q3:B, q4:D, q5:C, q6:B, q7:D | Firestore |
+| 2 | q1:C, q2:B, q3:D, q4:A, q5:C, q6:B, q7:A (renovado en sesión 65) | Firestore `examenes_respuestas` |
+| 3 | q1:C, q2:A, q3:B, q4:D, q5:B, q6:C, q7:D (renovado en sesión 65) | Firestore |
 | 4 | q1:C, q2:A, q3:D, q4:B, q5:A, q6:D, q7:B (renovado en sesión 65) | Firestore |
 | 5 | q1:C, q2:A, q3:D, q4:B, q5:C, q6:C, q7:D | Firestore |
-| 6 | q1:B, q2:D, q3:D, q4:A, q5:B, q6:B, q7:D | Firestore |
+| 6 | q1:B, q2:D, q3:A, q4:C, q5:B, q6:D, q7:B (renovado en sesión 65) | Firestore |
 
 ### Videos
 | Módulo | URL | Duración aprox. |
@@ -186,8 +186,9 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 
 ## 🔧 Pendientes activos
 - [ ] **Semana 8 en `tips.html`** (sección 🎨 Crear con IA): las 3 tarjetas ya están subidas, ocultas en comentarios `<!-- PUBLICAR dd/10 … FIN dd/10 -->`; sus imágenes (`cuento-1..7.webp`, `dia-muertos-1.webp`) siguen **sin subir, solo en la PC donde se hicieron** — agregarlas al commit de su fecha. Ya programados en IG/FB: reel **lunes 26/10 a las 10:00** (destaparlo solo después de confirmar que YouTube ya muestra el Short público), carrusel **miércoles 28/10** (`tips-img/cuento-1..7.webp`), post Día de Muertos **viernes 30/10** (`tips-img/dia-muertos-1.webp`). En cada fecha, cuando el usuario avise: quitar las dos líneas del comentario de esa tarjeta, commit y push. El reel ya tiene su Short `gZNwctdYVWQ` (programado en YouTube para el 26/10). No decir "Storybook" en lo público: el nombre/atajo se reserva para el M5 (decisión del usuario, 22/10)
-- [ ] **Renovar M2, M3 y M6** (propuesta del 24/10 en `D:\Documentos\Claude\Propuesta_M2_M3_M6.md`, **fuera del repo, solo en esta PC**): M2 = el video enseña la voz de ChatGPT y la guía no (agregar sección de voz, cambiar metáfora de Fórmula 1, examen nuevo); M3 = examen repetido/obvio, recuadros "no son fotos reales" y "fotos de niños"; M6 = sumar los 4 hábitos del carrusel de estafas, explicar Google Lens o quitar esa pregunta, examen nuevo. Faltan las 4 decisiones del final del archivo; orden sugerido M2 → M6 → M3, uno por uno con el mismo procedimiento que el M4. Si el M2 enseña la voz, ajustar la sección 1 del M4 para no repetirla
-- [ ] **M1 más atractivo**, en otra sesión después de M2/M3/M6 (es la puerta del embudo; está en `modulo1.html`, ir con calma y no rehacerlo todo)
+- [ ] **Analytics roto en módulos 2-5:** `cc_activarAnalytics()` llama `firebase.analytics()` pero esas páginas no cargan el SDK `firebase-analytics` (sí lo cargan Academia_AI, login, dashboard, modulo1 y modulo6) → error "firebase.analytics is not a function" al aceptar cookies y no se miden visitas a esos módulos. Arreglo: agregar el `<script>` del SDK como en modulo6.html (hallado en sesión 65)
+- [ ] **Revisar M5** con el mismo criterio que M2/M3/M4/M6 (es el único módulo de pago sin revisar)
+- [ ] **M1 más atractivo**, en otra sesión (es la puerta del embudo; está en `modulo1.html`, ir con calma y no rehacerlo todo)
 - [ ] Decidir si se quita también "Duración: 45–60 min" del encabezado de `modulo4.html` (solo se quitó el tiempo del Paso 2)
 - [ ] **Reel semana 9:** idea "Lo que le preguntabas a tu nieto, pregúntaselo a la IA" (subtítulos de la tele, audífonos Bluetooth), adelanto del M4 renovado. No usar fragmentos del video del M4 (es de un canal de terceros). Guion pendiente
 - [ ] **Primer depósito de Stripe:** confirmar que llegó a la cuenta bancaria (depósitos semanales). El usuario quería verlo antes de anunciar el sitio
@@ -235,4 +236,5 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 - **20/10 (s61):** VIP nuevo: anita_montana5@hotmail.com (ya dado de alta en Firestore `vip_users` por el usuario)
 - **23/10 (s64):** revisión de números para la decisión gratis+donación: 28 días ≈40 sesiones en GA, Search Console 5 clics/82 impresiones en 2+ meses ("Duplicada sin canónica" ya validada como Correcto), embudo M1 sin registros desde el 18/10, ninguna compra de alumnos reales (las 2 de `accesos` son del usuario). Decisión pospuesta: primero más contenido en redes. Metricool: IG ~15 seguidores, alcance medio ~10 por post; el único que salió de seguidores fue el reel chilaquiles (16/9, 160 alcance); FB 1-8 por post
 - **24/10 (s65):** **M4 renovado** en Firestore: guía de 5 secciones (voz, foto, encargo, planear, salud/dinero con cuidado, lista "Lo logré") con campos `modulo4_n1..n15`, `modulo4_c1..c5` y `modulo4_p_identidad/intencion/instrucciones` (caja de Copiar), y examen de 7 casos prácticos con clave nueva; quitado el tiempo del Paso 2. Respaldo del M4 anterior en `D:\Documentos\Claude\Respaldo_M4_firestore_2026-10-24.json` (fuera del repo). Propuesta de M2/M3/M6 escrita, pendiente de decisiones
+- **24/10 (s65, cont.):** **M2, M3 y M6 renovados** en Firestore según `D:\Documentos\Claude\Propuesta_M2_M3_M6.md`: M2 con sección de voz (como el video) y metáfora del pastel; M3 con recuadros "no son fotos reales"/"fotos de niños" y actividad de tarjeta (`modulo3_g14/g15`); M6 con los 4 hábitos del carrusel, Google Lens, 3 tarjetas de noticias (`modulo6_g12-14`) y casillas `g10/g11`. Se conservaron los IDs de campos existentes. Exámenes de casos prácticos con claves nuevas; sección 1 del M4 ya remite al M2. Tiempo del Paso 2 quitado en M2/M3/M6. Respaldos previos en `D:\Documentos\Claude\Respaldo_moduloN_firestore_2026-10-24b.json`
 - **23/10 (s63):** enlace "💡 Ver tips gratis" del hero pasado a botón con contorno amarillo (`.btn-tips`, ancho completo en móvil); publicada la tarjeta "palabra clave" (post semana 7) en `tips.html`
