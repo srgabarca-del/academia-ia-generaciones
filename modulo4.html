@@ -159,7 +159,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   </div>
   <p class="saltar-paso" id="saltar-video"><a href="#paso-guia" onclick="irAPasoGuia();return false;">¿Ya viste el video? Ir al Paso 2 ↓</a></p>
 
-  <h2 class="paso-titulo" id="paso-guia"><span>Paso 2</span> Practica con la guía <small>(unos 15–20 minutos)</small></h2>
+  <h2 class="paso-titulo" id="paso-guia"><span>Paso 2</span> Practica con la guía</h2>
   <p style="font-size:1.15rem;color:#424242;margin-bottom:14px;">Lee la explicación y completa las actividades aquí mismo. Tus respuestas se guardan solas.</p>
 
   <div id="guia-box" style="background:#fff;border-radius:14px;border:2px solid var(--color-primario);margin-bottom:24px;overflow:hidden;">
@@ -333,24 +333,24 @@ function activarAutoguardadoGuia() {
   });
 }
 
-// Combina las 3 respuestas de "Actividad práctica 1" (Identidad/Intención/
-// Instrucciones) en un solo prompt listo para copiar y pegar en la IA que
-// el alumno elija — antes tenía que armarlo él mismo a mano, y la guía no
-// explicaba qué hacer con las 3 respuestas por separado.
+// Combina las 3 respuestas de la "Actividad 3" (Identidad/Intención/
+// Instrucciones) en un solo encargo listo para copiar y pegar en la IA que
+// el alumno elija. (Sesión 65: la guía renovada usa IDs nuevos para que el
+// autoguardado de la guía anterior no se cuele en campos con otro sentido.)
 function activarPromptCompilado() {
-  var g1 = document.getElementById('modulo4_g1');
-  var g2 = document.getElementById('modulo4_g2');
-  var g3 = document.getElementById('modulo4_g3');
+  var g1 = document.getElementById('modulo4_p_identidad');
+  var g2 = document.getElementById('modulo4_p_intencion');
+  var g3 = document.getElementById('modulo4_p_instrucciones');
   var caja = document.getElementById('modulo4_prompt_compilado');
   var btnCopiar = document.getElementById('modulo4_copiar_prompt');
   if (!g1 || !g2 || !g3 || !caja || !btnCopiar) return;
   function actualizar() {
     var v1 = g1.value.trim(), v2 = g2.value.trim(), v3 = g3.value.trim();
     if (!v1 && !v2 && !v3) {
-      caja.textContent = 'Escribe los campos de arriba para armar tu prompt aquí.';
+      caja.textContent = 'Escribe los campos de arriba para armar tu encargo aquí.';
       return;
     }
-    caja.textContent = 'Actúa como ' + (v1 || '...') + '. Quiero aprender ' + (v2 || '...') + '. ' + (v3 || '...');
+    caja.textContent = 'Actúa como ' + (v1 || '...') + '. Quiero ' + (v2 || '...') + '. ' + (v3 || '...');
   }
   [g1, g2, g3].forEach(function(campo) { campo.addEventListener('input', actualizar); });
   actualizar();
