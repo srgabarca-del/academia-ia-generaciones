@@ -164,6 +164,8 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   <div class="vw">
     <div style="position:relative;width:100%;padding-top:56.25%;">
       <div id="yt-player" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>
+      <!-- Tapa el logo de YouTube de la esquina inferior derecha (mejor esfuerzo, NT 101) -->
+      <div style="position:absolute;bottom:0;right:0;width:90px;height:40px;z-index:5;cursor:default;" title=""></div>
     </div>
   </div>
   <p style="color:#555;font-size:1.2rem;font-weight:600;margin-bottom:24px;" id="vt">🎬 ¿Qué es la IA? — Video Animado</p>
@@ -670,7 +672,7 @@ var ytPlayer, ytProgresoMarcado = false;
 function onYouTubeIframeAPIReady() {
   ytPlayer = new YT.Player('yt-player', {
     videoId: 'k4DXSfIYGUo',
-    playerVars: { rel: 0 },
+    playerVars: { rel: 0, modestbranding: 1, fs: 0 },
     events: {
       onStateChange: function(event) {
         if (event.data === YT.PlayerState.PLAYING && !ytProgresoMarcado) {
