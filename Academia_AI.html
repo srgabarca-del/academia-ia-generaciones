@@ -304,7 +304,7 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
           <button onclick="window.location='modulo1.html'" style="background:var(--color-acento);color:var(--color-primario);border:none;padding:14px 26px;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">Ver el video completo — Sin registro</button>
         </div>
       </div>
-      <p style="text-align:center;color:#555;font-size:1rem;margin-bottom:20px;">👆 Un adelanto de 45 segundos — el video completo lo ves gratis en el Módulo 1, sin registrarte.</p>
+      <p style="text-align:center;color:#555;font-size:1rem;margin-bottom:20px;">👆 Un adelanto de 40 segundos — el video completo lo ves gratis en el Módulo 1, sin registrarte.</p>
       <script>
       (function() {
         var ytTag = document.createElement('script');
@@ -313,13 +313,13 @@ footer{background:var(--color-neutro-oscuro);padding:32px 24px;text-align:center
         var checkInterval;
         window.onYouTubeIframeAPIReady = function() {
           new YT.Player('video-adelanto-player', {
-            videoId: 'V-cZbZtjpeY',
+            videoId: 'k4DXSfIYGUo',
             playerVars: { rel: 0, modestbranding: 1, fs: 0 },
             events: {
               onStateChange: function(event) {
                 if (event.data === YT.PlayerState.PLAYING) {
                   checkInterval = setInterval(function() {
-                    if (event.target.getCurrentTime() >= 45) {
+                    if (event.target.getCurrentTime() >= 42) {
                       event.target.pauseVideo();
                       document.getElementById('video-adelanto-fin').style.display = 'flex';
                       clearInterval(checkInterval);
