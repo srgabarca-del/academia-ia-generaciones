@@ -398,6 +398,13 @@ function cargarContenidoModulo() {
   }
   return contenidoModuloPromise;
 }
+// Precarga: con sesión, pide la guía en segundo plano desde que carga la
+// página (sin mostrarla), mientras el alumno ve el video. Así la Cloud
+// Function ya despertó (arranque en frío de 3-8 s) y la guía aparece al
+// instante al abrirla. Si falla, se reintenta sola al tocar el botón.
+authReadyPromise.then(function() {
+  if (firebase.auth().currentUser) { cargarContenidoModulo().catch(function() {}); }
+});
 function mensajeErrorContenido(err) {
   if (err.code === 'functions/unauthenticated') { return '⚠️ Tu sesión expiró. <a href="login.html">Inicia sesión de nuevo</a> y vuelve a intentarlo.'; }
   if (err.code === 'functions/permission-denied') { return '⚠️ No tienes acceso a este módulo. <a href="Academia_AI.html#planes-pago">Ver planes de pago</a>.'; }

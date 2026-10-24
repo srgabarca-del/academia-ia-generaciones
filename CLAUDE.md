@@ -91,7 +91,7 @@ Fuera del repo (no subir): `Caracteristicas_Legales_Academia_IA.docx`, `Logo cur
 - Firebase Auth: correo/contraseña (mín. 10 caracteres, mayúscula y número, NT 38) y Google con `signInWithPopup` + `prompt:'select_account'` (redirect fallaba por extensiones del navegador, NT 40, 77)
 - `login.html` con sesión persistente: muestra aviso "Ya tienes una sesión activa como…" en vez de redirigir solo (NT 92)
 - Al iniciar sesión: `esVIP()` (async, Firestore) + `sincronizarAccesoComprado()` (de `accesos` a `localStorage`) + `sincronizarCuentaAcceso(email)` (borra acceso local si cambió la cuenta, NT 17)
-- Módulos 2-6: `authReadyPromise` arranca al cargar la página y se espera antes de llamar Cloud Functions (evita falso "sesión expirada", NT 62, 66). `cargarContenidoModulo()` cachea la Promise para guía y examen
+- Módulos 2-6: `authReadyPromise` arranca al cargar la página y se espera antes de llamar Cloud Functions (evita falso "sesión expirada", NT 62, 66). `cargarContenidoModulo()` cachea la Promise para guía y examen, y con sesión se **precarga** en segundo plano al cargar la página (oculta el arranque en frío de 3-8 s de la Cloud Function; si falla, se reintenta al abrir la guía). Alternativa descartada por costo: `minInstances: 1` (~USD 3-6/mes)
 - Registro gratuito ya no envía correo de verificación ni lo exige (NT 18, 96)
 
 ### Correo automático
