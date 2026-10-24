@@ -135,10 +135,18 @@ document.getElementById('nav-burger').addEventListener('click', function() {
 <div class="body" id="main">
   <span class="badge">🆓 MÓDULO 1 — GRATUITO</span>
   <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;color:var(--color-primario);margin-bottom:8px;">Descubriendo la Inteligencia Artificial</h1>
-  <p style="color:#555;font-size:1.2rem;margin-bottom:24px;">Duración: unos 30–45 min · Sin conocimientos previos · En español</p>
+  <p style="color:#555;font-size:1.2rem;margin-bottom:24px;">Gratis · Sin conocimientos previos · En español</p>
   <div style="background:linear-gradient(135deg,var(--color-primario),var(--color-secundario));border-radius:14px;padding:20px 24px;margin-bottom:24px;color:#fff;">
     <h2 style="font-size:1.05rem;font-weight:700;margin-bottom:4px;" id="saludo">¡Bienvenido/a a tu primer módulo! 🎉</h2>
     <p style="font-size:1.15rem;opacity:.85;">Tu recorrido tiene 3 pasos: mira el video, practica con la guía y presenta la evaluación para obtener tu certificado.</p>
+  </div>
+  <div style="background:#fff;border:2px solid var(--color-acento);border-radius:14px;padding:16px 20px;margin-bottom:24px;">
+    <p style="font-size:1.2rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:8px;">🎯 Hoy vas a lograr:</p>
+    <ul style="list-style:none;padding:0;font-size:1.2rem;color:#000000;line-height:1.9;">
+      <li>✅ Platicar por primera vez con una Inteligencia Artificial</li>
+      <li>✅ Descubrir dónde ya la usas sin saberlo</li>
+      <li>✅ Llevarte tu certificado gratis</li>
+    </ul>
   </div>
   <div class="pbr"><div class="pf" id="pf" style="background:var(--color-primario);"></div></div>
   <p style="font-size:1rem;color:#757575;margin-bottom:20px;" id="pl">Progreso: 0%</p>
@@ -151,7 +159,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
     <li id="paso-ind-3"><a href="#paso-eval"><span class="paso-num">3</span><span class="paso-txt">Evaluación y certificado</span></a></li>
   </ol>
 
-  <h2 class="paso-titulo" id="paso-video"><span>Paso 1</span> Ve el video <small>(unos 5 minutos)</small></h2>
+  <h2 class="paso-titulo" id="paso-video"><span>Paso 1</span> Ve el video</h2>
 
   <div class="vw">
     <div style="position:relative;width:100%;padding-top:56.25%;">
@@ -166,7 +174,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
   </div>
   <p class="saltar-paso" id="saltar-video"><a href="#paso-guia" onclick="irAPasoGuia();return false;">¿Ya viste el video? Ir al Paso 2 ↓</a></p>
 
-  <h2 class="paso-titulo" id="paso-guia"><span>Paso 2</span> Practica con la guía <small>(unos 10–15 minutos)</small></h2>
+  <h2 class="paso-titulo" id="paso-guia"><span>Paso 2</span> Practica con la guía</h2>
   <p style="font-size:1.15rem;color:#424242;margin-bottom:14px;">Lee la explicación y completa las actividades aquí mismo. Tus respuestas se guardan solas.</p>
 
   <!-- ══════════════════════════════════════════════════════════════ -->
@@ -186,104 +194,99 @@ document.getElementById('nav-burger').addEventListener('click', function() {
     </button>
 
     <div id="guia-lista" style="display:none;padding:24px;border-top:1px solid #E0E0E0;">
-      <h4 style="font-size:1.3rem;font-weight:700;color:var(--color-primario);margin-bottom:8px;">🤖 ¿Qué es la Inteligencia Artificial?</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:6px;">Una computadora que aprende a hacer cosas que antes solo hacían los humanos: hablar, escribir, dibujar y crear música. No duerme ni se cansa, puede leer millones de libros en segundos y responder al instante.</p>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">La IA aprende de los datos que le damos, igual que una persona aprende de la experiencia.</p>
+      <!-- ══ ACTIVIDAD 1 — PRIMERA PLÁTICA (sesión 65): el momento "¡sí pude!" va primero ══ -->
+      <div style="background:linear-gradient(135deg,#EDE7F6,#E3F2FD);border:2px solid var(--color-primario);border-radius:14px;padding:18px 20px;margin-bottom:24px;">
+        <h4 style="font-size:1.35rem;font-weight:800;color:var(--color-primario);margin-bottom:8px;">🎉 Actividad 1 — Tu primera plática con la IA</h4>
+        <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Antes de la teoría, vamos a probarla. En 3 minutos vas a escribirle a una Inteligencia Artificial de verdad.</p>
 
-      <h4 style="font-size:1.3rem;font-weight:700;color:var(--color-primario);margin-bottom:8px;">📱 La IA ya está en tu vida diaria</h4>
-      <ul style="font-size:1.2rem;color:#000000;line-height:1.9;margin-bottom:20px;padding-left:20px;">
-        <li><strong>YouTube</strong> — aprende qué te gusta y recomienda videos</li>
-        <li><strong>WhatsApp</strong> — corrige errores de escritura automáticamente</li>
-        <li><strong>Google Maps</strong> — calcula la mejor ruta en tiempo real</li>
-        <li><strong>Siri / Google Assistant</strong> — entiende tu voz y responde preguntas</li>
-        <li><strong>Cámara del celular</strong> — reconoce caras y mejora fotos al instante</li>
-      </ul>
+        <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:8px;"><strong>1. Elige dónde platicar</strong> (las tres son gratis):</p>
+        <ul style="font-size:1.15rem;color:#000000;line-height:1.7;margin:0 0 10px 24px;">
+          <li><strong>Meta AI en WhatsApp</strong> — ya la tienes: abre WhatsApp y toca el círculo azul y morado o busca "Meta AI" en tus chats.</li>
+          <li><strong>ChatGPT</strong> o <strong>Gemini</strong> — ábrelos con estos botones:</li>
+        </ul>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+          <a href="https://chatgpt.com" target="_blank" rel="noopener" style="display:inline-block;background:#fff;color:var(--color-primario);border:2px solid var(--color-primario);padding:10px 18px;border-radius:10px;font-size:1.1rem;font-weight:700;text-decoration:none;">Abrir ChatGPT ↗</a>
+          <a href="https://gemini.google.com" target="_blank" rel="noopener" style="display:inline-block;background:#fff;color:var(--color-primario);border:2px solid var(--color-primario);padding:10px 18px;border-radius:10px;font-size:1.1rem;font-weight:700;text-decoration:none;">Abrir Gemini ↗</a>
+        </div>
+
+        <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:8px;"><strong>2. Copia una de estas preguntas</strong> con el botón y pégala en el chat:</p>
+        <div class="m1-prompt" style="background:#fff;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+          <p style="font-size:1.15rem;color:#000000;line-height:1.6;margin-bottom:8px;">"Hola, es la primera vez que platico contigo. Explícame en palabras sencillas qué puedes hacer por mí."</p>
+          <button type="button" class="m1-copiar" style="background:var(--color-primario);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;">📋 Copiar</button>
+          <span class="m1-copiado" role="status" style="margin-left:8px;color:#2E7D32;font-weight:700;"></span>
+        </div>
+        <div class="m1-prompt" style="background:#fff;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+          <p style="font-size:1.15rem;color:#000000;line-height:1.6;margin-bottom:8px;">"Tengo huevo, jitomate, cebolla y tortillas. ¿Qué desayuno rico puedo hacer en 15 minutos?"</p>
+          <button type="button" class="m1-copiar" style="background:var(--color-primario);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;">📋 Copiar</button>
+          <span class="m1-copiado" role="status" style="margin-left:8px;color:#2E7D32;font-weight:700;"></span>
+        </div>
+        <div class="m1-prompt" style="background:#fff;border-radius:10px;padding:12px 14px;margin-bottom:16px;">
+          <p style="font-size:1.15rem;color:#000000;line-height:1.6;margin-bottom:8px;">"Escribe un mensaje cariñoso de buenos días para el grupo de WhatsApp de mi familia."</p>
+          <button type="button" class="m1-copiar" style="background:var(--color-primario);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;">📋 Copiar</button>
+          <span class="m1-copiado" role="status" style="margin-left:8px;color:#2E7D32;font-weight:700;"></span>
+        </div>
+
+        <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:10px;"><strong>3. Mira qué te contesta.</strong> También puedes escribirle con tus propias palabras.</p>
+        <label style="display:flex;align-items:center;gap:10px;font-size:1.2rem;color:#000000;margin-bottom:12px;cursor:pointer;"><input type="checkbox" id="modulo1_c1" style="width:24px;height:24px;flex-shrink:0;"> Ya le escribí y me contestó</label>
+        <div id="m1-lo-lograste" style="display:none;background:#E8F5E9;border-radius:10px;padding:12px 16px;font-size:1.2rem;color:#1B5E20;font-weight:700;margin-bottom:12px;">🎉 ¡Lo lograste! Acabas de platicar con una Inteligencia Artificial.</div>
+        <label for="modulo1_n1" style="display:block;font-size:1.15rem;color:#000000;margin-bottom:6px;">¿Qué te respondió? ¿Te sorprendió? <span style="color:#757575;">(opcional)</span></label>
+        <textarea id="modulo1_n1" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:10px;box-sizing:border-box;"></textarea>
+        <p style="font-size:1.05rem;color:#424242;line-height:1.6;">Si no pudiste, no pasa nada: sigue con la guía y vuelve a intentarlo cuando quieras.</p>
+      </div>
+
+      <h4 style="font-size:1.3rem;font-weight:700;color:var(--color-primario);margin-bottom:8px;">🤖 ¿Qué es la Inteligencia Artificial?</h4>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:6px;">Es un programa que aprende de muchísimos ejemplos (textos, fotos, conversaciones) y con eso puede platicar, escribir, traducir, dibujar y mucho más. Lo que acabas de usar arriba es una IA.</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">No duerme ni se cansa y te contesta al instante, a cualquier hora. Aprende de los datos que le dieron, igual que una persona aprende de la experiencia.</p>
+
+      <h4 style="font-size:1.3rem;font-weight:700;color:var(--color-primario);margin-bottom:8px;">📱 Actividad 2 — La IA ya está en tu celular</h4>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:10px;">Seguramente ya la usas sin saberlo. Marca las que te han pasado:</p>
+      <label style="display:flex;align-items:center;gap:10px;font-size:1.2rem;color:#000000;margin-bottom:10px;cursor:pointer;"><input type="checkbox" id="modulo1_c2" style="width:24px;height:24px;flex-shrink:0;"> <span><strong>YouTube</strong> me recomienda videos que me gustan</span></label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:1.2rem;color:#000000;margin-bottom:10px;cursor:pointer;"><input type="checkbox" id="modulo1_c3" style="width:24px;height:24px;flex-shrink:0;"> <span><strong>WhatsApp</strong> o el teclado me corrigen o sugieren palabras</span></label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:1.2rem;color:#000000;margin-bottom:10px;cursor:pointer;"><input type="checkbox" id="modulo1_c4" style="width:24px;height:24px;flex-shrink:0;"> <span><strong>Google Maps</strong> me calcula la mejor ruta</span></label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:1.2rem;color:#000000;margin-bottom:10px;cursor:pointer;"><input type="checkbox" id="modulo1_c5" style="width:24px;height:24px;flex-shrink:0;"> <span>La <strong>cámara</strong> reconoce caras o mejora mis fotos</span></label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:1.2rem;color:#000000;margin-bottom:14px;cursor:pointer;"><input type="checkbox" id="modulo1_c6" style="width:24px;height:24px;flex-shrink:0;"> <span>Le hablo al <strong>asistente de voz</strong> (Google, Siri o Alexa)</span></label>
+      <label for="modulo1_n2" style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Cuál te sorprendió más? <span style="color:#757575;">(opcional)</span></label>
+      <textarea id="modulo1_n2" rows="1" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:20px;">
         <div style="background:#E8F5E9;border-radius:10px;padding:14px 16px;">
-          <div style="font-weight:700;color:#2E7D32;font-size:1.2rem;margin-bottom:8px;">✅ Beneficios de la IA</div>
+          <div style="font-weight:700;color:#2E7D32;font-size:1.2rem;margin-bottom:8px;">✅ Lo que la IA hace bien</div>
           <ul style="font-size:1.1rem;color:#000000;line-height:1.7;padding-left:18px;">
             <li>Responde preguntas al instante</li>
             <li>Traduce idiomas en segundos</li>
-            <li>Crea texto, imágenes y música</li>
-            <li>Disponible las 24 horas</li>
-            <li>Ayuda a aprender a tu ritmo</li>
+            <li>Escribe mensajes, cartas y recetas</li>
+            <li>Está disponible las 24 horas</li>
+            <li>Te explica las veces que necesites, con paciencia</li>
           </ul>
         </div>
         <div style="background:#FFF3E0;border-radius:10px;padding:14px 16px;">
-          <div style="font-weight:700;color:#EF6C00;font-size:1.2rem;margin-bottom:8px;">⚠️ Limitaciones de la IA</div>
+          <div style="font-weight:700;color:#EF6C00;font-size:1.2rem;margin-bottom:8px;">⚠️ Lo que hay que cuidar</div>
           <ul style="font-size:1.1rem;color:#000000;line-height:1.7;padding-left:18px;">
-            <li>Puede equivocarse — verifica siempre</li>
-            <li>No tiene emociones reales</li>
-            <li>No reemplaza el amor humano</li>
-            <li>Puede generar información falsa</li>
-            <li>Necesita supervisión</li>
+            <li>Puede equivocarse: en salud, dinero o trámites, confírmalo con una persona</li>
+            <li>A veces inventa datos con mucha seguridad</li>
+            <li>No tiene sentimientos ni reemplaza a tu familia</li>
+            <li>Nunca le des contraseñas ni datos de tu tarjeta</li>
           </ul>
         </div>
       </div>
 
       <h4 style="font-size:1.3rem;font-weight:700;color:var(--color-primario);margin-bottom:8px;">💬 ¿Qué es un PROMPT?</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:4px;">La instrucción o pregunta que le das a la IA para obtener una respuesta.</p>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:4px;"><em>Ejemplo: "Explícame qué es la fotosíntesis como si tuviera 10 años"</em></p>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">Mientras más claro y específico sea tu prompt, ¡mejor será la respuesta!</p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:4px;">Es la instrucción o pregunta que le das a la IA, escrita o con tu voz. <strong>Lo que copiaste en la Actividad 1 fue un prompt.</strong></p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:4px;"><em>Ejemplo: "Escribe un mensaje cariñoso de buenos días para mi familia."</em></p>
+      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:20px;">Mientras más claro y con más detalles sea tu prompt, ¡mejor será la respuesta! En el Módulo 2 aprendes cómo.</p>
 
       <div style="border-top:2px dashed #E0E0E0;margin:24px 0;"></div>
 
-      <h4 style="font-size:1.35rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:14px;">✏️ Actividad práctica 1 — Encuentra la IA en tus apps</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Abre 3 de tus apps favoritas y busca señales de inteligencia artificial. Completa esto por cada una:</p>
-      <div style="background:var(--color-neutro-claro);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
-        <div style="font-weight:700;font-size:1.1rem;color:var(--color-primario);margin-bottom:8px;">App 1</div>
-        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">Nombre de la app</label>
-        <input id="modulo1_g1" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
-        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Qué hace la IA ahí?</label>
-        <input id="modulo1_g2" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
-        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Es útil?</label>
-        <select id="modulo1_g3" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;"><option value="">—</option><option>Sí</option><option>No</option></select>
-      </div>
-      <div style="background:var(--color-neutro-claro);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
-        <div style="font-weight:700;font-size:1.1rem;color:var(--color-primario);margin-bottom:8px;">App 2</div>
-        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">Nombre de la app</label>
-        <input id="modulo1_g4" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
-        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Qué hace la IA ahí?</label>
-        <input id="modulo1_g5" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
-        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Es útil?</label>
-        <select id="modulo1_g6" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;"><option value="">—</option><option>Sí</option><option>No</option></select>
-      </div>
-      <div style="background:var(--color-neutro-claro);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
-        <div style="font-weight:700;font-size:1.1rem;color:var(--color-primario);margin-bottom:8px;">App 3</div>
-        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">Nombre de la app</label>
-        <input id="modulo1_g16" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
-        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Qué hace la IA ahí?</label>
-        <input id="modulo1_g17" type="text" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;margin-bottom:10px;">
-        <label style="display:block;font-size:1.05rem;color:#000000;margin-bottom:4px;">¿Es útil?</label>
-        <select id="modulo1_g18" style="width:100%;border:1px solid #E0E0E0;border-radius:6px;padding:8px;font-size:1.05rem;box-sizing:border-box;"><option value="">—</option><option>Sí</option><option>No</option></select>
-      </div>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Cuál fue la señal de IA más sorprendente que encontraste?</label>
-      <textarea id="modulo1_g7" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
-
-      <h4 style="font-size:1.35rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:14px;">🗓️ Actividad práctica 2 — Mi Día con IA</h4>
-      <p style="font-size:1.2rem;color:#000000;line-height:1.7;margin-bottom:12px;">Piensa en tu día de ayer. ¿Usaste el celular? ¿Viste noticias? Responde:</p>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">1. ¿Qué apps o dispositivos usaste ayer?</label>
-      <textarea id="modulo1_g8" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">2. ¿Alguna te sugirió algo automáticamente? ¿Cuál?</label>
-      <textarea id="modulo1_g9" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">3. ¿Usaste Google Maps o Waze? ¿Te calculó la ruta sola?</label>
-      <textarea id="modulo1_g10" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">4. Completa la frase: "Hoy usé IA cuando..."</label>
-      <textarea id="modulo1_g11" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">5. ¿Le contarías a un familiar lo que aprendiste hoy? ¿Qué le dirías?</label>
-      <textarea id="modulo1_g12" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:24px;box-sizing:border-box;"></textarea>
-
-      <h4 style="font-size:1.35rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:14px;">💭 Reflexión final</h4>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Qué fue lo más interesante que aprendiste en este módulo?</label>
-      <textarea id="modulo1_g13" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Para qué te gustaría usar la IA en tu vida?</label>
-      <textarea id="modulo1_g14" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
-      <label style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Tienes alguna duda o pregunta sobre la IA?</label>
-      <textarea id="modulo1_g15" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:20px;box-sizing:border-box;"></textarea>
+      <h4 style="font-size:1.35rem;font-weight:800;color:var(--color-neutro-oscuro);margin-bottom:14px;">💭 Para cerrar <span style="font-size:1rem;font-weight:400;color:#757575;">(opcional)</span></h4>
+      <label for="modulo1_n3" style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">Completa la frase: "Hoy usé IA cuando…"</label>
+      <textarea id="modulo1_n3" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
+      <label for="modulo1_n4" style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Para qué te gustaría usar la IA en tu vida?</label>
+      <textarea id="modulo1_n4" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;"></textarea>
+      <label for="modulo1_n5" style="display:block;font-size:1.2rem;color:#000000;margin-bottom:6px;">¿Tienes alguna duda sobre la IA?</label>
+      <textarea id="modulo1_n5" rows="2" style="width:100%;border:1px solid #E0E0E0;border-radius:8px;padding:10px;font-size:1.2rem;font-family:inherit;margin-bottom:20px;box-sizing:border-box;"></textarea>
 
       <p style="text-align:center;font-size:1rem;color:#757575;margin-bottom:10px;">Puedes imprimir la guía para que te sirva de apoyo para el uso de las herramientas de IA.</p>
-      <button onclick="window.print()" style="width:100%;padding:14px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir</button>
+      <button type="button" onclick="window.print()" style="width:100%;padding:14px;background:var(--color-primario);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;">🖨️ Imprimir</button>
       <button type="button" class="bn" onclick="irAPasoEval()" style="background:var(--color-primario);margin-top:14px;">✅ Ya terminé la guía → Ir al Paso 3: Evaluación</button>
     </div>
   </div>
@@ -296,7 +299,7 @@ document.getElementById('nav-burger').addEventListener('click', function() {
       <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:4px;">📝 Evaluación del Módulo 1</h2>
       <p style="font-size:1.05rem;opacity:.85;">7 preguntas — necesitas 5 o más para aprobar.</p>
     </div>
-    <div class="qq" id="q1"><p class="qt">1. ¿Qué es la Inteligencia Artificial?</p><label class="op"><input type="radio" name="q1" value="A"> Tecnología que permite a las computadoras aprender y realizar tareas inteligentes</label><label class="op"><input type="radio" name="q1" value="B"> Un robot físico que camina y habla</label><label class="op"><input type="radio" name="q1" value="C"> El internet mejorado</label><label class="op"><input type="radio" name="q1" value="D"> Un videojuego muy avanzado</label></div><div class="qq" id="q2"><p class="qt">2. ¿Cuál NO es una aplicación de IA en la vida diaria?</p><label class="op"><input type="radio" name="q2" value="A"> Las rutas de Google Maps</label><label class="op"><input type="radio" name="q2" value="B"> El autocompletado de WhatsApp</label><label class="op"><input type="radio" name="q2" value="C"> Las recomendaciones de YouTube</label><label class="op"><input type="radio" name="q2" value="D"> Un libro de papel impreso</label></div><div class="qq" id="q3"><p class="qt">3. ¿Cómo aprende la Inteligencia Artificial?</p><label class="op"><input type="radio" name="q3" value="A"> Hablando con otros robots</label><label class="op"><input type="radio" name="q3" value="B"> Leyendo libros físicos</label><label class="op"><input type="radio" name="q3" value="C"> Con datos y ejemplos que le dan los programadores</label><label class="op"><input type="radio" name="q3" value="D"> Viendo televisión</label></div><div class="qq" id="q4"><p class="qt">4. ¿Cuál es una LIMITACIÓN de la IA?</p><label class="op"><input type="radio" name="q4" value="A"> Puede crear música</label><label class="op"><input type="radio" name="q4" value="B"> Puede cometer errores y dar información incorrecta</label><label class="op"><input type="radio" name="q4" value="C"> Puede trabajar las 24 horas</label><label class="op"><input type="radio" name="q4" value="D"> Puede traducir idiomas</label></div><div class="qq" id="q5"><p class="qt">5. ¿Qué es un "prompt"?</p><label class="op"><input type="radio" name="q5" value="A"> Un tipo de computadora especial</label><label class="op"><input type="radio" name="q5" value="B"> El nombre de un robot famoso</label><label class="op"><input type="radio" name="q5" value="C"> El cerebro de la IA</label><label class="op"><input type="radio" name="q5" value="D"> La instrucción o pregunta que le das a la IA</label></div><div class="qq" id="q6"><p class="qt">6. ¿Por qué es importante usar la IA con responsabilidad?</p><label class="op"><input type="radio" name="q6" value="A"> Porque puede usarse para ayudar o para hacer daño</label><label class="op"><input type="radio" name="q6" value="B"> Porque es obligatorio por ley</label><label class="op"><input type="radio" name="q6" value="C"> Para hacer trampa en los exámenes</label><label class="op"><input type="radio" name="q6" value="D"> Para no necesitar estudiar más</label></div><div class="qq" id="q7"><p class="qt">7. ¿Cuál de estas herramientas usa IA y es gratuita?</p><label class="op"><input type="radio" name="q7" value="A"> Ninguna gratuita usa IA</label><label class="op"><input type="radio" name="q7" value="B"> Solo apps de pago para empresas</label><label class="op"><input type="radio" name="q7" value="C"> ChatGPT, Gemini y Copilot (versiones gratuitas)</label><label class="op"><input type="radio" name="q7" value="D"> Solo herramientas de pago</label></div>
+    <div class="qq" id="q1"><p class="qt">1. ¿Qué es la Inteligencia Artificial?</p><label class="op"><input type="radio" name="q1" value="A"> Un programa que aprende de muchísimos ejemplos y puede platicar, escribir y crear</label><label class="op"><input type="radio" name="q1" value="B"> Un robot que vive dentro de tu celular</label><label class="op"><input type="radio" name="q1" value="C"> Una persona que te contesta desde una oficina</label><label class="op"><input type="radio" name="q1" value="D"> Un buscador que solo copia páginas de internet</label></div><div class="qq" id="q2"><p class="qt">2. ¿En cuál de estas ya usas IA, quizá sin saberlo?</p><label class="op"><input type="radio" name="q2" value="A"> La linterna del celular</label><label class="op"><input type="radio" name="q2" value="B"> La calculadora cuando sumas</label><label class="op"><input type="radio" name="q2" value="C"> Las recomendaciones de videos en YouTube</label><label class="op"><input type="radio" name="q2" value="D"> El despertador</label></div><div class="qq" id="q3"><p class="qt">3. ¿Qué es un "prompt"?</p><label class="op"><input type="radio" name="q3" value="A"> El nombre de la app de IA</label><label class="op"><input type="radio" name="q3" value="B"> La respuesta que te da la IA</label><label class="op"><input type="radio" name="q3" value="C"> La contraseña para entrar</label><label class="op"><input type="radio" name="q3" value="D"> La instrucción o pregunta que le escribes (o dices) a la IA</label></div><div class="qq" id="q4"><p class="qt">4. Doña Mari le pidió a la IA una receta y le salió con un ingrediente que no tiene. ¿Qué le conviene hacer?</p><label class="op"><input type="radio" name="q4" value="A"> Ir a comprar el ingrediente aunque sea caro</label><label class="op"><input type="radio" name="q4" value="B"> Decirle a la IA: "No tengo crema, cámbiala por otra cosa"</label><label class="op"><input type="radio" name="q4" value="C"> Pensar que la IA no sirve para cocinar</label><label class="op"><input type="radio" name="q4" value="D"> Buscar la receta en otro lado</label></div><div class="qq" id="q5"><p class="qt">5. La IA te dice con mucha seguridad para qué sirve una medicina. ¿Qué haces?</p><label class="op"><input type="radio" name="q5" value="A"> Confirmarlo con tu médico o farmacéutico</label><label class="op"><input type="radio" name="q5" value="B"> Creerle, porque lo dijo muy segura</label><label class="op"><input type="radio" name="q5" value="C"> Tomar la medicina de inmediato</label><label class="op"><input type="radio" name="q5" value="D"> Compartirlo en el grupo de la familia</label></div><div class="qq" id="q6"><p class="qt">6. ¿Cuál de estas preguntas te dará una mejor respuesta de la IA?</p><label class="op"><input type="radio" name="q6" value="A"> "Receta."</label><label class="op"><input type="radio" name="q6" value="B"> "Dime algo de comida."</label><label class="op"><input type="radio" name="q6" value="C"> "Tengo pollo y arroz, somos 2 y tengo 30 minutos. Dame una receta fácil."</label><label class="op"><input type="radio" name="q6" value="D"> "¿Qué como?"</label></div><div class="qq" id="q7"><p class="qt">7. ¿Cuál de estas IA puedes usar gratis?</p><label class="op"><input type="radio" name="q7" value="A"> Ninguna, todas cuestan</label><label class="op"><input type="radio" name="q7" value="B"> Solo funcionan en computadora</label><label class="op"><input type="radio" name="q7" value="C"> Meta AI dentro de WhatsApp, y las versiones gratis de ChatGPT y Gemini</label><label class="op"><input type="radio" name="q7" value="D"> Solo funcionan en inglés</label></div>
     <div id="qerr" style="display:none;background:#FFEBEE;color:var(--color-error);border-radius:10px;padding:12px;margin-top:12px;font-size:1.1rem;">⚠️ Responde todas las preguntas.</div>
     <button class="bn" id="btn-env" style="background:var(--color-primario);margin-top:20px;">✅ Enviar evaluación</button>
   </div>
@@ -404,53 +407,14 @@ document.getElementById('nav-burger').addEventListener('click', function() {
     </ul>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <!-- VIDEOS COMPLEMENTARIOS -->
-  <!-- Para agregar más videos: copia un bloque .vid-card y cambia   -->
-  <!-- el ID de YouTube, el título y la descripción                  -->
-  <!-- ══════════════════════════════════════════════════════════════ -->
-  <div style="background:#fff;border-radius:14px;border:1px solid #E0E0E0;margin-bottom:28px;overflow:hidden;">
-    <!-- Encabezado colapsable -->
-    <div id="comp-header" onclick="toggleComp()" style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;user-select:none;background:var(--color-neutro-claro);">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span style="font-size:1.5rem;">🎬</span>
-        <div>
-          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);">Videos Complementarios</div>
-          <div style="font-size:1.05rem;color:#757575;">Contenido adicional sobre Inteligencia Artificial</div>
-        </div>
-      </div>
-      <span id="comp-arrow" style="font-size:1.2rem;color:var(--color-primario);transition:transform .3s;">▼</span>
-    </div>
-
-    <!-- Lista de videos (colapsable) -->
-    <div id="comp-lista" style="display:none;padding:16px 24px;border-top:1px solid #E0E0E0;">
-
-      <!-- ── VIDEO 1 ── -->
-      <div class="vid-card" style="display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--color-neutro-claro);">
-        <div style="flex-shrink:0;width:120px;height:68px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;" onclick="abrirVideo('9-W1VbQNt5Y')">
-          <span style="font-size:1.8rem;">▶</span>
-        </div>
-        <div style="flex:1;">
-          <div style="font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);margin-bottom:4px;">El TeledIArio del Futuro — Desafío de la Inteligencia Artificial</div>
-          <div style="font-size:1.05rem;color:#757575;margin-bottom:8px;">📺 RTVE — Televisión Española · Especial informativo</div>
-          <div style="font-size:1.05rem;color:#555;line-height:1.5;margin-bottom:10px;">Cómo se ha desarrollado la IA, sus características y los riesgos del futuro. Un especial producido por TVE bajo la dirección de Pepa Bueno.</div>
-          <button onclick="abrirVideo('9-W1VbQNt5Y')" style="background:var(--color-primario);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-size:1.05rem;font-weight:700;cursor:pointer;">▶ Ver en YouTube</button>
-        </div>
-      </div>
-      <!-- ── FIN VIDEO 1 ── -->
-
-      <!-- ── AQUÍ PUEDES AGREGAR MÁS VIDEOS ── -->
-      <!-- Copia el bloque de arriba desde <div class="vid-card"> -->
-      <!-- hasta <!-- FIN VIDEO --> y cambia el ID de YouTube,     -->
-      <!-- el título, el canal y la descripción                     -->
-
-      <div style="text-align:center;padding:16px 0 4px;color:#757575;font-size:1.05rem;">
-        🔜 Próximamente más videos sobre IA
-      </div>
-
-    </div>
-  </div>
-
+  <a href="tips.html" style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;border:1px solid #E0E0E0;padding:18px 24px;margin-bottom:28px;text-decoration:none;">
+    <span style="font-size:1.8rem;">🎥</span>
+    <span style="flex:1;">
+      <span style="display:block;font-size:1.15rem;font-weight:700;color:var(--color-neutro-oscuro);">Tips en video de 1 minuto</span>
+      <span style="display:block;font-size:1.05rem;color:#555;">Trucos sencillos para usar la IA en tu día a día y no caer en estafas.</span>
+    </span>
+    <span style="font-size:1.1rem;font-weight:700;color:var(--color-primario);">Ver →</span>
+  </a>
 
   <div class="footer-social-bar">
   <button type="button" onclick="CookieConsent.showPreferences()" aria-label="Cambiar mis preferencias de cookies" style="background:none;border:none;color:#fff;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 10px;">🍪 Cookies</button>
@@ -565,7 +529,7 @@ function asegurarCertificadoVerificable(numModulo, nombreModulo, nombreAlumno, f
 }
 // ─────────────────────────────────────────────────────────────────────────
 
-var RESP = {"q1": "A", "q2": "D", "q3": "C", "q4": "B", "q5": "D", "q6": "A", "q7": "C"};
+var RESP = {"q1": "A", "q2": "C", "q3": "D", "q4": "B", "q5": "A", "q6": "C", "q7": "C"};
 var certOK = false;
 // Empieza a esperar la confirmación de sesión desde que carga la página —
 // mismo patrón usado en modulo2-6.html, necesario para poder llamar a
@@ -978,14 +942,6 @@ document.getElementById('btn-mod2').addEventListener('click', function() {
   }
 });
 
-// ── VIDEOS COMPLEMENTARIOS ────────────────────────────────────────────────────
-function toggleComp() {
-  var lista = document.getElementById('comp-lista');
-  var arrow = document.getElementById('comp-arrow');
-  var abierto = lista.style.display !== 'none';
-  lista.style.display = abierto ? 'none' : 'block';
-  arrow.style.transform = abierto ? 'rotate(0deg)' : 'rotate(180deg)';
-}
 // ── CONTADOR ANÓNIMO DEL EMBUDO ───────────────────────────────────────────────
 // Suma 1 al contador del día en Firestore (embudo_modulo1/AAAA-MM-DD) cuando
 // alguien llega a cada paso del recorrido. Sin nombre, correo ni ID: solo
@@ -1101,9 +1057,41 @@ function toggleGuia() {
     });
   });
 })();
-function abrirVideo(youtubeId) {
-  window.open('https://www.youtube.com/watch?v=' + youtubeId, '_blank');
-}
+// Actividad 1 (sesión 65): copiar una de las 3 preguntas de ejemplo. Al primer
+// "Copiar" se cuenta el paso "primera_conversacion" del embudo; la casilla
+// "Ya le escribí y me contestó" muestra el festejo.
+(function() {
+  document.querySelectorAll('#guia-lista .m1-copiar').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var caja = btn.closest('.m1-prompt');
+      var texto = caja.querySelector('p').textContent.replace(/^"|"$/g, '');
+      var msg = caja.querySelector('.m1-copiado');
+      contarEmbudo('primera_conversacion');
+      // Respaldo para celulares viejos o navegadores sin permiso de portapapeles.
+      function copiarALaAntigua() {
+        var t = document.createElement('textarea');
+        t.value = texto; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+        document.body.appendChild(t); t.select();
+        var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(t);
+        return ok;
+      }
+      var listoMsg = '¡Copiado! Ahora pégalo en el chat.';
+      var falloMsg = 'No se pudo copiar: selecciona el texto y cópialo a mano.';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(texto).then(function() { msg.textContent = listoMsg; })
+          .catch(function() { msg.textContent = copiarALaAntigua() ? listoMsg : falloMsg; });
+      } else {
+        msg.textContent = copiarALaAntigua() ? listoMsg : falloMsg;
+      }
+    });
+  });
+  var listo = document.getElementById('modulo1_c1');
+  var festejo = document.getElementById('m1-lo-lograste');
+  function pintarFestejo() { festejo.style.display = listo.checked ? 'block' : 'none'; }
+  listo.addEventListener('change', pintarFestejo);
+  pintarFestejo();
+})();
 </script>
 
 <!-- ── Banner de cookies (CookieConsent v3) ──────────────────────────────

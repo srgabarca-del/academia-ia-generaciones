@@ -133,8 +133,8 @@ service cloud.firestore {
     // puede leer, listar ni borrar — el dueño lo revisa en la Consola.
     match /embudo_modulo1/{dia} {
       function camposEmbudo() {
-        return ['entrada', 'video_terminado', 'guia_terminada',
-                'evaluacion_abierta', 'aprobado', 'certificado'];
+        return ['entrada', 'video_terminado', 'primera_conversacion',
+                'guia_terminada', 'evaluacion_abierta', 'aprobado', 'certificado'];
       }
       function diaValido() {
         return dia == 'prueba' || dia.matches('^20[0-9]{2}-[0-9]{2}-[0-9]{2}$');
