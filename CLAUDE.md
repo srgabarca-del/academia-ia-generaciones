@@ -101,7 +101,7 @@ Fuera del repo (no subir): `Caracteristicas_Legales_Academia_IA.docx`, `Logo cur
 ### Medición
 - Firebase Analytics `G-FJR421N496`, solo con consentimiento (CookieConsent v3.1.0, `localStorage`, 182 días). Eventos siempre vía `logEventoAnalytics()` que revisa el consentimiento (NT 41, 76)
 - Contador propio sin cookies: `embudo_modulo1` (NT 108), pasos `entrada`, `video_terminado`, `primera_conversacion` (primer "Copiar" de la Actividad 1, desde sesión 65), `guia_terminada`, `evaluacion_abierta`, `aprobado`, `certificado`. Desde localhost escribe en el doc `prueba`
-- Enlaces cortos con UTM (sesión 58): `/ig` instagram·bio, `/fb` facebook·pagina, `/tiktok` tiktok·bio, `/wa` whatsapp·grupos, `/invitacion` whatsapp·directo, `/yt` youtube·academia, `/lectura` youtube·prolalectura (canal personal del usuario), `/tips` → tips.html. Formato largo: `https://iageneraciones.com/?utm_source=…&utm_medium=social|email&utm_campaign=…`. Ver en GA → Adquisición de tráfico
+- Enlaces cortos con UTM (sesión 58): `/ig` instagram·bio, `/fb` facebook·pagina, `/tiktok` tiktok·bio, `/wa` whatsapp·grupos, `/invitacion` whatsapp·directo, `/yt` youtube·academia, `/lectura` youtube·prolalectura (canal personal del usuario), `/tips` → tips.html. Cada página de enlace corto lleva sus etiquetas Open Graph (logo y descripción): sin ellas WhatsApp solo mostraba el título. Formato largo: `https://iageneraciones.com/?utm_source=…&utm_medium=social|email&utm_campaign=…`. Ver en GA → Adquisición de tráfico
 - Google Search Console verificado (DNS) y `sitemap.xml` enviado (NT 97)
 
 ---
@@ -144,7 +144,7 @@ Fuera del repo (no subir): `Caracteristicas_Legales_Academia_IA.docx`, `Logo cur
 
 **Layout:** nav responsivo con menú ☰ (logo corto "Academia IA" y enlaces dentro de `.nav-links`); en `Academia_AI.html` el quiebre a ☰ es **1470px** (8 enlaces); en módulos 600px (NT 50, 81, 106). Franja `.footer-social-bar` dentro del footer (no fija): 🍪 Cookies + píldoras Facebook/YouTube/Instagram (solo íconos en móvil). Sin botón de WhatsApp (retirado, NT 68). Botón flotante "🎁 Empieza gratis" se oculta al ver `#registro` o el footer.
 
-**Logo/compartir:** `logo.png` 200×200 (ícono), `favicon.png` 64×64 en todas las páginas, `og-image.png` cuadrada para Open Graph en `Academia_AI.html` (NT 88).
+**Logo/compartir:** `logo.png` 200×200 (ícono), `favicon.png` 64×64 en todas las páginas, `og-image.jpg` (1200×1098, 123 KB) para Open Graph en todas las páginas que se comparten, incluidos los enlaces cortos (NT 88). Se pasó de PNG de 346 KB a JPG porque WhatsApp no muestra imágenes de más de ~300 KB; `og-image.png` se queda como original.
 
 ---
 
@@ -239,4 +239,5 @@ Shorts conectados: 3 señales de una estafa `02iAbCZ7Fcw` (etiqueta "🎙️ Voz
 - **24/10 (s65, cont.):** arreglado Analytics en módulos 2-5 (faltaba el SDK `firebase-analytics-compat`; solo se medían Academia_AI, login, dashboard, M1 y M6)
 - **24/10 (s65, cont.):** **M2, M3 y M6 renovados** en Firestore según `D:\Documentos\Claude\Propuesta_M2_M3_M6.md`: M2 con sección de voz (como el video) y metáfora del pastel; M3 con recuadros "no son fotos reales"/"fotos de niños" y actividad de tarjeta (`modulo3_g14/g15`); M6 con los 4 hábitos del carrusel, Google Lens, 3 tarjetas de noticias (`modulo6_g12-14`) y casillas `g10/g11`. Se conservaron los IDs de campos existentes. Exámenes de casos prácticos con claves nuevas; sección 1 del M4 ya remite al M2. Tiempo del Paso 2 quitado en M2/M3/M6. Respaldos previos en `D:\Documentos\Claude\Respaldo_moduloN_firestore_2026-10-24b.json`
 - **24/10 (s66):** **video propio del M1** "¿Qué es la IA? Explicado en un minuto" (HyperFrames, `Videos Academia\Video M1`, cierre en el azul del logo #01223B como los reels, audio a −15.8 LUFS) publicado en YouTube `k4DXSfIYGUo` y puesto en `modulo1.html` y en el adelanto de `Academia_AI.html` (corte a 18.5 s; logo de YouTube tapado también en `modulo1.html`, NT 101). Antes era `V-cZbZtjpeY` de terceros. Enlace de la descripción sin https hasta verificar el canal para enlaces externos
+- **26/10 (s67):** vista previa con logo al compartir `/wa`, `/invitacion` y demás enlaces cortos (les faltaban las etiquetas Open Graph); imagen para compartir en `og-image.jpg` ligera
 - **23/10 (s63):** enlace "💡 Ver tips gratis" del hero pasado a botón con contorno amarillo (`.btn-tips`, ancho completo en móvil); publicada la tarjeta "palabra clave" (post semana 7) en `tips.html`
