@@ -2,7 +2,7 @@
   "name": "functions",
   "description": "Cloud Functions — pagos y acceso de Academia IA Generaciones",
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "main": "index.js",
   "dependencies": {
